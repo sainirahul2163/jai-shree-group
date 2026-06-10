@@ -1,0 +1,358 @@
+"use client";
+
+import Link from "next/link";
+import { useMemo } from "react";
+import { motion, useMotionValue, useTransform } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { COMPANY } from "@/lib/constants";
+
+const HEADLINE_WORDS = ["PRECISION", "ENGINEERED", "IN METAL"];
+
+const MICRO_STATS = [
+  { value: "50+ Years", label: "Experience" },
+  { value: "9 Units", label: "Manufacturing" },
+  { value: "ISO Certified", label: "Quality" },
+];
+
+function FloatingParticles() {
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 24 }, (_, i) => ({
+        id: i,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 3 + 1,
+        duration: Math.random() * 8 + 6,
+        delay: Math.random() * 2,
+      })),
+    []
+  );
+
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      {particles.map((particle) => (
+        <motion.div
+          key={particle.id}
+          className="absolute rounded-full"
+          style={{
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+            width: particle.size,
+            height: particle.size,
+            backgroundColor: "rgba(232, 82, 26, 0.4)",
+          }}
+          animate={{
+            y: [0, -30, 0],
+            x: [0, Math.random() * 20 - 10, 0],
+            opacity: [0.2, 0.6, 0.2],
+          }}
+          transition={{
+            duration: particle.duration,
+            delay: particle.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function HexagonalPerforatedVisual() {
+  const rows = 12;
+  const cols = 10;
+  const dotSize = 5;
+  const hSpacing = 14;
+  const vSpacing = 12;
+
+  const dots = useMemo(() => {
+    const result: { x: number; y: number; opacity: number }[] = [];
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        const offsetX = row % 2 === 0 ? 0 : hSpacing / 2;
+        const x = col * hSpacing + offsetX;
+        const y = row * vSpacing;
+        const centerX = (cols * hSpacing) / 2;
+        const centerY = (rows * vSpacing) / 2;
+        const dist = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
+        const maxDist = Math.sqrt(centerX ** 2 + centerY ** 2);
+        const opacity = 1 - (dist / maxDist) * 0.6;
+        result.push({ x, y, opacity: Math.max(0.2, opacity) });
+      }
+    }
+    return result;
+  }, []);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const rotateX = useTransform(mouseY, [-150, 150], [8, -8]);
+  const rotateY = useTransform(mouseX, [-150, 150], [-8, 8]);
+
+  return (
+    <motion.div
+      className="relative flex h-full min-h-[320px] w-full items-center justify-center lg:min-h-[480px]"
+      style={{ backgroundColor: "transparent" }}
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        mouseX.set(e.clientX - rect.left - rect.width / 2);
+        mouseY.set(e.clientY - rect.top - rect.height / 2);
+      }}
+      onMouseLeave={() => {
+        mouseX.set(0);
+        mouseY.set(0);
+      }}
+    >
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div
+          className="size-72 rounded-full blur-[80px] lg:size-96"
+          style={{ backgroundColor: "rgba(232, 82, 26, 0.25)" }}
+        />
+      </div>
+
+      <motion.div
+        style={{ rotateX, rotateY, perspective: 800 }}
+        animate={{ y: [0, -12, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        className="relative"
+      >
+        <motion.div
+          animate={{ rotate: [0, 3, 0, -3, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="relative"
+        >
+          <svg
+            viewBox={`0 0 ${cols * hSpacing + hSpacing / 2} ${rows * vSpacing + vSpacing}`}
+            className="h-auto w-full max-w-[340px] lg:max-w-[400px]"
+            style={{
+              filter: "drop-shadow(0 0 30px rgba(232, 82, 26, 0.5))",
+            }}
+            aria-hidden="true"
+          >
+            {dots.map((dot, i) => (
+              <circle
+                key={i}
+                cx={dot.x + dotSize}
+                cy={dot.y + dotSize}
+                r={dotSize / 2}
+                fill="#E8521A"
+                opacity={dot.opacity}
+              />
+            ))}
+          </svg>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
+          className="absolute -bottom-4 -left-4 w-56 rounded-xl border p-4 backdrop-blur-sm lg:-bottom-6 lg:-left-8 lg:w-64"
+          style={{
+            backgroundColor: "#1A1A1A",
+            borderColor: "#2A2A2A",
+          }}
+        >
+          <p
+            className="text-xs font-semibold uppercase tracking-widest"
+            style={{ color: "#E8521A" }}
+          >
+            Perforated Sheet
+          </p>
+          <div className="mt-3 space-y-2">
+            <div className="flex justify-between text-xs">
+              <span style={{ color: "#666666" }}>Thickness</span>
+              <span className="font-medium" style={{ color: "#FFFFFF" }}>
+                Up to 12mm
+              </span>
+            </div>
+            <div className="flex justify-between text-xs">
+              <span style={{ color: "#666666" }}>Size</span>
+              <span className="font-medium" style={{ color: "#FFFFFF" }}>
+                2200×4000mm
+              </span>
+            </div>
+            <div className="flex justify-between text-xs">
+              <span style={{ color: "#666666" }}>Materials</span>
+              <span className="font-medium" style={{ color: "#FFFFFF" }}>
+                SS/MS/AL/GI
+              </span>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+export function HeroSection() {
+  return (
+    <section
+      id="home"
+      className="relative flex min-h-screen items-center overflow-hidden pt-16 md:pt-20"
+      style={{ backgroundColor: "#0A0A0A" }}
+    >
+      <div className="pointer-events-none absolute inset-0">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at top right, rgba(232, 82, 26, 0.18) 0%, transparent 55%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, #ffffff 1px, transparent 1px),
+              linear-gradient(to bottom, #ffffff 1px, transparent 1px)
+            `,
+            backgroundSize: "60px 60px",
+          }}
+        />
+        <div className="hex-grid-bg absolute inset-0 opacity-[0.03]" />
+        <FloatingParticles />
+      </div>
+
+      <div className="relative mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-4 py-16 md:px-8 lg:grid-cols-5 lg:gap-8 lg:px-16 lg:py-24">
+        <div className="lg:col-span-3">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="mb-6 inline-flex items-center rounded-full px-4 py-1.5"
+            style={{
+              backgroundColor: "#1A1A1A",
+              border: "1px solid #E8521A",
+            }}
+          >
+            <span
+              className="mr-2 size-1.5 rounded-full"
+              style={{ backgroundColor: "#E8521A" }}
+            />
+            <span
+              className="text-xs font-medium sm:text-sm"
+              style={{ color: "#A0A0A0" }}
+            >
+              {COMPANY.iso} Certified • Since {COMPANY.founded}
+            </span>
+          </motion.div>
+
+          <h1
+            className="font-display text-4xl leading-[0.95] sm:text-5xl md:text-6xl lg:text-7xl"
+            style={{ color: "#FFFFFF" }}
+          >
+            {HEADLINE_WORDS.map((word, index) => (
+              <span key={word} className="block overflow-hidden">
+                <motion.span
+                  initial={{ y: "100%", opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{
+                    delay: 0.4 + index * 0.1,
+                    duration: 0.6,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="inline-block"
+                  style={{ color: "#FFFFFF" }}
+                >
+                  {word === "IN METAL" ? (
+                    <>
+                      <span style={{ color: "#FFFFFF" }}>IN </span>
+                      <span style={{ color: "#E8521A" }}>METAL</span>
+                    </>
+                  ) : (
+                    word
+                  )}
+                </motion.span>
+              </span>
+            ))}
+          </h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+            className="mt-6 max-w-xl text-lg leading-relaxed"
+            style={{ color: "#A0A0A0" }}
+          >
+            India&apos;s trusted manufacturer of perforated sheets, wire mesh
+            &amp; expanded metal. {COMPANY.experience} years. 9 manufacturing
+            units. Pan India delivery.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+            className="mt-8 flex flex-col gap-4 sm:flex-row"
+          >
+            <Button
+              asChild
+              size="lg"
+              className="glow-orange-hover h-12 border-0 px-6 text-base font-semibold hover:opacity-90"
+              style={{ backgroundColor: "#E8521A", color: "#FFFFFF" }}
+            >
+              <Link href="#contact">
+                Get a Free Quote
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="h-12 bg-transparent px-6 text-base font-semibold hover:bg-[#1A1A1A]"
+              style={{
+                borderColor: "#FFFFFF",
+                color: "#FFFFFF",
+              }}
+            >
+              <Link href="#products">
+                Explore Products
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 0.6 }}
+            className="mt-10 flex flex-wrap items-center gap-6 sm:gap-8"
+          >
+            {MICRO_STATS.map((stat, index) => (
+              <div key={stat.value} className="flex items-center gap-6 sm:gap-8">
+                <div>
+                  <p
+                    className="text-sm font-bold sm:text-base"
+                    style={{ color: "#FFFFFF" }}
+                  >
+                    {stat.value}
+                  </p>
+                  <p className="text-xs" style={{ color: "#666666" }}>
+                    {stat.label}
+                  </p>
+                </div>
+                {index < MICRO_STATS.length - 1 && (
+                  <div
+                    className="hidden h-8 w-px sm:block"
+                    style={{ backgroundColor: "#2A2A2A" }}
+                  />
+                )}
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="lg:col-span-2"
+        >
+          <HexagonalPerforatedVisual />
+        </motion.div>
+      </div>
+    </section>
+  );
+}
