@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
-import { Footer } from "@/components/layout/Footer";
-import { Navbar } from "@/components/layout/Navbar";
 import { GlobalSchema } from "@/components/seo/GlobalSchema";
-import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import { COMPANY } from "@/lib/constants";
 
 import "./globals.css";
@@ -84,10 +82,7 @@ export default function RootLayout({
         style={{ backgroundColor: "#0A0A0A", color: "#FFFFFF" }}
       >
         <GlobalSchema />
-        <Navbar />
-        <main className="min-h-screen flex-1 bg-[#0A0A0A]">{children}</main>
-        <Footer />
-        <WhatsAppButton />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

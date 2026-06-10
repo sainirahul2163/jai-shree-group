@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { ClientsPage } from "@/components/clients/ClientsPage";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { getPublishedTestimonials } from "@/lib/supabase/queries";
 
 export const metadata: Metadata = {
   title: "Our Clients | Trusted by Leading Manufacturers | Jai Shree Group",
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Clients() {
+export default async function Clients() {
+  const testimonials = await getPublishedTestimonials();
+
   return (
     <>
       <BreadcrumbSchema
@@ -21,7 +24,7 @@ export default function Clients() {
           { name: "Clients", path: "/clients" },
         ]}
       />
-      <ClientsPage />
+      <ClientsPage testimonials={testimonials} />
     </>
   );
 }

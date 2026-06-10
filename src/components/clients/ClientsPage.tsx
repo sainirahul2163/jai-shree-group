@@ -1,11 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Quote } from "lucide-react";
+import { Quote, Star } from "lucide-react";
 
 import { CtaBanner } from "@/components/shared/CtaBanner";
 import { PageHero } from "@/components/shared/PageHero";
 import { HOME_INDUSTRIES } from "@/lib/constants";
+import type { Testimonial } from "@/types/database";
 
 const CLIENT_PLACEHOLDERS = [
   { industry: "Automobile", name: "Automotive OEM — Pune" },
@@ -39,7 +40,21 @@ const TESTIMONIALS = [
   },
 ];
 
-export function ClientsPage() {
+type ClientsPageProps = {
+  testimonials?: Testimonial[];
+};
+
+export function ClientsPage({ testimonials = [] }: ClientsPageProps) {
+  const displayTestimonials =
+    testimonials.length > 0
+      ? testimonials.map((t) => ({
+          quote: t.message,
+          author: t.client_name,
+          company: [t.company_name, t.industry].filter(Boolean).join(" · "),
+          rating: t.rating,
+        }))
+      : TESTIMONIALS.map((t) => ({ ...t, rating: 5 }));
+
   return (
     <>
       <PageHero
@@ -106,9 +121,9 @@ export function ClientsPage() {
             What Our Clients Say
           </h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {TESTIMONIALS.map((item, index) => (
+            {displayTestimonials.slice(0, 3).map((item, index) => (
               <motion.div
-                key={item.company}
+                key={item.company + item.author}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -123,6 +138,14 @@ export function ClientsPage() {
                   className="mb-4 size-8"
                   style={{ color: "#E8521A" }}
                 />
+                <div className="mb-3 flex gap-0.5">
+                  {Array.from({ length: item.rating }).map((_, i) => (
+                    <Star
+                      key={i}
+                      className="size-4 fill-[#E8521A] text-[#E8521A]"
+                    />
+                  ))}
+                </div>
                 <p
                   className="text-base leading-relaxed italic"
                   style={{ color: "#A0A0A0" }}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { GalleryPage } from "@/components/gallery/GalleryPage";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { getPublishedGalleryItems } from "@/lib/supabase/queries";
 
 export const metadata: Metadata = {
   title: "Product Gallery | Perforated Sheets & Wire Mesh | Jai Shree Group",
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Gallery() {
+export default async function Gallery() {
+  const items = await getPublishedGalleryItems();
+
   return (
     <>
       <BreadcrumbSchema
@@ -21,7 +24,7 @@ export default function Gallery() {
           { name: "Gallery", path: "/gallery" },
         ]}
       />
-      <GalleryPage />
+      <GalleryPage items={items} />
     </>
   );
 }
