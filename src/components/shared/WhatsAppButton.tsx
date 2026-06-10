@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 
-const WHATSAPP_URL =
-  "https://wa.me/917023504327?text=Hi%2C%20I%20need%20a%20quote%20for%20metal%20products";
+import { COMPANY } from "@/lib/constants";
+import { whatsappUrl } from "@/lib/email";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -19,6 +19,11 @@ function WhatsAppIcon({ className }: { className?: string }) {
 }
 
 export function WhatsAppButton() {
+  const href = whatsappUrl(
+    COMPANY.whatsapp,
+    "Hi, I need a quote for metal products."
+  );
+
   return (
     <div className="group fixed bottom-4 right-4 z-50 sm:bottom-6 sm:right-6">
       <span
@@ -33,7 +38,7 @@ export function WhatsAppButton() {
       </span>
 
       <motion.a
-        href={WHATSAPP_URL}
+        href={href}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with us on WhatsApp"

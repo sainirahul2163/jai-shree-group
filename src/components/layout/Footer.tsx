@@ -81,10 +81,32 @@ export function Footer() {
               {FOOTER.social.map((item) => {
                 const Icon =
                   item.icon === "Linkedin" ? LinkedInIcon : FacebookIcon;
+                const isPlaceholder = item.href === "#";
+
+                if (isPlaceholder) {
+                  return (
+                    <span
+                      key={item.name}
+                      title={`${item.name} — coming soon`}
+                      className="flex size-9 cursor-not-allowed items-center justify-center rounded-lg border opacity-50"
+                      style={{
+                        borderColor: "#2A2A2A",
+                        color: "#A0A0A0",
+                        backgroundColor: "#111111",
+                      }}
+                      aria-label={`${item.name} coming soon`}
+                    >
+                      <Icon className="size-4" />
+                    </span>
+                  );
+                }
+
                 return (
                   <a
                     key={item.name}
                     href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     aria-label={item.name}
                     className="flex size-9 items-center justify-center rounded-lg border transition-colors hover:border-[#E8521A] hover:text-[#E8521A]"
                     style={{

@@ -19,7 +19,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { COMPANY, MATERIALS, PRODUCTS } from "@/lib/constants";
 import { getProductIcon } from "@/lib/icons";
 import { whatsappUrl } from "@/lib/email";
-import type { QuoteFormValues } from "@/lib/validations";
+import { quoteFormSchema, type QuoteFormValues } from "@/lib/validations";
 
 const STEPS = ["Product Selection", "Specifications", "Contact Details"];
 
@@ -53,6 +53,13 @@ export function GetQuotePage() {
     "idle" | "loading" | "success" | "error"
   >("idle");
   const [waLink, setWaLink] = useState<string | undefined>();
+  const [stepError, setStepError] = useState<string | null>(null);
+
+  const specsComplete =
+    form.material.trim() !== "" &&
+    form.thickness.trim() !== "" &&
+    form.dimensions.trim() !== "" &&
+    form.quantity.trim() !== "";
 
   function toggleProduct(slug: string) {
     setForm((prev) => ({
@@ -71,12 +78,20 @@ export function GetQuotePage() {
   }
 
   async function handleSubmit() {
+    const parsed = quoteFormSchema.safeParse(form);
+    if (!parsed.success) {
+      setStepError("Please fill in all required fields correctly.");
+      setStatus("error");
+      return;
+    }
+
+    setStepError(null);
     setStatus("loading");
     try {
       const res = await fetch("/api/quote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(parsed.data),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
@@ -225,7 +240,10 @@ export function GetQuotePage() {
               </div>
               <div className="mt-8 flex justify-end">
                 <Button
-                  onClick={() => setStep(1)}
+                  onClick={() => {
+                    setStepError(null);
+                    setStep(1);
+                  }}
                   disabled={form.products.length === 0}
                   className="h-11 border-0 px-6"
                   style={{ backgroundColor: "#E8521A", color: "#FFF" }}
@@ -370,7 +388,15 @@ export function GetQuotePage() {
                   Back
                 </Button>
                 <Button
-                  onClick={() => setStep(2)}
+                  onClick={() => {
+                    if (!specsComplete) {
+                      setStepError("Please complete all specification fields.");
+                      return;
+                    }
+                    setStepError(null);
+                    setStep(2);
+                  }}
+                  disabled={!specsComplete}
                   className="border-0"
                   style={{ backgroundColor: "#E8521A", color: "#FFF" }}
                 >
@@ -378,6 +404,9 @@ export function GetQuotePage() {
                   <ArrowRight className="size-4" />
                 </Button>
               </div>
+              {stepError && step === 1 && (
+                <p className="mt-4 text-sm text-red-400">{stepError}</p>
+              )}
             </motion.div>
           )}
 
@@ -458,7 +487,8 @@ export function GetQuotePage() {
 
               {status === "error" && (
                 <p className="text-sm text-red-400">
-                  Submission failed. Please call {COMPANY.phone}.
+                  {stepError ??
+                    `Submission failed. Please call ${COMPANY.phone}.`}
                 </p>
               )}
 

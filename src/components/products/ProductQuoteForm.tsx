@@ -56,7 +56,8 @@ export function ProductQuoteForm({
         }),
       });
 
-      if (!res.ok) throw new Error("Failed");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Failed");
       setStatus("success");
       form.reset({ ...values, name: "", phone: "", email: "", message: "" });
     } catch {

@@ -503,7 +503,7 @@ export const HOME_SECTIONS = {
       { value: "12mm", label: "Max Perforation Thickness" },
       { value: "14mm", label: "Max Laser Cutting Thickness" },
       { value: "2200×4000mm", label: "Max Sheet Size" },
-      { value: "400 Mesh", label: "Finest Wire Mesh" },
+      { value: "2–400 Mesh", label: "Wire Mesh Range" },
     ],
     cta: { label: "Read Full Story", href: "/about" },
   },
@@ -590,7 +590,7 @@ export const MUMBAI_BRANCHES = BRANCHES.filter(
 export const FOOTER = {
   description:
     "ISO 9001:2015 certified manufacturer of perforated sheets, wire mesh & expanded metal. Serving India since 1970.",
-  copyright: "© 2024 Jai Shree Group. All rights reserved.",
+  copyright: "© 2026 Jai Shree Group. All rights reserved.",
   certification: "ISO 9001:2015 Certified | Pune & Mumbai, India",
   social: [
     { name: "LinkedIn", href: "#", icon: "Linkedin" },

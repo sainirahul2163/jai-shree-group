@@ -76,7 +76,7 @@ export function ProductPageClient({
                   itemType="https://schema.org/ListItem"
                 >
                   <Link
-                    href="/#products"
+                    href="/products"
                     itemProp="item"
                     className="hover:text-white"
                   >
@@ -360,7 +360,7 @@ export function ProductPageClient({
           </div>
 
           <div className="lg:col-span-1">
-            <div className="sticky top-24">
+            <div className="lg:sticky lg:top-24">
               <ProductQuoteForm productName={product.name} />
             </div>
           </div>

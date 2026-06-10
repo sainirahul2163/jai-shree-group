@@ -61,7 +61,8 @@ export function ContactPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
-      if (!res.ok) throw new Error("Failed");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Failed");
       setStatus("success");
       form.reset();
     } catch {

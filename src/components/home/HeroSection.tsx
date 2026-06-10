@@ -292,7 +292,7 @@ export function HeroSection() {
               className="glow-orange-hover h-12 border-0 px-6 text-base font-semibold hover:opacity-90"
               style={{ backgroundColor: "#E8521A", color: "#FFFFFF" }}
             >
-              <Link href="#contact">
+              <Link href="/get-quote">
                 Get a Free Quote
                 <ArrowRight className="size-4" />
               </Link>
@@ -307,7 +307,7 @@ export function HeroSection() {
                 color: "#FFFFFF",
               }}
             >
-              <Link href="#products">
+              <Link href="/products">
                 Explore Products
                 <ArrowRight className="size-4" />
               </Link>

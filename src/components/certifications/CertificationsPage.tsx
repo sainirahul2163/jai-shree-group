@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { Award, Download, Shield, CheckCircle } from "lucide-react";
 
@@ -61,11 +60,13 @@ export function CertificationsPage() {
                   </p>
                 </div>
               </div>
-              <Button asChild className="mt-8 glow-orange">
-                <Link href="#">
-                  <Download className="mr-2 size-4" />
-                  Download ISO Certificate
-                </Link>
+              <Button
+                type="button"
+                disabled
+                className="mt-8 glow-orange opacity-60"
+              >
+                <Download className="mr-2 size-4" />
+                Download ISO Certificate
               </Button>
               <p className="mt-3 text-xs" style={{ color: "#666666" }}>
                 Certificate download coming soon
