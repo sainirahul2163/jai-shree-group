@@ -196,44 +196,64 @@
     @apply w-full;
   }
 
-  .landing-badge-shimmer {
+  /* ───── /landing cinematic experience ───── */
+
+  /* Eyebrow badge: a thin light band sweeps across every 4s */
+  .landing-shimmer {
     position: relative;
     overflow: hidden;
   }
 
-  .landing-badge-shimmer::after {
+  .landing-shimmer::after {
     content: "";
     position: absolute;
     inset: 0;
     background: linear-gradient(
       105deg,
-      transparent 40%,
-      rgba(232, 82, 26, 0.35) 50%,
-      transparent 60%
+      transparent 42%,
+      rgba(255, 255, 255, 0.2) 50%,
+      transparent 58%
     );
-    transform: translateX(-120%);
-    animation: landing-shimmer 3s ease-in-out infinite;
+    transform: translateX(-150%);
+    animation: landing-shimmer 4s ease-in-out infinite;
   }
 
   @keyframes landing-shimmer {
-    0%,
+    0% {
+      transform: translateX(-150%);
+    }
+    45%,
     100% {
-      transform: translateX(-120%);
-    }
-    50% {
-      transform: translateX(120%);
+      transform: translateX(150%);
     }
   }
 
-  .landing-marquee-track {
-    animation: landing-marquee 40s linear infinite;
+  /* Marquee: duplicated-content seamless loop, two speeds for parallax */
+  .landing-marquee-left {
+    animation: landing-marquee-left 40s linear infinite;
   }
 
-  .landing-marquee-track:hover {
+  .landing-marquee-right {
+    animation: landing-marquee-right 50s linear infinite;
+  }
+
+  .landing-marquee-row:hover .landing-marquee-left,
+  .landing-marquee-row:hover .landing-marquee-right {
     animation-play-state: paused;
   }
 
-  @keyframes landing-marquee {
+  /* Outline type fills with white on row hover — fashion-house feel */
+  .landing-marquee-text {
+    color: transparent;
+    -webkit-text-stroke: 1px #2a2a2a;
+    transition: color 0.4s ease;
+  }
+
+  .landing-marquee-row:hover .landing-marquee-text {
+    color: #fafafa;
+  }
+
+  @keyframes landing-marquee-left {
     0% {
       transform: translateX(0);
     }
@@ -242,33 +262,68 @@
     }
   }
 
-  .landing-industries-track {
-    animation: landing-industries-scroll 50s linear infinite;
-  }
-
-  .landing-industries-track:hover {
-    animation-play-state: paused;
-  }
-
-  @keyframes landing-industries-scroll {
+  @keyframes landing-marquee-right {
     0% {
-      transform: translateX(0);
-    }
-    100% {
       transform: translateX(-50%);
     }
+    100% {
+      transform: translateX(0);
+    }
   }
 
-  .landing-texture {
-    background-image: radial-gradient(
-        circle at 20% 20%,
-        rgba(232, 82, 26, 0.04) 0%,
-        transparent 45%
-      ),
-      radial-gradient(
-        circle at 80% 80%,
-        rgba(255, 255, 255, 0.02) 0%,
-        transparent 40%
-      );
+  /* Hero scroll cue: dot travels down the guide line */
+  .landing-cue-dot {
+    animation: landing-cue 2.5s ease-in-out infinite;
+  }
+
+  @keyframes landing-cue {
+    0% {
+      transform: translate(-50%, 0);
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-50%, 44px);
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .landing-marquee-left,
+    .landing-marquee-right,
+    .landing-cue-dot,
+    .landing-shimmer::after {
+      animation: none;
+    }
+  }
+}
+
+/* Landing — industries rail */
+@keyframes landing-rail-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.landing-rail {
+  animation: landing-rail-scroll 60s linear infinite;
+  will-change: transform;
+}
+
+.landing-rail:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-rail {
+    animation: none;
   }
 }

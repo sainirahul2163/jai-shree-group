@@ -1,27 +1,70 @@
 "use client";
 
-import { LANDING_MARQUEE_ITEMS } from "@/data/landing";
+const ROW_ONE = [
+  "PERFORATED SHEETS",
+  "LASER CUTTING",
+  "EXPANDED METAL",
+  "WIRE MESH",
+  "WELDED MESH",
+  "TURRET PUNCHING",
+  "DEMISTER PAD",
+];
 
-export function LandingMarquee() {
-  const items = [...LANDING_MARQUEE_ITEMS, ...LANDING_MARQUEE_ITEMS];
+const ROW_TWO = [
+  "PUNE",
+  "MUMBAI",
+  "ISO 9001:2015",
+  "CNC PRECISION",
+  "FIBER LASER",
+  "PAN INDIA",
+  "SINCE 1970",
+];
+
+function MarqueeRow({
+  items,
+  direction,
+}: {
+  items: string[];
+  direction: "left" | "right";
+}) {
+  const animationClass =
+    direction === "left" ? "landing-marquee-left" : "landing-marquee-right";
 
   return (
-    <section
-      className="overflow-hidden border-y py-4"
-      style={{ backgroundColor: "#0F0F0F", borderColor: "#1F1F1F" }}
-    >
-      <div className="landing-marquee-track flex w-max gap-8 whitespace-nowrap">
-        {items.map((item, index) => (
-          <span
-            key={`${item}-${index}`}
-            className="flex items-center gap-8 text-sm font-semibold uppercase tracking-[0.2em]"
-            style={{ color: index % 2 === 0 ? "#A0A0A0" : "#E8521A" }}
+    <div className="landing-marquee-row overflow-hidden py-6">
+      <div className={`flex w-max items-center ${animationClass}`}>
+        {/* Duplicated content for a seamless -50% loop */}
+        {[0, 1].map((copy) => (
+          <div
+            key={copy}
+            aria-hidden={copy === 1}
+            className="flex shrink-0 items-center"
           >
-            {item}
-            <span style={{ color: "#333333" }}>◆</span>
-          </span>
+            {items.map((item) => (
+              <span key={item} className="flex items-center whitespace-nowrap">
+                <span className="landing-marquee-text text-5xl font-black tracking-tight md:text-7xl">
+                  {item}
+                </span>
+                <span aria-hidden className="mx-8 text-2xl text-[#E8521A]">
+                  ◆
+                </span>
+              </span>
+            ))}
+          </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+export function LandingMarquee() {
+  return (
+    <section
+      aria-label="Capabilities and locations"
+      className="overflow-hidden bg-[#060606] py-20"
+    >
+      <MarqueeRow items={ROW_ONE} direction="left" />
+      <MarqueeRow items={ROW_TWO} direction="right" />
     </section>
   );
 }
