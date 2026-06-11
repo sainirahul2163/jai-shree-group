@@ -195,4 +195,80 @@
   .nav-link-underline:hover::after {
     @apply w-full;
   }
+
+  .landing-badge-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .landing-badge-shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(232, 82, 26, 0.35) 50%,
+      transparent 60%
+    );
+    transform: translateX(-120%);
+    animation: landing-shimmer 3s ease-in-out infinite;
+  }
+
+  @keyframes landing-shimmer {
+    0%,
+    100% {
+      transform: translateX(-120%);
+    }
+    50% {
+      transform: translateX(120%);
+    }
+  }
+
+  .landing-marquee-track {
+    animation: landing-marquee 40s linear infinite;
+  }
+
+  .landing-marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes landing-marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .landing-industries-track {
+    animation: landing-industries-scroll 50s linear infinite;
+  }
+
+  .landing-industries-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes landing-industries-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .landing-texture {
+    background-image: radial-gradient(
+        circle at 20% 20%,
+        rgba(232, 82, 26, 0.04) 0%,
+        transparent 45%
+      ),
+      radial-gradient(
+        circle at 80% 80%,
+        rgba(255, 255, 255, 0.02) 0%,
+        transparent 40%
+      );
+  }
 }

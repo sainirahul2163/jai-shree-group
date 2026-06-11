@@ -388,6 +388,7 @@ export const WEBSITE_GOALS = [
 export const SITE_ROUTES = {
   static: [
     "/",
+    "/landing",
     "/about",
     "/group",
     "/products",
