@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 
 import { LandingCapabilities } from "@/components/landing/LandingCapabilities";
+import { LandingCTA } from "@/components/landing/LandingCTA";
 import { LandingHero } from "@/components/landing/LandingHero";
 import { LandingIndustries } from "@/components/landing/LandingIndustries";
+import { LandingLocations } from "@/components/landing/LandingLocations";
 import { LandingMarquee } from "@/components/landing/LandingMarquee";
 import { LandingNav } from "@/components/landing/LandingNav";
 import { LandingProcess } from "@/components/landing/LandingProcess";
 import { LandingProducts } from "@/components/landing/LandingProducts";
 import { LandingStats } from "@/components/landing/LandingStats";
+import { LandingStory } from "@/components/landing/LandingStory";
+import { LandingTestimonials } from "@/components/landing/LandingTestimonials";
 import { ScrollProgress } from "@/components/landing/ScrollProgress";
 import { COMPANY } from "@/lib/constants";
 
@@ -56,6 +60,10 @@ export default function LandingPage() {
       <LandingCapabilities />
       <LandingProcess />
       <LandingIndustries />
+      <LandingStory />
+      <LandingLocations />
+      <LandingTestimonials />
+      <LandingCTA />
     </main>
   );
 }
