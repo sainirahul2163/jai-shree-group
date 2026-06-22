@@ -31,6 +31,21 @@ const PerforationPatterns = dynamic(
   { ssr: false }
 );
 
+const DimpleSheet3D = dynamic(
+  () => import("./DimpleSheet3D").then((m) => m.DimpleSheet3D),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-[420px] w-full items-center justify-center rounded-2xl border border-[#1E1E1E] bg-[#0C0C0C]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#E8521A] border-t-transparent" />
+          <span className="text-xs text-[#444]">Loading 3D render...</span>
+        </div>
+      </div>
+    ),
+  }
+);
+
 type ProductPageClientProps = {
   product: ProductDetail;
   relatedProducts: ProductDetail[];
@@ -211,6 +226,21 @@ export function ProductPageClient({
                 ))}
               </div>
             </motion.div>
+
+            {(product.slug === "custom-components" ||
+              product.slug === "perforated-sheets") && (
+              <div className="my-10">
+                <div className="mb-4 flex items-center gap-3">
+                  <span className="h-px w-6 bg-orange-500/40" />
+                  <span className="text-xs font-medium uppercase tracking-[0.25em] text-orange-500">
+                    {product.slug === "custom-components"
+                      ? "Dimple / Embossed Sheet — 3D Preview"
+                      : "Interactive 3D Preview"}
+                  </span>
+                </div>
+                <DimpleSheet3D />
+              </div>
+            )}
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}

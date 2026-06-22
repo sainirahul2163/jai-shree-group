@@ -1,9 +1,16 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Camera } from "lucide-react";
+
+const DimpleSheet3D = dynamic(
+  () =>
+    import("@/components/products/DimpleSheet3D").then((m) => m.DimpleSheet3D),
+  { ssr: false }
+);
 
 import { PageHero } from "@/components/shared/PageHero";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -61,6 +68,27 @@ export function GalleryPage({ items = [] }: GalleryPageProps) {
 
       <section className="section-padding" style={{ backgroundColor: "#111111" }}>
         <div className="mx-auto max-w-7xl">
+          <section className="mb-16">
+            <div className="mb-6 flex items-center gap-3">
+              <span className="h-px w-6 bg-orange-500/40" />
+              <span className="text-xs font-medium uppercase tracking-[0.25em] text-orange-500">
+                3D Interactive Preview
+              </span>
+            </div>
+            <h2 className="mb-2 text-2xl font-black text-white">
+              Dimple / Embossed Sheet
+            </h2>
+            <p className="mb-6 max-w-lg text-sm text-[#666]">
+              Real-time 3D render of our embossed dimple sheet. Move your mouse
+              to rotate and see the metallic reflections.
+            </p>
+            <DimpleSheet3D />
+            <p className="mt-3 text-center text-xs text-[#444]">
+              Product photography coming soon — actual shots from our Talawade
+              facility
+            </p>
+          </section>
+
           <Tabs
             value={activeFilter}
             onValueChange={setActiveFilter}
