@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 
 import { PageHero } from "@/components/shared/PageHero";
-import { IndiaMapGraphic } from "@/components/home/IndiaMapGraphic";
+import { IndiaMap } from "@/components/shared/IndiaMapLoader";
 import { Button } from "@/components/ui/button";
 import { BRANCH_PRODUCTS, getGoogleMapsUrl } from "@/data/branches";
 import {
@@ -277,7 +277,7 @@ export function GroupPage() {
               {section.mapCaption}
             </p>
           </motion.div>
-          <IndiaMapGraphic width={480} className="" />
+          <IndiaMap />
         </div>
       </section>
     </>

@@ -568,12 +568,5 @@ export const FOOTER = {
     brochure: "Download Catalogue",
     whatsapp: "WhatsApp Us",
   },
-} as const;
 
-export const INDIA_MAP = {
-  src: "/india-map.svg",
-  pins: {
-    pune: { left: "52%", top: "68%", label: "Pune" },
-    mumbai: { left: "44%", top: "63%", label: "Mumbai" },
-  },
 } as const;

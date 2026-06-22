@@ -14,7 +14,7 @@ import {
   PUNE_BRANCHES,
   type BRANCHES,
 } from "@/lib/constants";
-import { IndiaMapGraphic } from "@/components/home/IndiaMapGraphic";
+import { IndiaMap } from "@/components/shared/IndiaMapLoader";
 import {
   Tabs,
   TabsContent,
@@ -176,7 +176,9 @@ export function GroupSection() {
           </TabsContent>
         </Tabs>
 
-        <IndiaMapGraphic />
+        <div className="mt-16">
+          <IndiaMap />
+        </div>
       </div>
     </section>
   );
