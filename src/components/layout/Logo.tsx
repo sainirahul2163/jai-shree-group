@@ -44,9 +44,9 @@ export function Logo({ className }: { className?: string }) {
         <Image
           src="/logo.png"
           alt="Shree Perforators"
-          width={160}
+          width={180}
           height={48}
-          className="h-10 w-auto sm:h-12"
+          className="h-12 w-auto"
           priority
           onError={() => setShowTextLogo(true)}
         />

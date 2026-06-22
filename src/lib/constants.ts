@@ -1,6 +1,6 @@
 export const COMPANY = {
   name: "Jai Shree Group",
-  tagline: "Accept Challenges. Develop. Achieve.",
+  tagline: "Precision in Every Perforation",
   founded: "1970",
   founder: "Mr. Tejaram Jangid",
   foundedIn: "Delhi",
