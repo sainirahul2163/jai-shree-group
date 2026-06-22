@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { useMemo } from "react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
+import { ProductShowcase } from "@/components/home/ProductShowcase";
 import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/lib/constants";
 
@@ -12,7 +13,7 @@ const HEADLINE_WORDS = ["PRECISION", "ENGINEERED", "IN METAL"];
 
 const MICRO_STATS = [
   { value: "50+ Years", label: "Experience" },
-  { value: "9 Units", label: "Manufacturing" },
+  { value: "8 Units", label: "Manufacturing" },
   { value: "ISO Certified", label: "Quality" },
 ];
 
@@ -57,131 +58,6 @@ function FloatingParticles() {
         />
       ))}
     </div>
-  );
-}
-
-function HexagonalPerforatedVisual() {
-  const rows = 12;
-  const cols = 10;
-  const dotSize = 5;
-  const hSpacing = 14;
-  const vSpacing = 12;
-
-  const dots = useMemo(() => {
-    const result: { x: number; y: number; opacity: number }[] = [];
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        const offsetX = row % 2 === 0 ? 0 : hSpacing / 2;
-        const x = col * hSpacing + offsetX;
-        const y = row * vSpacing;
-        const centerX = (cols * hSpacing) / 2;
-        const centerY = (rows * vSpacing) / 2;
-        const dist = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
-        const maxDist = Math.sqrt(centerX ** 2 + centerY ** 2);
-        const opacity = 1 - (dist / maxDist) * 0.6;
-        result.push({ x, y, opacity: Math.max(0.2, opacity) });
-      }
-    }
-    return result;
-  }, []);
-
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const rotateX = useTransform(mouseY, [-150, 150], [8, -8]);
-  const rotateY = useTransform(mouseX, [-150, 150], [-8, 8]);
-
-  return (
-    <motion.div
-      className="relative flex h-full min-h-[320px] w-full items-center justify-center lg:min-h-[480px]"
-      style={{ backgroundColor: "transparent" }}
-      onMouseMove={(e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        mouseX.set(e.clientX - rect.left - rect.width / 2);
-        mouseY.set(e.clientY - rect.top - rect.height / 2);
-      }}
-      onMouseLeave={() => {
-        mouseX.set(0);
-        mouseY.set(0);
-      }}
-    >
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div
-          className="size-72 rounded-full blur-[80px] lg:size-96"
-          style={{ backgroundColor: "rgba(232, 82, 26, 0.25)" }}
-        />
-      </div>
-
-      <motion.div
-        style={{ rotateX, rotateY, perspective: 800 }}
-        animate={{ y: [0, -12, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="relative"
-      >
-        <motion.div
-          animate={{ rotate: [0, 3, 0, -3, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="relative"
-        >
-          <svg
-            viewBox={`0 0 ${cols * hSpacing + hSpacing / 2} ${rows * vSpacing + vSpacing}`}
-            className="h-auto w-full max-w-[340px] lg:max-w-[400px]"
-            style={{
-              filter: "drop-shadow(0 0 30px rgba(232, 82, 26, 0.5))",
-            }}
-            aria-hidden="true"
-          >
-            {dots.map((dot, i) => (
-              <circle
-                key={i}
-                cx={dot.x + dotSize}
-                cy={dot.y + dotSize}
-                r={dotSize / 2}
-                fill="#E8521A"
-                opacity={dot.opacity}
-              />
-            ))}
-          </svg>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.8, duration: 0.5 }}
-          className="absolute -bottom-4 -left-4 w-56 rounded-xl border p-4 backdrop-blur-sm lg:-bottom-6 lg:-left-8 lg:w-64"
-          style={{
-            backgroundColor: "#1A1A1A",
-            borderColor: "#2A2A2A",
-          }}
-        >
-          <p
-            className="text-xs font-semibold uppercase tracking-widest"
-            style={{ color: "#E8521A" }}
-          >
-            Perforated Sheet
-          </p>
-          <div className="mt-3 space-y-2">
-            <div className="flex justify-between text-xs">
-              <span style={{ color: "#666666" }}>Thickness</span>
-              <span className="font-medium" style={{ color: "#FFFFFF" }}>
-                Up to 12mm
-              </span>
-            </div>
-            <div className="flex justify-between text-xs">
-              <span style={{ color: "#666666" }}>Size</span>
-              <span className="font-medium" style={{ color: "#FFFFFF" }}>
-                2200×4000mm
-              </span>
-            </div>
-            <div className="flex justify-between text-xs">
-              <span style={{ color: "#666666" }}>Materials</span>
-              <span className="font-medium" style={{ color: "#FFFFFF" }}>
-                SS/MS/AL/GI
-              </span>
-            </div>
-          </div>
-        </motion.div>
-      </motion.div>
-    </motion.div>
   );
 }
 
@@ -350,7 +226,9 @@ export function HeroSection() {
           transition={{ delay: 0.5, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="lg:col-span-2"
         >
-          <HexagonalPerforatedVisual />
+          <div className="flex items-center justify-center">
+            <ProductShowcase />
+          </div>
         </motion.div>
       </div>
     </section>
