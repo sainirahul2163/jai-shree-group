@@ -16,7 +16,7 @@ export const INDUSTRY_DETAILS: Record<string, IndustryDetail> = {
     slug: "automobile",
     headline: "Precision Metal Components for Automotive Applications",
     description:
-      "Jai Shree Group supplies perforated sheets, wire mesh, and expanded metal to leading automobile manufacturers across India.",
+      "Jai Shree Group supplies perforated sheets, laser-cut components, and expanded metal to leading automobile manufacturers across India.",
     applications: [
       "Automobile Filters — perforated sheets for oil, air, fuel filters",
       "Engine Grills and Guards",
@@ -27,16 +27,16 @@ export const INDUSTRY_DETAILS: Record<string, IndustryDetail> = {
     ],
     products: [
       "perforated-sheets",
-      "wire-mesh",
       "expanded-metal",
       "laser-cutting",
+      "turret-punching",
     ],
     clients:
       "Tata Motors, Bajaj Auto, and Tier-1 automotive suppliers in Pune PCMC",
     metaTitle:
       "Perforated Sheets for Automobile Industry | Automotive Mesh Pune | Jai Shree Group",
     metaDescription:
-      "Perforated sheets, wire mesh and expanded metal for automobile industry. Filters, grills, guards. Serving Tata, Bajaj and Tier-1 suppliers from Pune. Get quote.",
+      "Perforated sheets, expanded metal and laser cutting for automobile industry. Filters, grills, guards. Serving Tata, Bajaj and Tier-1 suppliers from Pune. Get quote.",
   },
   construction: {
     name: "Construction & Architecture",
@@ -56,8 +56,8 @@ export const INDUSTRY_DETAILS: Record<string, IndustryDetail> = {
     products: [
       "perforated-sheets",
       "expanded-metal",
-      "aluminum-grill-profile",
-      "welded-mesh",
+      "laser-cutting",
+      "turret-punching",
     ],
     metaTitle:
       "Perforated Sheets for Construction | Architectural Metal Panels Pune | Jai Shree Group",
@@ -67,9 +67,9 @@ export const INDUSTRY_DETAILS: Record<string, IndustryDetail> = {
   "food-beverage": {
     name: "Food & Beverage",
     slug: "food-beverage",
-    headline: "Food-Grade Wire Mesh and Screens for Processing Industry",
+    headline: "Food-Grade Metal Screens for Processing Industry",
     description:
-      "SS wire mesh, perforated screens, and conveyor systems for food and beverage processing — meeting hygiene and safety standards.",
+      "SS perforated screens, laser-cut components, and conveyor systems for food and beverage processing — meeting hygiene and safety standards.",
     applications: [
       "Conveyor Belt Screens",
       "Food Processing Sieves",
@@ -78,16 +78,16 @@ export const INDUSTRY_DETAILS: Record<string, IndustryDetail> = {
       "Drying and Cooling Meshes",
       "Sugar Industry Screens (Huller, Herringbone)",
     ],
-    products: ["wire-mesh", "perforated-sheets", "welded-mesh"],
+    products: ["perforated-sheets", "laser-cutting", "custom-components"],
     metaTitle:
-      "Wire Mesh for Food Processing Industry | SS Screens India | Jai Shree Group",
+      "Perforated Sheets for Food Processing Industry | SS Screens India | Jai Shree Group",
     metaDescription:
-      "SS wire mesh and perforated screens for food and beverage processing. Conveyor screens, vibrating screens, food-grade sieves. ISO certified. Pune manufacturers.",
+      "Perforated screens and precision metal components for food and beverage processing. Conveyor screens, vibrating screens, food-grade sieves. ISO certified. Pune manufacturers.",
   },
   pharmaceutical: {
     name: "Pharmaceutical",
     slug: "pharmaceutical",
-    headline: "Precision Screens and Mesh for Pharmaceutical Equipment",
+    headline: "Precision Screens for Pharmaceutical Equipment",
     description:
       "Clean room panels, SS screens, and precision perforated sheets for pharmaceutical machinery and equipment.",
     applications: [
@@ -98,37 +98,43 @@ export const INDUSTRY_DETAILS: Record<string, IndustryDetail> = {
       "Filter Housings",
       "Drying Tray Mesh",
     ],
-    products: ["perforated-sheets", "wire-mesh", "demister-pad"],
+    products: ["perforated-sheets", "laser-cutting", "custom-components"],
     metaTitle:
       "Perforated Sheets for Pharmaceutical Industry | SS Mesh India | Jai Shree Group",
     metaDescription:
-      "Perforated sheets and SS wire mesh for pharmaceutical industry. Clean room panels, equipment screens, tablet coating drums. ISO certified manufacturers Pune.",
+      "Perforated sheets and precision metal screens for pharmaceutical industry. Clean room panels, equipment screens, tablet coating drums. ISO certified manufacturers Pune.",
   },
   petrochemical: {
     name: "Petrochemical",
     slug: "petrochemical",
-    headline: "Demister Pads and Industrial Mesh for Petrochemical Plants",
+    headline: "Perforated Metal Components for Petrochemical Plants",
     description:
-      "Demister pads, mist eliminators, and industrial wire mesh for refineries and petrochemical processing plants.",
+      "Perforated sheets, expanded metal, and corrosion-resistant metal components for refineries and petrochemical processing plants.",
     applications: [
-      "Demister Pads / Mist Eliminators",
+      "Process Vessel Internals",
       "Gas-Liquid Separation",
       "Column Packing Support",
-      "Process Vessel Internals",
       "Filtration Systems",
+      "Ventilation & Safety Screens",
+      "Custom Fabricated Components",
     ],
-    products: ["demister-pad", "wire-mesh", "perforated-sheets"],
+    products: [
+      "perforated-sheets",
+      "expanded-metal",
+      "laser-cutting",
+      "custom-components",
+    ],
     metaTitle:
-      "Demister Pads for Petrochemical Industry | Mist Eliminator India | Jai Shree Group",
+      "Perforated Sheets for Petrochemical Industry | Metal Components India | Jai Shree Group",
     metaDescription:
-      "Demister pads and mist eliminators for petrochemical and refinery applications. Knitted wire mesh, SS construction. Custom sizes. ISO certified. Get quote.",
+      "Perforated sheets and expanded metal for the petrochemical industry. Corrosion-resistant SS and MS perforated components from Jai Shree Group, Pune.",
   },
   "architecture-interior": {
     name: "Architecture & Interior",
     slug: "architecture-interior",
     headline: "Decorative Metal Mesh for Modern Architecture and Interiors",
     description:
-      "Architectural perforated panels, aluminum grills, and decorative expanded metal for interior and exterior design applications.",
+      "Architectural perforated panels and decorative expanded metal for interior and exterior design applications.",
     applications: [
       "Decorative Ceiling Panels",
       "Room Dividers and Screens",
@@ -140,13 +146,13 @@ export const INDUSTRY_DETAILS: Record<string, IndustryDetail> = {
     ],
     products: [
       "perforated-sheets",
-      "aluminum-grill-profile",
       "expanded-metal",
+      "custom-components",
     ],
     metaTitle:
       "Architectural Perforated Panels | Decorative Metal Mesh India | Jai Shree Group",
     metaDescription:
-      "Decorative perforated panels, aluminum grills and expanded metal for architecture and interiors. Facade cladding, ceiling panels, room dividers. Pune manufacturers.",
+      "Decorative perforated panels and expanded metal for architecture and interiors. Facade cladding, ceiling panels, room dividers. Pune manufacturers.",
   },
   "sugar-industry": {
     name: "Sugar Industry",
@@ -162,7 +168,7 @@ export const INDUSTRY_DETAILS: Record<string, IndustryDetail> = {
       "Perforated Test Sieves",
       "Conveyor Screens",
     ],
-    products: ["perforated-sheets", "wire-mesh"],
+    products: ["perforated-sheets", "custom-components"],
     metaTitle:
       "Sugar Industry Screens Manufacturers India | Huller Screens | Jai Shree Group",
     metaDescription:
@@ -171,22 +177,27 @@ export const INDUSTRY_DETAILS: Record<string, IndustryDetail> = {
   "mining-quarrying": {
     name: "Mining & Quarrying",
     slug: "mining-quarrying",
-    headline: "Heavy Duty Screens and Mesh for Mining Operations",
+    headline: "Heavy Duty Screens for Mining Operations",
     description:
-      "Heavy duty vibrating screens, crimped mesh, and welded mesh for mining, quarrying, and aggregate processing.",
+      "Heavy duty vibrating screens, perforated sheets, and expanded metal for mining, quarrying, and aggregate processing.",
     applications: [
       "Vibrating Screen Panels",
       "Crusher Screen Decks",
       "Aggregate Sizing Screens",
       "Coal Screening Mesh",
       "Mineral Separation Screens",
-      "Heavy Duty Welded Mesh",
+      "Heavy Duty Perforated Panels",
     ],
-    products: ["wire-mesh", "welded-mesh", "perforated-sheets"],
+    products: [
+      "perforated-sheets",
+      "expanded-metal",
+      "laser-cutting",
+      "custom-components",
+    ],
     metaTitle:
-      "Mining Screens Manufacturers India | Vibrating Screen Mesh | Jai Shree Group",
+      "Mining Screens Manufacturers India | Perforated & Expanded Metal | Jai Shree Group",
     metaDescription:
-      "Heavy duty vibrating screens and mesh for mining and quarrying. Crimped mesh, welded mesh, perforated screens. ISO certified manufacturers Pune. Get quote.",
+      "Heavy duty perforated sheets and expanded metal for mining and quarrying. Vibrating screen panels, crusher decks, aggregate sizing. ISO certified manufacturers Pune. Get quote.",
   },
 };
 

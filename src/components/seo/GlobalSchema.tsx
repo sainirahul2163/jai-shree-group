@@ -6,13 +6,16 @@ export function GlobalSchema() {
     "@type": "ManufacturingBusiness",
     name: COMPANY.name,
     foundingDate: COMPANY.founded,
-    iso6523Code: COMPANY.iso,
     keywords: SEO.primaryKeywords.join(", "),
-    areaServed: ["IN", "US", "GB", "AU", "AE", "SG"],
+    areaServed: [
+      { "@type": "City", name: "Pune" },
+      { "@type": "City", name: "Mumbai" },
+      { "@type": "State", name: "Maharashtra" },
+      { "@type": "Country", name: "India" },
+    ],
     address: {
       "@type": "PostalAddress",
-      streetAddress:
-        "Gat No. 94, Near Sonawane Wasti, Jyotibanagar, Talawade",
+      streetAddress: COMPANY.address,
       addressLocality: "Pune",
       addressRegion: "Maharashtra",
       postalCode: "411062",
@@ -21,7 +24,19 @@ export function GlobalSchema() {
     telephone: COMPANY.phone.replace(/\s/g, ""),
     email: COMPANY.email,
     url: COMPANY.website,
-    sameAs: [],
+    sameAs: [
+      "https://www.google.com/maps/place/Jai+Shree+Group",
+      "https://www.indiamart.com/shree-perforators/",
+      "https://www.linkedin.com/company/jai-shree-group/",
+    ],
+    hasCertification: {
+      "@type": "Certification",
+      name: "ISO 9001:2015",
+      issuedBy: {
+        "@type": "Organization",
+        name: "Bureau Veritas",
+      },
+    },
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Metal Manufacturing Products",

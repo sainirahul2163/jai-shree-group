@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title:
     "About Jai Shree Group | 50+ Years Metal Manufacturing | ISO 9001:2015 Pune",
   description:
-    "Learn about Jai Shree Group — ISO 9001:2015 certified metal manufacturer since 1970. 8 manufacturing units in Pune & Mumbai. Perforated sheets, laser cutting, custom components.",
+    "Learn about Jai Shree Group and Shree Perforators — ISO 9001:2015 certified metal manufacturer since 1970. 8 manufacturing units in Pune & Mumbai. Perforated sheets, laser cutting, custom components.",
   alternates: {
     canonical: "https://jaishreegroup.in/about",
   },

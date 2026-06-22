@@ -12,8 +12,7 @@ export function ContactPageSchema() {
     email: COMPANY.email,
     address: {
       "@type": "PostalAddress",
-      streetAddress:
-        "Gat No. 93, Near Sonawane Wasti, Jyotibanagar, Talawade",
+      streetAddress: COMPANY.address,
       addressLocality: "Pune",
       addressRegion: "Maharashtra",
       postalCode: "411062",

@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { CALCULATOR_FAQS } from "@/data/calculator-faqs";
 
 type HoleShape = "round" | "square" | "rectangular" | "capsule";
 type PitchType = "triangular" | "rectangular" | "staggered";
@@ -58,29 +59,6 @@ const FORMULAS = [
     pitch: "Staggered",
     formula: "Open Area % = 100 × L × C / (0.5 × Z1 × Z2)",
     note: "L × C = hole dimensions (mm), Z1 × Z2 = pitch (mm)",
-  },
-];
-
-const CALCULATOR_FAQS = [
-  {
-    q: "What is open area in perforated sheets?",
-    a: "Open area is the percentage of a perforated sheet surface that consists of holes versus solid metal. It affects airflow, filtration efficiency, and structural strength.",
-  },
-  {
-    q: "How does hole pitch affect open area?",
-    a: "Closer pitch (smaller distance between holes) reduces open area percentage. Triangular staggered pitch typically gives higher open area than rectangular pitch for the same hole size.",
-  },
-  {
-    q: "What open area is best for filtration?",
-    a: "Higher open area (typically 40–60%+) allows better flow and is preferred for filtration applications. Lower open area provides greater structural strength.",
-  },
-  {
-    q: "What is the difference between triangular and staggered pitch?",
-    a: "Triangular (60° staggered) arranges holes in equilateral triangle pattern. Staggered pitch refers to offset row arrangement. Both affect open area calculation differently.",
-  },
-  {
-    q: "Can Jai Shree Group manufacture to a specific open area?",
-    a: "Yes, we manufacture perforated sheets to achieve your required open area percentage by selecting appropriate hole size, pitch, and pattern. Contact us with your specification.",
   },
 ];
 
@@ -249,7 +227,7 @@ export function OpenAreaCalculator() {
             className="text-4xl font-black tracking-tight sm:text-5xl"
             style={{ color: "#FFFFFF" }}
           >
-            Open Area Calculator
+            Perforated Sheet Open Area Calculator
           </h1>
           <p className="mt-4 text-lg leading-relaxed" style={{ color: "#A0A0A0" }}>
             Calculate the open area percentage of perforated sheets based on hole

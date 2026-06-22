@@ -32,6 +32,16 @@ const nextConfig: NextConfig = {
         destination: "/products",
         permanent: true,
       },
+      {
+        source: "/pune/wire-mesh-manufacturers",
+        destination: "/pune/perforated-sheet-manufacturers",
+        permanent: true,
+      },
+      {
+        source: "/mumbai/wire-mesh-manufacturers",
+        destination: "/mumbai/perforated-sheet-manufacturers",
+        permanent: true,
+      },
     ];
   },
   async headers() {

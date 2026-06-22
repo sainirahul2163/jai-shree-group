@@ -9,8 +9,6 @@ import { ProductShowcase } from "@/components/home/ProductShowcase";
 import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/lib/constants";
 
-const HEADLINE_WORDS = ["PRECISION", "ENGINEERED", "IN METAL"];
-
 const MICRO_STATS = [
   { value: "50+ Years", label: "Experience" },
   { value: "8 Units", label: "Manufacturing" },
@@ -118,30 +116,21 @@ export function HeroSection() {
             className="font-display text-4xl leading-[0.95] sm:text-5xl md:text-6xl lg:text-7xl"
             style={{ color: "#FFFFFF" }}
           >
-            {HEADLINE_WORDS.map((word, index) => (
-              <span key={word} className="block overflow-hidden">
-                <motion.span
-                  initial={{ y: "100%", opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{
-                    delay: 0.4 + index * 0.1,
-                    duration: 0.6,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  className="inline-block"
-                  style={{ color: "#FFFFFF" }}
-                >
-                  {word === "IN METAL" ? (
-                    <>
-                      <span style={{ color: "#FFFFFF" }}>IN </span>
-                      <span style={{ color: "#E8521A" }}>METAL</span>
-                    </>
-                  ) : (
-                    word
-                  )}
-                </motion.span>
-              </span>
-            ))}
+            <span className="block overflow-hidden">
+              <motion.span
+                initial={{ y: "100%", opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{
+                  delay: 0.4,
+                  duration: 0.6,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="inline-block"
+                style={{ color: "#FFFFFF" }}
+              >
+                Perforated Sheet Manufacturers in Pune &amp; Mumbai
+              </motion.span>
+            </span>
           </h1>
 
           <motion.p
@@ -151,9 +140,9 @@ export function HeroSection() {
             className="mt-6 max-w-xl text-lg leading-relaxed"
             style={{ color: "#A0A0A0" }}
           >
-            India&apos;s trusted manufacturer of perforated sheets, wire mesh
-            &amp; expanded metal. {COMPANY.experience} years. 8 manufacturing
-            units. Pan India delivery.
+            India&apos;s trusted manufacturer of perforated sheets, expanded
+            metal, laser cutting &amp; precision components. {COMPANY.iso}{" "}
+            certified. {COMPANY.experience} years of experience.
           </motion.p>
 
           <motion.div

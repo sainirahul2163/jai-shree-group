@@ -3,8 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
+import { BlogArticleContent } from "@/components/blog/BlogArticleContent";
+import { BlogPostingSchema } from "@/components/seo/BlogPostingSchema";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { Button } from "@/components/ui/button";
+import { getBlogPostBySlug as getStaticBlogPost } from "@/data/blog-posts";
 import { BLOG_POSTS, COMPANY } from "@/lib/constants";
 import {
   getAllBlogSlugs,
@@ -15,8 +18,36 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-function getFallbackPost(slug: string) {
-  return BLOG_POSTS.find((post) => post.slug === slug);
+function resolvePost(slug: string, dbPost: Awaited<ReturnType<typeof getBlogPostBySlug>>) {
+  const staticPost = getStaticBlogPost(slug);
+  if (!dbPost && !staticPost) return null;
+
+  const title = dbPost?.title ?? staticPost!.title;
+  const category = dbPost?.category ?? staticPost!.category;
+  const excerpt = dbPost?.excerpt ?? staticPost!.excerpt;
+  const date =
+    dbPost?.published_at ?? dbPost?.created_at ?? staticPost!.date;
+  const content = (dbPost?.content?.trim() || staticPost?.content || "").trim();
+  const metaTitle =
+    dbPost?.meta_title?.trim() ||
+    staticPost?.meta_title ||
+    `${title} | Jai Shree Group Blog`;
+  const metaDescription =
+    dbPost?.meta_description?.trim() ||
+    staticPost?.meta_description ||
+    excerpt;
+  const coverUrl = dbPost?.cover_image_url ?? null;
+
+  return {
+    title,
+    category,
+    excerpt,
+    date,
+    content,
+    metaTitle,
+    metaDescription,
+    coverUrl,
+  };
 }
 
 export async function generateStaticParams() {
@@ -31,21 +62,12 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const dbPost = await getBlogPostBySlug(slug);
-  const fallback = getFallbackPost(slug);
-  const post = dbPost ?? fallback;
+  const post = resolvePost(slug, dbPost);
   if (!post) return {};
 
-  const title = "meta_title" in post && post.meta_title
-    ? post.meta_title
-    : `${post.title} | Jai Shree Group Blog`;
-  const description =
-    "meta_description" in post && post.meta_description
-      ? post.meta_description
-      : post.excerpt;
-
   return {
-    title,
-    description,
+    title: post.metaTitle,
+    description: post.metaDescription,
     alternates: {
       canonical: `${COMPANY.website}/blog/${slug}`,
     },
@@ -61,27 +83,25 @@ export async function generateMetadata({
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
   const dbPost = await getBlogPostBySlug(slug);
-  const fallback = getFallbackPost(slug);
+  const post = resolvePost(slug, dbPost);
 
-  if (!dbPost && !fallback) {
+  if (!post) {
     notFound();
   }
 
-  const title = dbPost?.title ?? fallback!.title;
-  const category = dbPost?.category ?? fallback!.category;
-  const excerpt = dbPost?.excerpt ?? fallback!.excerpt;
-  const date =
-    dbPost?.published_at ?? dbPost?.created_at ?? fallback!.date;
-  const content = dbPost?.content;
-  const coverUrl = dbPost?.cover_image_url;
-
   return (
     <>
+      <BlogPostingSchema
+        title={post.title}
+        description={post.metaDescription}
+        slug={slug}
+        datePublished={post.date}
+      />
       <BreadcrumbSchema
         items={[
           { name: "Home", path: "/" },
           { name: "Blog", path: "/blog" },
-          { name: title, path: `/blog/${slug}` },
+          { name: post.title, path: `/blog/${slug}` },
         ]}
       />
       <section
@@ -89,53 +109,49 @@ export default async function BlogPostPage({ params }: PageProps) {
         style={{ backgroundColor: "#0A0A0A" }}
       >
         <div className="mx-auto max-w-3xl">
-          {coverUrl && (
+          {post.coverUrl && (
             <div className="relative mb-8 aspect-[2/1] overflow-hidden rounded-xl">
-              <Image src={coverUrl} alt={title} fill className="object-cover" />
+              <Image
+                src={post.coverUrl}
+                alt={post.title}
+                fill
+                className="object-cover"
+              />
             </div>
           )}
           <span
             className="text-xs font-semibold uppercase tracking-wider"
             style={{ color: "#E8521A" }}
           >
-            {category}
+            {post.category}
           </span>
           <h1
             className="mt-4 text-3xl font-black sm:text-4xl"
             style={{ color: "#FFFFFF" }}
           >
-            {title}
+            {post.title}
           </h1>
           <time
             className="mt-4 block text-sm"
             style={{ color: "#666666" }}
-            dateTime={date}
+            dateTime={post.date}
           >
-            {new Date(date).toLocaleDateString("en-IN", {
+            {new Date(post.date).toLocaleDateString("en-IN", {
               year: "numeric",
               month: "long",
               day: "numeric",
             })}
           </time>
 
-          {content ? (
-            <article
-              className="prose prose-invert mt-8 max-w-none text-base leading-relaxed"
-              style={{ color: "#A0A0A0" }}
-            >
-              {content.split("\n").map((para) => (
-                <p key={para.slice(0, 30)} className="mb-4">
-                  {para}
-                </p>
-              ))}
-            </article>
+          {post.content ? (
+            <BlogArticleContent content={post.content} />
           ) : (
             <>
               <p
                 className="mt-8 text-lg leading-relaxed"
                 style={{ color: "#A0A0A0" }}
               >
-                {excerpt}
+                {post.excerpt}
               </p>
               <div
                 className="mt-12 rounded-xl border p-8 text-center"

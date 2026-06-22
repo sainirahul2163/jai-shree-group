@@ -383,40 +383,7 @@ export const NAV_LINKS = [
   { label: "Contact", href: "/contact" },
 ] as const;
 
-export const BLOG_POSTS = [
-  {
-    title: "How to Calculate Open Area of Perforated Sheet",
-    slug: "how-to-calculate-open-area-perforated-sheet",
-    date: "2024-01-15",
-    category: "Technical Guide",
-    excerpt:
-      "Learn the 6 standard formulas for calculating open area percentage in perforated sheets — from round holes to capsule shapes.",
-  },
-  {
-    title: "Expanded Metal vs Perforated Sheet: Which to Choose?",
-    slug: "expanded-metal-vs-perforated-sheet",
-    date: "2024-01-22",
-    category: "Product Guide",
-    excerpt:
-      "Compare expanded metal and perforated sheets across cost, strength, waste, and applications to choose the right material.",
-  },
-  {
-    title: "Complete Wire Mesh Specification Guide",
-    slug: "wire-mesh-specification-guide",
-    date: "2024-02-01",
-    category: "Technical Guide",
-    excerpt:
-      "Everything you need to know about wire mesh specifications — mesh number, wire diameter, opening size, and open area.",
-  },
-  {
-    title: "Laser Cutting vs Turret Punching: Cost Comparison",
-    slug: "laser-cutting-vs-turret-punching",
-    date: "2024-02-10",
-    category: "Cost Guide",
-    excerpt:
-      "When to use laser cutting vs turret punching? A detailed cost and capability comparison for industrial buyers.",
-  },
-] as const;
+export { BLOG_POSTS } from "@/data/blog-posts";
 
 export const DESIGN_TOKENS = {
   background: "#0A0A0A",

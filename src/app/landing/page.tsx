@@ -30,7 +30,11 @@ export const metadata: Metadata = {
     "ISO certified metal fabrication",
   ],
   alternates: {
-    canonical: `${COMPANY.website}/landing`,
+    canonical: `${COMPANY.website}/`,
+  },
+  robots: {
+    index: false,
+    follow: false,
   },
   openGraph: {
     title: TITLE,

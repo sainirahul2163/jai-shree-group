@@ -179,60 +179,6 @@ export const LOCATION_PAGES: Record<string, LocationPageData> = {
       },
     ],
   },
-  "pune/wire-mesh-manufacturers": {
-    slug: "wire-mesh-manufacturers",
-    city: "pune",
-    cityName: "Pune",
-    productName: "Wire Mesh",
-    productSlug: "wire-mesh",
-    h1: "Wire Mesh Manufacturers in Pune",
-    metaTitle:
-      "Wire Mesh Manufacturers Pune | SS Mesh 2-400 Mesh | Jai Shree Group",
-    metaDescription:
-      "Wire mesh manufacturers in Pune. Plain, twill & crimped weaves. 2 to 400 mesh. SS, MS, brass, copper. Bhosari & Talawade units. ISO certified. Get quote.",
-    intro: [
-      "Pune's food processing, pharmaceutical, and sugar industries rely on precision wire mesh for sieving, filtration, and conveyor applications. Jai Shree Group manufactures wire mesh from our Bhosari and Talawade units.",
-      "From fine 400 mesh SS screens for pharmaceutical equipment to heavy crimped mesh for vibrating screens, our Pune facilities cover the full specification range with ISO 9001:2015 quality control.",
-    ],
-    facilityName: "Jai Shree Jaliwala — Bhosari",
-    facilityAddress:
-      "Dolhphin Square, Shop No. 8, Plot No. W68, S Block, MIDC, Bhosari, Pune 411026",
-    mapEmbedUrl: PUNE_MAP,
-    googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Jai Shree Jaliwala Bhosari Pune")}`,
-    products: [
-      "Plain & Twill Wire Mesh",
-      "Crimped Mesh",
-      "Vibrating Screen Mesh",
-      "SS Filter Screens",
-    ],
-    industries: [
-      "Pharmaceutical",
-      "Food & Beverage",
-      "Sugar Industry",
-      "Mining",
-    ],
-    specs: [
-      { label: "Mesh Range", value: "2 to 400 mesh" },
-      { label: "Weaves", value: "Plain / Twill / Crimped" },
-      { label: "Materials", value: "SS, MS, Brass, Cu, Al, GI" },
-      { label: "Wire Diameter", value: "0.025mm to 6mm" },
-      { label: "Certification", value: "ISO 9001:2015" },
-    ],
-    faqs: [
-      {
-        q: "What mesh sizes can you manufacture in Pune?",
-        a: "We manufacture wire mesh from 2 mesh to 400 mesh in plain, twill, and crimped weaves.",
-      },
-      {
-        q: "Do you supply SS wire mesh for food processing in Pune?",
-        a: "Yes — food-grade SS wire mesh for conveyor screens, sieves, and processing equipment is a core product from our Pune units.",
-      },
-      {
-        q: "Which Pune unit handles wire mesh manufacturing?",
-        a: "Jai Shree Jaliwala at Bhosari MIDC and our Talawade units handle wire mesh and crimped mesh production.",
-      },
-    ],
-  },
   "mumbai/perforated-sheet-manufacturers": {
     slug: "perforated-sheet-manufacturers",
     city: "mumbai",
@@ -327,55 +273,6 @@ export const LOCATION_PAGES: Record<string, LocationPageData> = {
       {
         q: "What is the lead time for laser cutting in Mumbai?",
         a: "Standard orders are completed within 3–7 working days depending on complexity. Rush orders can be accommodated on request.",
-      },
-    ],
-  },
-  "mumbai/wire-mesh-manufacturers": {
-    slug: "wire-mesh-manufacturers",
-    city: "mumbai",
-    cityName: "Mumbai",
-    productName: "Wire Mesh",
-    productSlug: "wire-mesh",
-    h1: "Wire Mesh Manufacturers in Mumbai",
-    metaTitle:
-      "Wire Mesh Manufacturers Mumbai | SS Mesh & Demister Pads | Jai Shree Group",
-    metaDescription:
-      "Wire mesh manufacturers in Mumbai. SS mesh, demister pads, filtration screens. Masjid Bunder & Bhayander units. Serving petrochemical & pharma. ISO certified. Get quote.",
-    intro: [
-      "Mumbai's petrochemical refineries, pharmaceutical plants, and port-related industries depend on high-quality wire mesh and demister pads. Jai Shree Filtration at Masjid Bunder has been a trusted supplier since the 1990s.",
-      "Our Mumbai wire mesh capabilities include knitted wire mesh for demister pads, SS filter screens, and industrial mesh for gas-liquid separation — serving refineries, chemical plants, and process equipment manufacturers across western India.",
-    ],
-    facilityName: "Jai Shree Filtration — Masjid Bunder",
-    facilityAddress:
-      "Shop No. 80-B, Gr. Floor, Keshavji Jadhavji Bldg., 24/26, Khadak Street, Nr. Satkar Hotel, Masjid Bunder Road, Mumbai - 400009",
-    mapEmbedUrl: MUMBAI_MAP,
-    googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Jai Shree Filtration Masjid Bunder Mumbai")}`,
-    products: [
-      "Knitted Wire Mesh",
-      "Demister Pads",
-      "SS Filter Screens",
-      "Mist Eliminators",
-    ],
-    industries: ["Petrochemical", "Pharmaceutical", "Chemical", "Filtration"],
-    specs: [
-      { label: "Mesh Range", value: "2 to 400 mesh" },
-      { label: "Specialty", value: "Demister Pads / Mist Eliminators" },
-      { label: "Materials", value: "SS 304/316, MS, Monel, Inconel" },
-      { label: "Construction", value: "Knitted / Woven / Welded" },
-      { label: "Certification", value: "ISO 9001:2015" },
-    ],
-    faqs: [
-      {
-        q: "Do you manufacture demister pads in Mumbai?",
-        a: "Yes — Jai Shree Filtration at Masjid Bunder specializes in demister pads and knitted wire mesh for petrochemical and refinery applications.",
-      },
-      {
-        q: "What wire mesh materials are available from your Mumbai units?",
-        a: "We supply SS 304/316, MS, Monel, Inconel, and other alloys for industrial filtration and separation applications.",
-      },
-      {
-        q: "Can you supply custom demister pad sizes for Mumbai refineries?",
-        a: "Yes — we manufacture demister pads to custom vessel dimensions with SS construction and grid support as required.",
       },
     ],
   },

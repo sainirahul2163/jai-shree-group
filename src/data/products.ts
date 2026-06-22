@@ -19,10 +19,10 @@ export type ProductDetail = {
 export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
   "perforated-sheets": {
     slug: "perforated-sheets",
-    name: "Perforated Sheets",
+    name: "Perforated Sheet Manufacturer — Pune & Mumbai",
     tagline: "Precision perforated to your exact specifications",
     overview: [
-      "Jai Shree Group manufactures perforated sheets using advanced CNC and Turret Punching technology. With over 50 years of experience, we deliver precision-perforated sheets in any metal, any hole pattern, and any size.",
+      "Manufactured at Shree Perforators and Jai Shree Metal Perforators facilities in Pune and Mumbai, our perforated sheets meet the highest quality standards under ISO 9001:2015. Jai Shree Group manufactures perforated sheets using advanced CNC and Turret Punching technology. With over 50 years of experience, we deliver precision-perforated sheets in any metal, any hole pattern, and any size.",
       "Our maximum width handling capacity is 2200mm × 4000mm, with punching capability up to 12mm thickness. We specialize in bow and warpage control — ensuring perfectly flat sheets every time.",
       "From standard round holes to complex custom patterns, our R&D team develops special dies and tools for any customer specification.",
     ],
@@ -90,8 +90,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
         a: "Yes, we have 5 manufacturing units in Pune (Talawade, Pisoli) and 3 units in Mumbai (Masjid Bunder, Bhayander, Palghar).",
       },
     ],
-    metaTitle:
-      "Perforated Sheet Manufacturer Pune & Mumbai | CNC Turret | Jai Shree Group",
+    metaTitle: "Perforated Sheet Manufacturer Pune Mumbai | Jai Shree",
     metaDescription:
       "Leading perforated sheet manufacturer in Pune & Mumbai. CNC turret perforated sheet manufacturing up to 12mm. Export & global delivery. ISO 9001:2015. Get quote.",
     materials: [
@@ -107,10 +106,10 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
   },
   "laser-cutting": {
     slug: "laser-cutting",
-    name: "Laser Cutting",
+    name: "Laser Cutting Services — Pune & Mumbai",
     tagline: "Fiber laser precision for any metal, any drawing",
     overview: [
-      "Jai Shree Group offers state-of-the-art fiber laser cutting services in Pune and Mumbai. Our latest fiber laser technology can cut virtually any metal with exceptional precision and clean edges.",
+      "Manufactured at Shree Perforators and Jai Shree Metal Perforators facilities in Pune and Mumbai, our laser cutting services meet the highest quality standards under ISO 9001:2015. Jai Shree Group offers state-of-the-art fiber laser cutting services in Pune and Mumbai. Our latest fiber laser technology can cut virtually any metal with exceptional precision and clean edges.",
       "We accept custom drawings in any format and can process plates up to 14mm thickness. Our combination of Turret Punching with Laser Cutting offers significant cost savings for complex jobs.",
       "Laser cutting is used across aerospace, automotive, electronics, semiconductor, and medical sectors — and we serve all these industries from our Talawade, Pune facility.",
     ],
@@ -162,8 +161,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
         a: "Standard jobs are completed within 2-5 working days depending on complexity and quantity. Urgent jobs can be accommodated — contact us for timeline.",
       },
     ],
-    metaTitle:
-      "Laser Cutting Services in Pune & Mumbai | CNC Fiber Laser | Jai Shree Group",
+    metaTitle: "Laser Cutting Services Pune & Mumbai | Jai Shree Group",
     metaDescription:
       "Professional fiber laser cutting services in Pune & Mumbai. Up to 14mm thickness, any metal, any drawing. ISO certified. CNC precision. Get free quote today.",
     materials: [
@@ -178,10 +176,10 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
   },
   "expanded-metal": {
     slug: "expanded-metal",
-    name: "Expanded Metal",
+    name: "Expanded Metal Manufacturer — Pune & Mumbai",
     tagline: "Versatile expanded metal sheets for every application",
     overview: [
-      "Jai Shree Group manufactures expanded metal sheets using the slitting-and-stretching process — creating holes from a single sheet of metal with minimum waste and maximum strength.",
+      "Manufactured at Shree Perforators and Jai Shree Metal Perforators facilities in Pune and Mumbai, our expanded metal products meet the highest quality standards under ISO 9001:2015. Jai Shree Group manufactures expanded metal sheets using the slitting-and-stretching process — creating holes from a single sheet of metal with minimum waste and maximum strength.",
       "Available in Diamond, Square, Hexagonal, Grating, and Half Round patterns in standard widths of 900mm, 1250mm, and 1500mm up to 6mm maximum thickness.",
       "Expanded metal offers excellent strength-to-weight ratio, anti-skid properties, and can be further beautified with powder coating, anodizing, or hot dip coating.",
     ],
@@ -237,8 +235,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
         a: "Yes, expanded metal can be powder coated, anodized, or hot dip coated for enhanced aesthetics and corrosion resistance.",
       },
     ],
-    metaTitle:
-      "Expanded Mesh Manufacturers Pune & Mumbai | Expanded Metal | Jai Shree Group",
+    metaTitle: "Expanded Metal Manufacturers Pune Mumbai | Jai Shree",
     metaDescription:
       "Expanded mesh manufacturers in Pune & Mumbai. Diamond, square, hexagonal patterns. Up to 6mm thick. Export & global delivery. ISO certified. Get quote.",
     materials: [
@@ -254,10 +251,10 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
   },
   "turret-punching": {
     slug: "turret-punching",
-    name: "Turret Punching",
+    name: "CNC Turret Punching — Pune",
     tagline: "CNC turret punching for any hole shape in any metal",
     overview: [
-      "Jai Shree Group offers CNC Turret Punching services for any hole shape and pattern. Our turret punching machines can create round, square, rectangular, oblong, hex, and conical holes in Stainless Steel, MS, GI, Aluminum, Brass, and Copper.",
+      "Manufactured at Shree Perforators and Jai Shree Metal Perforators facilities in Pune and Mumbai, our turret punching services meet the highest quality standards under ISO 9001:2015. Jai Shree Group offers CNC Turret Punching services for any hole shape and pattern. Our turret punching machines can create round, square, rectangular, oblong, hex, and conical holes in Stainless Steel, MS, GI, Aluminum, Brass, and Copper.",
       "The key advantage of Turret Punching combined with Laser Cutting is significant cost saving on complex parts — standard shapes are punched (fast, economical) while complex cutouts are laser cut.",
       "Our R&D team develops special dies and tools for any non-standard hole shape as per customer specification.",
     ],
@@ -311,8 +308,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
         a: "Yes, we offer CNC turret punching job work from our Talawade, Pune facility. We serve clients across Pune, Mumbai, and pan India.",
       },
     ],
-    metaTitle:
-      "CNC Turret Perforated Sheet Manufacturing Pune | Turret Punching | Jai Shree Group",
+    metaTitle: "CNC Turret Punching Services Pune | Jai Shree Group",
     metaDescription:
       "CNC turret perforated sheet manufacturing in Pune & Mumbai. Any hole shape in SS, MS, GI, Aluminum. Combined with laser for cost saving. ISO certified. Get free quote.",
     materials: [
@@ -326,10 +322,10 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
   },
   "precision-sheet-leveling": {
     slug: "precision-sheet-leveling",
-    name: "Precision Sheet Leveling",
+    name: "Precision Sheet Leveling — Pune & Mumbai",
     tagline: "Bow and warpage control for perfectly flat sheets",
     overview: [
-      "Jai Shree Group specializes in Precision Sheet Leveling — the process of correcting bow, warpage, and camber in perforated sheets, laser cut parts, and expanded metal to achieve perfectly flat finished products.",
+      "Manufactured at Shree Perforators and Jai Shree Metal Perforators facilities in Pune and Mumbai, our precision sheet leveling services meet the highest quality standards under ISO 9001:2015. Jai Shree Group specializes in Precision Sheet Leveling — the process of correcting bow, warpage, and camber in perforated sheets, laser cut parts, and expanded metal to achieve perfectly flat finished products.",
       "Sheet leveling is critical after perforation or laser cutting, as these processes can induce internal stresses causing the sheet to bow or warp. Our specialized leveling equipment restores flatness to the tightest tolerances.",
       "This service is available for all metals and is particularly valuable for applications requiring precise fit, such as automotive components, architectural panels, and precision engineering parts.",
     ],
@@ -374,18 +370,17 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
         a: "Flatness tolerance depends on the material, thickness, and application. We work to customer-specified tolerances — contact us with your requirements.",
       },
     ],
-    metaTitle:
-      "Precision Sheet Leveling Services in Pune | Sheet Flattening Job Work | Jai Shree Group",
+    metaTitle: "Precision Sheet Leveling Pune & Mumbai | Jai Shree",
     metaDescription:
       "Precision sheet leveling and flattening services in Pune. Bow and warpage correction for perforated sheets and laser cut parts. All metals. ISO certified. Get quote.",
     materials: ["All Metals"],
   },
   "custom-components": {
     slug: "custom-components",
-    name: "Custom Components",
+    name: "Custom Metal Components — Pune",
     tagline: "Any shape, any metal, any specification — we engineer it.",
     overview: [
-      "Jai Shree Group undertakes special custom fabrication jobs that go beyond standard products. Our in-house R&D team develops special dies, tools, and machineries as per specific customer requirements.",
+      "Manufactured at Shree Perforators and Jai Shree Metal Perforators facilities in Pune and Mumbai, our custom components meet the highest quality standards under ISO 9001:2015. Jai Shree Group undertakes special custom fabrication jobs that go beyond standard products. Our in-house R&D team develops special dies, tools, and machineries as per specific customer requirements.",
       "From embossed plates and dimple de-stoners to huller screens, herringbone screens, and perforated test sieves — we manufacture any custom component in any metal.",
       "Pulverizing screens in Round, Square, Rectangular, Oblong, Hex & Conical holes and any type of hole by Turret Punching in Stainless Steel, MS, GI, Aluminum, Brass, Copper.",
     ],
@@ -442,8 +437,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
         a: "Round, Square, Rectangular, Oblong, Hexagonal, Conical, and completely custom shapes with special dies developed by our R&D team.",
       },
     ],
-    metaTitle:
-      "Custom Metal Components Manufacturers Pune | Special Fabrication | Jai Shree Group",
+    metaTitle: "Custom Metal Components Manufacturer Pune | Jai Shree",
     metaDescription:
       "Custom metal component manufacturers in Pune. Special dies, embossed plates, huller screens, herringbone screens, custom perforation. Any drawing, any metal. ISO certified.",
     materials: [

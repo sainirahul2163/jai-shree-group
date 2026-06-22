@@ -61,6 +61,12 @@ export function Footer() {
             >
               {COMPANY.tagline}
             </p>
+            <p
+              className="mt-2 text-xs"
+              style={{ color: "#666666" }}
+            >
+              Also known as Shree Perforators | Jai Shree Metal Perforators
+            </p>
             <span
               className="mt-4 inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium"
               style={{

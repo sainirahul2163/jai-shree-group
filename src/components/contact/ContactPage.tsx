@@ -23,10 +23,9 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import {
+  BRANCHES,
   COMPANY,
-  MUMBAI_BRANCHES,
   PRODUCTS,
-  PUNE_BRANCHES,
 } from "@/lib/constants";
 import { whatsappUrl } from "@/lib/email";
 import {
@@ -101,7 +100,7 @@ export function ContactPage() {
             className="text-4xl font-black tracking-tight sm:text-5xl"
             style={{ color: "#FFFFFF" }}
           >
-            Get In Touch
+            Contact Perforated Sheet Manufacturers — Pune & Mumbai
           </h1>
           <p className="mt-4 text-lg" style={{ color: "#A0A0A0" }}>
             Have a requirement? Our team responds within 24 hours.
@@ -193,36 +192,36 @@ export function ContactPage() {
                 className="mb-3 text-lg font-bold"
                 style={{ color: "#E8521A" }}
               >
-                Pune Branches
+                Our Branches
               </h3>
-              <ul className="space-y-2">
-                {PUNE_BRANCHES.map((b) => (
+              <ul className="space-y-4">
+                {BRANCHES.map((b) => (
                   <li
                     key={b.slug}
-                    className="text-base"
+                    className="text-base leading-relaxed"
                     style={{ color: "#A0A0A0" }}
                   >
-                    {b.name} — {b.area}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3
-                className="mb-3 text-lg font-bold"
-                style={{ color: "#E8521A" }}
-              >
-                Mumbai Branches
-              </h3>
-              <ul className="space-y-2">
-                {MUMBAI_BRANCHES.map((b) => (
-                  <li
-                    key={b.slug}
-                    className="text-base"
-                    style={{ color: "#A0A0A0" }}
-                  >
-                    {b.name} — {b.area}
+                    <p className="font-semibold" style={{ color: "#FFFFFF" }}>
+                      {b.name}
+                    </p>
+                    <p>
+                      {b.area}, {b.city}
+                    </p>
+                    <p>{b.address}</p>
+                    <a
+                      href={`tel:${b.phone.replace(/\s/g, "")}`}
+                      className="block transition-opacity hover:opacity-80"
+                      style={{ color: "#E8521A" }}
+                    >
+                      {b.phone}
+                    </a>
+                    <a
+                      href={`mailto:${b.email}`}
+                      className="block transition-opacity hover:opacity-80"
+                      style={{ color: "#E8521A" }}
+                    >
+                      {b.email}
+                    </a>
                   </li>
                 ))}
               </ul>

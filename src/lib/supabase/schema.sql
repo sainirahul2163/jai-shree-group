@@ -151,12 +151,12 @@ CREATE POLICY "Public read published blogs" ON blog_posts FOR SELECT TO anon USI
 CREATE POLICY "Public read published gallery" ON gallery_items FOR SELECT TO anon USING (is_published = true);
 CREATE POLICY "Public read published testimonials" ON testimonials FOR SELECT TO anon USING (is_published = true);
 
--- SEED BLOG POSTS (the 4 from constants)
+-- SEED BLOG POSTS (the 4 from constants — run scripts/seed-blog-posts.ts for full content)
 INSERT INTO blog_posts (title, slug, excerpt, category, is_published, published_at) VALUES
-('How to Calculate Open Area of Perforated Sheet', 'how-to-calculate-open-area-perforated-sheet', 'Learn the 6 standard formulas for calculating open area percentage in perforated sheets — from round holes to capsule shapes.', 'Technical Guide', true, NOW()),
-('Expanded Metal vs Perforated Sheet: Which to Choose?', 'expanded-metal-vs-perforated-sheet', 'Compare expanded metal and perforated sheets across cost, strength, waste, and applications to choose the right material.', 'Product Guide', true, NOW()),
-('Complete Wire Mesh Specification Guide', 'wire-mesh-specification-guide', 'Everything you need to know about wire mesh specifications — mesh number, wire diameter, opening size, and open area.', 'Technical Guide', true, NOW()),
-('Laser Cutting vs Turret Punching: Cost Comparison', 'laser-cutting-vs-turret-punching', 'When to use laser cutting vs turret punching? A detailed cost and capability comparison for industrial buyers.', 'Cost Guide', true, NOW())
+('How to Calculate Open Area of Perforated Sheet', 'how-to-calculate-open-area-perforated-sheet', 'Learn the standard formulas for calculating open area percentage in perforated sheets — with worked examples and a reference table for common hole sizes.', 'Technical Guide', true, NOW()),
+('Expanded Metal vs Perforated Sheet: Which to Choose?', 'expanded-metal-vs-perforated-sheet', 'Compare expanded metal and perforated sheets across strength, weight, cost, flow, and aesthetics — and learn which material suits your application.', 'Product Guide', true, NOW()),
+('Perforated Sheet Specification Guide', 'wire-mesh-specification-guide', 'Complete guide to perforated sheet specifications — hole shapes, pitch types, materials, thickness, finishes, and standard sizes from Jai Shree Group.', 'Technical Guide', true, NOW()),
+('Laser Cutting vs Turret Punching: Cost Comparison', 'laser-cutting-vs-turret-punching', 'When to use laser cutting vs turret punching? A detailed cost and capability comparison for industrial buyers in Pune and Mumbai.', 'Cost Guide', true, NOW())
 ON CONFLICT (slug) DO NOTHING;
 
 -- SEED TESTIMONIALS

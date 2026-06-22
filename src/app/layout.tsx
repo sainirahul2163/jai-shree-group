@@ -17,11 +17,25 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+function buildSiteVerification(): Metadata["verification"] | undefined {
+  const google = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+  const bing = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION;
+  if (!google && !bing) return undefined;
+
+  const verification: NonNullable<Metadata["verification"]> = {};
+  if (google) verification.google = google;
+  if (bing) {
+    verification.other = { "msvalidate.01": bing };
+  }
+  return verification;
+}
+
+const siteVerification = buildSiteVerification();
+
 export const metadata: Metadata = {
-  title:
-    "Perforated Sheet Manufacturer | Expanded Mesh Manufacturers | Jai Shree Group | ISO 9001:2015",
+  title: "Perforated Sheet Manufacturers Pune Mumbai | Jai Shree Group",
   description:
-    "Perforated sheet manufacturer & expanded mesh manufacturers in Pune & Mumbai. CNC turret perforated sheet manufacturing. 50+ years. Export & global delivery. 8 manufacturing units. Get quote today.",
+    "Perforated sheet manufacturers in Pune & Mumbai. ISO 9001:2015 certified, 50+ years. CNC turret perforation & laser cutting. Get a free quote today.",
   keywords: [
     "Perforated Sheet Manufacturer",
     "Expanded Mesh Manufacturers",
@@ -43,13 +57,12 @@ export const metadata: Metadata = {
   authors: [{ name: COMPANY.name }],
   creator: COMPANY.name,
   metadataBase: new URL("https://jaishreegroup.in"),
-  verification: {
-    google: "add-your-verification-code-here",
-  },
+  ...(siteVerification ? { verification: siteVerification } : {}),
   alternates: {
     canonical: "/",
     languages: {
       en: "https://jaishreegroup.in",
+      "en-IN": "https://jaishreegroup.in",
       "en-US": "https://jaishreegroup.in",
       "en-GB": "https://jaishreegroup.in",
       "en-AU": "https://jaishreegroup.in",

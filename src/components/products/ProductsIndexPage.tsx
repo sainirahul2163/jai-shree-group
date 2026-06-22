@@ -133,11 +133,20 @@ export function ProductsIndexPage() {
     <>
       <PageHero
         label="PRODUCTS"
-        title="Our Products"
+        title="Metal Manufacturing Products — Pune & Mumbai"
         subtitle="Six specialized metal fabrication capabilities — from CNC perforation to fiber laser cutting and custom components, serving industries across India."
       />
       <section className="section-padding" style={{ backgroundColor: "#111111" }}>
         <div className="mx-auto max-w-7xl">
+          <p
+            className="mb-10 max-w-3xl text-base leading-relaxed"
+            style={{ color: "#A0A0A0" }}
+          >
+            Jai Shree Group (Shree Perforators) manufactures precision metal
+            products across 8 facilities in Pune and Mumbai. ISO 9001:2015
+            certified with 50+ years of experience, we supply perforated sheets,
+            expanded metal, laser-cut components, and more across India.
+          </p>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {PRODUCTS.map((product, index) => (
               <ProductCard key={product.slug} product={product} index={index} />
