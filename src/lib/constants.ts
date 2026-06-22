@@ -19,6 +19,21 @@ export const COMPANY = {
 
 export const BROCHURE_URL = "/brochure/jai-shree-brochure.pdf";
 
+export const COMPANY_VIDEO = {
+  youtubeId: "",
+  localVideo: "",
+  label: "FACTORY TOUR",
+  heading: "50 Years of Precision,",
+  headingOrange: "One Facility at a Time.",
+  subtext:
+    "Step inside our Talawade, Pune facility — where CNC machines, fiber lasers, and 50 years of expertise come together to manufacture India's most precise perforated sheets and metal components.",
+  stats: [
+    { value: "15,000", label: "Sq. ft. facility" },
+    { value: "20+", label: "CNC machines" },
+    { value: "3", label: "Production shifts" },
+  ],
+} as const;
+
 export const BRANCHES = [
   {
     name: "Jai Shree Metal Perforators",
