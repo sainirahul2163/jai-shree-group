@@ -19,12 +19,19 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title:
-    "Jai Shree Group | Perforated Sheet Manufacturers Pune Mumbai | ISO 9001:2015",
+    "Perforated Sheet Manufacturer | Expanded Mesh Manufacturers | Jai Shree Group | ISO 9001:2015",
   description:
-    "ISO 9001:2015 certified perforated sheet, wire mesh & expanded metal manufacturers. 50+ years experience. 9 manufacturing units in Pune & Mumbai. Pan India delivery. Get quote today.",
+    "Perforated sheet manufacturer & expanded mesh manufacturers in Pune & Mumbai. CNC turret perforated sheet manufacturing. 50+ years. Export & global delivery. 8 manufacturing units. Get quote today.",
   keywords: [
+    "Perforated Sheet Manufacturer",
+    "Expanded Mesh Manufacturers",
+    "CNC Turret Perforated Sheet Manufacturing",
+    "perforated sheet manufacturers India export",
+    "wire mesh exporters India",
+    "expanded metal suppliers India",
+    "metal fabrication India",
+    "perforated metal sheets India supplier",
     "perforated sheets",
-    "wire mesh",
     "expanded metal",
     "laser cutting",
     "Pune",
@@ -32,7 +39,6 @@ export const metadata: Metadata = {
     "ISO 9001",
     "Jai Shree Group",
     "metal manufacturing",
-    "welded mesh",
   ],
   authors: [{ name: COMPANY.name }],
   creator: COMPANY.name,
@@ -42,6 +48,12 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "/",
+    languages: {
+      en: "https://jaishreegroup.in",
+      "en-US": "https://jaishreegroup.in",
+      "en-GB": "https://jaishreegroup.in",
+      "en-AU": "https://jaishreegroup.in",
+    },
   },
   openGraph: {
     type: "website",
@@ -49,17 +61,17 @@ export const metadata: Metadata = {
     url: COMPANY.website,
     siteName: COMPANY.name,
     title:
-      "Jai Shree Group | Perforated Sheet Manufacturers Pune Mumbai | ISO 9001:2015",
+      "Perforated Sheet Manufacturer | Expanded Mesh Manufacturers | Jai Shree Group",
     description:
-      "ISO 9001:2015 certified perforated sheet, wire mesh & expanded metal manufacturers. 50+ years experience. 9 manufacturing units in Pune & Mumbai.",
+      "Perforated sheet manufacturer in Pune & Mumbai. CNC turret perforated sheet manufacturing. Export & global delivery. ISO 9001:2015 certified.",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title:
-      "Jai Shree Group | Perforated Sheet Manufacturers Pune Mumbai | ISO 9001:2015",
+      "Perforated Sheet Manufacturer | Expanded Mesh | Jai Shree Group",
     description:
-      "ISO 9001:2015 certified perforated sheet, wire mesh & expanded metal manufacturers. 50+ years experience.",
+      "Perforated sheet manufacturer & expanded mesh manufacturers. CNC turret perforated sheet manufacturing. Export & global delivery.",
   },
   robots: {
     index: true,

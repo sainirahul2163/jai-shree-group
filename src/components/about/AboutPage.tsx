@@ -78,7 +78,7 @@ export function AboutPage() {
                 one of India&apos;s most trusted metal fabrication companies.
               </p>
               <p className="text-base leading-relaxed" style={{ color: "#A0A0A0" }}>
-                Today, with 9 manufacturing units across Pune and Mumbai, we serve
+                Today, with 8 manufacturing units across Pune and Mumbai, we serve
                 industries from automobile and construction to pharmaceutical and
                 petrochemical — delivering perforated sheets, wire mesh, expanded
                 metal, laser cutting, and more with ISO 9001:2015 certified processes.
@@ -191,7 +191,7 @@ export function AboutPage() {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
             {ABOUT_STATS.map((stat, index) => (
               <motion.div
                 key={stat.label}

@@ -134,7 +134,7 @@ export function ProductsIndexPage() {
       <PageHero
         label="PRODUCTS"
         title="Our Products"
-        subtitle="Nine specialized metal fabrication capabilities — from CNC perforation to fiber laser cutting, serving industries across India."
+        subtitle="Six specialized metal fabrication capabilities — from CNC perforation to fiber laser cutting and custom components, serving industries across India."
       />
       <section className="section-padding" style={{ backgroundColor: "#111111" }}>
         <div className="mx-auto max-w-7xl">

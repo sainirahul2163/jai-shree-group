@@ -16,7 +16,7 @@ export type LandingBentoItem = {
 
 export const LANDING_STATS = [
   { value: 50, suffix: "+", label: "Years of Experience", animate: true },
-  { value: 9, suffix: "", label: "Manufacturing Units", animate: true },
+  { value: 8, suffix: "", label: "Manufacturing Units", animate: true },
   { value: null, display: "12mm", label: "Max Perforation Thickness", animate: false },
   { value: null, display: "14mm", label: "Max Laser Thickness", animate: false },
   {
@@ -104,21 +104,18 @@ export const LANDING_BENTO: LandingBentoItem[] = [
     size: "large",
     gridClass: "md:col-span-2 md:row-span-2",
   },
-  { slug: "laser-cutting", size: "medium", gridClass: "md:col-span-1" },
+  { slug: "laser-cutting", size: "medium", gridClass: "md:col-span-2" },
+  { slug: "expanded-metal", size: "medium", gridClass: "md:col-span-2" },
   { slug: "turret-punching", size: "small", gridClass: "md:col-span-1" },
-  { slug: "expanded-metal", size: "medium", gridClass: "md:col-span-1" },
-  { slug: "demister-pad", size: "small", gridClass: "md:col-span-1" },
-  { slug: "wire-mesh", size: "large", gridClass: "md:col-span-2" },
-  { slug: "welded-mesh", size: "medium", gridClass: "md:col-span-1" },
-  {
-    slug: "aluminum-grill-profile",
-    size: "small",
-    gridClass: "md:col-span-1",
-  },
   {
     slug: "precision-sheet-leveling",
     size: "small",
     gridClass: "md:col-span-1",
+  },
+  {
+    slug: "custom-components",
+    size: "medium",
+    gridClass: "md:col-span-2",
   },
 ];
 

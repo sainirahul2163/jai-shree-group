@@ -51,11 +51,10 @@ export const ABOUT_TIMELINE_DETAILED = [
 
 export const ABOUT_STATS = [
   { value: "50+", label: "Years of Experience" },
-  { value: "9", label: "Manufacturing Units" },
+  { value: "8", label: "Manufacturing Units" },
   { value: "ISO", label: "9001:2015 Certified" },
   { value: "12mm", label: "Max Perforation" },
   { value: "14mm", label: "Max Laser Cutting" },
-  { value: "2200×4000mm", label: "Max Sheet Size" },
 ] as const;
 
 export const ABOUT_STRENGTHS = [

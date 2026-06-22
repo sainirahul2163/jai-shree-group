@@ -17,7 +17,7 @@ import { COMPANY } from "@/lib/constants";
 
 const TITLE = "Jai Shree Group — Precision in Every Perforation | Since 1970";
 const DESCRIPTION =
-  "ISO 9001:2015 certified perforated sheet manufacturers in Pune & Mumbai. 50+ years. 9 manufacturing units. CNC perforation, fiber laser cutting, wire mesh. Pan India delivery.";
+  "ISO 9001:2015 certified perforated sheet manufacturers in Pune & Mumbai. 50+ years. 8 manufacturing units. Export & global delivery. CNC perforation, fiber laser cutting.";
 
 export const metadata: Metadata = {
   title: TITLE,

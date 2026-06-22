@@ -11,7 +11,7 @@ type Stat = {
 
 const STATS: Stat[] = [
   { target: 50, suffix: "+", label: "Years of Mastery" },
-  { target: 9, label: "Manufacturing Units" },
+  { target: 8, label: "Manufacturing Units" },
   { target: 400, label: "Mesh Fineness Range" },
   { target: 12, suffix: "mm", label: "Max Perforation" },
 ];

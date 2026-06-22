@@ -135,7 +135,7 @@ export function ProductPageClient({
                   rel="noopener noreferrer"
                 >
                   <Download className="size-4" />
-                  Download Brochure
+                  Download Product Catalogue
                 </a>
               </Button>
             </div>

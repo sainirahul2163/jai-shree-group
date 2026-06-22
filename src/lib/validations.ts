@@ -32,9 +32,9 @@ export type ProductQuoteFormValues = z.infer<typeof productQuoteFormSchema>;
 export const quoteFormSchema = z.object({
   products: z.array(z.string()).min(1, "Select at least one product"),
   material: z.string().min(1, "Select a material"),
-  thickness: z.string().min(1, "Enter thickness"),
-  dimensions: z.string().min(1, "Enter size/dimensions"),
-  quantity: z.string().min(1, "Enter quantity"),
+  thickness: z.string().optional(),
+  dimensions: z.string().min(5, "Describe your requirements"),
+  quantity: z.string().optional(),
   quantityUnit: z.enum(["pcs", "kg", "sqm"]),
   deadline: z.enum(["urgent", "standard", "flexible"]),
   additionalRequirements: z.string().optional(),

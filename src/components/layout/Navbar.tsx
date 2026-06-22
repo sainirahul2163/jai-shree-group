@@ -186,7 +186,7 @@ export function Navbar() {
               rel="noopener noreferrer"
             >
               <Download className="size-4" />
-              Brochure
+              Catalogue
             </a>
           </Button>
           <Button
@@ -319,7 +319,7 @@ export function Navbar() {
                     onClick={() => setMobileOpen(false)}
                   >
                     <Download className="size-4" />
-                    Brochure
+                    Catalogue
                   </a>
                 </Button>
                 <Button

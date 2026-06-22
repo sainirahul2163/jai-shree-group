@@ -4,10 +4,15 @@ import Link from "next/link";
 import { ArrowRight, MessageCircle, Phone } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 
+import { COMPANY } from "@/lib/constants";
+import { whatsappUrl } from "@/lib/email";
+
 const SPRING = { type: "spring", stiffness: 100, damping: 30 } as const;
 
-const WHATSAPP_URL =
-  "https://wa.me/917023504327?text=Hi%2C%20I%20need%20a%20quote%20for%20metal%20products.";
+const WHATSAPP_URL = whatsappUrl(
+  COMPANY.whatsapp,
+  "Hi, I need a quote for metal products."
+);
 
 const telClass =
   "flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white";
@@ -87,9 +92,12 @@ export function LandingCTA() {
             {...enter(0.55)}
             className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:gap-8"
           >
-            <a href="tel:+919320204156" className={telClass}>
+            <a
+              href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}
+              className={telClass}
+            >
               <Phone className="h-4 w-4" />
-              Call +91 9320204156
+              Call {COMPANY.phone}
             </a>
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={telClass}>
               <MessageCircle className="h-4 w-4" />

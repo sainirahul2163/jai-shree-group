@@ -1,4 +1,4 @@
-import { COMPANY, PRODUCTS } from "@/lib/constants";
+import { COMPANY, PRODUCTS, SEO } from "@/lib/constants";
 
 export function GlobalSchema() {
   const schema = {
@@ -7,10 +7,12 @@ export function GlobalSchema() {
     name: COMPANY.name,
     foundingDate: COMPANY.founded,
     iso6523Code: COMPANY.iso,
+    keywords: SEO.primaryKeywords.join(", "),
+    areaServed: ["IN", "US", "GB", "AU", "AE", "SG"],
     address: {
       "@type": "PostalAddress",
       streetAddress:
-        "Gat No. 93, Near Sonawane Wasti, Jyotibanagar, Talawade",
+        "Gat No. 94, Near Sonawane Wasti, Jyotibanagar, Talawade",
       addressLocality: "Pune",
       addressRegion: "Maharashtra",
       postalCode: "411062",

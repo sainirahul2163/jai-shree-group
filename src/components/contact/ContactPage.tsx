@@ -35,11 +35,13 @@ import {
 } from "@/lib/validations";
 
 const WORKING_HOURS = "Mon–Sat, 9:00 AM – 6:00 PM";
+const SUBMIT_TIMEOUT_MS = 10_000;
 
 export function ContactPage() {
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
+  const [waLink, setWaLink] = useState<string | null>(null);
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
@@ -55,22 +57,38 @@ export function ContactPage() {
 
   async function onSubmit(values: ContactFormValues) {
     setStatus("loading");
+    setWaLink(null);
+
+    const fallbackWa = whatsappUrl(
+      COMPANY.whatsapp,
+      `Hi, I'm ${values.name}. Product: ${values.productInterest}. ${values.message}`
+    );
+
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), SUBMIT_TIMEOUT_MS);
+
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
+        signal: controller.signal,
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Failed");
+      setWaLink(data.whatsappUrl ?? fallbackWa);
       setStatus("success");
       form.reset();
     } catch {
+      setWaLink(fallbackWa);
       setStatus("error");
+    } finally {
+      window.clearTimeout(timeoutId);
     }
   }
 
   const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(COMPANY.address)}`;
+  const whatsappDisplay = `+91 ${COMPANY.phone.replace(/^\+91\s?/, "")}`;
 
   return (
     <div
@@ -120,7 +138,7 @@ export function ContactPage() {
               >
                 <span className="text-lg">💬</span>
                 <span className="text-base" style={{ color: "#FFFFFF" }}>
-                  WhatsApp: +91 7023504327
+                  WhatsApp: {whatsappDisplay}
                 </span>
               </a>
             </div>
@@ -233,9 +251,23 @@ export function ContactPage() {
                 <p className="mt-2 text-base" style={{ color: "#A0A0A0" }}>
                   We&apos;ll get back to you within 24 hours.
                 </p>
+                {waLink && (
+                  <Button
+                    asChild
+                    className="mt-6 h-12 border-0"
+                    style={{ backgroundColor: "#25D366", color: "#FFF" }}
+                  >
+                    <a href={waLink} target="_blank" rel="noopener noreferrer">
+                      Continue on WhatsApp
+                    </a>
+                  </Button>
+                )}
                 <Button
-                  className="mt-6"
-                  onClick={() => setStatus("idle")}
+                  className="mt-4"
+                  onClick={() => {
+                    setStatus("idle");
+                    setWaLink(null);
+                  }}
                   style={{ backgroundColor: "#E8521A", color: "#FFF" }}
                 >
                   Send Another Enquiry
@@ -339,9 +371,27 @@ export function ContactPage() {
                 </div>
 
                 {status === "error" && (
-                  <p className="text-sm text-red-400">
-                    Failed to send. Please call us or use WhatsApp.
-                  </p>
+                  <div className="space-y-3">
+                    <p className="text-sm text-red-400">
+                      Failed to send — request timed out or server error. Please
+                      call us or use WhatsApp.
+                    </p>
+                    {waLink && (
+                      <Button
+                        asChild
+                        className="h-11 w-full border-0"
+                        style={{ backgroundColor: "#25D366", color: "#FFF" }}
+                      >
+                        <a
+                          href={waLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Message us on WhatsApp
+                        </a>
+                      </Button>
+                    )}
+                  </div>
                 )}
 
                 <Button
@@ -351,7 +401,10 @@ export function ContactPage() {
                   style={{ backgroundColor: "#E8521A", color: "#FFFFFF" }}
                 >
                   {status === "loading" ? (
-                    <Loader2 className="size-4 animate-spin" />
+                    <>
+                      <Loader2 className="size-4 animate-spin" />
+                      Sending...
+                    </>
                   ) : (
                     "Send Enquiry"
                   )}

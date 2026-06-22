@@ -7,6 +7,21 @@ import { COMPANY, SITE_ROUTES, BLOG_POSTS } from "@/lib/constants";
 
 const BASE_URL = COMPANY.website;
 
+const HIGH_PRIORITY_PATHS = new Set([
+  "/",
+  "/products",
+  "/contact",
+  "/get-quote",
+  "/about",
+  "/group",
+]);
+
+function staticPriority(path: string): number {
+  if (path === "/") return 1.0;
+  if (HIGH_PRIORITY_PATHS.has(path)) return 0.95;
+  return 0.7;
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
@@ -14,7 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${BASE_URL}${path === "/" ? "" : path}`,
     lastModified: now,
     changeFrequency: path === "/" ? "weekly" : "monthly",
-    priority: path === "/" ? 1.0 : 0.7,
+    priority: staticPriority(path),
   }));
 
   const productPages: MetadataRoute.Sitemap = PRODUCT_SLUGS.map((slug) => ({

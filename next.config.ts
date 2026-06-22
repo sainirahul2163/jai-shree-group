@@ -10,6 +10,30 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/products/wire-mesh",
+        destination: "/products",
+        permanent: true,
+      },
+      {
+        source: "/products/welded-mesh",
+        destination: "/products",
+        permanent: true,
+      },
+      {
+        source: "/products/demister-pad",
+        destination: "/products",
+        permanent: true,
+      },
+      {
+        source: "/products/aluminum-grill-profile",
+        destination: "/products",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

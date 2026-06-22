@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Loader2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Loader2, Mail, Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -56,10 +56,12 @@ export function GetQuotePage() {
   const [stepError, setStepError] = useState<string | null>(null);
 
   const specsComplete =
-    form.material.trim() !== "" &&
-    form.thickness.trim() !== "" &&
-    form.dimensions.trim() !== "" &&
-    form.quantity.trim() !== "";
+    form.material.trim() !== "" && form.dimensions.trim().length >= 5;
+
+  const directWhatsAppUrl = whatsappUrl(
+    COMPANY.whatsapp,
+    "Hi, I need a quote for metal products."
+  );
 
   function toggleProduct(slug: string) {
     setForm((prev) => ({
@@ -160,6 +162,51 @@ export function GetQuotePage() {
         >
           Get a Free Quote
         </h1>
+
+        <div
+          className="mt-6 rounded-xl border p-5"
+          style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
+        >
+          <p className="text-sm font-semibold" style={{ color: "#E8521A" }}>
+            Prefer to talk directly?
+          </p>
+          <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-6">
+            <a
+              href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}
+              className="flex items-center gap-2 text-sm transition-opacity hover:opacity-80"
+              style={{ color: "#FFFFFF" }}
+            >
+              <Phone className="size-4" style={{ color: "#E8521A" }} />
+              Prefer to call? {COMPANY.phone}
+            </a>
+            <a
+              href={directWhatsAppUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm transition-opacity hover:opacity-80"
+              style={{ color: "#FFFFFF" }}
+            >
+              WhatsApp: {COMPANY.phone}
+            </a>
+            <a
+              href={`mailto:${COMPANY.email}`}
+              className="flex items-center gap-2 text-sm transition-opacity hover:opacity-80"
+              style={{ color: "#A0A0A0" }}
+            >
+              <Mail className="size-4" style={{ color: "#E8521A" }} />
+              Email: {COMPANY.email}
+            </a>
+          </div>
+          <Button
+            asChild
+            className="mt-4 h-12 w-full border-0 sm:w-auto"
+            style={{ backgroundColor: "#25D366", color: "#FFFFFF" }}
+          >
+            <a href={directWhatsAppUrl} target="_blank" rel="noopener noreferrer">
+              Get Quote on WhatsApp
+            </a>
+          </Button>
+        </div>
 
         {/* Progress */}
         <div className="mt-8 mb-10">
@@ -267,11 +314,16 @@ export function GetQuotePage() {
                 className="mb-4 text-2xl font-bold"
                 style={{ color: "#FFFFFF" }}
               >
-                Specifications
+                Your Requirements
               </h2>
+              <p className="mb-6 text-sm" style={{ color: "#A0A0A0" }}>
+                Tell us the material and what you need — size, thickness, and
+                quantity can all go in one message. Our team will follow up for
+                any missing details.
+              </p>
 
               <div>
-                <Label style={{ color: "#A0A0A0" }}>Material Required</Label>
+                <Label style={{ color: "#A0A0A0" }}>Material Required *</Label>
                 <Select
                   value={form.material}
                   onValueChange={(v) => updateField("material", v)}
@@ -291,60 +343,20 @@ export function GetQuotePage() {
               </div>
 
               <div>
-                <Label style={{ color: "#A0A0A0" }}>Thickness (mm)</Label>
-                <Input
-                  className="mt-1.5 h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
-                  placeholder="e.g. 3mm"
-                  value={form.thickness}
-                  onChange={(e) => updateField("thickness", e.target.value)}
-                />
-              </div>
-
-              <div>
-                <Label style={{ color: "#A0A0A0" }}>Size / Dimensions</Label>
+                <Label style={{ color: "#A0A0A0" }}>
+                  Size, thickness &amp; quantity *
+                </Label>
                 <Textarea
-                  rows={3}
+                  rows={4}
                   className="mt-1.5 border-[#2A2A2A] bg-[#1A1A1A] text-white"
-                  placeholder="e.g. 1000mm × 2000mm"
+                  placeholder="e.g. SS304 perforated sheet, 2mm thick, 1000×2000mm, 50 pcs"
                   value={form.dimensions}
                   onChange={(e) => updateField("dimensions", e.target.value)}
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label style={{ color: "#A0A0A0" }}>Quantity</Label>
-                  <Input
-                    className="mt-1.5 h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
-                    value={form.quantity}
-                    onChange={(e) => updateField("quantity", e.target.value)}
-                  />
-                </div>
-                <div>
-                  <Label style={{ color: "#A0A0A0" }}>Unit</Label>
-                  <Select
-                    value={form.quantityUnit}
-                    onValueChange={(v) =>
-                      updateField(
-                        "quantityUnit",
-                        v as QuoteFormValues["quantityUnit"]
-                      )
-                    }
-                  >
-                    <SelectTrigger className="mt-1.5 h-10 w-full border-[#2A2A2A] bg-[#1A1A1A] text-white">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="pcs">Pieces</SelectItem>
-                      <SelectItem value="kg">Kg</SelectItem>
-                      <SelectItem value="sqm">Sq.m</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
               <div>
-                <Label style={{ color: "#A0A0A0" }}>Deadline</Label>
+                <Label style={{ color: "#A0A0A0" }}>When do you need it?</Label>
                 <Select
                   value={form.deadline}
                   onValueChange={(v) =>
@@ -366,11 +378,12 @@ export function GetQuotePage() {
 
               <div>
                 <Label style={{ color: "#A0A0A0" }}>
-                  Additional Requirements
+                  Anything else we should know?
                 </Label>
                 <Textarea
                   rows={3}
                   className="mt-1.5 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                  placeholder="Drawing reference, finishing, delivery city, etc."
                   value={form.additionalRequirements}
                   onChange={(e) =>
                     updateField("additionalRequirements", e.target.value)
@@ -390,7 +403,9 @@ export function GetQuotePage() {
                 <Button
                   onClick={() => {
                     if (!specsComplete) {
-                      setStepError("Please complete all specification fields.");
+                      setStepError(
+                        "Please select a material and describe your requirements."
+                      );
                       return;
                     }
                     setStepError(null);

@@ -66,7 +66,7 @@ export function CtaSection() {
               className="h-14 border-white/30 bg-transparent px-8 text-base font-semibold hover:bg-white/5"
               style={{ color: "#FFFFFF" }}
             >
-              <a href="tel:+919320204156">
+              <a href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}>
                 <Phone className="mr-2 size-5" />
                 Call Us Now
               </a>

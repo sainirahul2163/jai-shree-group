@@ -276,7 +276,7 @@ export function HeroSection() {
             style={{ color: "#A0A0A0" }}
           >
             India&apos;s trusted manufacturer of perforated sheets, wire mesh
-            &amp; expanded metal. {COMPANY.experience} years. 9 manufacturing
+            &amp; expanded metal. {COMPANY.experience} years. 8 manufacturing
             units. Pan India delivery.
           </motion.p>
 

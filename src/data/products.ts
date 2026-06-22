@@ -71,11 +71,11 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
     faqs: [
       {
         q: "What is the maximum thickness you can perforate?",
-        a: "We can perforate up to 12mm thickness plates in any metal including Stainless Steel, Carbon Steel, Aluminum, GI, Copper, and Brass.",
+        a: "We can perforate up to 12mm thickness plates in any metal including Stainless Steel, MS, GI, Aluminum, Copper, and Brass.",
       },
       {
         q: "What materials are available for perforated sheets?",
-        a: "We work with Carbon Steel, Stainless Steel, Aluminum, Galvanized Steel, Copper, Brass, Titanium, PVC, and PP Sheet.",
+        a: "We work with Stainless Steel, MS (Mild Steel), GI (Galvanized Iron), Aluminum, Copper, Brass, Titanium, PVC, and PP Sheet.",
       },
       {
         q: "Can you make custom hole patterns?",
@@ -87,18 +87,18 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
       },
       {
         q: "Do you supply perforated sheets in Pune and Mumbai?",
-        a: "Yes, we have 6 manufacturing units in Pune (Talawade, Bhosari, Pisoli) and 3 units in Mumbai (Masjid Bunder, Bhayander, Palghar).",
+        a: "Yes, we have 5 manufacturing units in Pune (Talawade, Pisoli) and 3 units in Mumbai (Masjid Bunder, Bhayander, Palghar).",
       },
     ],
     metaTitle:
-      "Perforated Sheet Manufacturers in Pune & Mumbai | Jai Shree Group",
+      "Perforated Sheet Manufacturer Pune & Mumbai | CNC Turret | Jai Shree Group",
     metaDescription:
-      "ISO 9001:2015 certified perforated sheet manufacturers. CNC & Turret perforation up to 12mm, size 2200×4000mm. All metals. Custom patterns. Pune & Mumbai. Get quote.",
+      "Leading perforated sheet manufacturer in Pune & Mumbai. CNC turret perforated sheet manufacturing up to 12mm. Export & global delivery. ISO 9001:2015. Get quote.",
     materials: [
-      "Carbon Steel",
       "Stainless Steel",
+      "MS (Mild Steel)",
+      "GI (Galvanized Iron)",
       "Aluminum",
-      "Galvanized Steel",
       "Copper",
       "Brass",
       "Titanium",
@@ -143,7 +143,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
     faqs: [
       {
         q: "What thickness can you laser cut?",
-        a: "We accept up to 14mm thickness plates for laser cutting in Carbon Steel, Stainless Steel, Aluminum, Copper, Brass, and Titanium.",
+        a: "We accept up to 14mm thickness plates for laser cutting in MS, Stainless Steel, Aluminum, Copper, Brass, and Titanium.",
       },
       {
         q: "Can you cut from my custom drawing?",
@@ -167,10 +167,10 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
     metaDescription:
       "Professional fiber laser cutting services in Pune & Mumbai. Up to 14mm thickness, any metal, any drawing. ISO certified. CNC precision. Get free quote today.",
     materials: [
-      "Carbon Steel",
       "Stainless Steel",
+      "MS (Mild Steel)",
       "Aluminum",
-      "Galvanized Steel",
+      "GI (Galvanized Iron)",
       "Copper",
       "Brass",
       "Titanium",
@@ -238,156 +238,18 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
       },
     ],
     metaTitle:
-      "Expanded Metal Sheet Manufacturers in Pune & Mumbai | Jai Shree Group",
+      "Expanded Mesh Manufacturers Pune & Mumbai | Expanded Metal | Jai Shree Group",
     metaDescription:
-      "Expanded metal sheet manufacturers in Pune & Mumbai. Diamond, square, hexagonal patterns. Up to 6mm thick. ISO certified. Minimum waste, cost saving. Get quote.",
+      "Expanded mesh manufacturers in Pune & Mumbai. Diamond, square, hexagonal patterns. Up to 6mm thick. Export & global delivery. ISO certified. Get quote.",
     materials: [
       "Stainless Steel",
-      "Low Carbon Steel",
+      "MS (Mild Steel)",
       "Brass",
       "Copper",
       "Aluminum",
-      "Galvanized Steel",
+      "GI (Galvanized Iron)",
       "Titanium",
       "Nickel",
-    ],
-  },
-  "wire-mesh": {
-    slug: "wire-mesh",
-    name: "Wire Mesh",
-    tagline: "Plain, Twill & Crimped weaves from 2 to 400 mesh",
-    overview: [
-      "Jai Shree Group manufactures industrial wire mesh in Plain Weave, Twill Weave, and Crimped Weave patterns across the full specification range from 2 mesh to 400 mesh.",
-      "Our wire mesh is used across filtration, food processing, pharmaceutical, petrochemical, and automobile industries. We stock a comprehensive range and also manufacture to custom specifications.",
-      "Available in Stainless Steel, Carbon Steel, Brass, Copper, Aluminum, GI, Titanium, and Nickel — with full specification charts for wire diameter, opening size, and open area percentage.",
-    ],
-    specifications: [
-      { label: "Mesh Range", value: "2 mesh to 400 mesh" },
-      { label: "Weave Types", value: "Plain Weave, Twill Weave, Crimped Weave" },
-      { label: "Wire Diameter", value: "0.04mm to 2.6mm (varies by mesh)" },
-      { label: "Opening Size", value: "0.04mm to 10.36mm" },
-      { label: "Standard Widths", value: "As per specification" },
-    ],
-    strengths: [
-      "Full range from 2 to 400 mesh available",
-      "Plain, Twill and Crimped weave options",
-      "All metals — SS, MS, Brass, Copper, Aluminum, GI, Nickel",
-      "Custom widths and lengths available",
-      "Detailed specification chart for all mesh sizes",
-    ],
-    applications: [
-      "Filtration & Separation",
-      "Refinery Oil Fields",
-      "Petrochemical Industries",
-      "Food Industry",
-      "Heat Treating",
-      "Automobile Industries",
-      "Paper Industries",
-      "Sugar Industries",
-      "Building & Construction",
-      "Window & Safety Guard",
-    ],
-    faqs: [
-      {
-        q: "What mesh sizes are available?",
-        a: "We manufacture wire mesh from 2 mesh to 400 mesh, covering the full range of industrial filtration and separation requirements.",
-      },
-      {
-        q: "What is the difference between plain weave and twill weave?",
-        a: "Plain weave has each wire crossing over and under alternating wires — simpler and more rigid. Twill weave crosses over two and under two — allowing finer mesh with heavier wire, giving better strength and flow.",
-      },
-      {
-        q: "What materials are available for wire mesh?",
-        a: "We stock Stainless Steel, Carbon Steel, Low Carbon Steel, Brass, Copper, Aluminum, Galvanized Steel, Titanium, and Nickel wire mesh.",
-      },
-      {
-        q: "Can I get wire mesh cut to size?",
-        a: "Yes, we supply wire mesh in custom widths and lengths as per your requirement. Standard rolls and sheets are also available.",
-      },
-      {
-        q: "Do you supply SS wire mesh in Pune?",
-        a: "Yes, Stainless Steel wire mesh is available from our Talawade, Pune facility. We supply across Maharashtra and pan India.",
-      },
-    ],
-    metaTitle:
-      "Wire Mesh Manufacturers in Pune & Mumbai | SS Wire Mesh Suppliers | Jai Shree Group",
-    metaDescription:
-      "Wire mesh manufacturers in Pune & Mumbai. Plain, Twill, Crimped weaves. 2 to 400 mesh. SS, MS, Brass, Copper. ISO certified. Custom sizes. Get quote today.",
-    materials: [
-      "Stainless Steel",
-      "Carbon Steel",
-      "Brass",
-      "Copper",
-      "Aluminum",
-      "Galvanized Steel",
-      "Titanium",
-      "Nickel",
-    ],
-  },
-  "welded-mesh": {
-    slug: "welded-mesh",
-    name: "Welded Mesh",
-    tagline: "Heavy duty welded wire mesh for fencing & construction",
-    overview: [
-      "Jai Shree Group manufactures welded wire mesh with openings from ½\" × ½\" to 4\" × 4\", available in Stainless Steel, Low Carbon Steel, Hot Dip Galvanized Wire, and Electro Galvanized Wire.",
-      "Standard roll length is 50 feet in widths of 2, 3, 4, and 5 feet. Custom sizes are available on request.",
-      "Welded mesh is widely used in construction, fencing, caging, enclosures, agriculture, and decorative applications.",
-    ],
-    specifications: [
-      { label: "Opening Range", value: '½" × ½" to 4" × 4"' },
-      { label: "Standard Roll Length", value: "50 Feet" },
-      { label: "Standard Widths", value: "2ft, 3ft, 4ft, 5ft" },
-      { label: "Wire Gauge", value: "SWG 6 to SWG 19 (varies by opening)" },
-      { label: "Custom Sizes", value: "Available on request" },
-    ],
-    strengths: [
-      'Wide range of openings from ½" to 4"',
-      "Multiple wire gauge options per opening size",
-      "Custom sizes available on request",
-      "Hot dip galvanized for outdoor/corrosion resistance",
-      "Standard 50ft rolls for easy installation",
-    ],
-    applications: [
-      "Fencing & Enclosures",
-      "Building & Construction",
-      "Window & Safety Guard",
-      "Farm & Garden",
-      "Agricultural Use",
-      "Decorative Applications",
-      "Exhibitions",
-      "Caging",
-    ],
-    faqs: [
-      {
-        q: "What opening sizes are available in welded mesh?",
-        a: 'We manufacture welded mesh from ½" × ½" (12.7mm × 12.7mm) to 4" × 4" (101mm × 101mm) in standard specifications.',
-      },
-      {
-        q: "What is the standard roll length?",
-        a: "Standard roll length is 50 feet. Widths available are 2 feet, 3 feet, 4 feet, and 5 feet. Custom sizes can be made on request.",
-      },
-      {
-        q: "What materials are available?",
-        a: "Welded mesh is available in Stainless Steel, Low Carbon Steel, Hot Dip Galvanized Wire, and Electro Galvanized Wire.",
-      },
-      {
-        q: "What wire gauge is used?",
-        a: "Wire gauge ranges from SWG 6 (thickest) to SWG 19 (finest) depending on the opening size. Heavier gauges are used for larger openings.",
-      },
-      {
-        q: "Can you supply welded mesh for fencing in Pune?",
-        a: "Yes, we supply welded mesh for fencing applications from our Talawade, Pune facility. We deliver across Maharashtra and pan India.",
-      },
-    ],
-    metaTitle:
-      "Welded Mesh Manufacturers in Pune & Mumbai | GI Welded Wire Mesh | Jai Shree Group",
-    metaDescription:
-      'Welded wire mesh manufacturers in Pune & Mumbai. ½" to 4" openings. SS, GI, Low Carbon Steel. Custom sizes. ISO certified. Fencing, construction, agriculture.',
-    materials: [
-      "Stainless Steel",
-      "Low Carbon Steel",
-      "Hot Dip Galvanized",
-      "Electro Galvanized",
     ],
   },
   "turret-punching": {
@@ -395,7 +257,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
     name: "Turret Punching",
     tagline: "CNC turret punching for any hole shape in any metal",
     overview: [
-      "Jai Shree Group offers CNC Turret Punching services for any hole shape and pattern. Our turret punching machines can create round, square, rectangular, oblong, hex, and conical holes in Stainless Steel, Carbon Steel, MS/GI, Aluminum, Brass, and Copper.",
+      "Jai Shree Group offers CNC Turret Punching services for any hole shape and pattern. Our turret punching machines can create round, square, rectangular, oblong, hex, and conical holes in Stainless Steel, MS, GI, Aluminum, Brass, and Copper.",
       "The key advantage of Turret Punching combined with Laser Cutting is significant cost saving on complex parts — standard shapes are punched (fast, economical) while complex cutouts are laser cut.",
       "Our R&D team develops special dies and tools for any non-standard hole shape as per customer specification.",
     ],
@@ -442,7 +304,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
       },
       {
         q: "What materials can be turret punched?",
-        a: "We punch Stainless Steel, Carbon Steel, MS/GI, Aluminum, Brass, and Copper in various thicknesses.",
+        a: "We punch Stainless Steel, MS (Mild Steel), GI (Galvanized Iron), Aluminum, Brass, and Copper in various thicknesses.",
       },
       {
         q: "Do you offer turret punching job work in Pune?",
@@ -450,124 +312,17 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
       },
     ],
     metaTitle:
-      "Turret Punching Services in Pune | CNC Turret Punching Job Work | Jai Shree Group",
+      "CNC Turret Perforated Sheet Manufacturing Pune | Turret Punching | Jai Shree Group",
     metaDescription:
-      "CNC turret punching services in Pune & Mumbai. Any hole shape in SS, MS, Aluminum, GI. Combined with laser for cost saving. ISO certified. Get free quote.",
-    materials: ["Stainless Steel", "MS", "GI", "Aluminum", "Brass", "Copper"],
-  },
-  "demister-pad": {
-    slug: "demister-pad",
-    name: "Demister Pad",
-    tagline: "Knitted wire mesh demister pads for industrial filtration",
-    overview: [
-      "Jai Shree Group manufactures Knitted Wire Mesh Demister Pads (also known as Mist Eliminators) for industrial filtration and gas-liquid separation applications.",
-      "Available in Plain Weave and Corrugated Weave patterns in widths from 25mm to 600mm. Custom sizes are available on request.",
-      "Used extensively in Refinery Oil Fields, Petrochemical Industries, Pharmaceutical Industries, and Automobile Industries for effective mist elimination and liquid droplet separation.",
+      "CNC turret perforated sheet manufacturing in Pune & Mumbai. Any hole shape in SS, MS, GI, Aluminum. Combined with laser for cost saving. ISO certified. Get free quote.",
+    materials: [
+      "Stainless Steel",
+      "MS (Mild Steel)",
+      "GI (Galvanized Iron)",
+      "Aluminum",
+      "Brass",
+      "Copper",
     ],
-    specifications: [
-      { label: "Standard Width", value: "25mm to 600mm" },
-      { label: "Weave Types", value: "Plain Weave, Corrugated Weave" },
-      { label: "Custom Sizes", value: "Available on request" },
-      { label: "Application", value: "Mist elimination, gas-liquid separation" },
-    ],
-    strengths: [
-      "Width range 25mm to 600mm",
-      "Plain and Corrugated weave options",
-      "Custom sizes available for any vessel dimension",
-      "Suitable for corrosive environments (SS available)",
-      "High efficiency droplet separation",
-    ],
-    applications: [
-      "Refinery Oil Fields",
-      "Petrochemical Industries",
-      "Pharmaceutical Industries",
-      "Automobile Industries",
-      "Gas Processing",
-      "Chemical Plants",
-      "Filtration Systems",
-    ],
-    faqs: [
-      {
-        q: "What is a demister pad?",
-        a: "A demister pad (also called mist eliminator or knitted wire mesh pad) is used in industrial vessels to separate liquid droplets from gas streams. It works by coalescing fine mist droplets into larger drops that fall back by gravity.",
-      },
-      {
-        q: "What widths are available for demister pads?",
-        a: "Standard width range is 25mm to 600mm. Custom sizes can be manufactured to fit any vessel diameter or specification.",
-      },
-      {
-        q: "What materials are used for demister pads?",
-        a: "We manufacture demister pads in Stainless Steel, Copper, Aluminum, and Galvanized Steel — with Stainless Steel being most common for corrosive applications.",
-      },
-      {
-        q: "What industries use demister pads?",
-        a: "Demister pads are widely used in Refinery Oil Fields, Petrochemical Industries, Pharmaceutical Industries, Automobile Industries, and any process plant requiring gas-liquid separation.",
-      },
-      {
-        q: "Can you supply custom-size demister pads?",
-        a: "Yes, we manufacture demister pads to custom dimensions as per your vessel specification. Contact us with your requirements for a quote.",
-      },
-    ],
-    metaTitle:
-      "Demister Pad Manufacturers in India | Knitted Wire Mesh Mist Eliminator | Jai Shree Group",
-    metaDescription:
-      "Demister pad manufacturers in Pune. Knitted wire mesh mist eliminators for refinery, petrochemical, pharma industries. SS, Copper, Aluminum. Custom sizes. Get quote.",
-    materials: ["Stainless Steel", "Copper", "Aluminum", "Galvanized Steel"],
-  },
-  "aluminum-grill-profile": {
-    slug: "aluminum-grill-profile",
-    name: "Aluminum Grill & Profile",
-    tagline: "Architectural aluminum grills and profiles for modern spaces",
-    overview: [
-      "Jai Shree Group supplies Aluminum Grills and Profiles for architectural interior and exterior applications. Our aluminum products are used in building facades, window grills, decorative panels, and structural profiles.",
-      "Aluminum grills offer excellent corrosion resistance, lightweight properties, and can be anodized or powder coated in any color for aesthetic appeal.",
-      "Custom profiles and grill patterns are available as per architectural drawings and specifications.",
-    ],
-    specifications: [
-      { label: "Material", value: "Aluminum (various alloys)" },
-      { label: "Finishing", value: "Anodized, Powder Coated, Mill Finish" },
-      { label: "Application", value: "Interior & Exterior Architectural" },
-      { label: "Custom", value: "Any pattern/profile as per drawing" },
-    ],
-    strengths: [
-      "Lightweight yet strong aluminum construction",
-      "Excellent corrosion resistance",
-      "Anodized and powder coated finishes available",
-      "Custom patterns and profiles per drawing",
-      "Suitable for interior and exterior use",
-    ],
-    applications: [
-      "Building Facades",
-      "Window Grills",
-      "Decorative Ceiling Panels",
-      "Partition Screens",
-      "Structural Profiles",
-      "Balcony Railings",
-      "Ventilation Grills",
-    ],
-    faqs: [
-      {
-        q: "What finishing options are available for aluminum grills?",
-        a: "Aluminum grills can be supplied in Mill Finish, Anodized (silver, bronze, black), or Powder Coated in any RAL color.",
-      },
-      {
-        q: "Can you make custom grill patterns?",
-        a: "Yes, we manufacture custom aluminum grill patterns as per your architectural drawings. Contact us with your design requirements.",
-      },
-      {
-        q: "What are the advantages of aluminum over steel for grills?",
-        a: "Aluminum is lightweight (1/3 the weight of steel), naturally corrosion resistant, and can be anodized for long-lasting color. Ideal for architectural and coastal applications.",
-      },
-      {
-        q: "Do you supply aluminum profiles for construction?",
-        a: "Yes, we supply standard and custom aluminum profiles for construction and architectural applications from our Pune facility.",
-      },
-    ],
-    metaTitle:
-      "Aluminum Grill & Profile Manufacturers in Pune | Architectural Aluminum | Jai Shree Group",
-    metaDescription:
-      "Aluminum grill and profile manufacturers in Pune. Architectural grills, decorative panels, window grills. Anodized, powder coated finishes. Custom designs. Get quote.",
-    materials: ["Aluminum"],
   },
   "precision-sheet-leveling": {
     slug: "precision-sheet-leveling",
@@ -579,6 +334,8 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
       "This service is available for all metals and is particularly valuable for applications requiring precise fit, such as automotive components, architectural panels, and precision engineering parts.",
     ],
     specifications: [
+      { label: "Max Thickness", value: "Up to 5mm" },
+      { label: "Max Width", value: "1500mm" },
       { label: "Process", value: "Roller leveling, tension leveling" },
       { label: "Application", value: "Post-perforation, post-laser cutting" },
       { label: "Materials", value: "All metals" },
@@ -606,7 +363,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
       },
       {
         q: "What metals can you level?",
-        a: "We offer precision leveling for all metals including Stainless Steel, Carbon Steel, Aluminum, GI, Copper, and Brass sheets.",
+        a: "We offer precision leveling for all metals including Stainless Steel, MS, GI, Aluminum, Copper, and Brass sheets.",
       },
       {
         q: "Is sheet leveling available as a standalone service?",
@@ -622,6 +379,81 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
     metaDescription:
       "Precision sheet leveling and flattening services in Pune. Bow and warpage correction for perforated sheets and laser cut parts. All metals. ISO certified. Get quote.",
     materials: ["All Metals"],
+  },
+  "custom-components": {
+    slug: "custom-components",
+    name: "Custom Components",
+    tagline: "Any shape, any metal, any specification — we engineer it.",
+    overview: [
+      "Jai Shree Group undertakes special custom fabrication jobs that go beyond standard products. Our in-house R&D team develops special dies, tools, and machineries as per specific customer requirements.",
+      "From embossed plates and dimple de-stoners to huller screens, herringbone screens, and perforated test sieves — we manufacture any custom component in any metal.",
+      "Pulverizing screens in Round, Square, Rectangular, Oblong, Hex & Conical holes and any type of hole by Turret Punching in Stainless Steel, MS, GI, Aluminum, Brass, Copper.",
+    ],
+    specifications: [
+      {
+        label: "Hole Types",
+        value: "Round, Square, Rectangular, Oblong, Hex, Conical, Custom",
+      },
+      {
+        label: "Materials",
+        value: "SS, MS, GI, Aluminum, Brass, Copper",
+      },
+      {
+        label: "Special Jobs",
+        value: "Embossed Plates, Huller Screens, Herringbone Screens",
+      },
+      { label: "Process", value: "CNC Turret Punching, Laser Cutting, Special Dies" },
+      { label: "Drawings", value: "DXF, DWG or customer sample accepted" },
+    ],
+    strengths: [
+      "In-house R&D team develops special dies and tools",
+      "Any hole shape in any metal",
+      "Accept customer drawings or samples",
+      "Special machineries developed as per requirement",
+      "Embossed plates, trays, dimple de-stoners",
+      "Huller screens and herringbone screens",
+      "Perforated test sieves in all shapes",
+    ],
+    applications: [
+      "Custom Embossed Plates",
+      "Huller Screens",
+      "Herringbone Screens",
+      "Perforated Test Sieves",
+      "Pulverizing Screens",
+      "Dimple De-Stoners",
+      "Special Industrial Components",
+      "OEM Parts",
+    ],
+    faqs: [
+      {
+        q: "Can you manufacture from my custom drawing?",
+        a: "Yes, we accept DXF, DWG, PDF drawings or physical samples. Our R&D team will develop special dies if required.",
+      },
+      {
+        q: "What is the minimum order quantity for custom components?",
+        a: "MOQ depends on complexity of the job. Contact us with your requirement and drawing for a quote.",
+      },
+      {
+        q: "How long does custom component development take?",
+        a: "Standard custom jobs: 5-7 working days. Jobs requiring new die development: 10-15 working days. Urgent jobs accommodated.",
+      },
+      {
+        q: "What hole shapes can you make for custom jobs?",
+        a: "Round, Square, Rectangular, Oblong, Hexagonal, Conical, and completely custom shapes with special dies developed by our R&D team.",
+      },
+    ],
+    metaTitle:
+      "Custom Metal Components Manufacturers Pune | Special Fabrication | Jai Shree Group",
+    metaDescription:
+      "Custom metal component manufacturers in Pune. Special dies, embossed plates, huller screens, herringbone screens, custom perforation. Any drawing, any metal. ISO certified.",
+    materials: [
+      "Stainless Steel",
+      "MS (Mild Steel)",
+      "GI (Galvanized Iron)",
+      "Aluminum",
+      "Brass",
+      "Copper",
+    ],
   },
 };
 

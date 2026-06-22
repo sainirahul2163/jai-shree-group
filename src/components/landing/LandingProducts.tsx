@@ -25,14 +25,15 @@ const LAYOUT: { slug: Product["slug"]; variant: Variant; className: string }[] =
       className: "md:col-span-2 md:row-span-2",
     },
     { slug: "laser-cutting", variant: "medium", className: "md:col-span-2" },
-    { slug: "wire-mesh", variant: "small", className: "" },
-    { slug: "welded-mesh", variant: "small", className: "" },
     { slug: "expanded-metal", variant: "medium", className: "md:col-span-2" },
-    { slug: "turret-punching", variant: "medium", className: "md:col-span-2" },
-    { slug: "demister-pad", variant: "small", className: "" },
-    { slug: "aluminum-grill-profile", variant: "small", className: "" },
+    { slug: "turret-punching", variant: "small", className: "" },
     {
       slug: "precision-sheet-leveling",
+      variant: "small",
+      className: "",
+    },
+    {
+      slug: "custom-components",
       variant: "medium",
       className: "md:col-span-2",
     },
@@ -203,7 +204,7 @@ export function LandingProducts() {
           {...reveal(0.1)}
           className="mt-6 text-5xl font-black tracking-tight md:text-7xl"
         >
-          <span className="block text-white">Nine Ways We</span>
+          <span className="block text-white">Six Ways We</span>
           <span className="block text-[#3A3A3A]">Shape Metal</span>
         </motion.h2>
 

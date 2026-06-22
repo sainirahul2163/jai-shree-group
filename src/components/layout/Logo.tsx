@@ -1,11 +1,15 @@
+"use client";
+
+import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { Hexagon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-export function Logo({ className }: { className?: string }) {
+function TextLogo() {
   return (
-    <Link href="/" className={cn("group flex items-center gap-2.5", className)}>
+    <>
       <Hexagon
         className="size-7 transition-transform duration-300 group-hover:rotate-90"
         strokeWidth={1.5}
@@ -25,6 +29,28 @@ export function Logo({ className }: { className?: string }) {
           GROUP
         </span>
       </div>
+    </>
+  );
+}
+
+export function Logo({ className }: { className?: string }) {
+  const [showTextLogo, setShowTextLogo] = useState(false);
+
+  return (
+    <Link href="/" className={cn("group flex items-center gap-2.5", className)}>
+      {showTextLogo ? (
+        <TextLogo />
+      ) : (
+        <Image
+          src="/logo.png"
+          alt="Shree Perforators"
+          width={160}
+          height={48}
+          className="h-10 w-auto sm:h-12"
+          priority
+          onError={() => setShowTextLogo(true)}
+        />
+      )}
     </Link>
   );
 }

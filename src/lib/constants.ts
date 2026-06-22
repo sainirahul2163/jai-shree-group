@@ -6,15 +6,15 @@ export const COMPANY = {
   foundedIn: "Delhi",
   experience: "50+",
   iso: "ISO 9001:2015",
-  email: "jsmppune@gmail.com",
-  phone: "+91 9320204156",
+  email: "shreeperforator@gmail.com",
+  phone: "+91 9370606017",
   whatsapp:
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "+917023504327",
+    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "919370606017",
   address:
-    "Gat No. 93, Near Sonawane Wasti, Jyotibanagar, Talawade, Pune - 411062",
+    "Gat No. 94, Near Sonawane Wasti, Jyotibanagar, Talawade, Pune - 411062",
   website: "https://jaishreegroup.in",
   locations: ["Pune (Talawade)", "Mumbai (Bhayander, Palghar)"],
-  manufacturingUnits: 9,
+  manufacturingUnits: 8,
 } as const;
 
 export const BROCHURE_URL = "/brochure/jai-shree-brochure.pdf";
@@ -38,7 +38,7 @@ export const BRANCHES = [
     city: "Pune",
     address:
       "Gat no. 94, Near Sonawane Wasti, Jyotibanagar, Talawade, Pune- 411062",
-    phone: "+91 9320204156",
+    phone: "+91 9370606017",
     email: "shreeperforator@gmail.com",
     website: "www.shreeperforators.com",
   },
@@ -51,17 +51,6 @@ export const BRANCHES = [
       "Gat no. 93, Near Sonawane Wasti, Jyotibanagar, Talawade, Pune- 411062",
     phone: "+91 9049456019",
     email: "balajiwelded@gmail.com",
-    website: "www.shreeperforators.com",
-  },
-  {
-    name: "Jai Shree Jaliwala",
-    slug: "jai-shree-jaliwala",
-    area: "Bhosari",
-    city: "Pune",
-    address:
-      "Dolhphin Square, Shop No. 8, Plot No. W68, S Block, MIDC, Bhosari, Pune 411026",
-    phone: "+91 9049456019",
-    email: "shreeperforator@gmail.com",
     website: "www.shreeperforators.com",
   },
   {
@@ -135,8 +124,8 @@ export const PRODUCTS = [
     },
     materials: [
       "Stainless Steel",
-      "Carbon Steel",
-      "MS/GI",
+      "MS (Mild Steel)",
+      "GI (Galvanized Iron)",
       "Aluminum",
       "Copper",
       "Brass",
@@ -154,7 +143,7 @@ export const PRODUCTS = [
     },
     materials: [
       "Stainless Steel",
-      "Carbon Steel",
+      "MS (Mild Steel)",
       "Aluminum",
       "Copper",
       "Brass",
@@ -174,49 +163,12 @@ export const PRODUCTS = [
     },
     materials: [
       "Stainless Steel",
-      "Low Carbon Steel",
+      "MS (Mild Steel)",
+      "GI (Galvanized Iron)",
       "Brass",
       "Copper",
       "Aluminum",
-      "GI",
       "Titanium",
-    ],
-  },
-  {
-    name: "Wire Mesh",
-    slug: "wire-mesh",
-    description:
-      "Plain, Twill & Crimped weaves. Full specification range from 2 to 400 mesh.",
-    icon: "LayoutGrid",
-    specs: {
-      meshRange: "2 to 400 mesh",
-      weaves: "Plain / Twill / Crimped",
-    },
-    materials: [
-      "Stainless Steel",
-      "Carbon Steel",
-      "Brass",
-      "Copper",
-      "Aluminum",
-      "GI",
-      "Nickel",
-    ],
-  },
-  {
-    name: "Welded Mesh",
-    slug: "welded-mesh",
-    description:
-      '½" to 4" openings. Standard 50ft rolls. Custom sizes available.',
-    icon: "Hash",
-    specs: {
-      openings: '½" to 4"',
-      standardRoll: "50ft",
-    },
-    materials: [
-      "Stainless Steel",
-      "Low Carbon Steel",
-      "Hot Dip GI",
-      "Electro GI",
     ],
   },
   {
@@ -231,35 +183,12 @@ export const PRODUCTS = [
     },
     materials: [
       "Stainless Steel",
-      "MS",
+      "MS (Mild Steel)",
+      "GI (Galvanized Iron)",
       "Aluminum",
-      "GI",
       "Copper",
       "Brass",
     ],
-  },
-  {
-    name: "Demister Pad",
-    slug: "demister-pad",
-    description:
-      "Knitted wire mesh for filtration. Width 25mm–600mm. Custom sizes available.",
-    icon: "Layers",
-    specs: {
-      width: "25mm–600mm",
-      type: "Knitted Wire Mesh",
-    },
-    materials: ["Stainless Steel", "Copper", "Aluminum", "GI"],
-  },
-  {
-    name: "Aluminum Grill & Profile",
-    slug: "aluminum-grill-profile",
-    description:
-      "Architectural aluminum grills and profiles for interior & exterior use.",
-    icon: "AlignJustify",
-    specs: {
-      application: "Interior & Exterior",
-    },
-    materials: ["Aluminum"],
   },
   {
     name: "Precision Sheet Leveling",
@@ -272,12 +201,31 @@ export const PRODUCTS = [
     },
     materials: ["All Metals"],
   },
+  {
+    name: "Custom Components",
+    slug: "custom-components",
+    description:
+      "Custom-engineered metal components, special dies, embossed plates, dimple de-stoners, huller screens, herringbone screens and any special job as per drawing.",
+    icon: "Settings2",
+    specs: {
+      process: "Custom Fabrication",
+      drawings: "DXF / DWG / Sample",
+    },
+    materials: [
+      "Stainless Steel",
+      "MS (Mild Steel)",
+      "GI (Galvanized Iron)",
+      "Aluminum",
+      "Brass",
+      "Copper",
+    ],
+  },
 ] as const;
 
 export const MATERIALS = [
   "Stainless Steel",
-  "Carbon Steel",
-  "MS/GI",
+  "MS (Mild Steel)",
+  "GI (Galvanized Iron)",
   "Aluminum",
   "Copper",
   "Brass",
@@ -288,7 +236,7 @@ export const MATERIALS = [
 
 export const STATS = [
   { value: "50+", label: "Years of Experience" },
-  { value: "9", label: "Manufacturing Units" },
+  { value: "8", label: "Manufacturing Units" },
   { value: "ISO", label: "9001:2015 Certified" },
   { value: "PAN", label: "India Delivery" },
 ] as const;
@@ -469,11 +417,15 @@ export const DESIGN_TOKENS = {
 
 export const SEO = {
   primaryKeywords: [
+    "Perforated Sheet Manufacturer",
+    "Expanded Mesh Manufacturers",
+    "CNC Turret Perforated Sheet Manufacturing",
     "perforated sheet manufacturers Pune",
-    "perforated sheet manufacturers Mumbai",
-    "perforated sheet manufacturers India",
-    "wire mesh manufacturers Pune",
-    "expanded metal manufacturers India",
+    "perforated sheet manufacturers India export",
+    "wire mesh exporters India",
+    "expanded metal suppliers India",
+    "metal fabrication India",
+    "perforated metal sheets India supplier",
   ],
   schemaTypes: [
     "LocalBusiness",
@@ -489,7 +441,7 @@ export const HOME_SECTIONS = {
     label: "WHAT WE MANUFACTURE",
     heading: "Our Product Range",
     subtext:
-      "Nine specialized metal fabrication capabilities — from CNC perforation to fiber laser cutting, serving industries across India.",
+      "Six specialized metal fabrication capabilities — from CNC perforation to fiber laser cutting, serving industries across India and export markets.",
   },
   about: {
     id: "about",
@@ -520,7 +472,7 @@ export const HOME_SECTIONS = {
   group: {
     id: "group",
     label: "OUR GROUP",
-    heading: "9 Manufacturing Units",
+    heading: "8 Manufacturing Units",
     subtext:
       "Strategically located across Pune and Mumbai for faster delivery across India",
     mapCaption:
@@ -613,7 +565,7 @@ export const FOOTER = {
     contact: "Contact Us",
   },
   buttons: {
-    brochure: "Download Brochure",
+    brochure: "Download Catalogue",
     whatsapp: "WhatsApp Us",
   },
 } as const;

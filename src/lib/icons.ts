@@ -18,6 +18,7 @@ import {
   PenTool,
   Pickaxe,
   Ruler,
+  Settings2,
   Truck,
   UtensilsCrossed,
   Wheat,
@@ -35,6 +36,7 @@ export const PRODUCT_ICONS: Record<string, LucideIcon> = {
   Layers,
   AlignJustify,
   Ruler,
+  Settings2,
 };
 
 export const INDUSTRY_ICONS: Record<string, LucideIcon> = {
