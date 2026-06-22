@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -21,6 +22,14 @@ import { BROCHURE_URL } from "@/lib/constants";
 import type { ProductDetail } from "@/data/products";
 import { getProductIcon } from "@/lib/icons";
 import { PRODUCTS } from "@/lib/constants";
+
+const PerforationPatterns = dynamic(
+  () =>
+    import("@/components/products/PerforationPatterns").then(
+      (m) => m.PerforationPatterns
+    ),
+  { ssr: false }
+);
 
 type ProductPageClientProps = {
   product: ProductDetail;
@@ -328,7 +337,9 @@ export function ProductPageClient({
               </div>
             </motion.div>
 
-            {product.patterns && product.patterns.length > 0 && (
+            {product.patterns &&
+              product.patterns.length > 0 &&
+              product.slug !== "perforated-sheets" && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -366,6 +377,17 @@ export function ProductPageClient({
           </div>
         </div>
       </section>
+
+      {product.slug === "perforated-sheets" && (
+        <section
+          className="section-padding"
+          style={{ backgroundColor: "#0A0A0A" }}
+        >
+          <div className="mx-auto max-w-7xl">
+            <PerforationPatterns />
+          </div>
+        </section>
+      )}
 
       {/* Related Products */}
       <section
