@@ -196,7 +196,7 @@ const HOLE_SHAPES: { id: HoleShape & string; label: string }[] = [
   { id: "round", label: "Round" },
   { id: "square", label: "Square" },
   { id: "hex", label: "Hex" },
-  { id: "slot", label: "Slot (Round End / Square End)" },
+  { id: "slot", label: "Slot" },
 ];
 
 function getAvailableArrangements(
@@ -1009,13 +1009,22 @@ export function OpenAreaCalculator() {
         ? slotEndType !== null && arrangement !== null
         : arrangement !== null;
 
+  const calculatorReady = calculatorId !== null && arrangementSelected;
+
+  const arrangementButtonClass = (selected: boolean) =>
+    `flex-1 min-w-[120px] rounded-lg border px-3 text-sm font-medium transition-all h-[52px] ${
+      selected
+        ? "border-[#E8521A] bg-[#E8521A]/10 text-white"
+        : "border-[#2A2A2A] bg-[#111111] text-[#A0A0A0] hover:border-[#E8521A]/50"
+    }`;
+
   return (
     <div
       className="section-padding pt-28 md:pt-32"
       style={{ backgroundColor: "#0A0A0A" }}
     >
-      <div className="mx-auto max-w-7xl">
-        <div className="mb-10 max-w-3xl">
+      <div className="mx-auto max-w-[760px]">
+        <div className="mb-10">
           <h1
             className="text-4xl font-black tracking-tight sm:text-5xl"
             style={{ color: "#FFFFFF" }}
@@ -1031,125 +1040,120 @@ export function OpenAreaCalculator() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-5 lg:items-start">
-          {/* Left panel — 40% */}
-          <div className="space-y-8 lg:sticky lg:top-24 lg:col-span-2 lg:self-start">
-            <div
-              className="rounded-xl border p-6"
-              style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
+        <div className="space-y-10">
+          {/* Section 1 — Hole Shape */}
+          <section>
+            <p
+              className="text-xs font-semibold uppercase tracking-[0.2em]"
+              style={{ color: "#E8521A" }}
             >
-              <p
-                className="text-xs font-semibold uppercase tracking-[0.2em]"
-                style={{ color: "#E8521A" }}
-              >
-                Step 1
-              </p>
-              <h2
-                className="mt-2 text-xl font-bold"
-                style={{ color: "#FFFFFF" }}
-              >
+              Step 1
+            </p>
+            <div className="mt-2 flex flex-wrap items-start justify-between gap-3">
+              <h2 className="text-2xl font-bold text-white">
                 Select Hole Shape
               </h2>
-              <div className="mt-4 grid grid-cols-2 gap-3">
-                {HOLE_SHAPES.map((shape) => {
-                  const selected = holeShape === shape.id;
-                  return (
-                    <button
-                      key={shape.id}
-                      type="button"
-                      onClick={() => selectHoleShape(shape.id as HoleShape)}
-                      className={`rounded-xl border p-4 text-center transition-all ${
-                        selected
-                          ? "border-[#E8521A] bg-[#E8521A]/10 text-white"
-                          : "border-[#2A2A2A] bg-[#1A1A1A] text-[#A0A0A0] hover:border-[#E8521A]/50"
-                      }`}
-                    >
-                      <HoleShapeIcon shape={shape.id} selected={selected} />
-                      <span className="mt-2 block text-sm font-medium">
-                        {shape.label}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <AnimatePresence>
-              {showStep2 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 12 }}
-                  transition={{ duration: 0.3 }}
-                  className="rounded-xl border p-6"
-                  style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
+              {holeShape !== null && (
+                <button
+                  type="button"
+                  onClick={handleReset}
+                  className="text-sm transition-opacity hover:opacity-80"
+                  style={{ color: "#A0A0A0" }}
                 >
-                  <p
-                    className="text-xs font-semibold uppercase tracking-[0.2em]"
-                    style={{ color: "#E8521A" }}
+                  ← Start over
+                </button>
+              )}
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              {HOLE_SHAPES.map((shape) => {
+                const selected = holeShape === shape.id;
+                return (
+                  <button
+                    key={shape.id}
+                    type="button"
+                    onClick={() => selectHoleShape(shape.id as HoleShape)}
+                    className={`flex h-[100px] flex-col items-center justify-center rounded-xl border text-center transition-all ${
+                      selected
+                        ? "border-[#E8521A] bg-[#E8521A]/10 text-white"
+                        : "border-[#2A2A2A] bg-[#111111] text-[#A0A0A0] hover:border-[#E8521A]/50"
+                    }`}
                   >
-                    Step 2
-                  </p>
-                  <h2
-                    className="mt-2 text-xl font-bold"
-                    style={{ color: "#FFFFFF" }}
-                  >
-                    Select Arrangement
-                  </h2>
+                    <HoleShapeIcon shape={shape.id} selected={selected} />
+                    <span className="mt-2 block text-sm font-medium">
+                      {shape.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
 
-                  {showSlotEndStep && (
-                    <div className="mt-4">
-                      <p
-                        className="mb-2 text-sm"
-                        style={{ color: "#A0A0A0" }}
-                      >
-                        End Type
-                      </p>
-                      <div className="space-y-2">
-                        {(
-                          [
-                            ["round-end", "Round End"],
-                            ["square-end", "Square End"],
-                          ] as const
-                        ).map(([id, label]) => (
-                          <button
-                            key={id}
-                            type="button"
-                            onClick={() => selectSlotEnd(id)}
-                            className={`w-full rounded-xl border px-4 py-3 text-left text-sm font-medium transition-all ${
-                              slotEndType === id
-                                ? "border-[#E8521A] bg-[#E8521A]/10 text-white"
-                                : "border-[#2A2A2A] bg-[#1A1A1A] text-[#A0A0A0] hover:border-[#E8521A]/50"
-                            }`}
-                          >
-                            {label}
-                          </button>
-                        ))}
-                      </div>
+          {/* Section 2 — Arrangement */}
+          <AnimatePresence>
+            {showStep2 && (
+              <motion.section
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.25 }}
+              >
+                <p
+                  className="text-xs font-semibold uppercase tracking-[0.2em]"
+                  style={{ color: "#E8521A" }}
+                >
+                  Step 2
+                </p>
+                <h2 className="mt-2 text-2xl font-bold text-white">
+                  Select Arrangement
+                </h2>
+
+                {showSlotEndStep && (
+                  <div className="mt-4">
+                    <p className="mb-2 text-sm text-[#A0A0A0]">End Type</p>
+                    <div className="flex gap-2">
+                      {(
+                        [
+                          ["round-end", "Round End"],
+                          ["square-end", "Square End"],
+                        ] as const
+                      ).map(([id, label]) => (
+                        <button
+                          key={id}
+                          type="button"
+                          onClick={() => selectSlotEnd(id)}
+                          className={arrangementButtonClass(slotEndType === id)}
+                        >
+                          {label}
+                        </button>
+                      ))}
                     </div>
-                  )}
+                  </div>
+                )}
 
-                  {showArrangementStep && arrangements.length > 0 && (
+                {holeShape === "hex" && (
+                  <p className="mt-4 text-sm" style={{ color: "#666666" }}>
+                    Hex perforation uses standard honeycomb arrangement
+                  </p>
+                )}
+
+                {showArrangementStep &&
+                  holeShape !== "hex" &&
+                  arrangements.length > 0 && (
                     <div className={showSlotEndStep ? "mt-4" : "mt-4"}>
                       {showSlotEndStep && (
-                        <p
-                          className="mb-2 text-sm"
-                          style={{ color: "#A0A0A0" }}
-                        >
+                        <p className="mb-2 text-sm text-[#A0A0A0]">
                           Arrangement
                         </p>
                       )}
-                      <div className="space-y-2">
+                      <div className="flex flex-wrap gap-2">
                         {arrangements.map((opt) => (
                           <button
                             key={opt.id}
                             type="button"
                             onClick={() => selectArrangement(opt.id)}
-                            className={`w-full rounded-xl border px-4 py-3 text-left text-sm font-medium transition-all ${
+                            className={arrangementButtonClass(
                               arrangement === opt.id
-                                ? "border-[#E8521A] bg-[#E8521A]/10 text-white"
-                                : "border-[#2A2A2A] bg-[#1A1A1A] text-[#A0A0A0] hover:border-[#E8521A]/50"
-                            }`}
+                            )}
                           >
                             {opt.label}
                           </button>
@@ -1157,95 +1161,50 @@ export function OpenAreaCalculator() {
                       </div>
                     </div>
                   )}
-
-                  {holeShape === "hex" && (
-                    <p className="mt-3 text-sm" style={{ color: "#666666" }}>
-                      Hex perforation uses a standard honeycomb arrangement.
-                    </p>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {config && arrangementSelected && (
-              <div
-                className="rounded-xl border border-l-4 p-4"
-                style={{
-                  backgroundColor: "#111111",
-                  borderColor: "#2A2A2A",
-                  borderLeftColor: "#E8521A",
-                }}
-              >
-                <p className="text-sm" style={{ color: "#FFFFFF" }}>
-                  <span style={{ color: "#A0A0A0" }}>Calculator: </span>
-                  {config.name}
-                </p>
-                <p className="mt-2 text-sm" style={{ color: "#FFFFFF" }}>
-                  <span style={{ color: "#A0A0A0" }}>Formula: </span>
-                  {config.formulaText}
-                </p>
-              </div>
+              </motion.section>
             )}
+          </AnimatePresence>
 
-            <button
-              type="button"
-              onClick={handleReset}
-              className="text-sm transition-opacity hover:opacity-80"
-              style={{ color: "#A0A0A0" }}
-            >
-              ← Start over
-            </button>
-          </div>
-
-          {/* Right panel — 60% */}
-          <div className="space-y-6 lg:col-span-3">
-            {/* Section A: Diagram */}
-            <div className="rounded-xl border border-[#2A2A2A] bg-[#1A1A1A] p-6">
-              {!calculatorId ? (
-                <div
-                  className="flex min-h-[180px] items-center justify-center rounded-xl border border-dashed px-6 py-12 text-center text-sm"
-                  style={{ borderColor: "#2A2A2A", color: "#666666" }}
-                >
-                  Select hole shape and arrangement to see diagram
-                </div>
-              ) : (
-                <motion.div
-                  key={calculatorId}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <CalculatorDiagram calculatorId={calculatorId} />
-                </motion.div>
-              )}
-            </div>
-
-            {/* Section B: Formula */}
-            {config && (
+          {/* Section 3 — Diagram + Formula */}
+          <AnimatePresence>
+            {calculatorReady && config && calculatorId && (
               <motion.div
-                initial={{ opacity: 0, y: 8 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="rounded-xl border-l-4 border-l-[#E8521A] bg-[#1A1A1A] p-4"
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.25 }}
+                className="grid grid-cols-1 gap-4 md:grid-cols-[55%_45%]"
               >
-                <p
-                  className="text-xs font-semibold uppercase tracking-[0.2em]"
-                  style={{ color: "#E8521A" }}
-                >
-                  Formula
-                </p>
-                <p className="mt-2 font-mono text-lg text-white">
-                  {config.formulaDisplay}
-                </p>
+                <div className="rounded-xl border border-[#2A2A2A] bg-[#111111] p-5">
+                  <motion.div
+                    key={calculatorId}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <CalculatorDiagram calculatorId={calculatorId} />
+                  </motion.div>
+                </div>
+                <div className="rounded-xl border-l-4 border-l-[#E8521A] bg-[#111111] p-5">
+                  <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#E8521A]">
+                    Formula
+                  </p>
+                  <p className="font-mono text-lg text-white">
+                    {config.formulaDisplay}
+                  </p>
+                </div>
               </motion.div>
             )}
+          </AnimatePresence>
 
-            {/* Section C: Inputs */}
-            {config && (
+          {/* Section 4 — Input Fields */}
+          <AnimatePresence>
+            {calculatorReady && config && (
               <motion.div
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.25 }}
                 className="space-y-4"
               >
                 {config.fields.map((field, index) => (
@@ -1257,8 +1216,7 @@ export function OpenAreaCalculator() {
                   >
                     <label
                       htmlFor={`input-${field.key}`}
-                      className="mb-2 block text-sm"
-                      style={{ color: "#A0A0A0" }}
+                      className="mb-1 block text-sm text-[#A0A0A0]"
                     >
                       {field.label}
                     </label>
@@ -1276,7 +1234,7 @@ export function OpenAreaCalculator() {
                         onChange={(e) =>
                           handleInputChange(field.key, e.target.value)
                         }
-                        className={`h-12 flex-1 rounded-lg border bg-[#1A1A1A] px-4 text-white ${
+                        className={`h-12 flex-1 rounded-lg border bg-[#111111] px-4 py-3 text-white placeholder-[#666666] ${
                           errors[field.key]
                             ? "border-red-500"
                             : "border-[#2A2A2A]"
@@ -1284,99 +1242,92 @@ export function OpenAreaCalculator() {
                       />
                     </div>
                     {errors[field.key] && (
-                      <p className="mt-1.5 text-sm text-red-400">
+                      <p className="mt-1 text-xs text-red-400">
                         {errors[field.key]}
                       </p>
                     )}
                     {warnings[field.key] && !errors[field.key] && (
-                      <p className="mt-1.5 text-sm text-amber-400">
+                      <p className="mt-1 text-xs text-amber-400">
                         {warnings[field.key]}
                       </p>
                     )}
                   </motion.div>
                 ))}
-
-                <motion.div whileTap={{ scale: 0.98 }}>
-                  <Button
-                    type="button"
-                    onClick={handleCalculate}
-                    disabled={isCalculating}
-                    className="h-12 w-full rounded-lg border-0 bg-[#E8521A] py-3 font-semibold text-white hover:bg-[#FF6B35]"
-                  >
-                    {isCalculating ? (
-                      <>
-                        <Loader2 className="size-4 animate-spin" />
-                        Calculating...
-                      </>
-                    ) : (
-                      "Calculate Open Area"
-                    )}
-                  </Button>
-                </motion.div>
               </motion.div>
             )}
+          </AnimatePresence>
 
-            {/* Section D: Result */}
-            <AnimatePresence>
-              {result !== null && hasCalculated && (
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ duration: 0.4 }}
-                  className="rounded-xl border border-[#E8521A] bg-[#1A1A1A] p-6"
-                >
-                  <p
-                    className="text-xs font-semibold uppercase tracking-[0.2em]"
-                    style={{ color: "#E8521A" }}
-                  >
-                    Open Area Result
-                  </p>
-                  <p className="mt-3 text-5xl font-black text-[#E8521A]">
-                    {result.toFixed(2)}%
-                  </p>
-                  <p className="mt-2 text-sm text-[#A0A0A0]">
-                    Based on your inputs
-                  </p>
-                  {inputSummary && (
-                    <p className="mt-3 text-sm" style={{ color: "#666666" }}>
-                      {inputSummary}
-                    </p>
-                  )}
+          {/* Section 5 — Calculate Button */}
+          {calculatorReady && config && (
+            <motion.div whileTap={{ scale: 0.98 }} className="mt-6">
+              <Button
+                type="button"
+                onClick={handleCalculate}
+                disabled={isCalculating}
+                className="h-auto w-full rounded-xl border-0 bg-[#E8521A] py-4 font-semibold text-white hover:bg-[#FF6B35]"
+              >
+                {isCalculating ? (
+                  <>
+                    <Loader2 className="size-4 animate-spin" />
+                    Calculating...
+                  </>
+                ) : (
+                  "Calculate Open Area"
+                )}
+              </Button>
+            </motion.div>
+          )}
 
-                  {result > 100 && (
-                    <div className="mt-4 rounded-lg border border-amber-500 bg-amber-950 p-3 text-sm text-amber-400">
-                      Result exceeds 100% — please recheck your input values
-                    </div>
-                  )}
-                  {result <= 0 && (
-                    <div className="mt-4 rounded-lg border border-red-500 bg-red-950/50 p-3 text-sm text-red-400">
-                      Invalid result — please check all inputs are positive
-                    </div>
-                  )}
+          {/* Section 6 — Result */}
+          <AnimatePresence>
+            {result !== null && hasCalculated && (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.4 }}
+                className="mt-4 rounded-xl border border-[#E8521A] bg-[#111111] p-6"
+              >
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#E8521A]">
+                  Open Area Result
+                </p>
+                <p className="mt-2 text-6xl font-black text-[#E8521A]">
+                  {result.toFixed(2)}%
+                </p>
+                {inputSummary && (
+                  <p className="mt-2 text-sm text-[#666666]">{inputSummary}</p>
+                )}
 
-                  <div className="mt-5 flex gap-4">
-                    <button
-                      type="button"
-                      onClick={handleRecalculate}
-                      className="text-sm underline-offset-2 hover:underline"
-                      style={{ color: "#E8521A" }}
-                    >
-                      Recalculate
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleReset}
-                      className="text-sm underline-offset-2 hover:underline"
-                      style={{ color: "#A0A0A0" }}
-                    >
-                      Start Over
-                    </button>
+                {result > 100 && (
+                  <div className="mt-3 rounded-lg border border-amber-500 bg-amber-950 p-3 text-sm text-amber-400">
+                    Result exceeds 100% — please recheck your input values
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                )}
+                {result <= 0 && (
+                  <div className="mt-3 rounded-lg border border-red-500 bg-red-950/50 p-3 text-sm text-red-400">
+                    Invalid result — please check all inputs are positive
+                  </div>
+                )}
+
+                <div className="mt-5 flex gap-4">
+                  <button
+                    type="button"
+                    onClick={handleRecalculate}
+                    className="text-sm text-[#A0A0A0] hover:text-white"
+                  >
+                    Recalculate
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleReset}
+                    className="text-sm text-[#E8521A] hover:text-[#FF6B35]"
+                  >
+                    Start Over
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </div>
