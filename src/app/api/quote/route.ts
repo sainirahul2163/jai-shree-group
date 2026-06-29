@@ -39,6 +39,7 @@ export async function POST(request: Request) {
       quantityUnit,
       deadline,
       additionalRequirements,
+      customComponentNote,
       sendWhatsApp,
     } = body;
 
@@ -68,6 +69,7 @@ export async function POST(request: Request) {
           quantity,
           quantityUnit,
           deadline,
+          custom_component_note: customComponentNote || null,
         },
         source: "quote_form",
         source_page:
@@ -112,6 +114,7 @@ export async function POST(request: Request) {
             <p><strong>Quantity:</strong> ${quantityLabel || "Not specified"}</p>
             <p><strong>Deadline:</strong> ${deadline || "Not specified"}</p>
             <p><strong>Additional requirements:</strong> ${additionalRequirements || "None"}</p>
+            <p><strong>Custom component note:</strong> ${customComponentNote || "None"}</p>
             <p><strong>Lead ID:</strong> ${data?.[0]?.id ?? "N/A"}</p>
           `,
         });

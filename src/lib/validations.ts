@@ -37,6 +37,7 @@ export const quoteFormSchema = z.object({
   quantityUnit: z.enum(["pcs", "kg", "sqm"]),
   deadline: z.enum(["urgent", "standard", "flexible"]),
   additionalRequirements: z.string().optional(),
+  customComponentNote: z.string().optional(),
   name: z.string().min(2, "Name must be at least 2 characters"),
   companyName: z.string().optional(),
   phone: z

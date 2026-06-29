@@ -1,9 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Loader2, Mail, Phone } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  Loader2,
+  Lock,
+  Mail,
+  Phone,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,6 +37,43 @@ const DEADLINE_OPTIONS = [
   { value: "flexible", label: "Flexible" },
 ] as const;
 
+type ProductSlug =
+  | "perforated-sheets"
+  | "laser-cutting"
+  | "expanded-metal"
+  | "turret-punching"
+  | "precision-sheet-leveling"
+  | "custom-components";
+
+const INCOMPATIBLE: Record<ProductSlug, ProductSlug[]> = {
+  "perforated-sheets": ["expanded-metal", "turret-punching"],
+  "laser-cutting": ["expanded-metal"],
+  "expanded-metal": ["perforated-sheets", "turret-punching"],
+  "turret-punching": ["perforated-sheets", "expanded-metal"],
+  "custom-components": [],
+  "precision-sheet-leveling": [],
+};
+
+const PRECISION_SLUG: ProductSlug = "precision-sheet-leveling";
+const CUSTOM_SLUG: ProductSlug = "custom-components";
+
+function getDisabledProducts(selected: string[]): Set<string> {
+  const disabled = new Set<string>();
+  for (const slug of selected) {
+    for (const incompatible of INCOMPATIBLE[slug as ProductSlug] ?? []) {
+      disabled.add(incompatible);
+    }
+  }
+  for (const slug of selected) {
+    disabled.delete(slug);
+  }
+  return disabled;
+}
+
+function getProductLabel(slug: string): string {
+  return PRODUCTS.find((p) => p.slug === slug)?.name ?? slug;
+}
+
 const initialForm: QuoteFormValues = {
   products: [],
   material: "",
@@ -37,6 +82,7 @@ const initialForm: QuoteFormValues = {
   quantityUnit: "pcs",
   deadline: "standard",
   additionalRequirements: "",
+  customComponentNote: "",
   name: "",
   companyName: "",
   phone: "",
@@ -53,6 +99,37 @@ export function GetQuotePage() {
   >("idle");
   const [waLink, setWaLink] = useState<string | undefined>();
   const [stepError, setStepError] = useState<string | null>(null);
+  const [precisionHintVisible, setPrecisionHintVisible] = useState(false);
+  const [incompatMessage, setIncompatMessage] = useState<string | null>(null);
+  const [customComponentNoteError, setCustomComponentNoteError] = useState<
+    string | null
+  >(null);
+
+  const disabledProducts = useMemo(
+    () => getDisabledProducts(form.products),
+    [form.products]
+  );
+
+  const hasCustomSelected = form.products.includes(CUSTOM_SLUG);
+  const customSelectedAlone =
+    hasCustomSelected && form.products.length === 1;
+
+  const selectionSummary =
+    form.products.length > 1
+      ? `Selected: ${form.products.map(getProductLabel).join(" + ")}`
+      : null;
+
+  useEffect(() => {
+    if (!precisionHintVisible) return;
+    const timer = window.setTimeout(() => setPrecisionHintVisible(false), 4000);
+    return () => window.clearTimeout(timer);
+  }, [precisionHintVisible]);
+
+  useEffect(() => {
+    if (!incompatMessage) return;
+    const timer = window.setTimeout(() => setIncompatMessage(null), 3000);
+    return () => window.clearTimeout(timer);
+  }, [incompatMessage]);
 
   const specsComplete =
     form.material.trim() !== "" && form.thickness.trim().length >= 1;
@@ -62,13 +139,53 @@ export function GetQuotePage() {
     "Hi, I need a quote for metal products."
   );
 
-  function toggleProduct(slug: string) {
-    setForm((prev) => ({
-      ...prev,
-      products: prev.products.includes(slug)
-        ? prev.products.filter((p) => p !== slug)
-        : [...prev.products, slug],
-    }));
+  function handleProductClick(slug: string) {
+    setPrecisionHintVisible(false);
+    setIncompatMessage(null);
+
+    if (disabledProducts.has(slug)) {
+      setIncompatMessage("Not compatible with your current selection");
+      return;
+    }
+
+    const isSelected = form.products.includes(slug);
+
+    if (!isSelected && slug === PRECISION_SLUG && form.products.length === 0) {
+      setPrecisionHintVisible(true);
+      return;
+    }
+
+    if (isSelected) {
+      let next = form.products.filter((p) => p !== slug);
+      if (next.length === 1 && next[0] === PRECISION_SLUG) {
+        next = [];
+      }
+      if (slug === CUSTOM_SLUG) {
+        updateField("customComponentNote", "");
+        setCustomComponentNoteError(null);
+      }
+      updateField("products", next);
+      return;
+    }
+
+    updateField("products", [...form.products, slug]);
+  }
+
+  function validateStep1(): boolean {
+    if (form.products.length === 0) {
+      setStepError("Please select at least one product.");
+      return false;
+    }
+    if (
+      customSelectedAlone &&
+      form.customComponentNote?.trim() === ""
+    ) {
+      setCustomComponentNoteError("Please describe your requirement");
+      return false;
+    }
+    setCustomComponentNoteError(null);
+    setStepError(null);
+    return true;
   }
 
   function updateField<K extends keyof QuoteFormValues>(
@@ -253,30 +370,43 @@ export function GetQuotePage() {
                 {PRODUCTS.map((product) => {
                   const Icon = getProductIcon(product.icon);
                   const selected = form.products.includes(product.slug);
+                  const disabled = disabledProducts.has(product.slug);
                   return (
                     <button
                       key={product.slug}
                       type="button"
-                      onClick={() => toggleProduct(product.slug)}
-                      className="relative rounded-xl border p-4 text-left transition-all"
+                      onClick={() => handleProductClick(product.slug)}
+                      className={`relative rounded-xl border p-4 text-left transition-all ${
+                        disabled
+                          ? "cursor-not-allowed opacity-40"
+                          : selected
+                            ? ""
+                            : "hover:border-[#E8521A]"
+                      }`}
                       style={{
                         backgroundColor: selected ? "#1A1A1A" : "#111111",
                         borderColor: selected ? "#E8521A" : "#2A2A2A",
                       }}
                     >
-                      {selected && (
+                      {selected && !disabled && (
                         <Check
                           className="absolute top-3 right-3 size-5"
                           style={{ color: "#E8521A" }}
                         />
                       )}
+                      {disabled && (
+                        <Lock
+                          className="absolute top-3 right-3 size-4"
+                          style={{ color: "#666666" }}
+                        />
+                      )}
                       <Icon
                         className="mb-2 size-6"
-                        style={{ color: "#E8521A" }}
+                        style={{ color: disabled ? "#666666" : "#E8521A" }}
                       />
                       <p
                         className="font-bold"
-                        style={{ color: "#FFFFFF" }}
+                        style={{ color: disabled ? "#666666" : "#FFFFFF" }}
                       >
                         {product.name}
                       </p>
@@ -284,10 +414,88 @@ export function GetQuotePage() {
                   );
                 })}
               </div>
+
+              <AnimatePresence>
+                {precisionHintVisible && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.2 }}
+                    className="mt-4 rounded-xl border p-4 text-sm"
+                    style={{
+                      backgroundColor: "#111111",
+                      borderColor: "#E8521A",
+                      color: "#A0A0A0",
+                    }}
+                  >
+                    Precision Sheet Leveling works best alongside another
+                    process. Please select at least one other product first.
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {incompatMessage && (
+                <p className="mt-3 text-sm" style={{ color: "#A0A0A0" }}>
+                  {incompatMessage}
+                </p>
+              )}
+
+              {selectionSummary && (
+                <p className="mt-4 text-sm" style={{ color: "#A0A0A0" }}>
+                  {selectionSummary}
+                </p>
+              )}
+
+              <AnimatePresence>
+                {hasCustomSelected && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.25, ease: "easeInOut" }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pt-4">
+                      <Label style={{ color: "#A0A0A0" }}>
+                        {customSelectedAlone
+                          ? "Describe your custom component requirement *"
+                          : "Any custom component notes? (optional)"}
+                      </Label>
+                      <Textarea
+                        rows={4}
+                        className="mt-1.5 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                        placeholder={
+                          customSelectedAlone
+                            ? "Please describe the product you want to customize — material, shape, application, quantity, any reference dimensions or drawings..."
+                            : "Describe any customization needed for your selected products..."
+                        }
+                        value={form.customComponentNote ?? ""}
+                        onChange={(e) => {
+                          updateField("customComponentNote", e.target.value);
+                          if (e.target.value.trim()) {
+                            setCustomComponentNoteError(null);
+                          }
+                        }}
+                      />
+                      {customComponentNoteError && (
+                        <p className="mt-2 text-sm text-red-400">
+                          {customComponentNoteError}
+                        </p>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {stepError && step === 0 && (
+                <p className="mt-4 text-sm text-red-400">{stepError}</p>
+              )}
+
               <div className="mt-8 flex justify-end">
                 <Button
                   onClick={() => {
-                    setStepError(null);
+                    if (!validateStep1()) return;
                     setStep(1);
                   }}
                   disabled={form.products.length === 0}
