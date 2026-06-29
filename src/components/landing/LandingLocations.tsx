@@ -10,15 +10,13 @@ const CITIES = [
   {
     name: "Pune",
     ghost: "PUNE",
-    unitCount: "5 Manufacturing Units",
+    unitCount: "3 Manufacturing Units",
     branches: [
       { name: "Jai Shree Metal Perforators", area: "Talawade" },
       { name: "Shree Perforators", area: "Talawade" },
       { name: "Shree Weld Mesh", area: "Talawade" },
-      { name: "Dev Shree Metal Perforators", area: "Talawade" },
-      { name: "Chandan Metal Perforators", area: "Pisoli" },
     ],
-    areas: "TALAWADE • PISOLI",
+    areas: "TALAWADE",
   },
   {
     name: "Mumbai",
@@ -66,7 +64,7 @@ export function LandingLocations() {
           {...reveal(0.1)}
           className="mt-6 text-center text-5xl font-black tracking-tight md:text-7xl"
         >
-          <span className="text-white">8 Units. 2 Cities. </span>
+          <span className="text-white">6 Units. 2 Cities. </span>
           <span className="bg-gradient-to-r from-[#E8521A] via-[#FF6B35] to-[#E8521A] bg-clip-text text-transparent">
             All of India.
           </span>
@@ -138,7 +136,7 @@ export function LandingLocations() {
           {...reveal(0.3)}
           className="mt-12 text-center text-sm text-[#8A8A8A]"
         >
-          Serving clients across Maharashtra and Pan India
+          Serving clients across Maharashtra and worldwide
         </motion.p>
       </div>
     </section>

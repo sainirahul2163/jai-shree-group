@@ -9,14 +9,12 @@ const LOCATIONS = [
     name: "Pune",
     lat: 18.6469,
     lng: 73.7562,
-    units: 5,
+    units: 3,
     color: "#E8521A",
     branches: [
       "Jai Shree Metal Perforators — Talawade",
       "Shree Perforators — Talawade",
       "Shree Weld Mesh — Talawade",
-      "Dev Shree Metal Perforators — Talawade",
-      "Chandan Metal Perforators — Pisoli",
     ],
     description:
       "Our primary manufacturing hub in Maharashtra's industrial heartland.",

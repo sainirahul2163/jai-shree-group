@@ -33,7 +33,10 @@ import {
   type ContactFormValues,
 } from "@/lib/validations";
 
-const WORKING_HOURS = "Mon–Sat, 9:00 AM – 6:00 PM";
+const WORKING_HOURS = [
+  { days: "Mon – Wed, Fri – Sun", hours: "9:00 AM – 6:00 PM", closed: false },
+  { days: "Thursday", hours: "Closed (Holiday)", closed: true },
+] as const;
 const SUBMIT_TIMEOUT_MS = 10_000;
 
 export function ContactPage() {
@@ -178,13 +181,33 @@ export function ContactPage() {
             </div>
 
             <div
-              className="flex items-center gap-3 rounded-xl border p-5"
+              className="rounded-xl border p-5"
               style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
             >
-              <Clock className="size-5" style={{ color: "#E8521A" }} />
-              <span className="text-base" style={{ color: "#A0A0A0" }}>
-                {WORKING_HOURS}
-              </span>
+              <div className="flex items-start gap-3">
+                <Clock className="mt-0.5 size-5 shrink-0" style={{ color: "#E8521A" }} />
+                <div className="space-y-2">
+                  {WORKING_HOURS.map((row) => (
+                    <div
+                      key={row.days}
+                      className="flex flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
+                    >
+                      <span
+                        className="text-base font-medium"
+                        style={{ color: row.closed ? "#E8521A" : "#FFFFFF" }}
+                      >
+                        {row.days}
+                      </span>
+                      <span
+                        className="text-base"
+                        style={{ color: row.closed ? "#E8521A" : "#A0A0A0" }}
+                      >
+                        {row.hours}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <div>

@@ -176,10 +176,10 @@ export function GroupPage() {
   const { group: section } = HOME_SECTIONS;
 
   const overviewStats = [
-    { value: "8", label: "Manufacturing Units" },
+    { value: "6", label: "Manufacturing Units" },
     { value: "2", label: "Cities" },
     { value: "50+", label: "Years Experience" },
-    { value: "Pan India", label: "Delivery Network" },
+    { value: "Global Delivery", label: "Delivery Network" },
   ];
 
   return (
@@ -187,7 +187,7 @@ export function GroupPage() {
       <PageHero
         label={section.label}
         title="Our Group"
-        subtitle="8 manufacturing units strategically located across Pune and Mumbai"
+        subtitle="6 manufacturing units strategically located across Pune and Mumbai"
       />
 
       {/* Overview */}
@@ -211,9 +211,9 @@ export function GroupPage() {
               className="mt-4 text-base leading-relaxed"
               style={{ color: "#A0A0A0" }}
             >
-              With facilities in Talawade and Pisoli (Pune) and Bhayander,
+              With facilities in Talawade (Pune) and Bhayander,
               Masjid Bunder, and Palghar (Mumbai region), we deliver faster turnaround
-              and Pan India logistics to clients across every major industrial hub.
+              and global logistics to clients across every major industrial hub.
             </p>
           </motion.div>
 

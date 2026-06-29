@@ -72,7 +72,6 @@ export default async function AdminLeadDetailPage({
               ],
               ["Material", lead.material ?? "—"],
               ["Thickness", lead.thickness ?? "—"],
-              ["Size", lead.size ?? "—"],
               ["Quantity", lead.quantity ?? "—"],
               ["Deadline", lead.deadline ?? "—"],
               ["City", lead.city ?? "—"],

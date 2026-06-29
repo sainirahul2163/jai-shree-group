@@ -10,7 +10,7 @@ import { COMPANY } from "@/lib/constants";
 const TRUST_BADGES = [
   "Response within 24 hours",
   `${COMPANY.iso} Certified`,
-  "Pan India Delivery",
+  "Global Delivery",
 ] as const;
 
 export function CtaSection() {
@@ -44,7 +44,7 @@ export function CtaSection() {
             className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed"
             style={{ color: "#A0A0A0" }}
           >
-            Tell us your requirement and get a quote within 24 hours. Pan India
+            Tell us your requirement and get a quote within 24 hours. Global
             delivery from our Pune &amp; Mumbai facilities.
           </p>
 

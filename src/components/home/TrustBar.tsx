@@ -5,7 +5,7 @@ import { motion, useInView } from "framer-motion";
 
 const TRUST_STATS = [
   { value: 50, suffix: "+", label: "Years of Experience", animate: true },
-  { value: 8, suffix: "", label: "Manufacturing Units", animate: true },
+  { value: 6, suffix: "", label: "Manufacturing Units", animate: true },
   {
     value: null,
     display: "ISO 9001:2015",
@@ -14,8 +14,8 @@ const TRUST_STATS = [
   },
   {
     value: null,
-    display: "Pan India",
-    label: "Delivery",
+    display: "Global Delivery",
+    label: "",
     animate: false,
   },
 ] as const;

@@ -10,9 +10,8 @@ type ValuePart = { num: number; pad?: number } | { text: string };
 const ROWS: { label: string; parts: ValuePart[] }[] = [
   { label: "Max Perforation", parts: [{ num: 12 }, { text: "mm" }] },
   { label: "Max Laser Cutting", parts: [{ num: 14 }, { text: "mm" }] },
-  { label: "Max Sheet Size", parts: [{ num: 2200 }, { text: "×" }, { num: 4000 }] },
   { label: "Wire Mesh Range", parts: [{ num: 2 }, { text: "—" }, { num: 400 }] },
-  { label: "Manufacturing Units", parts: [{ num: 8, pad: 2 }] },
+  { label: "Manufacturing Units", parts: [{ num: 6, pad: 2 }] },
   { label: "Years of Mastery", parts: [{ num: 50 }, { text: "+" }] },
 ];
 

@@ -23,12 +23,11 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
     tagline: "Precision perforated to your exact specifications",
     overview: [
       "Manufactured at Shree Perforators and Jai Shree Metal Perforators facilities in Pune and Mumbai, our perforated sheets meet the highest quality standards under ISO 9001:2015. Jai Shree Group manufactures perforated sheets using advanced CNC and Turret Punching technology. With over 50 years of experience, we deliver precision-perforated sheets in any metal, any hole pattern, and any size.",
-      "Our maximum width handling capacity is 2200mm × 4000mm, with punching capability up to 12mm thickness. We specialize in bow and warpage control — ensuring perfectly flat sheets every time.",
+      "Our punching capability extends up to 12mm thickness. We specialize in bow and warpage control — ensuring perfectly flat sheets every time.",
       "From standard round holes to complex custom patterns, our R&D team develops special dies and tools for any customer specification.",
     ],
     specifications: [
       { label: "Max Thickness", value: "Up to 12mm" },
-      { label: "Max Sheet Size", value: "2200mm × 4000mm" },
       { label: "Hole Diameter", value: "Up to thickness of metal" },
       {
         label: "Categories",
@@ -39,7 +38,6 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
     strengths: [
       "Punch up to 12mm thickness in any metal",
       "Hole size up to the thickness of material",
-      "Max width handling: 2200mm × 4000mm",
       "In-house Shearing, Bending and Leveling",
       "Specialization in bow/warpage control",
       "Prompt development of custom perforation jobs",
@@ -82,12 +80,8 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
         a: "Yes, our R&D team develops special dies and tools for any custom hole pattern, shape, or configuration as per your drawing.",
       },
       {
-        q: "What is the maximum sheet size available?",
-        a: "Our maximum width handling capacity is 2200mm (W) × 4000mm (L). Custom sizes can be arranged.",
-      },
-      {
         q: "Do you supply perforated sheets in Pune and Mumbai?",
-        a: "Yes, we have 5 manufacturing units in Pune (Talawade, Pisoli) and 3 units in Mumbai (Masjid Bunder, Bhayander, Palghar).",
+        a: "Yes, we have 3 manufacturing units in Pune (Talawade) and 3 units in Mumbai (Masjid Bunder, Bhayander, Palghar).",
       },
     ],
     metaTitle: "Perforated Sheet Manufacturer Pune Mumbai | Jai Shree",
@@ -154,7 +148,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
       },
       {
         q: "Do you offer laser cutting services in Pune?",
-        a: "Yes, our laser cutting facility is located at Talawade, Pune with the latest fiber laser technology. We also serve Mumbai, Nashik, and pan India.",
+        a: "Yes, our laser cutting facility is located at Talawade, Pune with the latest fiber laser technology. We also serve Mumbai, Nashik, and worldwide.",
       },
       {
         q: "How long does a laser cutting job take?",
@@ -180,18 +174,15 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
     tagline: "Versatile expanded metal sheets for every application",
     overview: [
       "Manufactured at Shree Perforators and Jai Shree Metal Perforators facilities in Pune and Mumbai, our expanded metal products meet the highest quality standards under ISO 9001:2015. Jai Shree Group manufactures expanded metal sheets using the slitting-and-stretching process — creating holes from a single sheet of metal with minimum waste and maximum strength.",
-      "Available in Diamond, Square, Hexagonal, Grating, and Half Round patterns in standard widths of 900mm, 1250mm, and 1500mm up to 6mm maximum thickness.",
-      "Expanded metal offers excellent strength-to-weight ratio, anti-skid properties, and can be further beautified with powder coating, anodizing, or hot dip coating.",
+      "Available in Diamond, Square, Hexagonal, Grating, and Half Round patterns up to 6mm maximum thickness.",
+      "Expanded metal offers excellent strength-to-weight ratio and anti-skid properties for safety and industrial applications.",
     ],
     specifications: [
-      { label: "Standard Widths", value: "900mm, 1250mm, 1500mm" },
       { label: "Max Thickness", value: "Up to 6mm" },
       {
         label: "Patterns",
         value: "Diamond, Square, Hexagonal, Grating, Half Round",
       },
-      { label: "Custom Lengths", value: "Available in coil form or cut lengths" },
-      { label: "Finishing", value: "Powder coating, anodizing, hot dip coating" },
     ],
     strengths: [
       "Minimum waste — no material punched out",
@@ -199,7 +190,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
       "Manufactured from single piece of metal",
       "Can be welded, deep drawn, and folded",
       "Anti-skid knuckle surface for safety applications",
-      "Special designs and sizes at customer request",
+      "Special designs at customer request",
     ],
     applications: [
       "Architectural Decoration",
@@ -223,16 +214,12 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
         a: "We manufacture Diamond, Square, Hexagonal, Grating, and Half Round patterns. Special designs are also available at customer request.",
       },
       {
-        q: "What are the standard sizes for expanded metal sheets?",
-        a: "Standard widths are 900mm, 1250mm, and 1500mm. Custom lengths are available, and sheets can also be supplied in coil form. Maximum thickness is 6mm.",
+        q: "What is the maximum thickness for expanded metal sheets?",
+        a: "Maximum thickness is 6mm. Sheets can also be supplied in coil form with custom lengths available on request.",
       },
       {
         q: "What is the difference between expanded metal and perforated sheet?",
         a: "Expanded metal is made by slitting and stretching (no waste), while perforated sheets are made by punching holes (material removed). Expanded metal is generally more cost-effective and has better strength-to-weight ratio.",
-      },
-      {
-        q: "Can expanded metal be powder coated?",
-        a: "Yes, expanded metal can be powder coated, anodized, or hot dip coated for enhanced aesthetics and corrosion resistance.",
       },
     ],
     metaTitle: "Expanded Metal Manufacturers Pune Mumbai | Jai Shree",
@@ -305,7 +292,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
       },
       {
         q: "Do you offer turret punching job work in Pune?",
-        a: "Yes, we offer CNC turret punching job work from our Talawade, Pune facility. We serve clients across Pune, Mumbai, and pan India.",
+        a: "Yes, we offer CNC turret punching job work from our Talawade, Pune facility. We serve clients across Pune, Mumbai, and worldwide.",
       },
     ],
     metaTitle: "CNC Turret Punching Services Pune | Jai Shree Group",
@@ -331,7 +318,6 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
     ],
     specifications: [
       { label: "Max Thickness", value: "Up to 5mm" },
-      { label: "Max Width", value: "1500mm" },
       { label: "Process", value: "Roller leveling, tension leveling" },
       { label: "Application", value: "Post-perforation, post-laser cutting" },
       { label: "Materials", value: "All metals" },

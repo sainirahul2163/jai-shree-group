@@ -16,7 +16,7 @@ const ROW_TWO = [
   "ISO 9001:2015",
   "CNC PRECISION",
   "FIBER LASER",
-  "PAN INDIA",
+  "GLOBAL DELIVERY",
   "SINCE 1970",
 ];
 

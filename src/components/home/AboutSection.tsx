@@ -54,7 +54,7 @@ export function AboutSection() {
               style={{ color: "#A0A0A0" }}
             >
               Operating as Shree Perforators and Jai Shree Metal Perforators
-              across our 8 manufacturing units in Pune and Mumbai, we bring over
+              across our 6 manufacturing units in Pune and Mumbai, we bring over
               50 years of precision to every order.
             </p>
           </div>

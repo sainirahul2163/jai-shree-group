@@ -110,7 +110,7 @@ export function LandingCTA() {
             className="mt-12 text-xs uppercase tracking-[0.2em] text-white/40"
           >
             24hr Response <span className="text-[#E8521A]">◆</span> ISO
-            9001:2015 <span className="text-[#E8521A]">◆</span> Pan India
+            9001:2015 <span className="text-[#E8521A]">◆</span> Global Delivery
             Delivery
           </motion.p>
         </div>

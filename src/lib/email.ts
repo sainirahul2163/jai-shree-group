@@ -76,7 +76,6 @@ export function buildQuoteEmailHtml(data: {
   products: string[];
   material: string;
   thickness: string;
-  dimensions: string;
   quantity: string;
   quantityUnit: string;
   deadline: string;
@@ -92,7 +91,6 @@ export function buildQuoteEmailHtml(data: {
     fieldRow("Products", data.products.join(", ")),
     fieldRow("Material", data.material),
     fieldRow("Thickness", data.thickness),
-    fieldRow("Dimensions", data.dimensions),
     fieldRow("Quantity", `${data.quantity} ${data.quantityUnit}`),
     fieldRow("Deadline", data.deadline),
     fieldRow("Additional Requirements", data.additionalRequirements ?? ""),

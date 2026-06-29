@@ -51,7 +51,7 @@ export const ABOUT_TIMELINE_DETAILED = [
 
 export const ABOUT_STATS = [
   { value: "50+", label: "Years of Experience" },
-  { value: "8", label: "Manufacturing Units" },
+  { value: "6", label: "Manufacturing Units" },
   { value: "ISO", label: "9001:2015 Certified" },
   { value: "12mm", label: "Max Perforation" },
   { value: "14mm", label: "Max Laser Cutting" },
@@ -85,8 +85,8 @@ export const ABOUT_STRENGTHS = [
   },
   {
     icon: "Truck",
-    title: "Pan India delivery",
-    description: "Procurement and delivery network across India.",
+    title: "Global delivery",
+    description: "Procurement and delivery network worldwide.",
   },
   {
     icon: "Handshake",

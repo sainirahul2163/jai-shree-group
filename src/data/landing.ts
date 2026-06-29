@@ -16,15 +16,9 @@ export type LandingBentoItem = {
 
 export const LANDING_STATS = [
   { value: 50, suffix: "+", label: "Years of Experience", animate: true },
-  { value: 8, suffix: "", label: "Manufacturing Units", animate: true },
+  { value: 6, suffix: "", label: "Manufacturing Units", animate: true },
   { value: null, display: "12mm", label: "Max Perforation Thickness", animate: false },
   { value: null, display: "14mm", label: "Max Laser Thickness", animate: false },
-  {
-    value: null,
-    display: "2200×4000",
-    label: "Max Sheet Size (mm)",
-    animate: false,
-  },
   { value: null, display: "2-400", label: "Wire Mesh Range", animate: false },
 ] as const;
 
@@ -61,7 +55,7 @@ export const LANDING_PROCESS_STEPS = [
     step: 5,
     icon: "Truck",
     title: "QC & Delivery",
-    description: "Inspection + Pan India delivery",
+    description: "Inspection + global delivery",
   },
 ] as const;
 
@@ -92,7 +86,7 @@ export const LANDING_TESTIMONIALS = [
 export const LANDING_MARQUEE_ITEMS = [
   ...PRODUCTS.map((p) => p.name),
   COMPANY.iso,
-  "Pan India Delivery",
+  "Global Delivery",
   "CNC Perforation",
   "Fiber Laser Cutting",
   "Bow Control Specialists",

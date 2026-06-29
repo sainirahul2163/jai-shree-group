@@ -14,7 +14,7 @@ export const COMPANY = {
     "Gat No. 94, Near Sonawane Wasti, Jyotibanagar, Talawade, Pune - 411062",
   website: "https://jaishreegroup.in",
   locations: ["Pune (Talawade)", "Mumbai (Bhayander, Palghar)"],
-  manufacturingUnits: 8,
+  manufacturingUnits: 6,
 } as const;
 
 export const BROCHURE_URL = "/brochure/jai-shree-brochure.pdf";
@@ -69,28 +69,6 @@ export const BRANCHES = [
     website: "www.shreeperforators.com",
   },
   {
-    name: "Dev Shree Metal Perforators",
-    slug: "dev-shree-metal-perforators",
-    area: "Talawade",
-    city: "Pune",
-    address:
-      "Gat no. 258, Opp. National Weigh Bridge, Jyotibanagar, Talawade, Pune- 411062",
-    phone: "+91 9890797298",
-    email: "devshreemetalperforators@gmail.com",
-    website: "www.shreeperforators.com",
-  },
-  {
-    name: "Chandan Metal Perforators",
-    slug: "chandan-metal-perforators",
-    area: "Pisoli",
-    city: "Pune",
-    address:
-      "S.No.33, Kondhwa Pisoli Road, Opp. Pune Weigh Bridge, Pisoli, Tal. Haveli, Pune",
-    phone: "+91 9822216242",
-    email: "chandanmetalperforators@gmail.com",
-    website: "www.shreeperforators.com",
-  },
-  {
     name: "Jai Shree Filtration",
     slug: "jai-shree-filtration",
     area: "Masjid Bunder",
@@ -130,11 +108,10 @@ export const PRODUCTS = [
     name: "Perforated Sheets",
     slug: "perforated-sheets",
     description:
-      "CNC & Turret perforation in all metals. Up to 12mm thickness, 2200×4000mm max size.",
+      "CNC & Turret perforation in all metals. Up to 12mm thickness.",
     icon: "Grid3X3",
     specs: {
       maxThickness: "12mm",
-      maxSize: "2200×4000mm",
       process: "CNC / Turret",
     },
     materials: [
@@ -169,7 +146,7 @@ export const PRODUCTS = [
     name: "Expanded Metal",
     slug: "expanded-metal",
     description:
-      "Diamond, square & hexagonal patterns. Up to 6mm thick. Widths 900/1250/1500mm.",
+      "Diamond, square & hexagonal patterns. Up to 6mm thick.",
     icon: "Diamond",
     specs: {
       maxThickness: "6mm",
@@ -251,9 +228,9 @@ export const MATERIALS = [
 
 export const STATS = [
   { value: "50+", label: "Years of Experience" },
-  { value: "8", label: "Manufacturing Units" },
+  { value: "6", label: "Manufacturing Units" },
   { value: "ISO", label: "9001:2015 Certified" },
-  { value: "PAN", label: "India Delivery" },
+  { value: "Global", label: "Delivery" },
 ] as const;
 
 export const INDUSTRIES = [
@@ -323,7 +300,7 @@ export const KEY_DIFFERENTIATORS = [
   "100% privately owned, zero debt company",
   "CNC + Fiber Laser technology",
   "Custom solutions as per drawing/specs",
-  "Pan India delivery",
+  "Global delivery",
   "Bow/warpage control specialization",
   "In-house Shearing, Bending, Leveling",
   "R&D team for special dies, tools, machinery",
@@ -437,7 +414,6 @@ export const HOME_SECTIONS = {
     highlights: [
       { value: "12mm", label: "Max Perforation Thickness" },
       { value: "14mm", label: "Max Laser Cutting Thickness" },
-      { value: "2200×4000mm", label: "Max Sheet Size" },
       { value: "2–400 Mesh", label: "Wire Mesh Range" },
     ],
     cta: { label: "Read Full Story", href: "/about" },
@@ -454,7 +430,7 @@ export const HOME_SECTIONS = {
   group: {
     id: "group",
     label: "OUR GROUP",
-    heading: "8 Manufacturing Units",
+    heading: "6 Manufacturing Units",
     subtext:
       "Strategically located across Pune and Mumbai for faster delivery across India",
     mapCaption:
@@ -510,7 +486,7 @@ export const PROCESS_STEPS = [
     step: 5,
     icon: "Truck",
     title: "QC & Delivery",
-    description: "Inspection + Pan India delivery",
+    description: "Inspection + global delivery",
   },
 ] as const;
 

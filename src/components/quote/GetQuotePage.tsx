@@ -33,7 +33,6 @@ const initialForm: QuoteFormValues = {
   products: [],
   material: "",
   thickness: "",
-  dimensions: "",
   quantity: "",
   quantityUnit: "pcs",
   deadline: "standard",
@@ -56,7 +55,7 @@ export function GetQuotePage() {
   const [stepError, setStepError] = useState<string | null>(null);
 
   const specsComplete =
-    form.material.trim() !== "" && form.dimensions.trim().length >= 5;
+    form.material.trim() !== "" && form.thickness.trim().length >= 1;
 
   const directWhatsAppUrl = whatsappUrl(
     COMPANY.whatsapp,
@@ -317,9 +316,8 @@ export function GetQuotePage() {
                 Your Requirements
               </h2>
               <p className="mb-6 text-sm" style={{ color: "#A0A0A0" }}>
-                Tell us the material and what you need — size, thickness, and
-                quantity can all go in one message. Our team will follow up for
-                any missing details.
+                Tell us the material, thickness, and quantity. Our team will
+                follow up for any missing details.
               </p>
 
               <div>
@@ -343,15 +341,22 @@ export function GetQuotePage() {
               </div>
 
               <div>
-                <Label style={{ color: "#A0A0A0" }}>
-                  Size, thickness &amp; quantity *
-                </Label>
-                <Textarea
-                  rows={4}
-                  className="mt-1.5 border-[#2A2A2A] bg-[#1A1A1A] text-white"
-                  placeholder="e.g. SS304 perforated sheet, 2mm thick, 1000×2000mm, 50 pcs"
-                  value={form.dimensions}
-                  onChange={(e) => updateField("dimensions", e.target.value)}
+                <Label style={{ color: "#A0A0A0" }}>Thickness *</Label>
+                <Input
+                  className="mt-1.5 h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                  placeholder="e.g. 2mm"
+                  value={form.thickness}
+                  onChange={(e) => updateField("thickness", e.target.value)}
+                />
+              </div>
+
+              <div>
+                <Label style={{ color: "#A0A0A0" }}>Quantity</Label>
+                <Input
+                  className="mt-1.5 h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                  placeholder="e.g. 50 pcs"
+                  value={form.quantity}
+                  onChange={(e) => updateField("quantity", e.target.value)}
                 />
               </div>
 
@@ -404,7 +409,7 @@ export function GetQuotePage() {
                   onClick={() => {
                     if (!specsComplete) {
                       setStepError(
-                        "Please select a material and describe your requirements."
+                        "Please select a material and enter thickness."
                       );
                       return;
                     }

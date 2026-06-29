@@ -11,7 +11,7 @@ import { COMPANY } from "@/lib/constants";
 
 const MICRO_STATS = [
   { value: "50+ Years", label: "Experience" },
-  { value: "8 Units", label: "Manufacturing" },
+  { value: "6 Units", label: "Manufacturing" },
   { value: "ISO Certified", label: "Quality" },
 ];
 

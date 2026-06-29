@@ -22,7 +22,7 @@ const MILESTONES = [
 const STRENGTHS = [
   "100% privately owned. Zero debt.",
   "In-house R&D for special dies & tooling.",
-  "Pan India delivery from Pune & Mumbai.",
+  "Global delivery from Pune & Mumbai.",
 ];
 
 export function LandingStory() {

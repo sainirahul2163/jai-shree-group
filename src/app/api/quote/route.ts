@@ -35,7 +35,6 @@ export async function POST(request: Request) {
       products,
       material,
       thickness,
-      dimensions,
       quantity,
       quantityUnit,
       deadline,
@@ -58,7 +57,7 @@ export async function POST(request: Request) {
         products_selected: productsSelected,
         material: material || null,
         thickness: thickness || null,
-        size: dimensions || null,
+        size: null,
         quantity: quantityLabel,
         deadline: deadline || null,
         message: additionalRequirements || null,
@@ -66,7 +65,6 @@ export async function POST(request: Request) {
           products: productsSelected,
           material,
           thickness,
-          dimensions,
           quantity,
           quantityUnit,
           deadline,
@@ -111,7 +109,6 @@ export async function POST(request: Request) {
             <p><strong>Products:</strong> ${productsSelected.join(", ") || "Not specified"}</p>
             <p><strong>Material:</strong> ${material || "Not specified"}</p>
             <p><strong>Thickness:</strong> ${thickness || "Not specified"}</p>
-            <p><strong>Size:</strong> ${dimensions || "Not specified"}</p>
             <p><strong>Quantity:</strong> ${quantityLabel || "Not specified"}</p>
             <p><strong>Deadline:</strong> ${deadline || "Not specified"}</p>
             <p><strong>Additional requirements:</strong> ${additionalRequirements || "None"}</p>

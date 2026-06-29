@@ -14,7 +14,6 @@ const SHOWCASE_PRODUCTS = [
     tagline: "CNC Precision Perforation",
     specs: [
       { label: "Max Thickness", value: "12mm" },
-      { label: "Max Size", value: "2200×4000mm" },
       { label: "Materials", value: "SS / MS / GI / AL" },
     ],
     pattern: "dots",
@@ -38,7 +37,6 @@ const SHOWCASE_PRODUCTS = [
     tagline: "Diamond & Hexagonal Patterns",
     specs: [
       { label: "Max Thickness", value: "6mm" },
-      { label: "Widths", value: "900 / 1250 / 1500mm" },
       { label: "Patterns", value: "Diamond / Square / Hex" },
     ],
     pattern: "diamond",
@@ -62,7 +60,6 @@ const SHOWCASE_PRODUCTS = [
     tagline: "Zero Bow. Zero Warpage.",
     specs: [
       { label: "Max Thickness", value: "5mm" },
-      { label: "Max Width", value: "1500mm" },
       { label: "Tolerance", value: "As per spec" },
     ],
     pattern: "lines",

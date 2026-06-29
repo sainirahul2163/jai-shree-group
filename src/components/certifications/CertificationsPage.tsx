@@ -10,7 +10,7 @@ import { COMPANY } from "@/lib/constants";
 
 const BENEFITS = [
   "Documented quality management processes at every stage",
-  "Consistent product quality across all 8 manufacturing units",
+  "Consistent product quality across all 6 manufacturing units",
   "Traceability from raw material to finished product",
   "Regular internal audits and continuous improvement",
   "Customer-focused approach with negligible rejection rates",

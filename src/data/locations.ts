@@ -39,10 +39,10 @@ export const LOCATION_PAGES: Record<string, LocationPageData> = {
     metaTitle:
       "Perforated Sheet Manufacturers Pune | CNC Perforation Talawade | Jai Shree Group",
     metaDescription:
-      "Leading perforated sheet manufacturers in Pune. CNC & turret punching up to 12mm, 2200×4000mm max size. ISO 9001:2015. Talawade, Bhosari, Pisoli units. Get quote.",
+      "Leading perforated sheet manufacturers in Pune. CNC & turret punching up to 12mm. ISO 9001:2015. Talawade units. Get quote.",
     intro: [
       "Pune is India's automobile manufacturing hub — home to Tata Motors, Bajaj Auto, and hundreds of Tier-1 suppliers in PCMC. Jai Shree Group has served this ecosystem since 1997 from our Talawade facility.",
-      "With 6 manufacturing units across Talawade, Bhosari, and Pisoli, we are among the largest perforated sheet manufacturers in Pune — delivering filters, grills, screens, and custom panels to automotive, pharmaceutical, and construction industries.",
+      "With 3 manufacturing units in Talawade, we are among the leading perforated sheet manufacturers in Pune — delivering filters, grills, screens, and custom panels to automotive, pharmaceutical, and construction industries.",
     ],
     facilityName: "Jai Shree Metal Perforators — Talawade",
     facilityAddress: PUNE_ADDRESS,
@@ -62,7 +62,6 @@ export const LOCATION_PAGES: Record<string, LocationPageData> = {
     ],
     specs: [
       { label: "Max Thickness", value: "12mm" },
-      { label: "Max Size", value: "2200 × 4000mm" },
       { label: "Process", value: "CNC / Turret Punching" },
       { label: "Materials", value: "SS, MS, GI, Al, Cu, Brass" },
       { label: "Certification", value: "ISO 9001:2015" },
@@ -70,7 +69,7 @@ export const LOCATION_PAGES: Record<string, LocationPageData> = {
     faqs: [
       {
         q: "Where are your perforated sheet manufacturing units in Pune?",
-        a: "We operate 6 units in Pune at Talawade (4 units), Bhosari, and Pisoli — all within PCMC industrial areas for easy access.",
+        a: "We operate 3 units in Pune at Talawade — all within PCMC industrial areas for easy access.",
       },
       {
         q: "What is the minimum order quantity for perforated sheets in Pune?",
@@ -78,7 +77,7 @@ export const LOCATION_PAGES: Record<string, LocationPageData> = {
       },
       {
         q: "Do you deliver perforated sheets from Pune to other cities?",
-        a: "Yes, we offer Pan India delivery from our Pune facilities to Mumbai, Nashik, Bangalore, Chennai, Delhi, and all major industrial cities.",
+        a: "Yes, we offer global delivery from our Pune facilities to Mumbai, Nashik, Bangalore, Chennai, Delhi, and all major industrial cities worldwide.",
       },
     ],
   },
@@ -140,16 +139,15 @@ export const LOCATION_PAGES: Record<string, LocationPageData> = {
     metaTitle:
       "Expanded Metal Manufacturers Pune | Diamond & Hex Patterns | Jai Shree Group",
     metaDescription:
-      "Expanded metal manufacturers in Pune. Diamond, square & hexagonal patterns. Up to 6mm thick, widths 900/1250/1500mm. ISO certified. Talawade facility. Get quote.",
+      "Expanded metal manufacturers in Pune. Diamond, square & hexagonal patterns. Up to 6mm thick. ISO certified. Talawade facility. Get quote.",
     intro: [
-      "Expanded metal is essential for walkways, facades, filters, and security applications across Pune's construction and industrial sectors. Jai Shree Group manufactures expanded metal at our Dev Shree and main Talawade units.",
+      "Expanded metal is essential for walkways, facades, filters, and security applications across Pune's construction and industrial sectors. Jai Shree Group manufactures expanded metal at our Talawade units.",
       "Located in Pune's auto and engineering hub, we supply anti-skid stair treads, facade cladding, machine guards, and filtration media to builders, architects, and OEMs throughout western India.",
     ],
-    facilityName: "Dev Shree Metal Perforators — Talawade",
-    facilityAddress:
-      "Gat No. 258, Opp. National Weigh Bridge, Jyotibanagar, Talawade, Pune - 411062",
+    facilityName: "Jai Shree Metal Perforators — Talawade",
+    facilityAddress: PUNE_ADDRESS,
     mapEmbedUrl: PUNE_MAP,
-    googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Dev Shree Metal Perforators Talawade Pune")}`,
+    googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(PUNE_ADDRESS)}`,
     products: [
       "Diamond Pattern Expanded Metal",
       "Square & Hexagonal Patterns",
@@ -174,8 +172,8 @@ export const LOCATION_PAGES: Record<string, LocationPageData> = {
         a: "Yes — architectural expanded metal for facades, ceilings, and decorative panels is a major application we serve across Pune and Maharashtra.",
       },
       {
-        q: "Can expanded metal be supplied in custom sheet sizes from Pune?",
-        a: "Yes, we cut to custom dimensions. Standard widths are 900mm, 1250mm, and 1500mm with lengths as per requirement.",
+        q: "What thickness options are available for expanded metal from Pune?",
+        a: "We manufacture expanded metal up to 6mm thickness. Sheets can also be supplied in coil form with custom lengths available on request.",
       },
     ],
   },
@@ -207,7 +205,6 @@ export const LOCATION_PAGES: Record<string, LocationPageData> = {
     industries: ["Petrochemical", "Construction", "Pharmaceutical", "Export"],
     specs: [
       { label: "Max Thickness", value: "12mm" },
-      { label: "Max Size", value: "2200 × 4000mm" },
       { label: "Process", value: "CNC / Turret Punching" },
       { label: "Materials", value: "SS, MS, GI, Al, Cu, Brass" },
       { label: "Certification", value: "ISO 9001:2015" },
@@ -223,7 +220,7 @@ export const LOCATION_PAGES: Record<string, LocationPageData> = {
       },
       {
         q: "Can you deliver perforated sheets from Mumbai to Pune and other cities?",
-        a: "Yes, we offer Pan India delivery from both our Mumbai and Pune manufacturing networks.",
+        a: "Yes, we offer global delivery from both our Mumbai and Pune manufacturing networks.",
       },
     ],
   },

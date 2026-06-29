@@ -16,7 +16,7 @@ const STEPS = [
   { num: "02", title: "Review & Drawing", desc: "We review specs and drawings" },
   { num: "03", title: "Material Selection", desc: "Best metal for your use" },
   { num: "04", title: "CNC Manufacturing", desc: "Precision CNC production" },
-  { num: "05", title: "QC & Delivery", desc: "Inspection + Pan India delivery" },
+  { num: "05", title: "QC & Delivery", desc: "Inspection + global delivery" },
 ];
 
 export function LandingProcess() {

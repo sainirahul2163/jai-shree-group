@@ -5,9 +5,9 @@ import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 
 export const metadata: Metadata = {
   title:
-    "Our Group | 8 Manufacturing Units Pune & Mumbai | Jai Shree Group",
+    "Our Group | 6 Manufacturing Units Pune & Mumbai | Jai Shree Group",
   description:
-    "Jai Shree Group operates 8 manufacturing units across Pune (Talawade, Pisoli) and Mumbai (Bhayander, Masjid Bunder, Palghar). Contact your nearest unit.",
+    "Jai Shree Group operates 6 manufacturing units across Pune (Talawade) and Mumbai (Bhayander, Masjid Bunder, Palghar). Contact your nearest unit.",
   alternates: {
     canonical: "https://jaishreegroup.in/group",
   },
