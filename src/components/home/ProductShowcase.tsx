@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { AnimatePresence, motion, useAnimation } from "framer-motion";
 
 const INTERVAL = 3500;
 
@@ -383,68 +383,106 @@ const PATTERN_MAP: Record<string, React.FC> = {
 
 export function ProductShowcase() {
   const [current, setCurrent] = useState(0);
-  const [progress, setProgress] = useState(0);
-  const [direction, setDirection] = useState(1);
+  const [isHovered, setIsHovered] = useState(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const progressControls = useAnimation();
 
-  const next = useCallback((dir = 1) => {
-    setDirection(dir);
-    setCurrent(
-      (prev) => (prev + dir + SHOWCASE_PRODUCTS.length) % SHOWCASE_PRODUCTS.length
-    );
-    setProgress(0);
+  const stopAutoRotate = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => next(1), INTERVAL);
-    return () => clearInterval(interval);
-  }, [next]);
+  const startAutoRotate = useCallback(() => {
+    stopAutoRotate();
+    intervalRef.current = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % SHOWCASE_PRODUCTS.length);
+    }, INTERVAL);
+  }, [stopAutoRotate]);
+
+  const restartAutoRotate = useCallback(() => {
+    if (isHovered) return;
+    startAutoRotate();
+  }, [isHovered, startAutoRotate]);
+
+  const goTo = useCallback(
+    (index: number) => {
+      setCurrent(index);
+      restartAutoRotate();
+    },
+    [restartAutoRotate]
+  );
+
+  const next = useCallback(
+    (dir = 1) => {
+      setCurrent(
+        (prev) =>
+          (prev + dir + SHOWCASE_PRODUCTS.length) % SHOWCASE_PRODUCTS.length
+      );
+      restartAutoRotate();
+    },
+    [restartAutoRotate]
+  );
 
   useEffect(() => {
-    setProgress(0);
-    const start = Date.now();
-    let rafId = 0;
+    if (isHovered) {
+      stopAutoRotate();
+    } else {
+      startAutoRotate();
+    }
+    return () => stopAutoRotate();
+  }, [isHovered, startAutoRotate, stopAutoRotate]);
 
-    const frame = () => {
-      const elapsed = Date.now() - start;
-      const pct = Math.min((elapsed / INTERVAL) * 100, 100);
-      setProgress(pct);
-      if (pct < 100) {
-        rafId = requestAnimationFrame(frame);
-      }
-    };
-
-    rafId = requestAnimationFrame(frame);
-    return () => cancelAnimationFrame(rafId);
-  }, [current]);
+  useEffect(() => {
+    progressControls.stop();
+    progressControls.set({ width: "0%" });
+    if (!isHovered) {
+      void progressControls.start({
+        width: "100%",
+        transition: { duration: INTERVAL / 1000, ease: "linear" },
+      });
+    }
+  }, [current, isHovered, progressControls]);
 
   const product = SHOWCASE_PRODUCTS[current];
   const Pattern = PATTERN_MAP[product.pattern];
 
-  const variants = {
-    enter: (dir: number) => ({
+  const cardVariants = {
+    exit: {
       opacity: 0,
-      y: dir > 0 ? 24 : -24,
-      filter: "blur(4px)",
-    }),
+      y: -12,
+      scale: 0.97,
+      transition: { duration: 0.28, ease: "easeIn" as const },
+    },
+    enter: {
+      opacity: 0,
+      y: 20,
+      scale: 0.97,
+    },
     center: {
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
+      scale: 1,
+      transition: { duration: 0.38, ease: "easeOut" as const },
     },
-    exit: (dir: number) => ({
-      opacity: 0,
-      y: dir > 0 ? -24 : 24,
-      filter: "blur(4px)",
-    }),
   };
 
   return (
     <div className="relative w-full max-w-sm">
-      <div
-        className="relative overflow-hidden rounded-2xl border border-[#2A2A2A]"
-        style={{ background: "#0F0F0F", minHeight: "260px" }}
+      <motion.div
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        whileHover={{ scale: 1.015 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        className="group relative overflow-hidden rounded-2xl border"
+        style={{
+          background: "#0F0F0F",
+          minHeight: "260px",
+          borderColor: isHovered ? "rgba(232, 82, 26, 0.7)" : "#2A2A2A",
+        }}
       >
-        <AnimatePresence mode="wait" custom={direction}>
+        <AnimatePresence mode="wait">
           <motion.div
             key={`pattern-${current}`}
             className="absolute inset-0"
@@ -465,114 +503,130 @@ export function ProductShowcase() {
           }}
         />
 
+        <motion.button
+          type="button"
+          onClick={() => next(-1)}
+          aria-label="Previous product"
+          animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.2 }}
+          className="absolute top-1/2 left-3 z-30 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/60 backdrop-blur-sm transition-colors hover:border-[#E8521A] hover:bg-[#E8521A]/80"
+        >
+          <ChevronLeft className="size-4 text-white" />
+        </motion.button>
+
+        <motion.button
+          type="button"
+          onClick={() => next(1)}
+          aria-label="Next product"
+          animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.2 }}
+          className="absolute top-1/2 right-3 z-30 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/60 backdrop-blur-sm transition-colors hover:border-[#E8521A] hover:bg-[#E8521A]/80"
+        >
+          <ChevronRight className="size-4 text-white" />
+        </motion.button>
+
         <div className="relative z-20 p-6">
-          <AnimatePresence mode="wait" custom={direction}>
+          <AnimatePresence mode="wait">
             <motion.div
               key={current}
-              custom={direction}
-              variants={variants}
+              variants={cardVariants}
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ duration: 0.35, ease: "easeOut" }}
             >
-              <span className="text-xs font-bold tracking-[0.2em] text-[#E8521A] uppercase">
+              <motion.span
+                className="text-xs font-bold tracking-[0.2em] text-[#E8521A] uppercase"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25, delay: 0 }}
+              >
                 {product.name}
-              </span>
+              </motion.span>
 
-              <p className="mt-1.5 text-sm text-[#888888]">{product.tagline}</p>
+              <motion.p
+                className="mt-1.5 text-sm text-[#888888]"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25, delay: 0.06 }}
+              >
+                {product.tagline}
+              </motion.p>
 
               <div className="my-4 h-px bg-[#1E1E1E]" />
 
               <div className="flex flex-col gap-2.5">
-                {product.specs.map((spec) => (
-                  <div
+                {product.specs.map((spec, specIndex) => (
+                  <motion.div
                     key={spec.label}
                     className="flex items-center justify-between"
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{
+                      duration: 0.22,
+                      delay: 0.12 + specIndex * 0.06,
+                    }}
                   >
                     <span className="text-xs text-[#666666]">{spec.label}</span>
                     <span className="text-sm font-semibold text-white tabular-nums">
                       {spec.value}
                     </span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
 
-              <Link
-                href={`/products/${product.slug}`}
-                className="group mt-5 flex items-center gap-1.5 text-xs font-medium text-[#E8521A] transition-colors hover:text-[#FF6B35]"
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2, delay: 0.24 }}
               >
-                View Product Details
-                <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
+                <Link
+                  href={`/products/${product.slug}`}
+                  className="group mt-5 flex items-center gap-1.5 text-xs font-medium text-[#E8521A] transition-colors hover:text-[#FF6B35]"
+                >
+                  View Product Details
+                  <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+              </motion.div>
             </motion.div>
           </AnimatePresence>
         </div>
 
         <div className="absolute right-0 bottom-0 left-0 z-20 h-0.5 bg-[#1A1A1A]">
           <motion.div
+            key={current}
             className="h-full bg-[#E8521A]"
-            style={{ width: `${progress}%` }}
+            initial={{ width: "0%" }}
+            animate={progressControls}
           />
         </div>
-      </div>
+      </motion.div>
 
-      <div className="mt-4 flex items-center justify-between">
+      <div className="mt-4 flex items-center justify-center">
         <div className="flex items-center gap-2">
           {SHOWCASE_PRODUCTS.map((_, i) => (
             <button
               key={i}
               type="button"
-              onClick={() => {
-                setDirection(i > current ? 1 : -1);
-                setCurrent(i);
-                setProgress(0);
-              }}
-              className="transition-all duration-300"
+              onClick={() => goTo(i)}
+              className="rounded-full p-0.5"
               aria-label={`Go to ${SHOWCASE_PRODUCTS[i].name}`}
             >
-              <span
-                className={`block rounded-full transition-all duration-300 ${
-                  i === current
-                    ? "h-1.5 w-5 bg-[#E8521A]"
-                    : "h-1.5 w-1.5 bg-[#333]"
-                }`}
+              <motion.span
+                layout
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                className="block h-2 rounded-full"
+                animate={{
+                  width: i === current ? 24 : 8,
+                  backgroundColor:
+                    i === current ? "#E8521A" : "rgba(255,255,255,0.2)",
+                }}
+                whileHover={{
+                  backgroundColor:
+                    i === current ? "#E8521A" : "rgba(255,255,255,0.4)",
+                }}
               />
             </button>
           ))}
-        </div>
-
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => next(-1)}
-            className="flex h-7 w-7 items-center justify-center rounded-full border border-[#2A2A2A] text-[#666] transition-all hover:border-[#E8521A] hover:text-[#E8521A]"
-            aria-label="Previous product"
-          >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path
-                d="M7.5 2L4 6l3.5 4"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
-          <button
-            type="button"
-            onClick={() => next(1)}
-            className="flex h-7 w-7 items-center justify-center rounded-full border border-[#2A2A2A] text-[#666] transition-all hover:border-[#E8521A] hover:text-[#E8521A]"
-            aria-label="Next product"
-          >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path
-                d="M4.5 2L8 6l-3.5 4"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
         </div>
       </div>
     </div>
