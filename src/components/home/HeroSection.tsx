@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
+import { MagneticDotsBackground } from "@/components/home/MagneticDotsBackground";
 import { ProductShowcase } from "@/components/home/ProductShowcase";
 import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/lib/constants";
@@ -15,58 +16,25 @@ const MICRO_STATS = [
   { value: "ISO Certified", label: "Quality" },
 ];
 
-function FloatingParticles() {
-  const particles = useMemo(
-    () =>
-      Array.from({ length: 24 }, (_, i) => ({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: Math.random() * 3 + 1,
-        duration: Math.random() * 8 + 6,
-        delay: Math.random() * 2,
-      })),
-    []
-  );
-
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {particles.map((particle) => (
-        <motion.div
-          key={particle.id}
-          className="absolute rounded-full"
-          style={{
-            left: `${particle.x}%`,
-            top: `${particle.y}%`,
-            width: particle.size,
-            height: particle.size,
-            backgroundColor: "rgba(232, 82, 26, 0.4)",
-          }}
-          animate={{
-            y: [0, -30, 0],
-            x: [0, Math.random() * 20 - 10, 0],
-            opacity: [0.2, 0.6, 0.2],
-          }}
-          transition={{
-            duration: particle.duration,
-            delay: particle.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-    </div>
-  );
-}
+const H1_LINES = [
+  { text: "PERFORATED SHEET", color: "#FFFFFF" },
+  { text: "MANUFACTURERS", color: "#FFFFFF" },
+  { text: "SINCE 1970", color: "#E8521A" },
+] as const;
 
 export function HeroSection() {
+  const heroRef = useRef<HTMLElement>(null);
+
   return (
     <section
+      ref={heroRef}
       id="home"
       className="relative flex min-h-screen items-center overflow-hidden pt-16 md:pt-20"
       style={{ backgroundColor: "#0A0A0A" }}
     >
-      <div className="pointer-events-none absolute inset-0">
+      <MagneticDotsBackground containerRef={heroRef} />
+
+      <div className="pointer-events-none absolute inset-0 z-[1]">
         <div
           className="absolute inset-0"
           style={{
@@ -84,11 +52,9 @@ export function HeroSection() {
             backgroundSize: "60px 60px",
           }}
         />
-        <div className="hex-grid-bg absolute inset-0 opacity-[0.03]" />
-        <FloatingParticles />
       </div>
 
-      <div className="relative mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-4 py-16 md:px-8 lg:grid-cols-5 lg:gap-8 lg:px-16 lg:py-24">
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-4 py-16 md:px-8 lg:grid-cols-5 lg:gap-8 lg:px-16 lg:py-24">
         <div className="lg:col-span-3">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -112,25 +78,24 @@ export function HeroSection() {
             </span>
           </motion.div>
 
-          <h1
-            className="font-display text-4xl leading-[0.95] sm:text-5xl md:text-6xl lg:text-7xl"
-            style={{ color: "#FFFFFF" }}
-          >
-            <span className="block overflow-hidden">
-              <motion.span
-                initial={{ y: "100%", opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{
-                  delay: 0.4,
-                  duration: 0.6,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="inline-block"
-                style={{ color: "#FFFFFF" }}
-              >
-                Perforated Sheet Manufacturers in Pune &amp; Mumbai
-              </motion.span>
-            </span>
+          <h1 className="font-display text-4xl leading-[0.95] sm:text-5xl md:text-6xl lg:text-7xl">
+            {H1_LINES.map((line) => (
+              <span key={line.text} className="block overflow-hidden">
+                <motion.span
+                  initial={{ y: "100%", opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{
+                    delay: 0.4,
+                    duration: 0.6,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="inline-block"
+                  style={{ color: line.color }}
+                >
+                  {line.text}
+                </motion.span>
+              </span>
+            ))}
           </h1>
 
           <motion.p
