@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Copy, Check } from "lucide-react";
+import { useCallback, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 import {
   Accordion,
@@ -11,511 +11,463 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { CALCULATOR_FAQS } from "@/data/calculator-faqs";
 
-type HoleShape = "round" | "square" | "rectangular" | "capsule";
-type PitchType = "triangular" | "rectangular" | "staggered";
+type CalcField = {
+  key: string;
+  label: string;
+  variable: string;
+};
 
-const FORMULAS = [
+type CalculatorDefinition = {
+  id: string;
+  tabLabel: string;
+  category: string;
+  title: string;
+  formulaDisplay: React.ReactNode;
+  fields: CalcField[];
+  calculate: (inputs: Record<string, number>) => number;
+};
+
+const CALCULATORS: CalculatorDefinition[] = [
   {
-    id: 1,
-    shape: "Round",
-    pitch: "Triangular (60°)",
-    formula: "Open Area % = R² × 90.69 / T²",
-    note: "R = hole radius (mm), T = pitch (mm)",
+    id: "calc-round-60-staggered",
+    tabLabel: "60° Staggered Round",
+    category: "ROUND PERFORATION",
+    title: "60° Staggered",
+    formulaDisplay: (
+      <>
+        OA = (D<sup>2</sup> × 90.69) / C<sup>2</sup>
+      </>
+    ),
+    fields: [
+      { key: "D", label: "Hole diameter", variable: "D" },
+      { key: "C", label: "Pitch", variable: "C" },
+    ],
+    calculate: ({ D, C }) => (D * D * 90.69) / (C * C),
   },
   {
-    id: 2,
-    shape: "Round",
-    pitch: "Rectangular",
-    formula: "Open Area % = R² × 78.5 / (U1 × U2)",
-    note: "R = hole radius (mm), U1 × U2 = pitch (mm)",
+    id: "calc-round-45-staggered",
+    tabLabel: "45° Staggered Round",
+    category: "ROUND PERFORATION",
+    title: "45° Staggered",
+    formulaDisplay: (
+      <>
+        OA = (D<sup>2</sup> × 78.5) / C<sup>2</sup>
+      </>
+    ),
+    fields: [
+      { key: "D", label: "Hole diameter", variable: "D" },
+      { key: "C", label: "Pitch", variable: "C" },
+    ],
+    calculate: ({ D, C }) => (D * D * 78.5) / (C * C),
   },
   {
-    id: 3,
-    shape: "Square",
-    pitch: "Rectangular",
-    formula: "Open Area % = C² × 100 / (U1 × U2)",
-    note: "C = hole side (mm), U1 × U2 = pitch (mm)",
+    id: "calc-round-straight",
+    tabLabel: "Straight Line Round",
+    category: "ROUND PERFORATION",
+    title: "Straight Line",
+    formulaDisplay: (
+      <>
+        OA = (D<sup>2</sup> × 78.5) / (C<sub>1</sub> × C<sub>2</sub>)
+      </>
+    ),
+    fields: [
+      { key: "D", label: "Hole diameter", variable: "D" },
+      { key: "C1", label: "Pitch 1", variable: "C₁" },
+      { key: "C2", label: "Pitch 2", variable: "C₂" },
+    ],
+    calculate: ({ D, C1, C2 }) => (D * D * 78.5) / (C1 * C2),
   },
   {
-    id: 4,
-    shape: "Round",
-    pitch: "Staggered",
-    formula: "Open Area % = C² × 100 / (0.5 × Z1 × Z2)",
-    note: "C = hole diameter (mm), Z1 × Z2 = staggered pitch (mm)",
+    id: "calc-square-straight",
+    tabLabel: "Straight Line Square",
+    category: "SQUARE PERFORATION",
+    title: "Straight Line",
+    formulaDisplay: (
+      <>
+        OA = (S<sup>2</sup> × 100) / (C<sub>1</sub> × C<sub>2</sub>)
+      </>
+    ),
+    fields: [
+      { key: "S", label: "Hole size", variable: "S" },
+      { key: "C1", label: "Pitch 1", variable: "C₁" },
+      { key: "C2", label: "Pitch 2", variable: "C₂" },
+    ],
+    calculate: ({ S, C1, C2 }) => (S * S * 100) / (C1 * C2),
   },
   {
-    id: 5,
-    shape: "Capsule",
-    pitch: "Staggered",
-    formula: "Open Area % = (R × L − 0.215R²) × 100 / (0.5 × Z1 × Z2)",
-    note: "R = capsule radius, L = slot length (mm)",
+    id: "calc-square-staggered",
+    tabLabel: "Staggered Square",
+    category: "SQUARE PERFORATION",
+    title: "Staggered",
+    formulaDisplay: (
+      <>
+        OA = (S<sup>2</sup> × 100) / (C<sub>1</sub> × C<sub>2</sub>)
+      </>
+    ),
+    fields: [
+      { key: "S", label: "Hole size", variable: "S" },
+      { key: "C1", label: "Pitch 1", variable: "C₁" },
+      { key: "C2", label: "Pitch 2", variable: "C₂" },
+    ],
+    calculate: ({ S, C1, C2 }) => (S * S * 100) / (C1 * C2),
   },
   {
-    id: 6,
-    shape: "Rectangular",
-    pitch: "Staggered",
-    formula: "Open Area % = 100 × L × C / (0.5 × Z1 × Z2)",
-    note: "L × C = hole dimensions (mm), Z1 × Z2 = pitch (mm)",
+    id: "calc-hex",
+    tabLabel: "Hex",
+    category: "HEX PERFORATION",
+    title: "Hexagonal",
+    formulaDisplay: (
+      <>
+        OA = (S<sup>2</sup> × 100) / C<sup>2</sup>
+      </>
+    ),
+    fields: [
+      { key: "S", label: "Hole size", variable: "S" },
+      { key: "C", label: "Pitch", variable: "C" },
+    ],
+    calculate: ({ S, C }) => (S * S * 100) / (C * C),
+  },
+  {
+    id: "calc-round-end-slot-side-staggered",
+    tabLabel: "Side Staggered Slot",
+    category: "ROUND END SLOT",
+    title: "Side Staggered",
+    formulaDisplay: (
+      <>
+        OA = (W×L − 0.215×W<sup>2</sup>) × 100 / (C<sub>1</sub> × C<sub>2</sub>)
+      </>
+    ),
+    fields: [
+      { key: "W", label: "Hole width", variable: "W" },
+      { key: "L", label: "Hole length", variable: "L" },
+      { key: "C1", label: "Pitch 1", variable: "C₁" },
+      { key: "C2", label: "Pitch 2", variable: "C₂" },
+    ],
+    calculate: ({ W, L, C1, C2 }) =>
+      ((W * L - 0.215 * W * W) * 100) / (C1 * C2),
+  },
+  {
+    id: "calc-round-end-slot-straight",
+    tabLabel: "Straight Line Slot (Round)",
+    category: "ROUND END SLOT",
+    title: "Straight Line",
+    formulaDisplay: (
+      <>
+        OA = (W×L − 0.215×W<sup>2</sup>) × 100 / (C<sub>1</sub> × C<sub>2</sub>)
+      </>
+    ),
+    fields: [
+      { key: "W", label: "Hole width", variable: "W" },
+      { key: "L", label: "Hole length", variable: "L" },
+      { key: "C1", label: "Pitch 1", variable: "C₁" },
+      { key: "C2", label: "Pitch 2", variable: "C₂" },
+    ],
+    calculate: ({ W, L, C1, C2 }) =>
+      ((W * L - 0.215 * W * W) * 100) / (C1 * C2),
+  },
+  {
+    id: "calc-square-end-slot-straight",
+    tabLabel: "Straight Line Slot (Square)",
+    category: "SQUARE END SLOT",
+    title: "Straight Line",
+    formulaDisplay: (
+      <>
+        OA = (W × L × 100) / (C<sub>1</sub> × C<sub>2</sub>)
+      </>
+    ),
+    fields: [
+      { key: "W", label: "Hole width", variable: "W" },
+      { key: "L", label: "Hole length", variable: "L" },
+      { key: "C1", label: "Pitch 1", variable: "C₁" },
+      { key: "C2", label: "Pitch 2", variable: "C₂" },
+    ],
+    calculate: ({ W, L, C1, C2 }) => (W * L * 100) / (C1 * C2),
+  },
+  {
+    id: "calc-square-end-slot-staggered",
+    tabLabel: "Staggered Slot (Square)",
+    category: "SQUARE END SLOT",
+    title: "Staggered",
+    formulaDisplay: (
+      <>
+        OA = (W × L × 100) / (C<sub>1</sub> × C<sub>2</sub>)
+      </>
+    ),
+    fields: [
+      { key: "W", label: "Hole width", variable: "W" },
+      { key: "L", label: "Hole length", variable: "L" },
+      { key: "C1", label: "Pitch 1", variable: "C₁" },
+      { key: "C2", label: "Pitch 2", variable: "C₂" },
+    ],
+    calculate: ({ W, L, C1, C2 }) => (W * L * 100) / (C1 * C2),
   },
 ];
 
-function getPitchOptions(shape: HoleShape): PitchType[] {
-  switch (shape) {
-    case "round":
-      return ["triangular", "rectangular", "staggered"];
-    case "square":
-      return ["rectangular"];
-    case "rectangular":
-    case "capsule":
-      return ["staggered"];
-    default:
-      return ["triangular"];
-  }
+function emptyInputs(fields: CalcField[]): Record<string, string> {
+  return Object.fromEntries(fields.map((f) => [f.key, ""]));
 }
 
-function calculateOpenArea(
-  shape: HoleShape,
-  pitch: PitchType,
-  values: Record<string, number>
-): { percent: number; formula: string } | null {
-  const { R, T, U1, U2, C, L, Z1, Z2 } = values;
-
-  switch (shape) {
-    case "round":
-      if (pitch === "triangular" && R && T) {
-        return {
-          percent: (R * R * 90.69) / (T * T),
-          formula: "R² × 90.69 / T²",
-        };
-      }
-      if (pitch === "rectangular" && R && U1 && U2) {
-        return {
-          percent: (R * R * 78.5) / (U1 * U2),
-          formula: "R² × 78.5 / (U1 × U2)",
-        };
-      }
-      if (pitch === "staggered" && C && Z1 && Z2) {
-        return {
-          percent: (C * C * 100) / (0.5 * Z1 * Z2),
-          formula: "C² × 100 / (0.5 × Z1 × Z2)",
-        };
-      }
-      break;
-    case "square":
-      if (pitch === "rectangular" && C && U1 && U2) {
-        return {
-          percent: (C * C * 100) / (U1 * U2),
-          formula: "C² × 100 / (U1 × U2)",
-        };
-      }
-      break;
-    case "rectangular":
-      if (pitch === "staggered" && L && C && Z1 && Z2) {
-        return {
-          percent: (100 * L * C) / (0.5 * Z1 * Z2),
-          formula: "100 × L × C / (0.5 × Z1 × Z2)",
-        };
-      }
-      break;
-    case "capsule":
-      if (pitch === "staggered" && R && L && Z1 && Z2) {
-        return {
-          percent: ((R * L - 0.215 * R * R) * 100) / (0.5 * Z1 * Z2),
-          formula: "(R × L − 0.215R²) × 100 / (0.5 × Z1 × Z2)",
-        };
-      }
-      break;
-  }
-  return null;
-}
-
-function getInterpretation(percent: number): string {
-  if (percent >= 50) return "Good for filtration — high flow capacity";
-  if (percent >= 25) return "Standard architectural — balanced strength and openness";
-  return "High strength — lower open area, greater structural integrity";
-}
-
-function NumInput({
-  label,
-  value,
-  onChange,
+function CalculatorCard({
   id,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  id: string;
-}) {
+  category,
+  title,
+  formulaDisplay,
+  fields,
+  calculate,
+}: CalculatorDefinition) {
+  const [inputs, setInputs] = useState(() => emptyInputs(fields));
+  const [errors, setErrors] = useState<Record<string, boolean>>({});
+  const [result, setResult] = useState<number | null>(null);
+  const [hasCalculated, setHasCalculated] = useState(false);
+
+  function handleInputChange(key: string, value: string) {
+    setInputs((prev) => ({ ...prev, [key]: value }));
+    if (errors[key]) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next[key];
+        return next;
+      });
+    }
+  }
+
+  function handleCalculate() {
+    const newErrors: Record<string, boolean> = {};
+    const numeric: Record<string, number> = {};
+
+    for (const field of fields) {
+      const raw = inputs[field.key]?.trim() ?? "";
+      const val = parseFloat(raw);
+      if (!raw || Number.isNaN(val) || val <= 0) {
+        newErrors[field.key] = true;
+      } else {
+        numeric[field.key] = val;
+      }
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setResult(null);
+      return;
+    }
+
+    setErrors({});
+    setResult(calculate(numeric));
+    setHasCalculated(true);
+  }
+
+  function handleReset() {
+    setInputs(emptyInputs(fields));
+    setErrors({});
+    setResult(null);
+    setHasCalculated(false);
+  }
+
   return (
-    <div>
-      <Label htmlFor={id} style={{ color: "#A0A0A0" }}>
-        {label}
-      </Label>
-      <Input
-        id={id}
-        type="number"
-        min="0"
-        step="0.01"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="mt-1.5 h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
-      />
-    </div>
+    <article
+      id={id}
+      className="scroll-mt-36 rounded-xl border p-6 md:p-8"
+      style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
+    >
+      <p
+        className="text-xs font-semibold uppercase tracking-[0.2em]"
+        style={{ color: "#E8521A" }}
+      >
+        {category}
+      </p>
+      <h2
+        className="mt-2 text-2xl font-bold"
+        style={{ color: "#FFFFFF" }}
+      >
+        {title}
+      </h2>
+
+      <div
+        className="mt-5 rounded-lg border px-4 py-3 font-mono text-sm md:text-base"
+        style={{
+          backgroundColor: "#1A1A1A",
+          borderColor: "#E8521A",
+          color: "#FFFFFF",
+        }}
+      >
+        {formulaDisplay}
+      </div>
+
+      <div className="mt-6 space-y-4">
+        {fields.map((field) => (
+          <div key={field.key}>
+            <label
+              htmlFor={`${id}-${field.key}`}
+              className="mb-1.5 block text-sm"
+              style={{ color: "#A0A0A0" }}
+            >
+              {field.label} ({field.variable})
+            </label>
+            <div className="flex items-center gap-2">
+              <span
+                className="flex size-9 shrink-0 items-center justify-center rounded-md text-sm font-bold"
+                style={{
+                  backgroundColor: "rgba(232, 82, 26, 0.15)",
+                  color: "#E8521A",
+                }}
+              >
+                {field.variable}
+              </span>
+              <Input
+                id={`${id}-${field.key}`}
+                type="number"
+                step="0.01"
+                min="0.001"
+                placeholder="Enter value in mm"
+                value={inputs[field.key]}
+                onChange={(e) => handleInputChange(field.key, e.target.value)}
+                className="h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                style={
+                  errors[field.key]
+                    ? { borderColor: "#ef4444" }
+                    : undefined
+                }
+              />
+            </div>
+            {errors[field.key] && (
+              <p className="mt-1.5 text-sm text-red-400">
+                Please enter a valid value
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <Button
+        type="button"
+        onClick={handleCalculate}
+        className="mt-6 h-11 border-0 px-6 text-base font-semibold"
+        style={{ backgroundColor: "#E8521A", color: "#FFFFFF" }}
+      >
+        Calculate
+      </Button>
+
+      <AnimatePresence>
+        {result !== null && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.25 }}
+            className="mt-6"
+          >
+            <p className="text-base" style={{ color: "#A0A0A0" }}>
+              Open Area ={" "}
+              <span
+                className="text-3xl font-black md:text-4xl"
+                style={{ color: "#E8521A" }}
+              >
+                {result.toFixed(2)}
+              </span>{" "}
+              %
+            </p>
+            {result > 100 && (
+              <p
+                className="mt-3 rounded-lg border px-3 py-2 text-sm"
+                style={{
+                  borderColor: "#f59e0b",
+                  backgroundColor: "rgba(245, 158, 11, 0.1)",
+                  color: "#fbbf24",
+                }}
+              >
+                Result exceeds 100% — please recheck inputs
+              </p>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {hasCalculated && (
+        <button
+          type="button"
+          onClick={handleReset}
+          className="mt-4 text-sm underline-offset-2 transition-opacity hover:opacity-80 hover:underline"
+          style={{ color: "#A0A0A0" }}
+        >
+          Reset
+        </button>
+      )}
+    </article>
   );
 }
 
 export function OpenAreaCalculator() {
-  const [shape, setShape] = useState<HoleShape>("round");
-  const [pitch, setPitch] = useState<PitchType>("triangular");
-  const [inputs, setInputs] = useState<Record<string, string>>({
-    R: "",
-    T: "",
-    U1: "",
-    U2: "",
-    C: "",
-    L: "",
-    Z1: "",
-    Z2: "",
-  });
-  const [result, setResult] = useState<{
-    percent: number;
-    formula: string;
-  } | null>(null);
-  const [copied, setCopied] = useState(false);
+  const [activeTab, setActiveTab] = useState(CALCULATORS[0].id);
 
-  const pitchOptions = useMemo(() => getPitchOptions(shape), [shape]);
-
-  function handleShapeChange(s: HoleShape) {
-    setShape(s);
-    const options = getPitchOptions(s);
-    setPitch(options[0]);
-    setResult(null);
-  }
-
-  function setInput(key: string, val: string) {
-    setInputs((prev) => ({ ...prev, [key]: val }));
-  }
-
-  function handleCalculate() {
-    const numeric: Record<string, number> = {};
-    for (const [k, v] of Object.entries(inputs)) {
-      numeric[k] = parseFloat(v) || 0;
-    }
-    setResult(calculateOpenArea(shape, pitch, numeric));
-  }
-
-  function handleCopy() {
-    if (!result) return;
-    navigator.clipboard.writeText(
-      `Open Area: ${result.percent.toFixed(1)}% (${result.formula})`
-    );
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }
+  const scrollToCalculator = useCallback((id: string) => {
+    setActiveTab(id);
+    document.getElementById(id)?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, []);
 
   return (
     <div
       className="section-padding pt-28 md:pt-32"
       style={{ backgroundColor: "#0A0A0A" }}
     >
-      <div className="mx-auto max-w-7xl">
-        <div className="mb-12 max-w-3xl">
+      <div className="mx-auto max-w-4xl">
+        <div className="mb-8 max-w-3xl">
           <h1
             className="text-4xl font-black tracking-tight sm:text-5xl"
             style={{ color: "#FFFFFF" }}
           >
             Perforated Sheet Open Area Calculator
           </h1>
-          <p className="mt-4 text-lg leading-relaxed" style={{ color: "#A0A0A0" }}>
-            Calculate the open area percentage of perforated sheets based on hole
-            shape, size, and pitch arrangement. Uses standard industry formulas
-            from Jai Shree Group&apos;s technical specifications.
+          <p
+            className="mt-4 text-lg leading-relaxed"
+            style={{ color: "#A0A0A0" }}
+          >
+            Calculate open area percentage using the same 10 industry-standard
+            formulas from Jai Shree Group&apos;s technical specifications —
+            round, square, hex, and slot perforation patterns.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          {/* Calculator panel */}
-          <div
-            className="rounded-xl border p-6"
-            style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
-          >
-            <h2
-              className="mb-4 text-lg font-bold"
-              style={{ color: "#FFFFFF" }}
-            >
-              Hole Shape
-            </h2>
-            <div className="mb-6 flex flex-wrap gap-2">
-              {(
-                [
-                  ["round", "Round"],
-                  ["square", "Square"],
-                  ["rectangular", "Rectangular"],
-                  ["capsule", "Capsule"],
-                ] as const
-              ).map(([val, label]) => (
-                <button
-                  key={val}
-                  type="button"
-                  onClick={() => handleShapeChange(val)}
-                  className="rounded-lg border px-4 py-2 text-base font-medium transition-colors"
-                  style={{
-                    borderColor: shape === val ? "#E8521A" : "#2A2A2A",
-                    backgroundColor:
-                      shape === val ? "rgba(232,82,26,0.15)" : "#0A0A0A",
-                    color: shape === val ? "#E8521A" : "#A0A0A0",
-                  }}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-
-            <h2
-              className="mb-4 text-lg font-bold"
-              style={{ color: "#FFFFFF" }}
-            >
-              Pitch Type
-            </h2>
-            <div className="mb-6 flex flex-wrap gap-2">
-              {pitchOptions.map((p) => (
-                <button
-                  key={p}
-                  type="button"
-                  onClick={() => {
-                    setPitch(p);
-                    setResult(null);
-                  }}
-                  className="rounded-lg border px-4 py-2 text-base capitalize transition-colors"
-                  style={{
-                    borderColor: pitch === p ? "#E8521A" : "#2A2A2A",
-                    backgroundColor:
-                      pitch === p ? "rgba(232,82,26,0.15)" : "#0A0A0A",
-                    color: pitch === p ? "#E8521A" : "#A0A0A0",
-                  }}
-                >
-                  {p}
-                </button>
-              ))}
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              {shape === "round" && pitch === "triangular" && (
-                <>
-                  <NumInput
-                    id="R"
-                    label="Hole Radius R (mm)"
-                    value={inputs.R}
-                    onChange={(v) => setInput("R", v)}
-                  />
-                  <NumInput
-                    id="T"
-                    label="Pitch T (mm)"
-                    value={inputs.T}
-                    onChange={(v) => setInput("T", v)}
-                  />
-                </>
-              )}
-              {shape === "round" && pitch === "rectangular" && (
-                <>
-                  <NumInput
-                    id="R"
-                    label="Hole Radius R (mm)"
-                    value={inputs.R}
-                    onChange={(v) => setInput("R", v)}
-                  />
-                  <NumInput
-                    id="U1"
-                    label="Pitch U1 (mm)"
-                    value={inputs.U1}
-                    onChange={(v) => setInput("U1", v)}
-                  />
-                  <NumInput
-                    id="U2"
-                    label="Pitch U2 (mm)"
-                    value={inputs.U2}
-                    onChange={(v) => setInput("U2", v)}
-                  />
-                </>
-              )}
-              {shape === "round" && pitch === "staggered" && (
-                <>
-                  <NumInput
-                    id="C"
-                    label="Hole Diameter C (mm)"
-                    value={inputs.C}
-                    onChange={(v) => setInput("C", v)}
-                  />
-                  <NumInput
-                    id="Z1"
-                    label="Pitch Z1 (mm)"
-                    value={inputs.Z1}
-                    onChange={(v) => setInput("Z1", v)}
-                  />
-                  <NumInput
-                    id="Z2"
-                    label="Pitch Z2 (mm)"
-                    value={inputs.Z2}
-                    onChange={(v) => setInput("Z2", v)}
-                  />
-                </>
-              )}
-              {shape === "square" && (
-                <>
-                  <NumInput
-                    id="C"
-                    label="Hole Size C (mm)"
-                    value={inputs.C}
-                    onChange={(v) => setInput("C", v)}
-                  />
-                  <NumInput
-                    id="U1"
-                    label="Pitch U1 (mm)"
-                    value={inputs.U1}
-                    onChange={(v) => setInput("U1", v)}
-                  />
-                  <NumInput
-                    id="U2"
-                    label="Pitch U2 (mm)"
-                    value={inputs.U2}
-                    onChange={(v) => setInput("U2", v)}
-                  />
-                </>
-              )}
-              {shape === "rectangular" && (
-                <>
-                  <NumInput
-                    id="L"
-                    label="Hole Length L (mm)"
-                    value={inputs.L}
-                    onChange={(v) => setInput("L", v)}
-                  />
-                  <NumInput
-                    id="C"
-                    label="Hole Width C (mm)"
-                    value={inputs.C}
-                    onChange={(v) => setInput("C", v)}
-                  />
-                  <NumInput
-                    id="Z1"
-                    label="Pitch Z1 (mm)"
-                    value={inputs.Z1}
-                    onChange={(v) => setInput("Z1", v)}
-                  />
-                  <NumInput
-                    id="Z2"
-                    label="Pitch Z2 (mm)"
-                    value={inputs.Z2}
-                    onChange={(v) => setInput("Z2", v)}
-                  />
-                </>
-              )}
-              {shape === "capsule" && (
-                <>
-                  <NumInput
-                    id="R"
-                    label="Capsule Radius R (mm)"
-                    value={inputs.R}
-                    onChange={(v) => setInput("R", v)}
-                  />
-                  <NumInput
-                    id="L"
-                    label="Slot Length L (mm)"
-                    value={inputs.L}
-                    onChange={(v) => setInput("L", v)}
-                  />
-                  <NumInput
-                    id="Z1"
-                    label="Pitch Z1 (mm)"
-                    value={inputs.Z1}
-                    onChange={(v) => setInput("Z1", v)}
-                  />
-                  <NumInput
-                    id="Z2"
-                    label="Pitch Z2 (mm)"
-                    value={inputs.Z2}
-                    onChange={(v) => setInput("Z2", v)}
-                  />
-                </>
-              )}
-            </div>
-
-            <Button
-              onClick={handleCalculate}
-              className="mt-6 h-11 w-full border-0 text-base font-semibold"
-              style={{ backgroundColor: "#E8521A", color: "#FFFFFF" }}
-            >
-              Calculate Open Area
-            </Button>
+        <nav
+          className="sticky top-20 z-20 -mx-1 mb-8 border-b pb-4"
+          style={{
+            backgroundColor: "#0A0A0A",
+            borderColor: "#2A2A2A",
+          }}
+          aria-label="Calculator types"
+        >
+          <div className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {CALCULATORS.map((calc) => (
+              <button
+                key={calc.id}
+                type="button"
+                onClick={() => scrollToCalculator(calc.id)}
+                className="shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors"
+                style={{
+                  borderColor: activeTab === calc.id ? "#E8521A" : "#2A2A2A",
+                  backgroundColor:
+                    activeTab === calc.id
+                      ? "rgba(232, 82, 26, 0.15)"
+                      : "#111111",
+                  color: activeTab === calc.id ? "#E8521A" : "#A0A0A0",
+                }}
+              >
+                {calc.tabLabel}
+              </button>
+            ))}
           </div>
+        </nav>
 
-          {/* Results panel */}
-          <div
-            className="rounded-xl border p-6"
-            style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
-          >
-            <h2
-              className="mb-6 text-lg font-bold"
-              style={{ color: "#FFFFFF" }}
-            >
-              Results
-            </h2>
-
-            {result ? (
-              <>
-                <p
-                  className="text-5xl font-black"
-                  style={{ color: "#E8521A" }}
-                >
-                  {result.percent.toFixed(1)}%
-                </p>
-                <p className="mt-1 text-base" style={{ color: "#A0A0A0" }}>
-                  Open Area
-                </p>
-
-                <div
-                  className="mt-6 rounded-lg border p-4 font-mono text-base"
-                  style={{
-                    borderColor: "#2A2A2A",
-                    backgroundColor: "#0A0A0A",
-                    color: "#FFFFFF",
-                  }}
-                >
-                  {result.formula}
-                </div>
-
-                <p
-                  className="mt-4 text-base leading-relaxed"
-                  style={{ color: "#A0A0A0" }}
-                >
-                  {getInterpretation(result.percent)}
-                </p>
-
-                <Button
-                  variant="outline"
-                  onClick={handleCopy}
-                  className="mt-6 border-[#2A2A2A] text-white"
-                >
-                  {copied ? (
-                    <Check className="size-4" />
-                  ) : (
-                    <Copy className="size-4" />
-                  )}
-                  {copied ? "Copied!" : "Copy Result"}
-                </Button>
-              </>
-            ) : (
-              <p className="text-base" style={{ color: "#666666" }}>
-                Enter dimensions and click Calculate to see open area percentage.
-              </p>
-            )}
-          </div>
+        <div className="space-y-8">
+          {CALCULATORS.map((calc) => (
+            <CalculatorCard key={calc.id} {...calc} />
+          ))}
         </div>
 
-        {/* What is Open Area */}
         <div
           className="mt-16 rounded-xl border p-8"
           style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
@@ -530,84 +482,14 @@ export function OpenAreaCalculator() {
             className="text-base leading-relaxed"
             style={{ color: "#A0A0A0" }}
           >
-            Open area is the ratio of the total area of holes to the total surface
-            area of a perforated sheet, expressed as a percentage. It determines
-            how much air, liquid, or light can pass through the sheet. Higher open
-            area means better flow but reduced structural strength. Selecting the
-            right open area depends on your application — filtration requires high
-            open area while load-bearing applications need lower open area.
+            Open area is the ratio of the total area of holes to the total
+            surface area of a perforated sheet, expressed as a percentage. It
+            determines how much air, liquid, or light can pass through the
+            sheet. Higher open area means better flow but reduced structural
+            strength.
           </p>
         </div>
 
-        {/* Formula table */}
-        <div className="mt-12">
-          <h2
-            className="mb-6 text-2xl font-bold"
-            style={{ color: "#FFFFFF" }}
-          >
-            Formula Reference
-          </h2>
-          <div
-            className="overflow-x-auto rounded-xl border"
-            style={{ borderColor: "#2A2A2A" }}
-          >
-            <table className="w-full min-w-[600px] text-base">
-              <thead>
-                <tr style={{ backgroundColor: "#1A1A1A" }}>
-                  <th
-                    className="px-4 py-3 text-left font-semibold"
-                    style={{ color: "#FFFFFF" }}
-                  >
-                    Hole Shape
-                  </th>
-                  <th
-                    className="px-4 py-3 text-left font-semibold"
-                    style={{ color: "#FFFFFF" }}
-                  >
-                    Pitch
-                  </th>
-                  <th
-                    className="px-4 py-3 text-left font-semibold"
-                    style={{ color: "#FFFFFF" }}
-                  >
-                    Formula
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {FORMULAS.map((f, i) => (
-                  <tr
-                    key={f.id}
-                    style={{
-                      backgroundColor: i % 2 === 0 ? "#111111" : "#0A0A0A",
-                    }}
-                  >
-                    <td
-                      className="px-4 py-3"
-                      style={{ color: "#FFFFFF" }}
-                    >
-                      {f.shape}
-                    </td>
-                    <td
-                      className="px-4 py-3"
-                      style={{ color: "#A0A0A0" }}
-                    >
-                      {f.pitch}
-                    </td>
-                    <td
-                      className="px-4 py-3 font-mono text-sm"
-                      style={{ color: "#E8521A" }}
-                    >
-                      {f.formula}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* FAQ */}
         <div className="mt-16 max-w-3xl">
           <h2
             className="mb-6 text-2xl font-bold"
