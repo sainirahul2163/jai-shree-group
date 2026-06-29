@@ -7,7 +7,7 @@ import { CALCULATOR_FAQS } from "@/data/calculator-faqs";
 export const metadata: Metadata = {
   title: "Perforated Sheet Open Area Calculator | Jai Shree Group",
   description:
-    "Free online perforated sheet open area calculator. 10 formulas for round, square, hex and slot holes — 60°/45° staggered, straight line, and side staggered patterns.",
+    "Calculate open area percentage for perforated sheets — round, square, hex, and slot patterns. 10 formula calculators for all perforation types.",
   alternates: {
     canonical: "https://jaishreegroup.in/calculator",
   },

@@ -1,421 +1,1021 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Loader2 } from "lucide-react";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { CALCULATOR_FAQS } from "@/data/calculator-faqs";
 
-type CalcField = {
+type HoleShape = "round" | "square" | "hex" | "slot" | null;
+type SlotEndType = "round-end" | "square-end" | null;
+type ArrangementType = string | null;
+
+type InputFieldDef = {
   key: string;
   label: string;
   variable: string;
 };
 
-type CalculatorDefinition = {
-  id: string;
-  tabLabel: string;
-  category: string;
-  title: string;
+type CalculatorConfig = {
+  id: number;
+  name: string;
+  formulaText: string;
   formulaDisplay: React.ReactNode;
-  fields: CalcField[];
-  calculate: (inputs: Record<string, number>) => number;
+  fields: InputFieldDef[];
+  calculate: (v: Record<string, number>) => number;
 };
 
-const CALCULATORS: CalculatorDefinition[] = [
-  {
-    id: "calc-round-60-staggered",
-    tabLabel: "60° Staggered Round",
-    category: "ROUND PERFORATION",
-    title: "60° Staggered",
+const CALCULATOR_CONFIG: Record<number, CalculatorConfig> = {
+  1: {
+    id: 1,
+    name: "Round Perforation — 60° Staggered",
+    formulaText: "OA = (D² × 90.69) / C²",
     formulaDisplay: (
       <>
         OA = (D<sup>2</sup> × 90.69) / C<sup>2</sup>
       </>
     ),
     fields: [
-      { key: "D", label: "Hole diameter", variable: "D" },
-      { key: "C", label: "Pitch", variable: "C" },
+      { key: "D", label: "Hole Diameter (D)", variable: "D" },
+      { key: "C", label: "Pitch (C)", variable: "C" },
     ],
     calculate: ({ D, C }) => (D * D * 90.69) / (C * C),
   },
-  {
-    id: "calc-round-45-staggered",
-    tabLabel: "45° Staggered Round",
-    category: "ROUND PERFORATION",
-    title: "45° Staggered",
+  2: {
+    id: 2,
+    name: "Round Perforation — 45° Staggered",
+    formulaText: "OA = (D² × 78.5) / C²",
     formulaDisplay: (
       <>
         OA = (D<sup>2</sup> × 78.5) / C<sup>2</sup>
       </>
     ),
     fields: [
-      { key: "D", label: "Hole diameter", variable: "D" },
-      { key: "C", label: "Pitch", variable: "C" },
+      { key: "D", label: "Hole Diameter (D)", variable: "D" },
+      { key: "C", label: "Pitch (C)", variable: "C" },
     ],
     calculate: ({ D, C }) => (D * D * 78.5) / (C * C),
   },
-  {
-    id: "calc-round-straight",
-    tabLabel: "Straight Line Round",
-    category: "ROUND PERFORATION",
-    title: "Straight Line",
+  3: {
+    id: 3,
+    name: "Round Perforation — Straight Line",
+    formulaText: "OA = (D² × 78.5) / (C₁ × C₂)",
     formulaDisplay: (
       <>
         OA = (D<sup>2</sup> × 78.5) / (C<sub>1</sub> × C<sub>2</sub>)
       </>
     ),
     fields: [
-      { key: "D", label: "Hole diameter", variable: "D" },
-      { key: "C1", label: "Pitch 1", variable: "C₁" },
-      { key: "C2", label: "Pitch 2", variable: "C₂" },
+      { key: "D", label: "Hole Diameter (D)", variable: "D" },
+      { key: "C1", label: "Pitch 1 (C₁)", variable: "C₁" },
+      { key: "C2", label: "Pitch 2 (C₂)", variable: "C₂" },
     ],
     calculate: ({ D, C1, C2 }) => (D * D * 78.5) / (C1 * C2),
   },
-  {
-    id: "calc-square-straight",
-    tabLabel: "Straight Line Square",
-    category: "SQUARE PERFORATION",
-    title: "Straight Line",
+  4: {
+    id: 4,
+    name: "Square Perforation — Straight Line",
+    formulaText: "OA = (S² × 100) / (C₁ × C₂)",
     formulaDisplay: (
       <>
         OA = (S<sup>2</sup> × 100) / (C<sub>1</sub> × C<sub>2</sub>)
       </>
     ),
     fields: [
-      { key: "S", label: "Hole size", variable: "S" },
-      { key: "C1", label: "Pitch 1", variable: "C₁" },
-      { key: "C2", label: "Pitch 2", variable: "C₂" },
+      { key: "S", label: "Hole Size (S)", variable: "S" },
+      { key: "C1", label: "Pitch 1 (C₁)", variable: "C₁" },
+      { key: "C2", label: "Pitch 2 (C₂)", variable: "C₂" },
     ],
     calculate: ({ S, C1, C2 }) => (S * S * 100) / (C1 * C2),
   },
-  {
-    id: "calc-square-staggered",
-    tabLabel: "Staggered Square",
-    category: "SQUARE PERFORATION",
-    title: "Staggered",
+  5: {
+    id: 5,
+    name: "Square Perforation — Staggered",
+    formulaText: "OA = (S² × 100) / (C₁ × C₂)",
     formulaDisplay: (
       <>
         OA = (S<sup>2</sup> × 100) / (C<sub>1</sub> × C<sub>2</sub>)
       </>
     ),
     fields: [
-      { key: "S", label: "Hole size", variable: "S" },
-      { key: "C1", label: "Pitch 1", variable: "C₁" },
-      { key: "C2", label: "Pitch 2", variable: "C₂" },
+      { key: "S", label: "Hole Size (S)", variable: "S" },
+      { key: "C1", label: "Pitch 1 (C₁)", variable: "C₁" },
+      { key: "C2", label: "Pitch 2 (C₂)", variable: "C₂" },
     ],
     calculate: ({ S, C1, C2 }) => (S * S * 100) / (C1 * C2),
   },
-  {
-    id: "calc-hex",
-    tabLabel: "Hex",
-    category: "HEX PERFORATION",
-    title: "Hexagonal",
+  6: {
+    id: 6,
+    name: "Hex Perforation — Standard",
+    formulaText: "OA = (S² × 100) / C²",
     formulaDisplay: (
       <>
         OA = (S<sup>2</sup> × 100) / C<sup>2</sup>
       </>
     ),
     fields: [
-      { key: "S", label: "Hole size", variable: "S" },
-      { key: "C", label: "Pitch", variable: "C" },
+      { key: "S", label: "Hole Size (S)", variable: "S" },
+      { key: "C", label: "Pitch (C)", variable: "C" },
     ],
     calculate: ({ S, C }) => (S * S * 100) / (C * C),
   },
-  {
-    id: "calc-round-end-slot-side-staggered",
-    tabLabel: "Side Staggered Slot",
-    category: "ROUND END SLOT",
-    title: "Side Staggered",
+  7: {
+    id: 7,
+    name: "Round End Slot — Side Staggered",
+    formulaText: "OA = (WL − 0.215W²) × 100 / (C₁ × C₂)",
     formulaDisplay: (
       <>
-        OA = (W×L − 0.215×W<sup>2</sup>) × 100 / (C<sub>1</sub> × C<sub>2</sub>)
+        OA = (WL − 0.215W<sup>2</sup>) × 100 / (C<sub>1</sub> × C<sub>2</sub>)
       </>
     ),
     fields: [
-      { key: "W", label: "Hole width", variable: "W" },
-      { key: "L", label: "Hole length", variable: "L" },
-      { key: "C1", label: "Pitch 1", variable: "C₁" },
-      { key: "C2", label: "Pitch 2", variable: "C₂" },
+      { key: "W", label: "Hole Width (W)", variable: "W" },
+      { key: "L", label: "Hole Length (L)", variable: "L" },
+      { key: "C1", label: "Pitch 1 (C₁)", variable: "C₁" },
+      { key: "C2", label: "Pitch 2 (C₂)", variable: "C₂" },
     ],
     calculate: ({ W, L, C1, C2 }) =>
       ((W * L - 0.215 * W * W) * 100) / (C1 * C2),
   },
-  {
-    id: "calc-round-end-slot-straight",
-    tabLabel: "Straight Line Slot (Round)",
-    category: "ROUND END SLOT",
-    title: "Straight Line",
+  8: {
+    id: 8,
+    name: "Round End Slot — Straight Line",
+    formulaText: "OA = (WL − 0.215W²) × 100 / (C₁ × C₂)",
     formulaDisplay: (
       <>
-        OA = (W×L − 0.215×W<sup>2</sup>) × 100 / (C<sub>1</sub> × C<sub>2</sub>)
+        OA = (WL − 0.215W<sup>2</sup>) × 100 / (C<sub>1</sub> × C<sub>2</sub>)
       </>
     ),
     fields: [
-      { key: "W", label: "Hole width", variable: "W" },
-      { key: "L", label: "Hole length", variable: "L" },
-      { key: "C1", label: "Pitch 1", variable: "C₁" },
-      { key: "C2", label: "Pitch 2", variable: "C₂" },
+      { key: "W", label: "Hole Width (W)", variable: "W" },
+      { key: "L", label: "Hole Length (L)", variable: "L" },
+      { key: "C1", label: "Pitch 1 (C₁)", variable: "C₁" },
+      { key: "C2", label: "Pitch 2 (C₂)", variable: "C₂" },
     ],
     calculate: ({ W, L, C1, C2 }) =>
       ((W * L - 0.215 * W * W) * 100) / (C1 * C2),
   },
-  {
-    id: "calc-square-end-slot-straight",
-    tabLabel: "Straight Line Slot (Square)",
-    category: "SQUARE END SLOT",
-    title: "Straight Line",
+  9: {
+    id: 9,
+    name: "Square End Slot — Straight Line",
+    formulaText: "OA = (W × L × 100) / (C₁ × C₂)",
     formulaDisplay: (
       <>
         OA = (W × L × 100) / (C<sub>1</sub> × C<sub>2</sub>)
       </>
     ),
     fields: [
-      { key: "W", label: "Hole width", variable: "W" },
-      { key: "L", label: "Hole length", variable: "L" },
-      { key: "C1", label: "Pitch 1", variable: "C₁" },
-      { key: "C2", label: "Pitch 2", variable: "C₂" },
+      { key: "W", label: "Hole Width (W)", variable: "W" },
+      { key: "L", label: "Hole Length (L)", variable: "L" },
+      { key: "C1", label: "Pitch 1 (C₁)", variable: "C₁" },
+      { key: "C2", label: "Pitch 2 (C₂)", variable: "C₂" },
     ],
     calculate: ({ W, L, C1, C2 }) => (W * L * 100) / (C1 * C2),
   },
-  {
-    id: "calc-square-end-slot-staggered",
-    tabLabel: "Staggered Slot (Square)",
-    category: "SQUARE END SLOT",
-    title: "Staggered",
+  10: {
+    id: 10,
+    name: "Square End Slot — Staggered",
+    formulaText: "OA = (W × L × 100) / (C₁ × C₂)",
     formulaDisplay: (
       <>
         OA = (W × L × 100) / (C<sub>1</sub> × C<sub>2</sub>)
       </>
     ),
     fields: [
-      { key: "W", label: "Hole width", variable: "W" },
-      { key: "L", label: "Hole length", variable: "L" },
-      { key: "C1", label: "Pitch 1", variable: "C₁" },
-      { key: "C2", label: "Pitch 2", variable: "C₂" },
+      { key: "W", label: "Hole Width (W)", variable: "W" },
+      { key: "L", label: "Hole Length (L)", variable: "L" },
+      { key: "C1", label: "Pitch 1 (C₁)", variable: "C₁" },
+      { key: "C2", label: "Pitch 2 (C₂)", variable: "C₂" },
     ],
     calculate: ({ W, L, C1, C2 }) => (W * L * 100) / (C1 * C2),
   },
+};
+
+const HOLE_SHAPES: { id: HoleShape & string; label: string }[] = [
+  { id: "round", label: "Round" },
+  { id: "square", label: "Square" },
+  { id: "hex", label: "Hex" },
+  { id: "slot", label: "Slot (Round End / Square End)" },
 ];
 
-function emptyInputs(fields: CalcField[]): Record<string, string> {
-  return Object.fromEntries(fields.map((f) => [f.key, ""]));
+function getAvailableArrangements(
+  holeShape: HoleShape,
+  slotEndType: SlotEndType
+): { id: string; label: string }[] {
+  if (holeShape === "round") {
+    return [
+      { id: "60-staggered", label: "60° Staggered" },
+      { id: "45-staggered", label: "45° Staggered" },
+      { id: "straight-line", label: "Straight Line" },
+    ];
+  }
+  if (holeShape === "square") {
+    return [
+      { id: "straight-line", label: "Straight Line" },
+      { id: "staggered", label: "Staggered" },
+    ];
+  }
+  if (holeShape === "hex") {
+    return [{ id: "standard", label: "Standard" }];
+  }
+  if (holeShape === "slot" && slotEndType === "round-end") {
+    return [
+      { id: "side-staggered", label: "Side Staggered" },
+      { id: "straight-line", label: "Straight Line" },
+    ];
+  }
+  if (holeShape === "slot" && slotEndType === "square-end") {
+    return [
+      { id: "straight-line", label: "Straight Line" },
+      { id: "staggered", label: "Staggered" },
+    ];
+  }
+  return [];
 }
 
-function CalculatorCard({
-  id,
-  category,
-  title,
-  formulaDisplay,
-  fields,
-  calculate,
-}: CalculatorDefinition) {
-  const [inputs, setInputs] = useState(() => emptyInputs(fields));
-  const [errors, setErrors] = useState<Record<string, boolean>>({});
-  const [result, setResult] = useState<number | null>(null);
-  const [hasCalculated, setHasCalculated] = useState(false);
+function getCalculatorId(
+  holeShape: HoleShape,
+  slotEndType: SlotEndType,
+  arrangement: ArrangementType
+): number | null {
+  if (!holeShape || !arrangement) return null;
 
-  function handleInputChange(key: string, value: string) {
-    setInputs((prev) => ({ ...prev, [key]: value }));
-    if (errors[key]) {
-      setErrors((prev) => {
-        const next = { ...prev };
-        delete next[key];
-        return next;
+  if (holeShape === "round") {
+    if (arrangement === "60-staggered") return 1;
+    if (arrangement === "45-staggered") return 2;
+    if (arrangement === "straight-line") return 3;
+  }
+  if (holeShape === "square") {
+    if (arrangement === "straight-line") return 4;
+    if (arrangement === "staggered") return 5;
+  }
+  if (holeShape === "hex" && arrangement === "standard") return 6;
+  if (holeShape === "slot" && slotEndType === "round-end") {
+    if (arrangement === "side-staggered") return 7;
+    if (arrangement === "straight-line") return 8;
+  }
+  if (holeShape === "slot" && slotEndType === "square-end") {
+    if (arrangement === "straight-line") return 9;
+    if (arrangement === "staggered") return 10;
+  }
+  return null;
+}
+
+function getInputWarnings(
+  calculatorId: number,
+  values: Record<string, number>
+): Record<string, string> {
+  const warnings: Record<string, string> = {};
+  const msg = "Hole diameter should be less than pitch";
+
+  if (calculatorId === 1 || calculatorId === 2) {
+    if (values.D >= values.C) warnings.D = msg;
+  }
+  if (calculatorId === 3) {
+    if (values.D >= values.C1) warnings.D = msg;
+    if (values.D >= values.C2) warnings.D = msg;
+  }
+  if (calculatorId === 4 || calculatorId === 5) {
+    if (values.S >= values.C1) warnings.S = msg;
+    if (values.S >= values.C2) warnings.S = msg;
+  }
+  if (calculatorId === 6) {
+    if (values.S >= values.C) warnings.S = msg;
+  }
+  if (calculatorId >= 7 && calculatorId <= 10) {
+    if (values.W >= values.C1) warnings.W = msg;
+    if (values.L >= values.C2) warnings.L = msg;
+  }
+  return warnings;
+}
+
+function SheetRect() {
+  return (
+    <rect
+      x="20"
+      y="30"
+      width="360"
+      height="140"
+      fill="#1A1A1A"
+      stroke="#E8521A"
+      strokeWidth="1.5"
+      rx="4"
+    />
+  );
+}
+
+function DimLine({
+  x1,
+  y1,
+  x2,
+  y2,
+}: {
+  x1: number | string;
+  y1: number | string;
+  x2: number | string;
+  y2: number | string;
+}) {
+  return (
+    <line
+      x1={x1}
+      y1={y1}
+      x2={x2}
+      y2={y2}
+      stroke="#666666"
+      strokeWidth="1"
+      strokeDasharray="4 2"
+    />
+  );
+}
+
+function VarLabel({
+  x,
+  y,
+  children,
+}: {
+  x: number | string;
+  y: number | string;
+  children: string;
+}) {
+  return (
+    <text
+      x={x}
+      y={y}
+      fill="#E8521A"
+      fontSize="13"
+      fontFamily="monospace"
+      fontWeight="bold"
+    >
+      {children}
+    </text>
+  );
+}
+
+function RoundHoles({
+  stagger = "none",
+}: {
+  stagger?: "60" | "45" | "none";
+}) {
+  const rows = 3;
+  const cols = 6;
+  const startX = 55;
+  const startY = 55;
+  const pitchX = 52;
+  const pitchY = 42;
+  const r = 12;
+
+  const holes: { cx: number; cy: number }[] = [];
+  for (let row = 0; row < rows; row++) {
+    let offset = 0;
+    if (stagger === "60" || stagger === "45") {
+      offset = row % 2 === 1 ? pitchX / 2 : 0;
+    }
+    for (let col = 0; col < cols; col++) {
+      holes.push({
+        cx: startX + col * pitchX + offset,
+        cy: startY + row * pitchY,
       });
     }
   }
 
-  function handleCalculate() {
-    const newErrors: Record<string, boolean> = {};
+  return (
+    <>
+      {holes.map((h, i) => (
+        <circle
+          key={i}
+          cx={h.cx}
+          cy={h.cy}
+          r={r}
+          fill="#0A0A0A"
+          stroke="#E8521A"
+          strokeWidth="1"
+        />
+      ))}
+    </>
+  );
+}
+
+function SquareHoles({ stagger = false }: { stagger?: boolean }) {
+  const size = 22;
+  const holes: { x: number; y: number }[] = [];
+  for (let row = 0; row < 3; row++) {
+    const offset = stagger && row % 2 === 1 ? 26 : 0;
+    for (let col = 0; col < 6; col++) {
+      holes.push({ x: 48 + col * 52 + offset, y: 48 + row * 40 });
+    }
+  }
+  return (
+    <>
+      {holes.map((h, i) => (
+        <rect
+          key={i}
+          x={h.x}
+          y={h.y}
+          width={size}
+          height={size}
+          rx="2"
+          fill="#0A0A0A"
+          stroke="#E8521A"
+          strokeWidth="1"
+        />
+      ))}
+    </>
+  );
+}
+
+function HexHoles() {
+  const hexPoints = (cx: number, cy: number, s: number) => {
+    const pts: string[] = [];
+    for (let i = 0; i < 6; i++) {
+      const angle = (Math.PI / 180) * (60 * i - 30);
+      pts.push(`${cx + s * Math.cos(angle)},${cy + s * Math.sin(angle)}`);
+    }
+    return pts.join(" ");
+  };
+  const centers = [
+    [70, 70],
+    [122, 70],
+    [174, 70],
+    [226, 70],
+    [278, 70],
+    [330, 70],
+    [96, 108],
+    [148, 108],
+    [200, 108],
+    [252, 108],
+    [304, 108],
+    [122, 146],
+    [174, 146],
+    [226, 146],
+    [278, 146],
+  ];
+  return (
+    <>
+      {centers.map(([cx, cy], i) => (
+        <polygon
+          key={i}
+          points={hexPoints(cx, cy, 14)}
+          fill="#0A0A0A"
+          stroke="#E8521A"
+          strokeWidth="1"
+        />
+      ))}
+    </>
+  );
+}
+
+function SlotShape({
+  x,
+  y,
+  w,
+  h,
+  roundEnd,
+}: {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  roundEnd: boolean;
+}) {
+  if (roundEnd) {
+    const r = h / 2;
+    return (
+      <rect
+        x={x}
+        y={y}
+        width={w}
+        height={h}
+        rx={r}
+        fill="#0A0A0A"
+        stroke="#E8521A"
+        strokeWidth="1"
+      />
+    );
+  }
+  return (
+    <rect
+      x={x}
+      y={y}
+      width={w}
+      height={h}
+      fill="#0A0A0A"
+      stroke="#E8521A"
+      strokeWidth="1"
+    />
+  );
+}
+
+function SlotHoles({
+  roundEnd,
+  stagger = false,
+}: {
+  roundEnd: boolean;
+  stagger?: boolean;
+}) {
+  const slots: { x: number; y: number }[] = [];
+  for (let row = 0; row < 3; row++) {
+    const offset = stagger && row % 2 === 1 ? 55 : 0;
+    for (let col = 0; col < 5; col++) {
+      slots.push({ x: 45 + col * 68 + offset, y: 52 + row * 38 });
+    }
+  }
+  return (
+    <>
+      {slots.map((s, i) => (
+        <SlotShape key={i} x={s.x} y={s.y} w={48} h={16} roundEnd={roundEnd} />
+      ))}
+    </>
+  );
+}
+
+function CalculatorDiagram({ calculatorId }: { calculatorId: number }) {
+  const svgProps = {
+    viewBox: "0 0 400 200",
+    className: "mx-auto h-auto max-h-[220px] w-full",
+    role: "img" as const,
+  };
+
+  switch (calculatorId) {
+    case 1:
+      return (
+        <svg {...svgProps}>
+          <SheetRect />
+          <RoundHoles stagger="60" />
+          <DimLine x1="55" y1="185" x2="79" y2="185" />
+          <VarLabel x="58" y="198">
+            D
+          </VarLabel>
+          <DimLine x1="55" y1="175" x2="107" y2="175" />
+          <VarLabel x="72" y="172">
+            C
+          </VarLabel>
+          <path
+            d="M 130 130 A 20 20 0 0 1 145 115"
+            fill="none"
+            stroke="#A0A0A0"
+            strokeWidth="1"
+          />
+          <VarLabel x="148" y="118">
+            60°
+          </VarLabel>
+        </svg>
+      );
+    case 2:
+      return (
+        <svg {...svgProps}>
+          <SheetRect />
+          <RoundHoles stagger="45" />
+          <DimLine x1="55" y1="185" x2="79" y2="185" />
+          <VarLabel x="58" y="198">
+            D
+          </VarLabel>
+          <DimLine x1="55" y1="175" x2="107" y2="175" />
+          <VarLabel x="72" y="172">
+            C
+          </VarLabel>
+          <path
+            d="M 130 130 A 20 20 0 0 1 144 112"
+            fill="none"
+            stroke="#A0A0A0"
+            strokeWidth="1"
+          />
+          <VarLabel x="148" y="112">
+            45°
+          </VarLabel>
+        </svg>
+      );
+    case 3:
+      return (
+        <svg {...svgProps}>
+          <SheetRect />
+          <RoundHoles />
+          <DimLine x1="43" y1="67" x2="67" y2="67" />
+          <VarLabel x="46" y="62">
+            D
+          </VarLabel>
+          <DimLine x1="43" y1="185" x2="95" y2="185" />
+          <VarLabel x="58" y="198">
+            C₁
+          </VarLabel>
+          <DimLine x1="30" y1="55" x2="30" y2="97" />
+          <VarLabel x="8" y="80">
+            C₂
+          </VarLabel>
+        </svg>
+      );
+    case 4:
+      return (
+        <svg {...svgProps}>
+          <SheetRect />
+          <SquareHoles />
+          <DimLine x1="48" y1="48" x2="70" y2="48" />
+          <VarLabel x="50" y="44">
+            S
+          </VarLabel>
+          <DimLine x1="48" y1="185" x2="100" y2="185" />
+          <VarLabel x="62" y="198">
+            C₁
+          </VarLabel>
+          <DimLine x1="35" y1="48" x2="35" y2="88" />
+          <VarLabel x="12" y="72">
+            C₂
+          </VarLabel>
+        </svg>
+      );
+    case 5:
+      return (
+        <svg {...svgProps}>
+          <SheetRect />
+          <SquareHoles stagger />
+          <DimLine x1="48" y1="48" x2="70" y2="48" />
+          <VarLabel x="50" y="44">
+            S
+          </VarLabel>
+          <DimLine x1="48" y1="185" x2="100" y2="185" />
+          <VarLabel x="62" y="198">
+            C₁
+          </VarLabel>
+          <DimLine x1="35" y1="48" x2="35" y2="88" />
+          <VarLabel x="12" y="72">
+            C₂
+          </VarLabel>
+        </svg>
+      );
+    case 6:
+      return (
+        <svg {...svgProps}>
+          <SheetRect />
+          <HexHoles />
+          <DimLine x1="56" y1="56" x2="84" y2="56" />
+          <VarLabel x="58" y="52">
+            S
+          </VarLabel>
+          <DimLine x1="70" y1="185" x2="122" y2="185" />
+          <VarLabel x="82" y="198">
+            C
+          </VarLabel>
+        </svg>
+      );
+    case 7:
+      return (
+        <svg {...svgProps}>
+          <SheetRect />
+          <SlotHoles roundEnd stagger />
+          <DimLine x1="45" y1="52" x2="45" y2="68" />
+          <VarLabel x="28" y="64">
+            W
+          </VarLabel>
+          <DimLine x1="45" y1="60" x2="93" y2="60" />
+          <VarLabel x="58" y="56">
+            L
+          </VarLabel>
+          <DimLine x1="45" y1="185" x2="113" y2="185" />
+          <VarLabel x="68" y="198">
+            C₁
+          </VarLabel>
+          <DimLine x1="32" y1="52" x2="32" y2="90" />
+          <VarLabel x="10" y="76">
+            C₂
+          </VarLabel>
+        </svg>
+      );
+    case 8:
+      return (
+        <svg {...svgProps}>
+          <SheetRect />
+          <SlotHoles roundEnd />
+          <DimLine x1="45" y1="52" x2="45" y2="68" />
+          <VarLabel x="28" y="64">
+            W
+          </VarLabel>
+          <DimLine x1="45" y1="60" x2="93" y2="60" />
+          <VarLabel x="58" y="56">
+            L
+          </VarLabel>
+          <DimLine x1="45" y1="185" x2="113" y2="185" />
+          <VarLabel x="68" y="198">
+            C₁
+          </VarLabel>
+          <DimLine x1="32" y1="52" x2="32" y2="90" />
+          <VarLabel x="10" y="76">
+            C₂
+          </VarLabel>
+        </svg>
+      );
+    case 9:
+      return (
+        <svg {...svgProps}>
+          <SheetRect />
+          <SlotHoles roundEnd={false} />
+          <DimLine x1="45" y1="52" x2="45" y2="68" />
+          <VarLabel x="28" y="64">
+            W
+          </VarLabel>
+          <DimLine x1="45" y1="60" x2="93" y2="60" />
+          <VarLabel x="58" y="56">
+            L
+          </VarLabel>
+          <DimLine x1="45" y1="185" x2="113" y2="185" />
+          <VarLabel x="68" y="198">
+            C₁
+          </VarLabel>
+          <DimLine x1="32" y1="52" x2="32" y2="90" />
+          <VarLabel x="10" y="76">
+            C₂
+          </VarLabel>
+        </svg>
+      );
+    case 10:
+      return (
+        <svg {...svgProps}>
+          <SheetRect />
+          <SlotHoles roundEnd={false} stagger />
+          <DimLine x1="45" y1="52" x2="45" y2="68" />
+          <VarLabel x="28" y="64">
+            W
+          </VarLabel>
+          <DimLine x1="45" y1="60" x2="93" y2="60" />
+          <VarLabel x="58" y="56">
+            L
+          </VarLabel>
+          <DimLine x1="45" y1="185" x2="113" y2="185" />
+          <VarLabel x="68" y="198">
+            C₁
+          </VarLabel>
+          <DimLine x1="32" y1="52" x2="32" y2="90" />
+          <VarLabel x="10" y="76">
+            C₂
+          </VarLabel>
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
+function RoundIcon({ selected }: { selected: boolean }) {
+  const stroke = selected ? "#E8521A" : "#666666";
+  return (
+    <svg viewBox="0 0 40 40" className="mx-auto size-10" aria-hidden>
+      <circle cx="20" cy="20" r="12" fill="none" stroke={stroke} strokeWidth="2" />
+    </svg>
+  );
+}
+
+function SquareIcon({ selected }: { selected: boolean }) {
+  const stroke = selected ? "#E8521A" : "#666666";
+  return (
+    <svg viewBox="0 0 40 40" className="mx-auto size-10" aria-hidden>
+      <rect
+        x="8"
+        y="8"
+        width="24"
+        height="24"
+        rx="2"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
+
+function HexIcon({ selected }: { selected: boolean }) {
+  const stroke = selected ? "#E8521A" : "#666666";
+  return (
+    <svg viewBox="0 0 40 40" className="mx-auto size-10" aria-hidden>
+      <polygon
+        points="20,6 33,14 33,26 20,34 7,26 7,14"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
+
+function SlotIcon({ selected }: { selected: boolean }) {
+  const stroke = selected ? "#E8521A" : "#666666";
+  return (
+    <svg viewBox="0 0 40 40" className="mx-auto size-10" aria-hidden>
+      <rect
+        x="6"
+        y="14"
+        width="28"
+        height="12"
+        rx="6"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
+
+function HoleShapeIcon({
+  shape,
+  selected,
+}: {
+  shape: string;
+  selected: boolean;
+}) {
+  switch (shape) {
+    case "round":
+      return <RoundIcon selected={selected} />;
+    case "square":
+      return <SquareIcon selected={selected} />;
+    case "hex":
+      return <HexIcon selected={selected} />;
+    case "slot":
+      return <SlotIcon selected={selected} />;
+    default:
+      return null;
+  }
+}
+
+const initialState = {
+  holeShape: null as HoleShape,
+  slotEndType: null as SlotEndType,
+  arrangement: null as ArrangementType,
+  inputs: {} as Record<string, string>,
+  errors: {} as Record<string, string>,
+  warnings: {} as Record<string, string>,
+  result: null as number | null,
+  isCalculating: false,
+  hasCalculated: false,
+};
+
+export function OpenAreaCalculator() {
+  const [holeShape, setHoleShape] = useState<HoleShape>(initialState.holeShape);
+  const [slotEndType, setSlotEndType] = useState<SlotEndType>(
+    initialState.slotEndType
+  );
+  const [arrangement, setArrangement] = useState<ArrangementType>(
+    initialState.arrangement
+  );
+  const [inputs, setInputs] = useState<Record<string, string>>(
+    initialState.inputs
+  );
+  const [errors, setErrors] = useState<Record<string, string>>(
+    initialState.errors
+  );
+  const [warnings, setWarnings] = useState<Record<string, string>>(
+    initialState.warnings
+  );
+  const [result, setResult] = useState<number | null>(initialState.result);
+  const [isCalculating, setIsCalculating] = useState(initialState.isCalculating);
+  const [hasCalculated, setHasCalculated] = useState(initialState.hasCalculated);
+
+  const calculatorId = useMemo(
+    () => getCalculatorId(holeShape, slotEndType, arrangement),
+    [holeShape, slotEndType, arrangement]
+  );
+
+  const config = calculatorId ? CALCULATOR_CONFIG[calculatorId] : null;
+  const arrangements = useMemo(
+    () => getAvailableArrangements(holeShape, slotEndType),
+    [holeShape, slotEndType]
+  );
+
+  const showStep2 = holeShape !== null;
+  const showSlotEndStep = holeShape === "slot";
+  const showArrangementStep =
+    holeShape === "hex" ||
+    (holeShape === "slot" && slotEndType !== null) ||
+    holeShape === "round" ||
+    holeShape === "square";
+
+  useEffect(() => {
+    if (holeShape === "hex" && arrangement !== "standard") {
+      setArrangement("standard");
+    }
+  }, [holeShape, arrangement]);
+
+  useEffect(() => {
+    if (!config) return;
+    setInputs((prev) => {
+      const next: Record<string, string> = {};
+      for (const field of config.fields) {
+        next[field.key] = prev[field.key] ?? "";
+      }
+      return next;
+    });
+    setResult(null);
+    setHasCalculated(false);
+    setErrors({});
+    setWarnings({});
+  }, [calculatorId, config]);
+
+  const handleReset = useCallback(() => {
+    setHoleShape(null);
+    setSlotEndType(null);
+    setArrangement(null);
+    setInputs({});
+    setErrors({});
+    setWarnings({});
+    setResult(null);
+    setIsCalculating(false);
+    setHasCalculated(false);
+  }, []);
+
+  const handleRecalculate = useCallback(() => {
+    setResult(null);
+    setHasCalculated(false);
+    setErrors({});
+    setWarnings({});
+  }, []);
+
+  function selectHoleShape(shape: HoleShape) {
+    setHoleShape(shape);
+    setSlotEndType(null);
+    setArrangement(shape === "hex" ? "standard" : null);
+    setResult(null);
+    setHasCalculated(false);
+    setErrors({});
+    setWarnings({});
+  }
+
+  function selectSlotEnd(end: SlotEndType) {
+    setSlotEndType(end);
+    setArrangement(null);
+    setResult(null);
+    setHasCalculated(false);
+  }
+
+  function selectArrangement(id: string) {
+    setArrangement(id);
+    setResult(null);
+    setHasCalculated(false);
+  }
+
+  function handleInputChange(key: string, value: string) {
+    setInputs((prev) => ({ ...prev, [key]: value }));
+    setErrors((prev) => {
+      const next = { ...prev };
+      delete next[key];
+      return next;
+    });
+  }
+
+  async function handleCalculate() {
+    if (!config || !calculatorId) return;
+
+    const fieldErrors: Record<string, string> = {};
     const numeric: Record<string, number> = {};
 
-    for (const field of fields) {
+    for (const field of config.fields) {
       const raw = inputs[field.key]?.trim() ?? "";
       const val = parseFloat(raw);
       if (!raw || Number.isNaN(val) || val <= 0) {
-        newErrors[field.key] = true;
+        fieldErrors[field.key] = "Please enter a valid value";
       } else {
         numeric[field.key] = val;
       }
     }
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      setResult(null);
+    if (Object.keys(fieldErrors).length > 0) {
+      setErrors(fieldErrors);
+      setWarnings({});
       return;
     }
 
     setErrors({});
-    setResult(calculate(numeric));
+    setWarnings(getInputWarnings(calculatorId, numeric));
+    setIsCalculating(true);
+
+    await new Promise((resolve) => setTimeout(resolve, 400));
+
+    setResult(config.calculate(numeric));
     setHasCalculated(true);
+    setIsCalculating(false);
   }
 
-  function handleReset() {
-    setInputs(emptyInputs(fields));
-    setErrors({});
-    setResult(null);
-    setHasCalculated(false);
-  }
+  const inputSummary = config
+    ? config.fields
+        .map((f) => {
+          const val = inputs[f.key]?.trim();
+          if (!val) return null;
+          return `${f.variable} = ${val} mm`;
+        })
+        .filter(Boolean)
+        .join(" · ")
+    : "";
 
-  return (
-    <article
-      id={id}
-      className="scroll-mt-36 rounded-xl border p-6 md:p-8"
-      style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
-    >
-      <p
-        className="text-xs font-semibold uppercase tracking-[0.2em]"
-        style={{ color: "#E8521A" }}
-      >
-        {category}
-      </p>
-      <h2
-        className="mt-2 text-2xl font-bold"
-        style={{ color: "#FFFFFF" }}
-      >
-        {title}
-      </h2>
-
-      <div
-        className="mt-5 rounded-lg border px-4 py-3 font-mono text-sm md:text-base"
-        style={{
-          backgroundColor: "#1A1A1A",
-          borderColor: "#E8521A",
-          color: "#FFFFFF",
-        }}
-      >
-        {formulaDisplay}
-      </div>
-
-      <div className="mt-6 space-y-4">
-        {fields.map((field) => (
-          <div key={field.key}>
-            <label
-              htmlFor={`${id}-${field.key}`}
-              className="mb-1.5 block text-sm"
-              style={{ color: "#A0A0A0" }}
-            >
-              {field.label} ({field.variable})
-            </label>
-            <div className="flex items-center gap-2">
-              <span
-                className="flex size-9 shrink-0 items-center justify-center rounded-md text-sm font-bold"
-                style={{
-                  backgroundColor: "rgba(232, 82, 26, 0.15)",
-                  color: "#E8521A",
-                }}
-              >
-                {field.variable}
-              </span>
-              <Input
-                id={`${id}-${field.key}`}
-                type="number"
-                step="0.01"
-                min="0.001"
-                placeholder="Enter value in mm"
-                value={inputs[field.key]}
-                onChange={(e) => handleInputChange(field.key, e.target.value)}
-                className="h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
-                style={
-                  errors[field.key]
-                    ? { borderColor: "#ef4444" }
-                    : undefined
-                }
-              />
-            </div>
-            {errors[field.key] && (
-              <p className="mt-1.5 text-sm text-red-400">
-                Please enter a valid value
-              </p>
-            )}
-          </div>
-        ))}
-      </div>
-
-      <Button
-        type="button"
-        onClick={handleCalculate}
-        className="mt-6 h-11 border-0 px-6 text-base font-semibold"
-        style={{ backgroundColor: "#E8521A", color: "#FFFFFF" }}
-      >
-        Calculate
-      </Button>
-
-      <AnimatePresence>
-        {result !== null && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.25 }}
-            className="mt-6"
-          >
-            <p className="text-base" style={{ color: "#A0A0A0" }}>
-              Open Area ={" "}
-              <span
-                className="text-3xl font-black md:text-4xl"
-                style={{ color: "#E8521A" }}
-              >
-                {result.toFixed(2)}
-              </span>{" "}
-              %
-            </p>
-            {result > 100 && (
-              <p
-                className="mt-3 rounded-lg border px-3 py-2 text-sm"
-                style={{
-                  borderColor: "#f59e0b",
-                  backgroundColor: "rgba(245, 158, 11, 0.1)",
-                  color: "#fbbf24",
-                }}
-              >
-                Result exceeds 100% — please recheck inputs
-              </p>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {hasCalculated && (
-        <button
-          type="button"
-          onClick={handleReset}
-          className="mt-4 text-sm underline-offset-2 transition-opacity hover:opacity-80 hover:underline"
-          style={{ color: "#A0A0A0" }}
-        >
-          Reset
-        </button>
-      )}
-    </article>
-  );
-}
-
-export function OpenAreaCalculator() {
-  const [activeTab, setActiveTab] = useState(CALCULATORS[0].id);
-
-  const scrollToCalculator = useCallback((id: string) => {
-    setActiveTab(id);
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  }, []);
+  const arrangementSelected =
+    holeShape === "hex"
+      ? arrangement === "standard"
+      : holeShape === "slot"
+        ? slotEndType !== null && arrangement !== null
+        : arrangement !== null;
 
   return (
     <div
       className="section-padding pt-28 md:pt-32"
       style={{ backgroundColor: "#0A0A0A" }}
     >
-      <div className="mx-auto max-w-4xl">
-        <div className="mb-8 max-w-3xl">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-10 max-w-3xl">
           <h1
             className="text-4xl font-black tracking-tight sm:text-5xl"
             style={{ color: "#FFFFFF" }}
@@ -426,99 +1026,357 @@ export function OpenAreaCalculator() {
             className="mt-4 text-lg leading-relaxed"
             style={{ color: "#A0A0A0" }}
           >
-            Calculate open area percentage using the same 10 industry-standard
-            formulas from Jai Shree Group&apos;s technical specifications —
-            round, square, hex, and slot perforation patterns.
+            Select your hole shape and arrangement, then enter dimensions to
+            calculate open area percentage using industry-standard formulas.
           </p>
         </div>
 
-        <nav
-          className="sticky top-20 z-20 -mx-1 mb-8 border-b pb-4"
-          style={{
-            backgroundColor: "#0A0A0A",
-            borderColor: "#2A2A2A",
-          }}
-          aria-label="Calculator types"
-        >
-          <div className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {CALCULATORS.map((calc) => (
-              <button
-                key={calc.id}
-                type="button"
-                onClick={() => scrollToCalculator(calc.id)}
-                className="shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors"
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-5 lg:items-start">
+          {/* Left panel — 40% */}
+          <div className="space-y-8 lg:sticky lg:top-24 lg:col-span-2 lg:self-start">
+            <div
+              className="rounded-xl border p-6"
+              style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
+            >
+              <p
+                className="text-xs font-semibold uppercase tracking-[0.2em]"
+                style={{ color: "#E8521A" }}
+              >
+                Step 1
+              </p>
+              <h2
+                className="mt-2 text-xl font-bold"
+                style={{ color: "#FFFFFF" }}
+              >
+                Select Hole Shape
+              </h2>
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                {HOLE_SHAPES.map((shape) => {
+                  const selected = holeShape === shape.id;
+                  return (
+                    <button
+                      key={shape.id}
+                      type="button"
+                      onClick={() => selectHoleShape(shape.id as HoleShape)}
+                      className={`rounded-xl border p-4 text-center transition-all ${
+                        selected
+                          ? "border-[#E8521A] bg-[#E8521A]/10 text-white"
+                          : "border-[#2A2A2A] bg-[#1A1A1A] text-[#A0A0A0] hover:border-[#E8521A]/50"
+                      }`}
+                    >
+                      <HoleShapeIcon shape={shape.id} selected={selected} />
+                      <span className="mt-2 block text-sm font-medium">
+                        {shape.label}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <AnimatePresence>
+              {showStep2 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 12 }}
+                  transition={{ duration: 0.3 }}
+                  className="rounded-xl border p-6"
+                  style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
+                >
+                  <p
+                    className="text-xs font-semibold uppercase tracking-[0.2em]"
+                    style={{ color: "#E8521A" }}
+                  >
+                    Step 2
+                  </p>
+                  <h2
+                    className="mt-2 text-xl font-bold"
+                    style={{ color: "#FFFFFF" }}
+                  >
+                    Select Arrangement
+                  </h2>
+
+                  {showSlotEndStep && (
+                    <div className="mt-4">
+                      <p
+                        className="mb-2 text-sm"
+                        style={{ color: "#A0A0A0" }}
+                      >
+                        End Type
+                      </p>
+                      <div className="space-y-2">
+                        {(
+                          [
+                            ["round-end", "Round End"],
+                            ["square-end", "Square End"],
+                          ] as const
+                        ).map(([id, label]) => (
+                          <button
+                            key={id}
+                            type="button"
+                            onClick={() => selectSlotEnd(id)}
+                            className={`w-full rounded-xl border px-4 py-3 text-left text-sm font-medium transition-all ${
+                              slotEndType === id
+                                ? "border-[#E8521A] bg-[#E8521A]/10 text-white"
+                                : "border-[#2A2A2A] bg-[#1A1A1A] text-[#A0A0A0] hover:border-[#E8521A]/50"
+                            }`}
+                          >
+                            {label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {showArrangementStep && arrangements.length > 0 && (
+                    <div className={showSlotEndStep ? "mt-4" : "mt-4"}>
+                      {showSlotEndStep && (
+                        <p
+                          className="mb-2 text-sm"
+                          style={{ color: "#A0A0A0" }}
+                        >
+                          Arrangement
+                        </p>
+                      )}
+                      <div className="space-y-2">
+                        {arrangements.map((opt) => (
+                          <button
+                            key={opt.id}
+                            type="button"
+                            onClick={() => selectArrangement(opt.id)}
+                            className={`w-full rounded-xl border px-4 py-3 text-left text-sm font-medium transition-all ${
+                              arrangement === opt.id
+                                ? "border-[#E8521A] bg-[#E8521A]/10 text-white"
+                                : "border-[#2A2A2A] bg-[#1A1A1A] text-[#A0A0A0] hover:border-[#E8521A]/50"
+                            }`}
+                          >
+                            {opt.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {holeShape === "hex" && (
+                    <p className="mt-3 text-sm" style={{ color: "#666666" }}>
+                      Hex perforation uses a standard honeycomb arrangement.
+                    </p>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {config && arrangementSelected && (
+              <div
+                className="rounded-xl border border-l-4 p-4"
                 style={{
-                  borderColor: activeTab === calc.id ? "#E8521A" : "#2A2A2A",
-                  backgroundColor:
-                    activeTab === calc.id
-                      ? "rgba(232, 82, 26, 0.15)"
-                      : "#111111",
-                  color: activeTab === calc.id ? "#E8521A" : "#A0A0A0",
+                  backgroundColor: "#111111",
+                  borderColor: "#2A2A2A",
+                  borderLeftColor: "#E8521A",
                 }}
               >
-                {calc.tabLabel}
-              </button>
-            ))}
+                <p className="text-sm" style={{ color: "#FFFFFF" }}>
+                  <span style={{ color: "#A0A0A0" }}>Calculator: </span>
+                  {config.name}
+                </p>
+                <p className="mt-2 text-sm" style={{ color: "#FFFFFF" }}>
+                  <span style={{ color: "#A0A0A0" }}>Formula: </span>
+                  {config.formulaText}
+                </p>
+              </div>
+            )}
+
+            <button
+              type="button"
+              onClick={handleReset}
+              className="text-sm transition-opacity hover:opacity-80"
+              style={{ color: "#A0A0A0" }}
+            >
+              ← Start over
+            </button>
           </div>
-        </nav>
 
-        <div className="space-y-8">
-          {CALCULATORS.map((calc) => (
-            <CalculatorCard key={calc.id} {...calc} />
-          ))}
-        </div>
+          {/* Right panel — 60% */}
+          <div className="space-y-6 lg:col-span-3">
+            {/* Section A: Diagram */}
+            <div className="rounded-xl border border-[#2A2A2A] bg-[#1A1A1A] p-6">
+              {!calculatorId ? (
+                <div
+                  className="flex min-h-[180px] items-center justify-center rounded-xl border border-dashed px-6 py-12 text-center text-sm"
+                  style={{ borderColor: "#2A2A2A", color: "#666666" }}
+                >
+                  Select hole shape and arrangement to see diagram
+                </div>
+              ) : (
+                <motion.div
+                  key={calculatorId}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <CalculatorDiagram calculatorId={calculatorId} />
+                </motion.div>
+              )}
+            </div>
 
-        <div
-          className="mt-16 rounded-xl border p-8"
-          style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
-        >
-          <h2
-            className="mb-4 text-2xl font-bold"
-            style={{ color: "#FFFFFF" }}
-          >
-            What is Open Area?
-          </h2>
-          <p
-            className="text-base leading-relaxed"
-            style={{ color: "#A0A0A0" }}
-          >
-            Open area is the ratio of the total area of holes to the total
-            surface area of a perforated sheet, expressed as a percentage. It
-            determines how much air, liquid, or light can pass through the
-            sheet. Higher open area means better flow but reduced structural
-            strength.
-          </p>
-        </div>
-
-        <div className="mt-16 max-w-3xl">
-          <h2
-            className="mb-6 text-2xl font-bold"
-            style={{ color: "#FFFFFF" }}
-          >
-            Open Area FAQ
-          </h2>
-          <Accordion type="single" collapsible>
-            {CALCULATOR_FAQS.map((faq, i) => (
-              <AccordionItem
-                key={faq.q}
-                value={`calc-faq-${i}`}
-                className="border-[#2A2A2A]"
+            {/* Section B: Formula */}
+            {config && (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="rounded-xl border-l-4 border-l-[#E8521A] bg-[#1A1A1A] p-4"
               >
-                <AccordionTrigger
-                  className="text-base"
-                  style={{ color: "#FFFFFF" }}
+                <p
+                  className="text-xs font-semibold uppercase tracking-[0.2em]"
+                  style={{ color: "#E8521A" }}
                 >
-                  {faq.q}
-                </AccordionTrigger>
-                <AccordionContent
-                  className="text-base"
-                  style={{ color: "#A0A0A0" }}
+                  Formula
+                </p>
+                <p className="mt-2 font-mono text-lg text-white">
+                  {config.formulaDisplay}
+                </p>
+              </motion.div>
+            )}
+
+            {/* Section C: Inputs */}
+            {config && (
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-4"
+              >
+                {config.fields.map((field, index) => (
+                  <motion.div
+                    key={field.key}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                  >
+                    <label
+                      htmlFor={`input-${field.key}`}
+                      className="mb-2 block text-sm"
+                      style={{ color: "#A0A0A0" }}
+                    >
+                      {field.label}
+                    </label>
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#E8521A] text-sm font-bold text-white">
+                        {field.variable}
+                      </span>
+                      <Input
+                        id={`input-${field.key}`}
+                        type="number"
+                        step="0.01"
+                        min="0.001"
+                        placeholder="Enter value in mm"
+                        value={inputs[field.key] ?? ""}
+                        onChange={(e) =>
+                          handleInputChange(field.key, e.target.value)
+                        }
+                        className={`h-12 flex-1 rounded-lg border bg-[#1A1A1A] px-4 text-white ${
+                          errors[field.key]
+                            ? "border-red-500"
+                            : "border-[#2A2A2A]"
+                        }`}
+                      />
+                    </div>
+                    {errors[field.key] && (
+                      <p className="mt-1.5 text-sm text-red-400">
+                        {errors[field.key]}
+                      </p>
+                    )}
+                    {warnings[field.key] && !errors[field.key] && (
+                      <p className="mt-1.5 text-sm text-amber-400">
+                        {warnings[field.key]}
+                      </p>
+                    )}
+                  </motion.div>
+                ))}
+
+                <motion.div whileTap={{ scale: 0.98 }}>
+                  <Button
+                    type="button"
+                    onClick={handleCalculate}
+                    disabled={isCalculating}
+                    className="h-12 w-full rounded-lg border-0 bg-[#E8521A] py-3 font-semibold text-white hover:bg-[#FF6B35]"
+                  >
+                    {isCalculating ? (
+                      <>
+                        <Loader2 className="size-4 animate-spin" />
+                        Calculating...
+                      </>
+                    ) : (
+                      "Calculate Open Area"
+                    )}
+                  </Button>
+                </motion.div>
+              </motion.div>
+            )}
+
+            {/* Section D: Result */}
+            <AnimatePresence>
+              {result !== null && hasCalculated && (
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ duration: 0.4 }}
+                  className="rounded-xl border border-[#E8521A] bg-[#1A1A1A] p-6"
                 >
-                  {faq.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+                  <p
+                    className="text-xs font-semibold uppercase tracking-[0.2em]"
+                    style={{ color: "#E8521A" }}
+                  >
+                    Open Area Result
+                  </p>
+                  <p className="mt-3 text-5xl font-black text-[#E8521A]">
+                    {result.toFixed(2)}%
+                  </p>
+                  <p className="mt-2 text-sm text-[#A0A0A0]">
+                    Based on your inputs
+                  </p>
+                  {inputSummary && (
+                    <p className="mt-3 text-sm" style={{ color: "#666666" }}>
+                      {inputSummary}
+                    </p>
+                  )}
+
+                  {result > 100 && (
+                    <div className="mt-4 rounded-lg border border-amber-500 bg-amber-950 p-3 text-sm text-amber-400">
+                      Result exceeds 100% — please recheck your input values
+                    </div>
+                  )}
+                  {result <= 0 && (
+                    <div className="mt-4 rounded-lg border border-red-500 bg-red-950/50 p-3 text-sm text-red-400">
+                      Invalid result — please check all inputs are positive
+                    </div>
+                  )}
+
+                  <div className="mt-5 flex gap-4">
+                    <button
+                      type="button"
+                      onClick={handleRecalculate}
+                      className="text-sm underline-offset-2 hover:underline"
+                      style={{ color: "#E8521A" }}
+                    >
+                      Recalculate
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleReset}
+                      className="text-sm underline-offset-2 hover:underline"
+                      style={{ color: "#A0A0A0" }}
+                    >
+                      Start Over
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </div>
