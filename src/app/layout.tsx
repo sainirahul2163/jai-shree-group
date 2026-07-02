@@ -32,6 +32,9 @@ function buildSiteVerification(): Metadata["verification"] | undefined {
 
 const siteVerification = buildSiteVerification();
 
+const faviconSvg =
+  "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A0A0A'/><text x='16' y='23' text-anchor='middle' font-size='18' font-weight='900' font-family='Arial,sans-serif' fill='%23E8521A'>J</text></svg>";
+
 export const metadata: Metadata = {
   title: "Perforated Sheet Manufacturers Pune Mumbai | Jai Shree Group",
   description:
@@ -89,6 +92,15 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+  },
+  icons: {
+    icon: [
+      {
+        url: faviconSvg,
+        type: "image/svg+xml",
+      },
+    ],
+    shortcut: faviconSvg,
   },
 };
 

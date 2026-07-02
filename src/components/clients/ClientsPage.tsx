@@ -28,7 +28,7 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      "Their demister pads meet our exact specifications for refinery applications. ISO certification gives us confidence in every order.",
+      "Their perforated sheets and precision components meet our exact specifications for refinery applications. ISO certification gives us confidence in every order.",
     author: "Project Engineer",
     company: "Petrochemical Plant, Mumbai",
   },

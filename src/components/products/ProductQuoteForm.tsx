@@ -26,9 +26,9 @@ export function ProductQuoteForm({
   productName,
   compact = false,
 }: ProductQuoteFormProps) {
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
-    "idle"
-  );
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error" | "unavailable"
+  >("idle");
 
   const form = useForm<ProductQuoteFormValues>({
     resolver: zodResolver(productQuoteFormSchema),
@@ -57,6 +57,10 @@ export function ProductQuoteForm({
       });
 
       const data = await res.json();
+      if (res.status === 503) {
+        setStatus("unavailable");
+        return;
+      }
       if (!res.ok) throw new Error(data.error ?? "Failed");
       setStatus("success");
       form.reset({ ...values, name: "", phone: "", email: "", message: "" });
@@ -188,6 +192,31 @@ export function ProductQuoteForm({
             </p>
           )}
         </div>
+
+        {status === "unavailable" && (
+          <div className="space-y-3 rounded-lg border p-4" style={{ borderColor: "#2A2A2A", backgroundColor: "#0A0A0A" }}>
+            <p className="text-sm" style={{ color: "#A0A0A0" }}>
+              Our online form is temporarily unavailable. Please WhatsApp us
+              directly for a quick response.
+            </p>
+            <Button
+              asChild
+              className="h-11 w-full border-0"
+              style={{ backgroundColor: "#25D366", color: "#FFFFFF" }}
+            >
+              <a
+                href={whatsappUrl(
+                  COMPANY.whatsapp,
+                  `Hi, I need a quote for ${productName}.`
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                WhatsApp Us Directly
+              </a>
+            </Button>
+          </div>
+        )}
 
         {status === "error" && (
           <p className="text-sm text-red-400">

@@ -414,7 +414,7 @@ export const HOME_SECTIONS = {
     highlights: [
       { value: "12mm", label: "Max Perforation Thickness" },
       { value: "14mm", label: "Max Laser Cutting Thickness" },
-      { value: "2–400 Mesh", label: "Wire Mesh Range" },
+      { value: "Up to 12mm", label: "Max Sheet Thickness" },
     ],
     cta: { label: "Read Full Story", href: "/about" },
   },
@@ -504,8 +504,21 @@ export const FOOTER = {
   copyright: "© 2026 Jai Shree Group. All rights reserved.",
   certification: "ISO 9001:2015 Certified | Pune & Mumbai, India",
   social: [
-    { name: "LinkedIn", href: "#", icon: "Linkedin" },
-    { name: "Facebook", href: "#", icon: "Facebook" },
+    {
+      name: "LinkedIn",
+      href: "https://www.linkedin.com/company/jai-shree-group/",
+      icon: "Linkedin",
+    },
+    {
+      name: "Facebook",
+      href: "https://www.facebook.com/jaishreegroup/",
+      icon: "Facebook",
+    },
+    {
+      name: "Instagram",
+      href: "https://www.instagram.com/jaishreegroup/",
+      icon: "Instagram",
+    },
   ],
   quickLinks: [
     { label: "About", href: "/about" },

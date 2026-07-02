@@ -1,22 +1,31 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
-import { Play, Volume2, VolumeX } from "lucide-react";
+import { Play, Video, Volume2, VolumeX } from "lucide-react";
 
 import { COMPANY_VIDEO } from "@/lib/constants";
 
 const SPRING = { type: "spring", stiffness: 100, damping: 30 } as const;
 
-function VideoPlaceholder({ onPlay }: { onPlay: () => void }) {
+function VideoPlaceholder({
+  showComingSoon,
+  onOpen,
+  onClose,
+}: {
+  showComingSoon: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}) {
   return (
     <div
       className="group relative flex aspect-video w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl border border-[#2A2A2A] bg-[#0C0C0C]"
-      onClick={onPlay}
+      onClick={onOpen}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") onPlay();
+        if (e.key === "Enter" || e.key === " ") onOpen();
       }}
     >
       <div
@@ -94,6 +103,49 @@ function VideoPlaceholder({ onPlay }: { onPlay: () => void }) {
           Video available soon
         </span>
       </div>
+
+      {showComingSoon && (
+        <div
+          className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-black/80 backdrop-blur-sm"
+          onClick={onClose}
+          role="presentation"
+        >
+          <div
+            className="flex flex-col items-center px-8 text-center"
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="factory-tour-soon-title"
+          >
+            <Video className="size-10" style={{ color: "#E8521A" }} />
+            <h3
+              id="factory-tour-soon-title"
+              className="mt-4 text-xl font-bold text-white"
+            >
+              Factory Tour Coming Soon
+            </h3>
+            <p className="mt-2 max-w-xs text-center text-sm text-[#A0A0A0]">
+              We&apos;re filming a complete walkthrough of our 6 manufacturing
+              units.
+            </p>
+            <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row">
+              <Link
+                href="/products"
+                className="rounded-lg bg-[#E8521A] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#FF6B35]"
+              >
+                Explore Products →
+              </Link>
+              <button
+                type="button"
+                onClick={onClose}
+                className="text-sm text-[#A0A0A0] transition-colors hover:text-white"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -207,6 +259,7 @@ function LocalVideo({ src }: { src: string }) {
 export function VideoSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-10% 0px" });
+  const [showComingSoon, setShowComingSoon] = useState(false);
 
   const hasYoutube = Boolean(COMPANY_VIDEO.youtubeId);
   const hasLocal = Boolean(COMPANY_VIDEO.localVideo);
@@ -276,7 +329,11 @@ export function VideoSection() {
           ) : hasLocal ? (
             <LocalVideo src={COMPANY_VIDEO.localVideo} />
           ) : (
-            <VideoPlaceholder onPlay={() => {}} />
+            <VideoPlaceholder
+              showComingSoon={showComingSoon}
+              onOpen={() => setShowComingSoon(true)}
+              onClose={() => setShowComingSoon(false)}
+            />
           )}
         </motion.div>
 

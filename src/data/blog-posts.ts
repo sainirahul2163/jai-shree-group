@@ -243,7 +243,7 @@ Send us your drawing or pattern specification for a process recommendation and q
   },
   {
     title: "Perforated Sheet Specification Guide",
-    slug: "wire-mesh-specification-guide",
+    slug: "perforated-sheet-specification-guide",
     date: "2024-02-01",
     category: "Technical Guide",
     excerpt:

@@ -41,7 +41,7 @@ const SUBMIT_TIMEOUT_MS = 10_000;
 
 export function ContactPage() {
   const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
+    "idle" | "loading" | "success" | "error" | "unavailable"
   >("idle");
   const [waLink, setWaLink] = useState<string | null>(null);
 
@@ -77,6 +77,12 @@ export function ContactPage() {
         signal: controller.signal,
       });
       const data = await res.json();
+      if (res.status === 503) {
+        setWaLink(data.whatsapp ?? fallbackWa);
+        setStatus("unavailable");
+        form.reset();
+        return;
+      }
       if (!res.ok) throw new Error(data.error ?? "Failed");
       setWaLink(data.whatsappUrl ?? fallbackWa);
       setStatus("success");
@@ -391,6 +397,30 @@ export function ContactPage() {
                     </p>
                   )}
                 </div>
+
+                {status === "unavailable" && (
+                  <div className="space-y-3 rounded-xl border p-4" style={{ borderColor: "#2A2A2A", backgroundColor: "#111111" }}>
+                    <p className="text-sm" style={{ color: "#A0A0A0" }}>
+                      Our online form is temporarily unavailable. Please WhatsApp
+                      us directly for a quick response.
+                    </p>
+                    {waLink && (
+                      <Button
+                        asChild
+                        className="h-11 w-full border-0"
+                        style={{ backgroundColor: "#25D366", color: "#FFF" }}
+                      >
+                        <a
+                          href={waLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          WhatsApp Us Directly
+                        </a>
+                      </Button>
+                    )}
+                  </div>
+                )}
 
                 {status === "error" && (
                   <div className="space-y-3">

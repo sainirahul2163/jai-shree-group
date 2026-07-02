@@ -4,25 +4,39 @@ import { Resend } from "resend";
 
 import { whatsappUrl } from "@/lib/email";
 import { COMPANY } from "@/lib/constants";
+import { isSupabaseConfigured } from "@/lib/supabase/env";
 
 export async function POST(request: Request) {
   try {
+    if (!isSupabaseConfigured()) {
+      return NextResponse.json(
+        {
+          error: "Service temporarily unavailable.",
+          message: "Please contact us directly via WhatsApp or phone.",
+          whatsapp: "https://wa.me/919370606017",
+          phone: "+91 9370606017",
+        },
+        { status: 503 }
+      );
+    }
+
     const body = await request.json();
     console.log("Contact form received:", body);
 
-    if (
-      !process.env.NEXT_PUBLIC_SUPABASE_URL ||
-      !process.env.SUPABASE_SERVICE_ROLE_KEY
-    ) {
-      console.error("Missing Supabase environment variables");
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
       return NextResponse.json(
-        { success: false, error: "Server configuration error" },
-        { status: 500 }
+        {
+          error: "Service temporarily unavailable.",
+          message: "Please contact us directly via WhatsApp or phone.",
+          whatsapp: "https://wa.me/919370606017",
+          phone: "+91 9370606017",
+        },
+        { status: 503 }
       );
     }
 
     const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY
     );
 

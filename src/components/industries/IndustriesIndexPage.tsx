@@ -15,7 +15,7 @@ export function IndustriesIndexPage() {
       <PageHero
         label="INDUSTRIES"
         title="Industries We Serve"
-        subtitle="Precision metal products for every sector — from automotive filters to petrochemical demister pads."
+        subtitle="Precision metal products for every sector — from automotive filters to petrochemical precision components."
       />
       <section className="section-padding" style={{ backgroundColor: "#111111" }}>
         <div className="mx-auto max-w-7xl">

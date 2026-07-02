@@ -2,15 +2,19 @@
 
 import { useCallback, useEffect, useRef, type RefObject } from "react";
 
-const SPACING = 28;
-const BASE_RADIUS = 1.8;
-const MAX_RADIUS = 2.8;
-const BASE_OPACITY = 0.25;
-const MAX_OPACITY = 0.7;
-const DETECTION_RADIUS = 120;
-const MAX_PUSH = 35;
+const SPACING = 52;
+const BASE_RADIUS = 16;
+const MAX_RADIUS = 19;
+const BASE_OPACITY = 0.45;
+const MAX_OPACITY = 0.85;
+const BASE_LINE_WIDTH = 1.5;
+const MAX_LINE_WIDTH = 2.5;
+const DETECTION_RADIUS = 160;
+const MAX_PUSH = 25;
 const SPRING_DECAY = 0.82;
-const DOT_RGB = "232, 82, 26";
+const DOT_RGB = { r: 232, g: 82, b: 26 };
+const BRIGHT_RGB = { r: 255, g: 107, b: 53 };
+const CANVAS_ALPHA = 0.6;
 
 type Dot = {
   baseX: number;
@@ -114,6 +118,7 @@ export function MagneticDotsBackground({
       const dots = dotsRef.current;
 
       ctx.clearRect(0, 0, width, height);
+      ctx.globalAlpha = CANVAS_ALPHA;
 
       const minX = mouse.x - DETECTION_RADIUS;
       const maxX = mouse.x + DETECTION_RADIUS;
@@ -166,12 +171,20 @@ export function MagneticDotsBackground({
           BASE_RADIUS + proximity * (MAX_RADIUS - BASE_RADIUS);
         const opacity =
           BASE_OPACITY + proximity * (MAX_OPACITY - BASE_OPACITY);
+        const lineWidth =
+          BASE_LINE_WIDTH + proximity * (MAX_LINE_WIDTH - BASE_LINE_WIDTH);
+        const r = Math.round(DOT_RGB.r + proximity * (BRIGHT_RGB.r - DOT_RGB.r));
+        const g = Math.round(DOT_RGB.g + proximity * (BRIGHT_RGB.g - DOT_RGB.g));
+        const b = Math.round(DOT_RGB.b + proximity * (BRIGHT_RGB.b - DOT_RGB.b));
 
         ctx.beginPath();
         ctx.arc(dot.currentX, dot.currentY, radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${DOT_RGB}, ${opacity})`;
-        ctx.fill();
+        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+        ctx.lineWidth = lineWidth;
+        ctx.stroke();
       }
+
+      ctx.globalAlpha = 1;
 
       rafRef.current = requestAnimationFrame(animate);
     };

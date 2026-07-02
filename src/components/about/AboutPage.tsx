@@ -5,13 +5,13 @@ import { motion } from "framer-motion";
 import {
   Award,
   Clock,
-  Download,
   Heart,
   Handshake,
   Package,
   Settings,
   Shield,
   Truck,
+  ArrowRight,
 } from "lucide-react";
 
 import { CtaBanner } from "@/components/shared/CtaBanner";
@@ -367,8 +367,8 @@ export function AboutPage() {
               </div>
               <Button asChild className="mt-8 glow-orange">
                 <Link href="/certifications">
-                  <Download className="mr-2 size-4" />
-                  Download ISO Certificate
+                  <ArrowRight className="mr-2 size-4" />
+                  View Certifications →
                 </Link>
               </Button>
             </motion.div>

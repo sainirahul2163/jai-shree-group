@@ -24,9 +24,9 @@ const MUMBAI_ADDRESS =
   "L-9, Swastik Industrial Estate, Behind Gaurav Dharam Kanta, Bhayander East, Mumbai - 401105";
 
 const PUNE_MAP =
-  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.5!2d73.78!3d18.62!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTjCsDM3JzEyLjAiTiA3M8KwNDYnNDguMCJF!5e0!3m2!1sen!2sin!4v1";
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3780.52!2d73.78999!3d18.68313!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2b79effffffff%3A0x1f3e66f3499a09a2!2sJaishree%20Metal%20Perforators!5e0!3m2!1sen!2sin!4v1700000000001!5m2!1sen!2sin";
 const MUMBAI_MAP =
-  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.5!2d72.85!3d19.30!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDE4JzAwLjAiTiA3MsKwNTEnMDAuMCJF!5e0!3m2!1sen!2sin!4v1";
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.92!2d72.85452!3d19.34521!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s!2zMTnCsDIwJzQyLjgiTiA3MsKwNTEnMjIuMiJF!5e0!3m2!1sen!2sin!4v1700000000002!5m2!1sen!2sin";
 
 export const LOCATION_PAGES: Record<string, LocationPageData> = {
   "pune/perforated-sheet-manufacturers": {
@@ -270,6 +270,53 @@ export const LOCATION_PAGES: Record<string, LocationPageData> = {
       {
         q: "What is the lead time for laser cutting in Mumbai?",
         a: "Standard orders are completed within 3–7 working days depending on complexity. Rush orders can be accommodated on request.",
+      },
+    ],
+  },
+  "mumbai/expanded-metal-manufacturers": {
+    slug: "expanded-metal-manufacturers",
+    city: "mumbai",
+    cityName: "Mumbai",
+    productName: "Expanded Metal",
+    productSlug: "expanded-metal",
+    h1: "Expanded Metal Manufacturers in Mumbai",
+    metaTitle: "Expanded Metal Manufacturers in Mumbai | Jai Shree Group",
+    metaDescription:
+      "ISO 9001:2015 certified expanded metal manufacturers in Mumbai. Diamond & hexagonal patterns in SS, MS, GI & AL. Jai Shree Group — 50+ years of precision metalwork. Get free quote.",
+    intro: [
+      "Mumbai's construction, marine, and industrial sectors rely on expanded metal for walkways, facades, security screens, and filtration support. Jai Shree Group manufactures expanded metal from our Bhayander, Masjid Bunder, and Palghar units.",
+      "Serving the Mumbai Metropolitan Region and export markets, we supply diamond, square, and hexagonal expanded metal in stainless steel, MS, GI, and aluminium — with ISO 9001:2015 certified quality and global delivery.",
+    ],
+    facilityName: "Jai Shree Industries — Bhayander",
+    facilityAddress: MUMBAI_ADDRESS,
+    mapEmbedUrl: MUMBAI_MAP,
+    googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MUMBAI_ADDRESS)}`,
+    products: [
+      "Diamond Pattern Expanded Metal",
+      "Square & Hexagonal Patterns",
+      "Anti-Skid Stair Treads",
+      "Facade & Security Panels",
+    ],
+    industries: ["Construction", "Petrochemical", "Architecture", "Marine"],
+    specs: [
+      { label: "Max Thickness", value: "6mm" },
+      { label: "Widths", value: "900 / 1250 / 1500mm" },
+      { label: "Patterns", value: "Diamond / Square / Hex" },
+      { label: "Materials", value: "SS, MS, GI, Al, Cu, Brass" },
+      { label: "Certification", value: "ISO 9001:2015" },
+    ],
+    faqs: [
+      {
+        q: "Where are your Mumbai expanded metal manufacturing units?",
+        a: "We operate units at Bhayander East, Masjid Bunder, and Palghar West — serving Mumbai and the wider Maharashtra industrial belt.",
+      },
+      {
+        q: "Do you supply expanded metal for building facades in Mumbai?",
+        a: "Yes — architectural expanded metal for facades, ceilings, and decorative panels is a major application we serve across Mumbai.",
+      },
+      {
+        q: "Can you deliver expanded metal from Mumbai to Pune and other cities?",
+        a: "Yes, we offer global delivery from our Mumbai and Pune manufacturing networks.",
       },
     ],
   },

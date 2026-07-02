@@ -95,7 +95,7 @@ export function GetQuotePage() {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<QuoteFormValues>(initialForm);
   const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
+    "idle" | "loading" | "success" | "error" | "unavailable"
   >("idle");
   const [waLink, setWaLink] = useState<string | undefined>();
   const [stepError, setStepError] = useState<string | null>(null);
@@ -212,6 +212,11 @@ export function GetQuotePage() {
         body: JSON.stringify(parsed.data),
       });
       const data = await res.json();
+      if (res.status === 503) {
+        setWaLink(data.whatsapp ?? "https://wa.me/919370606017");
+        setStatus("unavailable");
+        return;
+      }
       if (!res.ok) throw new Error(data.error);
       setWaLink(data.whatsappUrl);
       setStatus("success");
@@ -712,6 +717,28 @@ export function GetQuotePage() {
                   Send quote on WhatsApp too
                 </span>
               </label>
+
+              {status === "unavailable" && (
+                <div className="space-y-3 rounded-xl border p-4" style={{ borderColor: "#2A2A2A", backgroundColor: "#111111" }}>
+                  <p className="text-sm" style={{ color: "#A0A0A0" }}>
+                    Our online form is temporarily unavailable. Please WhatsApp
+                    us directly for a quick response.
+                  </p>
+                  <Button
+                    asChild
+                    className="h-11 w-full border-0"
+                    style={{ backgroundColor: "#25D366", color: "#FFF" }}
+                  >
+                    <a
+                      href={waLink ?? "https://wa.me/919370606017"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      WhatsApp Us Directly
+                    </a>
+                  </Button>
+                </div>
+              )}
 
               {status === "error" && (
                 <p className="text-sm text-red-400">

@@ -42,6 +42,11 @@ const nextConfig: NextConfig = {
         destination: "/mumbai/perforated-sheet-manufacturers",
         permanent: true,
       },
+      {
+        source: "/blog/wire-mesh-specification-guide",
+        destination: "/blog/perforated-sheet-specification-guide",
+        permanent: true,
+      },
     ];
   },
   async headers() {

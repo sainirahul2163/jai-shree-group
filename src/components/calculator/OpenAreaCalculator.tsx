@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
@@ -1328,6 +1329,24 @@ export function OpenAreaCalculator() {
               </motion.div>
             )}
           </AnimatePresence>
+
+          <div className="mt-8 rounded-xl border border-[#2A2A2A] bg-[#111111] p-6 text-center">
+            <p className="mb-1 text-sm text-[#A0A0A0]">
+              Know your specifications?
+            </p>
+            <p className="mb-4 font-semibold text-white">
+              Get an instant quote from our team
+            </p>
+            <Link
+              href="/get-quote"
+              className="inline-block rounded-lg bg-[#E8521A] px-8 py-3 font-semibold text-white transition-colors hover:bg-[#FF6B35]"
+            >
+              Get a Free Quote →
+            </Link>
+            <p className="mt-3 text-xs text-[#666666]">
+              Usually responds within 2 hours
+            </p>
+          </div>
         </div>
       </div>
     </div>

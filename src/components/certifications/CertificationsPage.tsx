@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Award, Download, Shield, CheckCircle } from "lucide-react";
+import { Award, Mail, Shield, CheckCircle } from "lucide-react";
 
 import { CtaBanner } from "@/components/shared/CtaBanner";
 import { PageHero } from "@/components/shared/PageHero";
@@ -60,16 +60,17 @@ export function CertificationsPage() {
                   </p>
                 </div>
               </div>
-              <Button
-                type="button"
-                disabled
-                className="mt-8 glow-orange opacity-60"
-              >
-                <Download className="mr-2 size-4" />
-                Download ISO Certificate
+              <Button asChild className="mt-8 glow-orange">
+                <a
+                  href="mailto:shreeperforator@gmail.com?subject=ISO Certificate Request&body=Hello, I would like to request a copy of your ISO 9001:2015 certificate."
+                >
+                  <Mail className="mr-2 size-4" />
+                  Request via Email
+                </a>
               </Button>
               <p className="mt-3 text-xs" style={{ color: "#666666" }}>
-                Certificate download coming soon
+                Our ISO 9001:2015 certificate is available on request. Click to
+                email us and we&apos;ll send it within 24 hours.
               </p>
             </motion.div>
 
