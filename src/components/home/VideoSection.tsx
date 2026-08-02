@@ -222,36 +222,111 @@ function YoutubeEmbed({ videoId }: { videoId: string }) {
 }
 
 function LocalVideo({ src }: { src: string }) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [playing, setPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const inView = useInView(containerRef, { once: false, margin: "-20% 0px" });
 
   useEffect(() => {
-    if (!videoRef.current) return;
-    if (inView) {
-      videoRef.current.play().catch(() => {});
-    } else {
-      videoRef.current.pause();
-    }
-  }, [inView]);
+    if (playing) videoRef.current?.play().catch(() => {});
+  }, [playing]);
 
+  // Once the play button is pressed, swap the poster for the real player.
+  if (playing) {
+    return (
+      <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-[#2A2A2A] bg-black">
+        <video
+          ref={videoRef}
+          src={src}
+          controls
+          autoPlay
+          playsInline
+          className="h-full w-full object-cover"
+        />
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{ boxShadow: "inset 0 0 80px 20px rgba(0,0,0,0.4)" }}
+        />
+      </div>
+    );
+  }
+
+  // Poster: same framed design + pulsing play button + tags (no "coming soon").
   return (
     <div
-      ref={containerRef}
-      className="relative aspect-video w-full overflow-hidden rounded-2xl border border-[#2A2A2A] bg-black"
+      className="group relative flex aspect-video w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl border border-[#2A2A2A] bg-[#0C0C0C]"
+      onClick={() => setPlaying(true)}
+      role="button"
+      tabIndex={0}
+      aria-label="Play the factory tour video"
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") setPlaying(true);
+      }}
     >
-      <video
-        ref={videoRef}
-        src={src}
-        muted
-        loop
-        playsInline
-        className="h-full w-full object-cover"
-      />
       <div
-        className="pointer-events-none absolute inset-0"
-        style={{ boxShadow: "inset 0 0 80px 20px rgba(0,0,0,0.4)" }}
+        className="absolute inset-0 opacity-30"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(232,82,26,0.4) 1px, transparent 1px)",
+          backgroundSize: "32px 28px",
+        }}
       />
+
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(232,82,26,0.08), transparent 70%)",
+        }}
+      />
+
+      <div className="absolute top-4 left-4 h-8 w-8 rounded-tl border-t-2 border-l-2 border-[#E8521A]/40" />
+      <div className="absolute top-4 right-4 h-8 w-8 rounded-tr border-t-2 border-r-2 border-[#E8521A]/40" />
+      <div className="absolute bottom-4 left-4 h-8 w-8 rounded-bl border-b-2 border-l-2 border-[#E8521A]/40" />
+      <div className="absolute bottom-4 right-4 h-8 w-8 rounded-br border-b-2 border-r-2 border-[#E8521A]/40" />
+
+      <div className="relative z-10 flex flex-col items-center gap-4 px-8 text-center">
+        <motion.div
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          transition={SPRING}
+          className="relative"
+        >
+          <motion.div
+            className="absolute inset-0 rounded-full bg-[#E8521A]/20"
+            animate={{ scale: [1, 1.8, 1], opacity: [0.5, 0, 0.5] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute inset-0 rounded-full bg-[#E8521A]/15"
+            animate={{ scale: [1, 2.4, 1], opacity: [0.3, 0, 0.3] }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 0.4,
+            }}
+          />
+          <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-[#E8521A] shadow-[0_0_40px_rgba(232,82,26,0.4)]">
+            <Play className="ml-1 h-8 w-8 fill-white text-white" />
+          </div>
+        </motion.div>
+
+        <div>
+          <p className="text-lg font-bold text-white">Factory Tour</p>
+        </div>
+
+        <div className="mt-2 flex flex-wrap justify-center gap-2">
+          {["CNC Machines", "Fiber Laser", "Wire Mesh Plant", "Talawade Facility"].map(
+            (tag) => (
+              <span
+                key={tag}
+                className="rounded-full border border-[#2A2A2A] px-3 py-1 text-xs text-[#666]"
+              >
+                {tag}
+              </span>
+            )
+          )}
+        </div>
+      </div>
     </div>
   );
 }

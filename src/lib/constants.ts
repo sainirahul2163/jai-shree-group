@@ -30,7 +30,8 @@ export const BROCHURE_URL = "/brochure/jai-shree-brochure.pdf";
 
 export const COMPANY_VIDEO = {
   youtubeId: "",
-  localVideo: "",
+  localVideo:
+    "https://myhqzpnxwyytqtgoxldy.supabase.co/storage/v1/object/public/video/Jai-shree-video-compressed.mp4",
   label: "FACTORY TOUR",
   heading: "50 Years of Precision,",
   headingOrange: "One Facility at a Time.",
