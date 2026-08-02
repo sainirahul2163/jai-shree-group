@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Jai Shree Group operates 6 manufacturing units across Pune (Talawade) and Mumbai (Bhayander, Masjid Bunder, Palghar). Contact your nearest unit.",
   alternates: {
-    canonical: "https://jaishreegroup.in/group",
+    canonical: "/group",
   },
 };
 

@@ -8,13 +8,13 @@ export const metadata: Metadata = {
   description:
     "Jai Shree Group serves automobile, construction, pharmaceutical, petrochemical, food processing, sugar, mining and architecture industries from Pune & Mumbai.",
   alternates: {
-    canonical: "https://jaishreegroup.in/industries",
+    canonical: "/industries",
   },
   openGraph: {
     title: "Industries We Serve | Jai Shree Group",
     description:
       "Trusted metal manufacturing partner across 8+ industries from Pune & Mumbai.",
-    url: "https://jaishreegroup.in/industries",
+    url: "/industries",
   },
 };
 

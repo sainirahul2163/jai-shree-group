@@ -1,6 +1,15 @@
+/**
+ * Canonical production origin — the single source of truth for the site URL.
+ * Override per-environment with NEXT_PUBLIC_SITE_URL (no trailing slash).
+ * Defaults to the live Vercel domain (apex 308-redirects to www, so we use www).
+ */
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") ??
+  "https://www.jaishreegroup.com";
+
 export const COMPANY = {
   name: "Jai Shree Group",
-  tagline: "Precision in Every Perforation",
+  tagline: "Accept Challenges – Develop – Achieve",
   founded: "1970",
   founder: "Mr. Tejaram Jangid",
   foundedIn: "Delhi",
@@ -12,7 +21,7 @@ export const COMPANY = {
     process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "919370606017",
   address:
     "Gat No. 94, Near Sonawane Wasti, Jyotibanagar, Talawade, Pune - 411062",
-  website: "https://jaishreegroup.in",
+  website: SITE_URL,
   locations: ["Pune (Talawade)", "Mumbai (Bhayander, Palghar)"],
   manufacturingUnits: 6,
 } as const;

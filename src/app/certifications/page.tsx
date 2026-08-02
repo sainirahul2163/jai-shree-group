@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     "Jai Shree Group is ISO 9001:2015 certified. Learn about our quality management system and what certification means for our customers.",
   alternates: {
-    canonical: "https://jaishreegroup.in/certifications",
+    canonical: "/certifications",
   },
 };
 

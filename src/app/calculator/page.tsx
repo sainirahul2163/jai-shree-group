@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Calculate open area percentage for perforated sheets — round, square, hex, and slot patterns. 10 formula calculators for all perforation types.",
   alternates: {
-    canonical: "https://jaishreegroup.in/calculator",
+    canonical: "/calculator",
   },
 };
 

@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   description:
     "Contact Jai Shree Group for perforated sheets, wire mesh, laser cutting and expanded metal. Pune & Mumbai. Get free quote within 24 hours.",
   alternates: {
-    canonical: "https://jaishreegroup.in/contact",
+    canonical: "/contact",
   },
   openGraph: {
     title: "Contact Jai Shree Group | Perforated Sheet Manufacturers Pune",
     description:
       "Contact Jai Shree Group for perforated sheets, wire mesh, laser cutting and expanded metal. Pune & Mumbai.",
-    url: "https://jaishreegroup.in/contact",
+    url: "/contact",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
   },
 };

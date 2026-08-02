@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   description:
     "Six active metal manufacturing products from Jai Shree Group — perforated sheets, laser cutting, expanded metal, turret punching, sheet leveling and custom components. ISO 9001:2015 certified.",
   alternates: {
-    canonical: "https://jaishreegroup.in/products",
+    canonical: "/products",
   },
   openGraph: {
     title: "Our Products | Jai Shree Group",
     description:
       "Perforated sheet manufacturer & expanded mesh manufacturers. CNC turret perforated sheet manufacturing from ISO certified Pune & Mumbai facilities.",
-    url: "https://jaishreegroup.in/products",
+    url: "/products",
   },
 };
 

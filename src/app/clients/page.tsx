@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Jai Shree Group serves leading manufacturers in automobile, construction, pharmaceutical, petrochemical and more. ISO 9001:2015 certified since 1970.",
   alternates: {
-    canonical: "https://jaishreegroup.in/clients",
+    canonical: "/clients",
   },
 };
 

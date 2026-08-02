@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Learn about Jai Shree Group and Shree Perforators — ISO 9001:2015 certified metal manufacturer since 1970. 6 manufacturing units in Pune & Mumbai. Perforated sheets, laser cutting, custom components.",
   alternates: {
-    canonical: "https://jaishreegroup.in/about",
+    canonical: "/about",
   },
 };
 

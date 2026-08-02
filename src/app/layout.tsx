@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import { GlobalSchema } from "@/components/seo/GlobalSchema";
 import { SiteChrome } from "@/components/layout/SiteChrome";
-import { COMPANY } from "@/lib/constants";
+import { COMPANY, SITE_URL } from "@/lib/constants";
 
 import "./globals.css";
 
@@ -32,9 +32,6 @@ function buildSiteVerification(): Metadata["verification"] | undefined {
 
 const siteVerification = buildSiteVerification();
 
-const faviconSvg =
-  "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A0A0A'/><text x='16' y='23' text-anchor='middle' font-size='18' font-weight='900' font-family='Arial,sans-serif' fill='%23E8521A'>J</text></svg>";
-
 export const metadata: Metadata = {
   title: "Perforated Sheet Manufacturers Pune Mumbai | Jai Shree Group",
   description:
@@ -59,16 +56,16 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: COMPANY.name }],
   creator: COMPANY.name,
-  metadataBase: new URL("https://jaishreegroup.in"),
+  metadataBase: new URL(SITE_URL),
   ...(siteVerification ? { verification: siteVerification } : {}),
   alternates: {
     canonical: "/",
     languages: {
-      en: "https://jaishreegroup.in",
-      "en-IN": "https://jaishreegroup.in",
-      "en-US": "https://jaishreegroup.in",
-      "en-GB": "https://jaishreegroup.in",
-      "en-AU": "https://jaishreegroup.in",
+      en: "/",
+      "en-IN": "/",
+      "en-US": "/",
+      "en-GB": "/",
+      "en-AU": "/",
     },
   },
   openGraph: {
@@ -92,15 +89,6 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-  },
-  icons: {
-    icon: [
-      {
-        url: faviconSvg,
-        type: "image/svg+xml",
-      },
-    ],
-    shortcut: faviconSvg,
   },
 };
 

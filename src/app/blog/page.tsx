@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     "Technical guides, product tutorials, and industry insights on perforated sheets, wire mesh, laser cutting and expanded metal from Jai Shree Group.",
   alternates: {
-    canonical: "https://jaishreegroup.in/blog",
+    canonical: "/blog",
   },
 };
 

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Request a free quote for perforated sheets, wire mesh, laser cutting, expanded metal and more. ISO certified manufacturers in Pune & Mumbai.",
   alternates: {
-    canonical: "https://jaishreegroup.in/get-quote",
+    canonical: "/get-quote",
   },
 };
 

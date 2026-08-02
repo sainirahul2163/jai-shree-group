@@ -23,7 +23,7 @@ function baseTemplate(title: string, body: string): string {
       ${body}
     </div>
     <div style="padding:16px 24px;background:#fafafa;border-top:1px solid #e5e5e5;color:#888;font-size:12px;">
-      Sent from jaishreegroup.in · ${escapeHtml(COMPANY.phone)} · ${escapeHtml(COMPANY.email)}
+      Sent from ${escapeHtml(COMPANY.website.replace(/^https?:\/\/(www\.)?/, ""))} · ${escapeHtml(COMPANY.phone)} · ${escapeHtml(COMPANY.email)}
     </div>
   </div>
 </body>
