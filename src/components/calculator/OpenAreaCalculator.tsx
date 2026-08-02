@@ -466,66 +466,167 @@ function HexHoles() {
   );
 }
 
-function SlotShape({
-  x,
-  y,
-  w,
-  h,
-  roundEnd,
-}: {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  roundEnd: boolean;
-}) {
-  if (roundEnd) {
-    const r = h / 2;
-    return (
-      <rect
-        x={x}
-        y={y}
-        width={w}
-        height={h}
-        rx={r}
-        fill="#0A0A0A"
-        stroke="#E8521A"
-        strokeWidth="1"
-      />
-    );
-  }
+function SlotSheetRect() {
   return (
     <rect
-      x={x}
-      y={y}
-      width={w}
-      height={h}
-      fill="#0A0A0A"
+      x="40"
+      y="30"
+      width="320"
+      height="150"
+      fill="#1A1A1A"
       stroke="#E8521A"
-      strokeWidth="1"
+      strokeWidth="1.5"
+      rx="4"
     />
   );
 }
 
-function SlotHoles({
-  roundEnd,
-  stagger = false,
-}: {
-  roundEnd: boolean;
-  stagger?: boolean;
-}) {
-  const slots: { x: number; y: number }[] = [];
-  for (let row = 0; row < 3; row++) {
-    const offset = stagger && row % 2 === 1 ? 55 : 0;
-    for (let col = 0; col < 5; col++) {
-      slots.push({ x: 45 + col * 68 + offset, y: 52 + row * 38 });
-    }
+const SLOT_LENGTH = 70;
+const SLOT_WIDTH = 24;
+const SLOT_RX = SLOT_WIDTH / 2;
+
+type SlotLayout = "side-staggered" | "straight-line";
+
+function getSlotPositions(layout: SlotLayout): { x: number; y: number }[] {
+  const row1 = [
+    { x: 55, y: 55 },
+    { x: 143, y: 55 },
+    { x: 231, y: 55 },
+  ];
+  const row2Straight = [
+    { x: 55, y: 97 },
+    { x: 143, y: 97 },
+    { x: 231, y: 97 },
+  ];
+  const row2Stagger = [
+    { x: 99, y: 97 },
+    { x: 187, y: 97 },
+  ];
+  const row3 = [
+    { x: 55, y: 139 },
+    { x: 143, y: 139 },
+    { x: 231, y: 139 },
+  ];
+
+  if (layout === "straight-line") {
+    return [...row1, ...row2Straight, ...row3];
   }
+  return [...row1, ...row2Stagger, ...row3];
+}
+
+function SlotShape({
+  x,
+  y,
+  roundEnd,
+}: {
+  x: number;
+  y: number;
+  roundEnd: boolean;
+}) {
+  return (
+    <rect
+      x={x}
+      y={y}
+      width={SLOT_LENGTH}
+      height={SLOT_WIDTH}
+      rx={roundEnd ? SLOT_RX : 0}
+      ry={roundEnd ? SLOT_RX : 0}
+      fill="rgba(0,0,0,0.6)"
+      stroke="#E8521A"
+      strokeWidth="1.2"
+    />
+  );
+}
+
+function SlotDiagramSlots({
+  clipId,
+  layout,
+  roundEnd,
+}: {
+  clipId: string;
+  layout: SlotLayout;
+  roundEnd: boolean;
+}) {
+  const slots = getSlotPositions(layout);
+  return (
+    <g clipPath={`url(#${clipId})`}>
+      {slots.map((s, i) => (
+        <SlotShape key={i} x={s.x} y={s.y} roundEnd={roundEnd} />
+      ))}
+    </g>
+  );
+}
+
+function SlotDimLabels() {
   return (
     <>
-      {slots.map((s, i) => (
-        <SlotShape key={i} x={s.x} y={s.y} w={48} h={16} roundEnd={roundEnd} />
-      ))}
+      <DimLine x1="42" y1="55" x2="42" y2="79" />
+      <text
+        x="28"
+        y="70"
+        fill="#E8521A"
+        fontSize="11"
+        fontFamily="monospace"
+        fontWeight="bold"
+      >
+        W
+      </text>
+      <DimLine x1="55" y1="48" x2="125" y2="48" />
+      <text
+        x="82"
+        y="44"
+        fill="#E8521A"
+        fontSize="11"
+        fontFamily="monospace"
+        fontWeight="bold"
+      >
+        L
+      </text>
+      <DimLine x1="90" y1="185" x2="178" y2="185" />
+      <text
+        x="124"
+        y="198"
+        fill="#E8521A"
+        fontSize="11"
+        fontFamily="monospace"
+        fontWeight="bold"
+      >
+        C₁
+      </text>
+      <DimLine x1="32" y1="67" x2="32" y2="109" />
+      <text
+        x="10"
+        y="92"
+        fill="#E8521A"
+        fontSize="11"
+        fontFamily="monospace"
+        fontWeight="bold"
+      >
+        C₂
+      </text>
+    </>
+  );
+}
+
+function SlotDiagram({
+  clipId,
+  layout,
+  roundEnd,
+}: {
+  clipId: string;
+  layout: SlotLayout;
+  roundEnd: boolean;
+}) {
+  return (
+    <>
+      <defs>
+        <clipPath id={clipId}>
+          <rect x="40" y="30" width="320" height="150" />
+        </clipPath>
+      </defs>
+      <SlotSheetRect />
+      <SlotDiagramSlots clipId={clipId} layout={layout} roundEnd={roundEnd} />
+      <SlotDimLabels />
     </>
   );
 }
@@ -661,93 +762,41 @@ function CalculatorDiagram({ calculatorId }: { calculatorId: number }) {
     case 7:
       return (
         <svg {...svgProps}>
-          <SheetRect />
-          <SlotHoles roundEnd stagger />
-          <DimLine x1="45" y1="52" x2="45" y2="68" />
-          <VarLabel x="28" y="64">
-            W
-          </VarLabel>
-          <DimLine x1="45" y1="60" x2="93" y2="60" />
-          <VarLabel x="58" y="56">
-            L
-          </VarLabel>
-          <DimLine x1="45" y1="185" x2="113" y2="185" />
-          <VarLabel x="68" y="198">
-            C₁
-          </VarLabel>
-          <DimLine x1="32" y1="52" x2="32" y2="90" />
-          <VarLabel x="10" y="76">
-            C₂
-          </VarLabel>
+          <SlotDiagram
+            clipId="clip7"
+            layout="side-staggered"
+            roundEnd
+          />
         </svg>
       );
     case 8:
       return (
         <svg {...svgProps}>
-          <SheetRect />
-          <SlotHoles roundEnd />
-          <DimLine x1="45" y1="52" x2="45" y2="68" />
-          <VarLabel x="28" y="64">
-            W
-          </VarLabel>
-          <DimLine x1="45" y1="60" x2="93" y2="60" />
-          <VarLabel x="58" y="56">
-            L
-          </VarLabel>
-          <DimLine x1="45" y1="185" x2="113" y2="185" />
-          <VarLabel x="68" y="198">
-            C₁
-          </VarLabel>
-          <DimLine x1="32" y1="52" x2="32" y2="90" />
-          <VarLabel x="10" y="76">
-            C₂
-          </VarLabel>
+          <SlotDiagram
+            clipId="clip8"
+            layout="straight-line"
+            roundEnd
+          />
         </svg>
       );
     case 9:
       return (
         <svg {...svgProps}>
-          <SheetRect />
-          <SlotHoles roundEnd={false} />
-          <DimLine x1="45" y1="52" x2="45" y2="68" />
-          <VarLabel x="28" y="64">
-            W
-          </VarLabel>
-          <DimLine x1="45" y1="60" x2="93" y2="60" />
-          <VarLabel x="58" y="56">
-            L
-          </VarLabel>
-          <DimLine x1="45" y1="185" x2="113" y2="185" />
-          <VarLabel x="68" y="198">
-            C₁
-          </VarLabel>
-          <DimLine x1="32" y1="52" x2="32" y2="90" />
-          <VarLabel x="10" y="76">
-            C₂
-          </VarLabel>
+          <SlotDiagram
+            clipId="clip9"
+            layout="straight-line"
+            roundEnd={false}
+          />
         </svg>
       );
     case 10:
       return (
         <svg {...svgProps}>
-          <SheetRect />
-          <SlotHoles roundEnd={false} stagger />
-          <DimLine x1="45" y1="52" x2="45" y2="68" />
-          <VarLabel x="28" y="64">
-            W
-          </VarLabel>
-          <DimLine x1="45" y1="60" x2="93" y2="60" />
-          <VarLabel x="58" y="56">
-            L
-          </VarLabel>
-          <DimLine x1="45" y1="185" x2="113" y2="185" />
-          <VarLabel x="68" y="198">
-            C₁
-          </VarLabel>
-          <DimLine x1="32" y1="52" x2="32" y2="90" />
-          <VarLabel x="10" y="76">
-            C₂
-          </VarLabel>
+          <SlotDiagram
+            clipId="clip10"
+            layout="side-staggered"
+            roundEnd={false}
+          />
         </svg>
       );
     default:
