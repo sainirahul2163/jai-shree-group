@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse, type NextRequest } from "next/server";
 
+import { isAdminEmail } from "@/lib/admin";
 import { getSupabaseAnonKey, getSupabaseUrl } from "@/lib/supabase/env";
 
 export async function middleware(req: NextRequest) {
@@ -37,20 +38,26 @@ export async function middleware(req: NextRequest) {
     }
   );
 
+  // getUser() re-validates the JWT with the auth server (getSession only
+  // trusts the cookie). We then gate on the admin allow-list, not merely
+  // "is someone logged in" — any Supabase user must NOT reach the panel.
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
+  const isAdmin = isAdminEmail(user?.email);
 
-  if (
-    req.nextUrl.pathname.startsWith("/admin") &&
-    req.nextUrl.pathname !== "/admin/login"
-  ) {
-    if (!session) {
-      return NextResponse.redirect(new URL("/admin/login", req.url));
-    }
+  const { pathname } = req.nextUrl;
+  const isLoginPage = pathname === "/admin/login";
+
+  // Every admin route except the login page requires an allow-listed admin.
+  // Non-admins (including logged-in-but-not-admin users) go to the login page;
+  // because the login page itself never redirects non-admins, there is no loop.
+  if (pathname.startsWith("/admin") && !isLoginPage && !isAdmin) {
+    return NextResponse.redirect(new URL("/admin/login", req.url));
   }
 
-  if (req.nextUrl.pathname === "/admin/login" && session) {
+  // Already-authenticated admins skip the login page.
+  if (isLoginPage && isAdmin) {
     return NextResponse.redirect(new URL("/admin/dashboard", req.url));
   }
 

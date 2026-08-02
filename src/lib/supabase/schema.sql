@@ -134,13 +134,35 @@ DROP POLICY IF EXISTS "Public read published blogs" ON blog_posts;
 DROP POLICY IF EXISTS "Public read published gallery" ON gallery_items;
 DROP POLICY IF EXISTS "Public read published testimonials" ON testimonials;
 
--- POLICIES: authenticated users (admin) can do everything
-CREATE POLICY "Admin full access leads" ON leads FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin full access follow_ups" ON follow_ups FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin full access blog_posts" ON blog_posts FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin full access gallery" ON gallery_items FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin full access testimonials" ON testimonials FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin full access page_views" ON page_views FOR ALL TO authenticated USING (true) WITH CHECK (true);
+-- ADMIN ALLOW-LIST: only emails in admin_users are treated as admins.
+-- (Prevents "any authenticated Supabase user = full admin". Also disable
+--  public sign-ups in Auth settings and set the ADMIN_EMAILS app env var.)
+CREATE TABLE IF NOT EXISTS admin_users (
+  email      TEXT PRIMARY KEY,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+ALTER TABLE admin_users ENABLE ROW LEVEL SECURITY;
+
+CREATE OR REPLACE FUNCTION is_admin()
+RETURNS BOOLEAN LANGUAGE SQL STABLE SECURITY DEFINER SET search_path = public AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM admin_users WHERE lower(email) = lower(auth.jwt() ->> 'email')
+  );
+$$;
+
+DROP POLICY IF EXISTS "admins read admin_users" ON admin_users;
+CREATE POLICY "admins read admin_users" ON admin_users FOR SELECT TO authenticated USING (is_admin());
+
+-- POLICIES: only allow-listed admins can do everything
+CREATE POLICY "Admin full access leads" ON leads FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin full access follow_ups" ON follow_ups FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin full access blog_posts" ON blog_posts FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin full access gallery" ON gallery_items FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin full access testimonials" ON testimonials FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+CREATE POLICY "Admin full access page_views" ON page_views FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+
+-- Seed admin(s). Replace before running; also add each via Auth → Users and to ADMIN_EMAILS.
+INSERT INTO admin_users (email) VALUES ('REPLACE_WITH_ADMIN@EMAIL.COM') ON CONFLICT (email) DO NOTHING;
 
 -- POLICIES: anonymous can insert leads and page_views (public forms)
 CREATE POLICY "Public can insert leads" ON leads FOR INSERT TO anon WITH CHECK (true);
@@ -189,10 +211,11 @@ INSERT INTO testimonials (client_name, company_name, industry, message, rating, 
 
 -- ============================================================
 -- ADMIN USER SETUP
--- 1. Supabase Dashboard → Authentication → Users → Add user
--- 2. Enter admin email + strong password
--- 3. Confirm email if required (disable email confirm in Auth settings for dev)
--- 4. Log in at https://jaishreegroup.in/admin/login
+-- 1. Authentication → Sign In / Providers → Email → turn OFF
+--    "Allow new users to sign up" (block public self-registration).
+-- 2. Authentication → Users → Add user (admin email + strong password).
+-- 3. Add the SAME email to admin_users above AND to the ADMIN_EMAILS env var.
+-- 4. Log in at https://www.jaishreegroup.com/admin/login
 -- ============================================================
 
 -- ============================================================
