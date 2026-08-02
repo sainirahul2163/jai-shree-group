@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# large local media — video is served from Supabase, brochure source stays local
+Jai-shree-video*.mp4
+*.cdr
