@@ -43,3 +43,13 @@ next-env.d.ts
 # large local media — video is served from Supabase, brochure source stays local
 Jai-shree-video*.mp4
 *.cdr
+
+# brochure source artwork — the built PDF lives in public/brochure/
+/JaiShree Brochure*.pdf
+
+# camera originals for the gallery — processed versions live in public/gallery/
+# (root-anchored: core.ignorecase makes a bare "Gallery/" also match public/gallery/)
+/Gallery/
+
+# python venv for the gallery image pipeline
+scripts/gallery-restyle/venv/

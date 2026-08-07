@@ -4,6 +4,10 @@ import { GalleryPage } from "@/components/gallery/GalleryPage";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { getPublishedGalleryItems } from "@/lib/supabase/queries";
 
+/** Gallery items are managed in Supabase — refresh the static page hourly so
+ *  newly published items appear without a redeploy. */
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "Product Gallery | Perforated Sheets & Wire Mesh | Jai Shree Group",
   description:

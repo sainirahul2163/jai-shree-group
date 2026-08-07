@@ -7,6 +7,10 @@ import { PageHero } from "@/components/shared/PageHero";
 import { BLOG_POSTS } from "@/lib/constants";
 import { getPublishedBlogPosts } from "@/lib/supabase/queries";
 
+/** Posts are managed in Supabase — refresh the static page hourly so newly
+ *  published posts appear without a redeploy. */
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "Metal Manufacturing Insights | Blog | Jai Shree Group",
   description:

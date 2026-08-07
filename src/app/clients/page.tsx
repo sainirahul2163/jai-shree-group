@@ -4,6 +4,10 @@ import { ClientsPage } from "@/components/clients/ClientsPage";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { getPublishedTestimonials } from "@/lib/supabase/queries";
 
+/** Testimonials are managed in Supabase — refresh the static page hourly so
+ *  newly published entries appear without a redeploy. */
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "Our Clients | Trusted by Leading Manufacturers | Jai Shree Group",
   description:
