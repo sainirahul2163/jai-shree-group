@@ -20,6 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { BROCHURE_URL } from "@/lib/constants";
 import type { ProductDetail } from "@/data/products";
+import type { ProductModel } from "./ProductViewer3D";
 import { getProductIcon } from "@/lib/icons";
 import { PRODUCTS } from "@/lib/constants";
 
@@ -31,12 +32,12 @@ const PerforationPatterns = dynamic(
   { ssr: false }
 );
 
-const DimpleSheet3D = dynamic(
-  () => import("./DimpleSheet3D").then((m) => m.DimpleSheet3D),
+const ProductViewer3D = dynamic(
+  () => import("./ProductViewer3D").then((m) => m.ProductViewer3D),
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-[420px] w-full items-center justify-center rounded-2xl border border-[#1E1E1E] bg-[#0C0C0C]">
+      <div className="flex h-[440px] w-full items-center justify-center rounded-2xl border border-[#1E1E1E] bg-[#0C0C0C]">
         <div className="flex flex-col items-center gap-3">
           <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#E8521A] border-t-transparent" />
           <span className="text-xs text-[#444]">Loading 3D render...</span>
@@ -45,6 +46,18 @@ const DimpleSheet3D = dynamic(
     ),
   }
 );
+
+/**
+ * Which product each 3D model belongs to. Mirrors the photographed samples in
+ * the gallery: the turret-punched blank, the fine filtration screen, the
+ * perforated sheet and the coil stock.
+ */
+const MODEL_BY_SLUG: Record<string, ProductModel> = {
+  "turret-punching": "round-blank",
+  "custom-components": "fine-screen",
+  "perforated-sheets": "sheet",
+  "precision-sheet-leveling": "coil",
+};
 
 type ProductPageClientProps = {
   product: ProductDetail;
@@ -227,18 +240,18 @@ export function ProductPageClient({
               </div>
             </motion.div>
 
-            {(product.slug === "custom-components" ||
-              product.slug === "perforated-sheets") && (
+            {MODEL_BY_SLUG[product.slug] && (
               <div className="my-10">
                 <div className="mb-4 flex items-center gap-3">
                   <span className="h-px w-6 bg-orange-500/40" />
                   <span className="text-xs font-medium uppercase tracking-[0.25em] text-orange-500">
-                    {product.slug === "custom-components"
-                      ? "Dimple / Embossed Sheet — 3D Preview"
-                      : "Interactive 3D Preview"}
+                    Interactive 3D Preview
                   </span>
                 </div>
-                <DimpleSheet3D />
+                <ProductViewer3D variant={MODEL_BY_SLUG[product.slug]} />
+                <p className="mt-3 text-xs text-[#555]">
+                  Real perforated geometry — drag to rotate, scroll to zoom.
+                </p>
               </div>
             )}
 
