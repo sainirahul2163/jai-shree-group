@@ -1,11 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import {
   CONSULTANCY_QUOTE,
+  CUSTOM,
   EXPANDED,
   LASER,
+  LEVELING,
   OPEN_AREA_FORMULAS,
   PATTERNS,
   PERFORATED,
+  TURRET,
 } from "@/data/brochure";
 
 import { ExpandedTerminologyDiagram, FormulaDiagram, PatternSwatch } from "./graphics";
@@ -207,6 +210,87 @@ export function PageExpanded2() {
         </div>
 
         <div className="mt-auto pb-[4mm] pt-[3.6mm]">
+          <QuoteBanner>{CONSULTANCY_QUOTE}</QuoteBanner>
+        </div>
+      </div>
+    </Sheet>
+  );
+}
+
+/* ── Page 9 · Turret Punching ── */
+
+export function PageTurret() {
+  return (
+    <Sheet page={9}>
+      <figure className="b-photo b-photo-tick mx-[11mm] mt-[10mm] h-[104mm] rounded-[10px]">
+        <img src="/gallery/perforated-round-blank.jpg" alt="CNC turret punched round blank" />
+        <figcaption className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/85 to-transparent px-[4mm] pb-[2.6mm] pt-[8mm] text-[8.4px] font-bold uppercase tracking-[0.18em] text-[#e6e6e6]">
+          Turret Punched Blank · Round Hole, 60° Staggered
+        </figcaption>
+      </figure>
+      <div className="b-pad !pt-[5mm]">
+        <SectionTag>{TURRET.title}</SectionTag>
+        <Field label="Material">{TURRET.material}</Field>
+        <Field label="Categories">{TURRET.categories}</Field>
+        <Field label="The Characteristics of Turret Punching">{TURRET.characteristics}</Field>
+        <Field label="Application">{TURRET.application}</Field>
+        <div className="b-field">
+          <div className="b-field-label">Our Strength</div>
+          <NumList items={TURRET.strengths} />
+        </div>
+      </div>
+    </Sheet>
+  );
+}
+
+/* ── Page 10 · Precision Sheet Leveling ── */
+
+export function PageLeveling() {
+  return (
+    <Sheet page={10}>
+      <figure className="b-photo b-photo-tick mx-[11mm] mt-[10mm] h-[104mm] rounded-[10px]">
+        <img src="/gallery/perforated-coil-stock.jpg" alt="Perforated coil stock ready for leveling" />
+        <figcaption className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/85 to-transparent px-[4mm] pb-[2.6mm] pt-[8mm] text-[8.4px] font-bold uppercase tracking-[0.18em] text-[#e6e6e6]">
+          Coil-to-Coil Stock · Leveled In-House
+        </figcaption>
+      </figure>
+      <div className="b-pad !pt-[5mm]">
+        <SectionTag>{LEVELING.title}</SectionTag>
+        <Field label="Material">{LEVELING.material}</Field>
+        <Field label="Process">{LEVELING.categories}</Field>
+        <Field label="The Characteristics of Sheet Leveling">{LEVELING.characteristics}</Field>
+        <Field label="Application">{LEVELING.application}</Field>
+        <div className="b-field">
+          <div className="b-field-label">Our Strength</div>
+          <NumList items={LEVELING.strengths} />
+        </div>
+      </div>
+    </Sheet>
+  );
+}
+
+/* ── Page 11 · Custom Components ── */
+
+export function PageCustom() {
+  return (
+    <Sheet page={11}>
+      <figure className="b-photo b-photo-tick mx-[11mm] mt-[10mm] h-[96mm] rounded-[10px]">
+        <img src="/gallery/perforated-fine-blank.jpg" alt="Fine perforated custom screen" />
+        <figcaption className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/85 to-transparent px-[4mm] pb-[2.6mm] pt-[8mm] text-[8.4px] font-bold uppercase tracking-[0.18em] text-[#e6e6e6]">
+          Custom Fine Perforated Screen
+        </figcaption>
+      </figure>
+      <div className="b-pad !pt-[5mm]">
+        <SectionTag>{CUSTOM.title}</SectionTag>
+        <Field label="Material">{CUSTOM.material}</Field>
+        <Field label="Process">{CUSTOM.categories}</Field>
+        <Field label="Special Jobs We Undertake">{CUSTOM.characteristics}</Field>
+        <Field label="Application">{CUSTOM.application}</Field>
+        <div className="b-field">
+          <div className="b-field-label">Our Strength</div>
+          <NumList items={CUSTOM.strengths} />
+        </div>
+        <div className="mt-auto pb-[4mm]">
           <QuoteBanner>{CONSULTANCY_QUOTE}</QuoteBanner>
         </div>
       </div>

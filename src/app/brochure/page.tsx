@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 
 import { PageCover, PageHistory, PageIntro } from "@/components/brochure/pages-front";
-import { PageKnitted, PageNetwork, PageWelded, PageWireMesh } from "@/components/brochure/pages-mesh";
+import { PageNetwork } from "@/components/brochure/pages-network";
 import {
+  PageCustom,
   PageExpanded,
   PageExpanded2,
   PageLaser,
+  PageLeveling,
   PagePatterns,
   PagePerforated,
+  PageTurret,
 } from "@/components/brochure/pages-products";
 
 import { PrintButton } from "./PrintButton";
@@ -33,9 +36,9 @@ export default function BrochurePage() {
       <PageLaser />
       <PageExpanded />
       <PageExpanded2 />
-      <PageWireMesh />
-      <PageWelded />
-      <PageKnitted />
+      <PageTurret />
+      <PageLeveling />
+      <PageCustom />
       <PageNetwork />
     </div>
   );
