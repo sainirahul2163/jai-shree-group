@@ -2,8 +2,26 @@
 
 import { revalidatePath } from "next/cache";
 
+import { isAdminEmail } from "@/lib/admin";
 import { createServerClient } from "@/lib/supabase/server";
 import type { FollowUpType, LeadStatus } from "@/types/database";
+
+/**
+ * Whether the current session belongs to an allow-listed admin.
+ *
+ * Signing in successfully is NOT the same as being allowed into the panel —
+ * `ADMIN_EMAILS` gates that, server-side. The login form calls this so a
+ * rejected account is told why, instead of bouncing off the middleware.
+ * Returns only a boolean about the caller's own session, so the allow-list
+ * itself never reaches the browser.
+ */
+export async function isCurrentUserAdmin(): Promise<boolean> {
+  const supabase = await createServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  return isAdminEmail(user?.email);
+}
 
 export async function updateLeadStatus(leadId: string, status: LeadStatus) {
   const supabase = await createServerClient();

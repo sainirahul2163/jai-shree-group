@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createClient } from "@/lib/supabase/client";
+import { isCurrentUserAdmin } from "@/lib/supabase/actions";
 
 export function AdminLoginForm() {
   const router = useRouter();
@@ -22,19 +23,41 @@ export function AdminLoginForm() {
     setError("");
 
     const supabase = createClient();
-    const { error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
 
-    if (authError) {
-      setError(authError.message);
+    try {
+      const { error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (authError) {
+        setError(authError.message);
+        return;
+      }
+
+      // Correct credentials are not enough: /admin is gated by the ADMIN_EMAILS
+      // allow-list. Check that here, because otherwise the middleware silently
+      // bounces this account back to the page it is already on and the form
+      // sits on "Signing in..." forever with nothing to explain why.
+      if (!(await isCurrentUserAdmin())) {
+        await supabase.auth.signOut();
+        setError(
+          "This account is not authorised for the admin panel. Ask your developer to add it to ADMIN_EMAILS."
+        );
+        return;
+      }
+
+      router.push("/admin/dashboard");
+      router.refresh();
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Sign-in failed. Please try again."
+      );
+    } finally {
+      // Reset on every path, success included - a spinner that can never clear
+      // is what made this failure invisible in the first place.
       setLoading(false);
-      return;
     }
-
-    router.push("/admin/dashboard");
-    router.refresh();
   }
 
   return (
