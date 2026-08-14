@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import {
-  BROCHURE_COVER,
   BROCHURE_EDGE,
   BROCHURE_HISTORY,
   BROCHURE_HISTORY_NOTE,
@@ -9,255 +8,299 @@ import {
   BROCHURE_VISION,
 } from "@/data/brochure";
 
-import { QuoteBanner, SectionTag, Sheet } from "./ui";
+import { Caps, Masthead, Sheet, Stat } from "./kit";
 
-/* ── Page 1 · Cover ── */
-
-/** Honeycomb: hex w=46.5mm, h=w×0.866; columns every 0.75w, half-height stagger. */
-const HEX_W = 46.5;
-const HEX_H = 40.3;
-const COL = 34.9;
-const ROW = HEX_H / 2;
-const HEX_CELLS: ReadonlyArray<{ x: number; y: number; img: number }> = [
-  { x: COL * 2, y: 0, img: 1 }, // top
-  { x: COL * 1, y: ROW, img: 3 }, // upper ring
-  { x: COL * 3, y: ROW, img: 4 },
-  { x: 0, y: ROW * 2, img: 5 }, // sides
-  { x: COL * 4, y: ROW * 2, img: 6 },
-  { x: COL * 1, y: ROW * 3, img: 7 }, // lower ring
-  { x: COL * 3, y: ROW * 3, img: 8 },
-  { x: COL * 2, y: ROW * 4, img: 9 }, // bottom
-  { x: 0, y: 0, img: 10 }, // outer corners
-  { x: COL * 4, y: ROW * 4, img: 2 },
-];
+/* ══════════════ 01 · Cover ══════════════ */
 
 export function PageCover() {
   return (
-    <Sheet className="b-hexbg">
-      {/* ambient glow */}
-      <div
-        className="pointer-events-none absolute -right-[30mm] -top-[30mm] h-[95mm] w-[95mm] rounded-full"
-        style={{ background: "radial-gradient(circle, rgba(232,82,26,0.22), transparent 70%)" }}
+    <Sheet dark>
+      <img
+        src="/gallery/perforated-sheet-detail.jpg"
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover"
+        style={{ opacity: 0.5 }}
       />
       <div
-        className="pointer-events-none absolute -left-[35mm] top-[95mm] h-[80mm] w-[80mm] rounded-full"
-        style={{ background: "radial-gradient(circle, rgba(232,82,26,0.1), transparent 70%)" }}
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(16,18,21,0.94) 0%, rgba(16,18,21,0.55) 34%, rgba(16,18,21,0.93) 72%, #101215 100%)",
+        }}
+      />
+      <div
+        className="glow"
+        style={{
+          right: "-40mm",
+          top: "22mm",
+          width: "130mm",
+          height: "130mm",
+          background: "radial-gradient(circle, rgba(232,82,26,0.30), transparent 68%)",
+        }}
       />
 
-      <div className="relative flex h-full flex-col justify-between px-[11mm] pb-[9mm] pt-[10mm]">
-        {/* top rail */}
+      <div className="relative flex h-full flex-col justify-between px-[var(--mx)] pb-[18mm] pt-[16mm]">
         <div className="flex items-start justify-between">
-          <img src="/logo/logo-stacked-dark.svg" alt="Jai Shree®" className="h-[30mm] w-auto" />
-          <div className="flex flex-col items-end gap-[2.4mm]">
-            <span className="inline-flex items-center gap-[2mm] rounded-full border border-[#3a2a24] bg-[#160e0a] px-[3.4mm] py-[1.5mm] text-[8px] font-extrabold uppercase tracking-[0.14em] text-[#ff9a70]">
-              <svg viewBox="0 0 12 12" className="h-[3mm] w-[3mm]" fill="none" stroke="#e8521a" strokeWidth="1.2">
-                <path d="M6 1.2 7.4 4l3.1.3-2.3 2 .7 3-2.9-1.6L3.1 9.3l.7-3-2.3-2L4.6 4Z" />
-              </svg>
-              {BROCHURE_COVER.certified}
-            </span>
-            <div className="text-right">
-              <div className="flex items-baseline justify-end gap-[1.5mm]">
-                <span className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#a0a0a0]">Over</span>
-                <span
-                  className="text-[64px] font-black leading-[0.9] tracking-[-0.04em]"
-                  style={{
-                    background: "linear-gradient(135deg, #ff6b35 0%, #e8521a 60%, #b23407 100%)",
-                    WebkitBackgroundClip: "text",
-                    backgroundClip: "text",
-                    color: "transparent",
-                  }}
-                >
-                  {BROCHURE_COVER.years}
-                </span>
-              </div>
-              <div className="mt-[0.6mm] text-[10px] font-extrabold uppercase tracking-[0.3em] text-white">
-                {BROCHURE_COVER.yearsLabel}
-              </div>
+          <img src="/logo/logo-horizontal-dark.svg" alt="Jai Shree Group®" className="h-[15mm] w-auto" />
+          <div className="text-right">
+            <div className="label" style={{ color: "#fff" }}>
+              Company Profile
+            </div>
+            <div className="mono mt-[1.6mm]" style={{ color: "#7d858e" }}>
+              Edition 2026
             </div>
           </div>
         </div>
 
-        {/* honeycomb collage with center mark */}
-        <div className="relative mx-auto" style={{ width: `${COL * 4 + HEX_W}mm`, height: `${ROW * 4 + HEX_H}mm` }}>
-          {HEX_CELLS.map((cell) => (
-            <div
-              key={cell.img}
-              className="b-hex"
-              style={{ left: `${cell.x}mm`, top: `${cell.y}mm`, width: `${HEX_W}mm`, height: `${HEX_H}mm` }}
-            >
-              <div className="b-hex-inner">
-                <img src={`/brochure/img/hex-${cell.img}.jpg`} alt="" />
-              </div>
-            </div>
-          ))}
-          {/* center message hexagon */}
-          <div
-            className="b-hex"
-            style={{
-              left: `${COL * 2}mm`,
-              top: `${ROW * 2}mm`,
-              width: `${HEX_W}mm`,
-              height: `${HEX_H}mm`,
-              background: "linear-gradient(135deg, #ff6b35, #e8521a)",
-              padding: "0.8mm",
-            }}
-          >
-            <div className="b-hex-inner flex flex-col items-center justify-center gap-[1.6mm] bg-[#0d0d0d] text-center">
-              <img
-                src="/logo/mark-dark.svg"
-                alt=""
-                style={{ height: "13mm", width: "auto", objectFit: "contain" }}
-              />
-              <span className="text-[8.6px] font-black uppercase tracking-[0.26em] text-[#c0c0c0]">
-                Est.&nbsp;<span className="text-[#ff6b35]">1970</span>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* trust headline */}
-        <div className="text-center">
-          <div className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#a0a0a0]">
-            <span className="text-[#ff6b35]">Jai Shree</span> · A Trusted Brand For
-          </div>
-          <div className="mt-[1.6mm] text-[34px] font-black uppercase leading-none tracking-[0.02em] text-white">
-            Jali <span className="text-[#e8521a]">/</span> Meshes
-          </div>
-          <div
-            className="mt-[2mm] text-[19px] font-black uppercase leading-none tracking-[0.14em]"
-            style={{ color: "transparent", WebkitTextStroke: "1px #8a8a8a" }}
-          >
-            Since Last 50+ Years
-          </div>
-        </div>
-
-        {/* solutions band */}
         <div>
-          <div className="mb-[3.4mm] flex items-center gap-[3mm]">
-            <span className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#e8521a]" />
-            <h2 className="text-center text-[14.5px] font-black uppercase tracking-[0.1em] text-white">
-              Assuring <span className="text-[#ff6b35]">One Stop Perfect Solution</span> For
-            </h2>
-            <span className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#e8521a]" />
+          <div className="label label--brand mb-[6mm]">
+            Est. 1970 — ISO 9001:2015 Certified
           </div>
-          <div className="grid grid-cols-3 gap-[2mm]">
-            {BROCHURE_COVER.solutions.map((item) => (
-              <span key={item} className="b-chip justify-center">
-                {item}
-              </span>
+          <h1 className="display" style={{ color: "#fff" }}>
+            Precision
+            <br />
+            perforated
+            <br />
+            metal.
+          </h1>
+          <div
+            className="my-[8mm]"
+            style={{ height: "3px", width: "38mm", background: "var(--brand)" }}
+          />
+          <p className="lead" style={{ maxWidth: "128mm", color: "#c8ced5" }}>
+            Perforated sheets, laser cutting, expanded metal and custom components —
+            engineered to specification and manufactured across six units in Pune and
+            Mumbai for over fifty years.
+          </p>
+        </div>
+
+        <div className="flex items-end justify-between">
+          <div className="flex gap-[14mm]">
+            {[
+              ["50+", "Years"],
+              ["06", "Units"],
+              ["02", "Cities"],
+            ].map(([v, k]) => (
+              <div key={k}>
+                <div
+                  className="mono"
+                  style={{ fontSize: "26px", fontWeight: 700, color: "#fff", letterSpacing: "-0.02em" }}
+                >
+                  {v}
+                </div>
+                <div className="label mt-[1mm]" style={{ color: "#7d858e" }}>
+                  {k}
+                </div>
+              </div>
             ))}
           </div>
+          <span className="mono" style={{ color: "#6e767f" }}>
+            jaishreegroup.com
+          </span>
         </div>
       </div>
     </Sheet>
   );
 }
 
-/* ── Page 2 · Introduction ── */
+/* ══════════════ 02 · Contents ══════════════ */
 
-export function PageIntro() {
+const TOC = [
+  ["01", "The Group", "03"],
+  ["02", "Fifty Years of Growth", "04"],
+  ["03", "Vision, Mission & Edge", "05"],
+  ["04", "Our Capabilities", "06"],
+  ["05", "Perforated Sheets", "07"],
+  ["06", "Perforation Patterns", "08"],
+  ["07", "Laser Cutting", "09"],
+  ["08", "Expanded Metal", "10"],
+  ["09", "Turret Punching", "12"],
+  ["10", "Precision Sheet Leveling", "13"],
+  ["11", "Custom Components", "14"],
+  ["12", "Materials & Industries", "15"],
+  ["13", "Our Network", "16"],
+] as const;
+
+export function PageContents() {
   return (
-    <Sheet page={2}>
-      <div className="b-pad">
-        <SectionTag>Introduction</SectionTag>
-        <div className="grid gap-[2.6mm]">
-          {BROCHURE_INTRO.map((para) => (
-            <p key={para.slice(0, 24)} className="b-body">
-              {para}
+    <Sheet foot="Contents" page={2}>
+      <div className="pad">
+        <div className="masthead">
+          <div className="masthead__top">
+            <span className="secno">—</span>
+            <span className="label">Company Profile · Edition 2026</span>
+          </div>
+          <h2 className="h1">Contents</h2>
+        </div>
+
+        <div className="grid grid-cols-2 gap-x-[12mm]">
+          <div>
+            {TOC.slice(0, 7).map(([no, title, pg]) => (
+              <div key={no} className="toc">
+                <span className="toc__no">{no}</span>
+                <span>{title}</span>
+                <span className="toc__pg">{pg}</span>
+              </div>
+            ))}
+          </div>
+          <div>
+            {TOC.slice(7).map(([no, title, pg]) => (
+              <div key={no} className="toc">
+                <span className="toc__no">{no}</span>
+                <span>{title}</span>
+                <span className="toc__pg">{pg}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-[10mm] grid grid-cols-4 gap-[8mm] border-t-2 border-[var(--ink)] pt-[7mm]">
+          <Stat value="50" accent="+" label="Years of experience" />
+          <Stat value="06" label="Manufacturing units" />
+          <Stat value="12" accent="mm" label="Max punch thickness" />
+          <Stat value="14" accent="mm" label="Max laser thickness" />
+        </div>
+
+        <figure className="shot bleed mt-auto" style={{ height: "72mm" }}>
+          <img src="/brochure/img/factory.jpg" alt="Jai Shree Group plant at Talawade, Pune" />
+          <figcaption className="shot__cap">Talawade, Pune — Group manufacturing facility</figcaption>
+        </figure>
+      </div>
+    </Sheet>
+  );
+}
+
+/* ══════════════ 03 · The Group ══════════════ */
+
+export function PageGroup() {
+  return (
+    <Sheet foot="The Group" page={3}>
+      <div className="pad">
+        <Masthead no="01" kicker="Introduction" title="The Group" />
+
+        <p className="lead mb-[7mm]" style={{ maxWidth: "150mm" }}>
+          {BROCHURE_INTRO[0]}
+        </p>
+
+        <div className="grid grid-cols-2 gap-x-[11mm] gap-y-[4mm]">
+          {BROCHURE_INTRO.slice(1).map((p) => (
+            <p key={p.slice(0, 20)} className="body">
+              {p}
             </p>
           ))}
         </div>
 
-        <div className="mt-[4.5mm] grid grid-cols-4 gap-[2.6mm]">
-          <div className="b-stat">
-            <div className="b-stat-value">
-              50<span>+</span>
-            </div>
-            <div className="b-stat-label">Years of Experience</div>
-          </div>
-          <div className="b-stat">
-            <div className="b-stat-value">
-              6<span>+</span>
-            </div>
-            <div className="b-stat-label">Manufacturing Units</div>
-          </div>
-          <div className="b-stat">
-            <div className="b-stat-value">
-              2<span>&nbsp;Cities</span>
-            </div>
-            <div className="b-stat-label">Mumbai &amp; Pune</div>
-          </div>
-          <div className="b-stat">
-            <div className="b-stat-value">
-              ISO<span>&nbsp;9001</span>
-            </div>
-            <div className="b-stat-label">2015 Certified</div>
+        <div className="mt-[8mm] rule" />
+
+        <div className="mt-[7mm] grid grid-cols-[1fr_62mm] items-start gap-[11mm]">
+          <p className="pull">
+            Our key goal is to reduce rejection — and our rejection percentage is
+            negligible, because our operators and supervisors are highly trained.
+          </p>
+          <div>
+            <div className="label mb-[3mm]">Certified to</div>
+            <div className="h3">ISO 9001:2015</div>
+            <p className="small mt-[2mm]">
+              Quality management across every plant, audited and maintained group-wide.
+            </p>
           </div>
         </div>
 
-        <figure className="b-photo b-photo-tick mt-[4.5mm] flex-1" style={{ minHeight: 0 }}>
-          <img src="/brochure/img/factory.jpg" alt="Jai Shree Group manufacturing facility" />
-          <figcaption className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/85 to-transparent px-[4mm] pb-[2.6mm] pt-[8mm] text-[8.4px] font-bold uppercase tracking-[0.18em] text-[#e6e6e6]">
-            Manufacturing Facility · Talawade, Pune
-          </figcaption>
+        <figure className="shot bleed mt-auto" style={{ height: "78mm" }}>
+          <img src="/brochure/img/perforated-collage.jpg" alt="Perforated sheets in a range of hole patterns" />
+          <figcaption className="shot__cap">Standard and custom perforation patterns</figcaption>
         </figure>
-        <div className="h-[6mm]" />
       </div>
     </Sheet>
   );
 }
 
-/* ── Page 3 · History · Vision · Mission · Edge ── */
+/* ══════════════ 04 · Fifty Years ══════════════ */
 
 export function PageHistory() {
   return (
-    <Sheet page={3}>
-      <div className="b-pad">
-        <SectionTag>History of the Group</SectionTag>
-        <div className="b-timeline">
+    <Sheet foot="Fifty Years of Growth" page={4}>
+      <div className="pad">
+        <Masthead no="02" kicker="History" title="Fifty years of growth" />
+
+        <div className="grid gap-0">
           {BROCHURE_HISTORY.map((item) => (
-            <div key={item.year} className="b-timeline-item">
-              <div className="b-timeline-year">{item.year}</div>
-              <div className="b-timeline-text">{item.text}</div>
+            <div
+              key={item.year}
+              className="grid grid-cols-[26mm_1fr] gap-[8mm] border-t border-[var(--rule)] py-[4.2mm]"
+            >
+              <div
+                className="mono"
+                style={{ fontSize: "22px", fontWeight: 700, color: "var(--brand)", letterSpacing: "-0.02em" }}
+              >
+                {item.year}
+              </div>
+              <p className="body" style={{ marginTop: "0.6mm" }}>
+                {item.text}
+              </p>
             </div>
           ))}
         </div>
-        <p className="b-body mt-[3.2mm] text-[9.9px]">{BROCHURE_HISTORY_NOTE}</p>
 
-        <div className="mt-[4.6mm] grid grid-cols-2 gap-[3mm]">
-          <div className="rounded-[10px] border border-[#2a2a2a] bg-[#111111] p-[3.6mm]">
-            <SectionTag>Our Vision</SectionTag>
-            <p className="b-body -mt-[1.6mm] text-[9.9px]">{BROCHURE_VISION}</p>
+        <div className="mt-[8mm] border-t-2 border-[var(--ink)] pt-[6mm]">
+          <p className="body" style={{ columnCount: 2, columnGap: "11mm" }}>
+            {BROCHURE_HISTORY_NOTE}
+          </p>
+        </div>
+      </div>
+    </Sheet>
+  );
+}
+
+/* ══════════════ 05 · Vision, Mission & Edge ══════════════ */
+
+export function PagePrinciples() {
+  return (
+    <Sheet dark foot="Vision, Mission & Edge" page={5}>
+      <div
+        className="glow"
+        style={{
+          left: "-30mm",
+          top: "-30mm",
+          width: "120mm",
+          height: "120mm",
+          background: "radial-gradient(circle, rgba(232,82,26,0.22), transparent 68%)",
+        }}
+      />
+      <div className="pad relative">
+        <Masthead no="03" kicker="What drives us" title="Vision, mission & edge" />
+
+        <div className="grid grid-cols-2 gap-[11mm]">
+          <div>
+            <div className="label label--brand mb-[3.4mm]">Our Vision</div>
+            <p className="body" style={{ fontSize: "15px" }}>
+              {BROCHURE_VISION}
+            </p>
           </div>
-          <div className="rounded-[10px] border border-[#2a2a2a] bg-[#111111] p-[3.6mm]">
-            <SectionTag>Our Mission</SectionTag>
-            <p className="b-body -mt-[1.6mm] text-[9.9px]">{BROCHURE_MISSION}</p>
+          <div>
+            <div className="label label--brand mb-[3.4mm]">Our Mission</div>
+            <p className="body" style={{ fontSize: "15px" }}>
+              {BROCHURE_MISSION}
+            </p>
           </div>
         </div>
 
-        <div className="mt-[4.6mm]">
-          <SectionTag>Edge on Others</SectionTag>
-          <ol className="b-numlist grid-cols-2 gap-x-[5mm]">
-            {BROCHURE_EDGE.map((item) => (
-              <li key={item.slice(0, 24)}>{item}</li>
-            ))}
-          </ol>
+        <div className="mt-[9mm] rule" />
+
+        <div className="mt-[7mm]">
+          <div className="label mb-[5mm]" style={{ color: "#fff" }}>
+            Our Edge on Others
+          </div>
+          <div className="grid grid-cols-2 gap-x-[11mm]">
+            <Caps items={BROCHURE_EDGE.slice(0, 4)} />
+            <Caps items={BROCHURE_EDGE.slice(4)} start={4} />
+          </div>
         </div>
-        <figure className="b-photo b-photo-tick mt-[4.6mm] flex-1" style={{ minHeight: 0 }}>
-          <img
-            src="/brochure/img/factory.jpg"
-            alt="Jai Shree Group plant, Talawade"
-            style={{ objectPosition: "50% 78%" }}
-          />
-          <figcaption className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/85 to-transparent px-[4mm] pb-[2.4mm] pt-[8mm] text-[8.4px] font-bold uppercase tracking-[0.18em] text-[#e6e6e6]">
-            Five Decades of Continuous Expansion
-          </figcaption>
-        </figure>
-        <div className="pb-[4mm] pt-[3.6mm]">
-          <QuoteBanner>
-            Independence of a privately owned company — total quality management under the
-            promoters&rsquo; control, on-schedule delivery, and tailor-made custom solutions.
-          </QuoteBanner>
+
+        <div className="mt-auto grid grid-cols-3 gap-[8mm] border-t border-[var(--dark-rule)] pt-[7mm]">
+          <Stat value="100" accent="%" label="Privately owned, zero debt" />
+          <Stat value="02" label="Cities — Pune & Mumbai" />
+          <Stat value="All" label="States of India served" />
         </div>
       </div>
     </Sheet>

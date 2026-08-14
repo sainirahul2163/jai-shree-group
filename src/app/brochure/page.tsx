@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
 
-import { PageCover, PageHistory, PageIntro } from "@/components/brochure/pages-front";
-import { PageNetwork } from "@/components/brochure/pages-network";
+import { PageCapability, PageNetwork } from "@/components/brochure/pages-back";
 import {
+  PageContents,
+  PageCover,
+  PageGroup,
+  PageHistory,
+  PagePrinciples,
+} from "@/components/brochure/pages-front";
+import {
+  PageCapabilities,
   PageCustom,
   PageExpanded,
-  PageExpanded2,
+  PageExpandedTech,
   PageLaser,
   PageLeveling,
   PagePatterns,
@@ -18,27 +25,31 @@ import { PrintButton } from "./PrintButton";
 import "./brochure.css";
 
 export const metadata: Metadata = {
-  title: "Company Brochure | Jai Shree Group",
+  title: "Company Profile | Jai Shree Group",
   description:
-    "Official Jai Shree Group catalogue — perforated sheets, laser cutting, expanded metal, wire mesh, welded mesh and demister pads.",
+    "Jai Shree Group company profile — perforated sheets, laser cutting, expanded metal, turret punching, precision sheet leveling and custom components.",
   robots: { index: false, follow: false },
 };
 
 export default function BrochurePage() {
   return (
-    <div className="b-root">
+    <div className="bx">
       <PrintButton />
       <PageCover />
-      <PageIntro />
+      <PageContents />
+      <PageGroup />
       <PageHistory />
+      <PagePrinciples />
+      <PageCapabilities />
       <PagePerforated />
       <PagePatterns />
       <PageLaser />
       <PageExpanded />
-      <PageExpanded2 />
+      <PageExpandedTech />
       <PageTurret />
       <PageLeveling />
       <PageCustom />
+      <PageCapability />
       <PageNetwork />
     </div>
   );
