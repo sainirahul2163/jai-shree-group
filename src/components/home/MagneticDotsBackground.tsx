@@ -3,6 +3,9 @@
 import { useCallback, useEffect, useRef, type RefObject } from "react";
 
 const SPACING = 52;
+// 60° staggered pitch: alternate rows shift half a pitch and rows sit
+// √3/2 apart, so every dot is exactly SPACING from all six neighbours.
+const ROW_SPACING = (SPACING * Math.sqrt(3)) / 2;
 const BASE_RADIUS = 16;
 const MAX_RADIUS = 19;
 const BASE_OPACITY = 0.45;
@@ -38,13 +41,15 @@ export function MagneticDotsBackground({
 
   const buildGrid = useCallback((width: number, height: number) => {
     const cols = Math.ceil(width / SPACING) + 1;
-    const rows = Math.ceil(height / SPACING) + 1;
+    const rows = Math.ceil(height / ROW_SPACING) + 1;
     const dots: Dot[] = [];
 
     for (let row = 0; row < rows; row++) {
+      const rowOffset = row % 2 === 0 ? 0 : SPACING / 2;
+
       for (let col = 0; col < cols; col++) {
-        const baseX = col * SPACING;
-        const baseY = row * SPACING;
+        const baseX = col * SPACING + rowOffset;
+        const baseY = row * ROW_SPACING;
         dots.push({
           baseX,
           baseY,
