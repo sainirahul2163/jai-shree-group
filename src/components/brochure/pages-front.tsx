@@ -41,7 +41,7 @@ export function PageCover() {
 
       <div className="relative flex h-full flex-col justify-between px-[var(--mx)] pb-[18mm] pt-[16mm]">
         <div className="flex items-start justify-between">
-          <img src="/logo/logo-horizontal-dark.svg" alt="Jai Shree Group®" className="h-[15mm] w-auto" />
+          <img src="/logo/logo-horizontal-dark.svg" alt="Jai Shree Group®" className="h-[19mm] w-auto" />
           <div className="text-right">
             <div className="label" style={{ color: "#fff" }}>
               Company Profile

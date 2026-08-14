@@ -176,50 +176,52 @@ export function PagePatterns() {
           ))}
         </div>
 
-        <div className="mt-[9mm] border-t-2 border-[var(--ink)] pt-[6mm]">
+        <div className="mt-[7mm] border-t-2 border-[var(--ink)] pt-[5mm]">
           <h3 className="h2 mb-[2mm]">Calculating open area</h3>
-          <p className="body mb-[6mm]" style={{ maxWidth: "150mm" }}>
-            Open area is the proportion of the sheet removed by perforation. Use the
-            formula matching your hole shape and pitch — our team will confirm the
-            right specification for your application.
+          <p className="body mb-[5mm]" style={{ maxWidth: "168mm" }}>
+            The proportion of the sheet removed by perforation — use the formula
+            matching your hole shape and pitch.
           </p>
 
-          <div className="grid grid-cols-2 gap-x-[9mm] gap-y-[5mm]">
+          <div className="grid grid-cols-2 gap-x-[9mm] gap-y-[4mm]">
             {OPEN_AREA_FORMULAS.map((f) => (
-              <div
-                key={f.label}
-                className="grid grid-cols-[1fr_auto] items-center gap-[5mm] border-t border-[var(--rule)] pt-[4mm]"
-              >
-                <div>
-                  <div className="h3 mb-[2.4mm]" style={{ fontSize: "14px" }}>
+              <div key={f.label} className="border-t border-[var(--rule)] pt-[3.4mm]">
+                <div className="mb-[2.6mm] flex items-start justify-between gap-[4mm]">
+                  <div className="h3" style={{ fontSize: "14px" }}>
                     {f.label}
                   </div>
-                  <div className="flex items-center gap-[3mm]">
-                    <span className="small" style={{ fontWeight: 600 }}>
-                      % Open Area
-                    </span>
-                    <span className="mono" style={{ color: "var(--ink-3)" }}>
-                      =
-                    </span>
-                    <span className="inline-grid justify-items-center">
-                      <span className="mono" style={{ fontWeight: 700, padding: "0 2mm" }}>
-                        {f.numerator}
-                      </span>
-                      <span
-                        className="mono"
-                        style={{
-                          fontWeight: 700,
-                          padding: "0.8mm 2mm 0",
-                          borderTop: "1.5px solid var(--brand)",
-                          color: "var(--ink-2)",
-                        }}
-                      >
-                        {f.denominator}
-                      </span>
-                    </span>
-                  </div>
+                  <FormulaDiagram kind={f.diagram} />
                 </div>
-                <FormulaDiagram kind={f.diagram} />
+                <div className="flex items-center gap-[2.6mm]" style={{ whiteSpace: "nowrap" }}>
+                  <span className="small" style={{ fontWeight: 600, color: "var(--ink-2)" }}>
+                    % Open Area
+                  </span>
+                  <span className="mono" style={{ color: "var(--ink-3)" }}>
+                    =
+                  </span>
+                  <span className="inline-grid justify-items-center">
+                    <span
+                      className="mono"
+                      style={{ fontSize: "12px", fontWeight: 700, padding: "0 2.4mm 0.6mm" }}
+                    >
+                      {f.numerator}
+                    </span>
+                    <span
+                      className="mono"
+                      style={{
+                        fontSize: "12px",
+                        fontWeight: 700,
+                        padding: "0.9mm 2.4mm 0",
+                        borderTop: "1.6px solid var(--brand)",
+                        color: "var(--ink-2)",
+                        width: "100%",
+                        textAlign: "center",
+                      }}
+                    >
+                      {f.denominator}
+                    </span>
+                  </span>
+                </div>
               </div>
             ))}
           </div>
@@ -246,7 +248,7 @@ export function PageLaser() {
       processLabel="Categories"
       application={LASER.application}
       capabilities={LASER.strengths}
-      imageHeight="104mm"
+      imageHeight="88mm"
     />
   );
 }
@@ -256,7 +258,7 @@ export function PageLaser() {
 export function PageExpanded() {
   return (
     <Sheet foot="Expanded Metal" page={10}>
-      <figure className="shot" style={{ height: "84mm" }}>
+      <figure className="shot" style={{ height: "70mm" }}>
         <img src="/brochure/img/em-brass.jpg" alt="Brass expanded metal sheets" />
         <figcaption className="shot__cap">Expanded metal — brass, diamond pattern</figcaption>
       </figure>
@@ -291,7 +293,7 @@ export function PageExpanded() {
 
         <div className="mt-auto grid grid-cols-4 gap-[2.6mm] pb-[3mm]">
           {[1, 5, 8, 12].map((i) => (
-            <figure key={i} className="shot" style={{ height: "30mm" }}>
+            <figure key={i} className="shot" style={{ height: "26mm" }}>
               <img src={`/brochure/img/expanded-${i}.jpg`} alt={`Expanded metal pattern ${i}`} />
             </figure>
           ))}

@@ -152,7 +152,7 @@ export function PatternSwatch({ id, label }: { id: string; label: string }) {
 
 function Diag({ children }: { children: React.ReactNode }) {
   return (
-    <svg viewBox="0 0 92 34" className="block h-[13mm] w-auto shrink-0">
+    <svg viewBox="0 0 92 34" className="block h-[11mm] w-auto shrink-0">
       <rect width="92" height="34" rx="2" fill="#EDEBE6" stroke={EDGE} strokeWidth="0.5" />
       {children}
     </svg>
@@ -182,7 +182,6 @@ export function FormulaDiagram({ kind }: { kind: string }) {
             </g>
           ))}
           <rect x="39" y="11" width="14" height="13" fill="none" stroke={DIM} strokeWidth="1.5" />
-          <text x="46" y="8" textAnchor="middle" fontSize="6.5" fill={DIM} fontWeight="700">U₁·U₂</text>
         </Diag>
       );
     case "square-rect":
@@ -208,7 +207,6 @@ export function FormulaDiagram({ kind }: { kind: string }) {
             </g>
           ))}
           <path d="M39 28 L39 11 L53 28 L53 11" fill="none" stroke={DIM} strokeWidth="1.5" />
-          <text x="46" y="6.5" textAnchor="middle" fontSize="6.5" fill={DIM} fontWeight="700">Z₁·Z₂</text>
         </Diag>
       );
     case "capsule-stag":

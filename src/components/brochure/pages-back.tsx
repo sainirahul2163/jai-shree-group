@@ -209,7 +209,7 @@ export function PageNetwork() {
           <div className="mb-[8mm] rule" />
           <div className="flex items-end justify-between gap-[10mm]">
             <div>
-              <img src="/logo/logo-horizontal-dark.svg" alt="Jai Shree Group®" className="h-[14mm] w-auto" />
+              <img src="/logo/logo-horizontal-dark.svg" alt="Jai Shree Group®" className="h-[17mm] w-auto" />
               <p className="lead mt-[5mm]" style={{ maxWidth: "104mm", fontSize: "16px", color: "#c8ced5" }}>
                 One group, every metal solution — from a single blank to
                 coil-to-coil production runs.
