@@ -23,6 +23,32 @@ export async function isCurrentUserAdmin(): Promise<boolean> {
   return isAdminEmail(user?.email);
 }
 
+/**
+ * Permanently removes a lead and its follow-up history.
+ *
+ * follow_ups.lead_id currently cascades, so deleting the lead alone would be
+ * enough. We clear follow-ups explicitly anyway so this keeps working if that
+ * constraint is ever recreated without the cascade.
+ *
+ * There is no undo — the leads table is the only record of these enquiries,
+ * so the UI confirms before calling this.
+ */
+export async function deleteLead(leadId: string) {
+  const supabase = await createServerClient();
+
+  const { error: followUpError } = await supabase
+    .from("follow_ups")
+    .delete()
+    .eq("lead_id", leadId);
+  if (followUpError) throw new Error(followUpError.message);
+
+  const { error } = await supabase.from("leads").delete().eq("id", leadId);
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/admin/leads");
+  revalidatePath("/admin/dashboard");
+}
+
 export async function updateLeadStatus(leadId: string, status: LeadStatus) {
   const supabase = await createServerClient();
   const { error } = await supabase

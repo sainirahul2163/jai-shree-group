@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState, useTransition } from "react";
+import { Trash2 } from "lucide-react";
 
 import { StatusBadge } from "@/components/admin/StatusBadge";
+import { deleteLead } from "@/lib/supabase/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -32,6 +34,21 @@ export function LeadsTable({
   totalPages: number;
 }) {
   const router = useRouter();
+  const [confirmId, setConfirmId] = useState<string | null>(null);
+  const [error, setError] = useState("");
+  const [isPending, startTransition] = useTransition();
+
+  function handleDelete(id: string) {
+    setConfirmId(null);
+    setError("");
+    startTransition(async () => {
+      try {
+        await deleteLead(id);
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Could not delete that lead");
+      }
+    });
+  }
 
   const csvData = useMemo(() => {
     const headers = [
@@ -109,6 +126,19 @@ export function LeadsTable({
         </Button>
       </div>
 
+      {error && (
+        <p
+          className="rounded-lg border px-4 py-2.5 text-sm"
+          style={{
+            borderColor: "rgba(248,113,113,0.4)",
+            backgroundColor: "rgba(248,113,113,0.08)",
+            color: "#F87171",
+          }}
+        >
+          {error}
+        </p>
+      )}
+
       <div
         className="overflow-x-auto rounded-xl border"
         style={{ borderColor: "#2A2A2A" }}
@@ -154,9 +184,48 @@ export function LeadsTable({
                     {new Date(lead.created_at).toLocaleDateString("en-IN")}
                   </td>
                   <td className="px-4 py-3">
-                    <Button asChild size="sm" variant="outline" className="border-[#2A2A2A]">
-                      <Link href={`/admin/leads/${lead.id}`}>View</Link>
-                    </Button>
+                    {confirmId === lead.id ? (
+                      <div className="flex items-center gap-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="whitespace-nowrap border-red-900/50 text-red-400"
+                          disabled={isPending}
+                          onClick={() => handleDelete(lead.id)}
+                        >
+                          Delete permanently
+                        </Button>
+                        <button
+                          onClick={() => setConfirmId(null)}
+                          className="text-xs underline"
+                          style={{ color: "#666666" }}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        <Button
+                          asChild
+                          size="sm"
+                          variant="outline"
+                          className="border-[#2A2A2A]"
+                        >
+                          <Link href={`/admin/leads/${lead.id}`}>View</Link>
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="border-[#2A2A2A] text-red-400"
+                          disabled={isPending}
+                          onClick={() => setConfirmId(lead.id)}
+                          aria-label={`Delete lead ${lead.name}`}
+                          title={`Delete ${lead.name}`}
+                        >
+                          <Trash2 className="size-4" />
+                        </Button>
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))

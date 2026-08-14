@@ -165,16 +165,82 @@ export async function getPageViewStats() {
   return { today: today ?? 0, topPages };
 }
 
+/**
+ * Leads still sitting on "new" after `days`. These are enquiries nobody has
+ * replied to yet — the most valuable thing the dashboard can surface, since an
+ * unanswered quote request is lost revenue rather than a neutral row in a list.
+ */
+export async function getStaleLeads(days = 3, limit = 5): Promise<Lead[]> {
+  if (!isSupabaseConfigured()) return [];
+  const supabase = await createServerClient();
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - days);
+
+  const { data } = await supabase
+    .from("leads")
+    .select("*")
+    .eq("status", "new")
+    .lt("created_at", cutoff.toISOString())
+    .order("created_at", { ascending: true })
+    .limit(limit);
+
+  return mapRows<Lead>(data);
+}
+
+/** Published/total counts for the content the admin manages. */
+export async function getContentCounts() {
+  const empty = { published: 0, total: 0 };
+  if (!isSupabaseConfigured()) {
+    return { gallery: empty, blog: empty, testimonials: empty };
+  }
+  const supabase = await createServerClient();
+
+  const countsFor = async (table: string, publishedColumn: string) => {
+    const [totalRes, publishedRes] = await Promise.all([
+      supabase.from(table).select("id", { count: "exact", head: true }),
+      supabase
+        .from(table)
+        .select("id", { count: "exact", head: true })
+        .eq(publishedColumn, true),
+    ]);
+    return {
+      total: totalRes.count ?? 0,
+      published: publishedRes.count ?? 0,
+    };
+  };
+
+  const [gallery, blog, testimonials] = await Promise.all([
+    countsFor("gallery_items", "is_published"),
+    countsFor("blog_posts", "is_published"),
+    countsFor("testimonials", "is_published"),
+  ]);
+
+  return { gallery, blog, testimonials };
+}
+
 export async function getLeadProductStats() {
-  if (!isSupabaseConfigured()) return [] as { product: string; count: number }[];
+  if (!isSupabaseConfigured()) {
+    return { items: [] as { product: string; count: number }[], window: "30 days" };
+  }
   const supabase = await createServerClient();
   const thirtyDaysAgo = new Date();
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-  const { data } = await supabase
+  let window = "30 days";
+  let { data } = await supabase
     .from("leads")
     .select("product_interest, products_selected")
     .gte("created_at", thirtyDaysAgo.toISOString());
+
+  // A quiet month shouldn't read as "we have no data" — fall back to all time
+  // and say so, instead of showing an empty panel that looks broken.
+  if (!data || data.length === 0) {
+    const allTime = await supabase
+      .from("leads")
+      .select("product_interest, products_selected");
+    data = allTime.data;
+    window = "all time";
+  }
 
   const counts: Record<string, number> = {};
   mapRows<Pick<Lead, "product_interest" | "products_selected">>(data).forEach(
@@ -189,8 +255,10 @@ export async function getLeadProductStats() {
     }
   );
 
-  return Object.entries(counts)
+  const items = Object.entries(counts)
     .map(([product, count]) => ({ product, count }))
     .sort((a, b) => b.count - a.count)
     .slice(0, 8);
+
+  return { items, window };
 }

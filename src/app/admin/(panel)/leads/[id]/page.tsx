@@ -5,6 +5,7 @@ import { Mail, MessageCircle, Phone } from "lucide-react";
 import { LeadDetailClient } from "@/components/admin/LeadDetailClient";
 import { StatusBadge } from "@/components/admin/StatusBadge";
 import { Button } from "@/components/ui/button";
+import { toWhatsAppNumber } from "@/lib/phone";
 import { createServerClient } from "@/lib/supabase/server";
 import type { FollowUp, Lead } from "@/types/database";
 
@@ -37,10 +38,7 @@ export default async function AdminLeadDetailPage({
 
   if (!lead) notFound();
 
-  const phoneDigits = lead.phone.replace(/\D/g, "");
-  const waPhone = phoneDigits.startsWith("91")
-    ? phoneDigits
-    : `91${phoneDigits.replace(/^0/, "")}`;
+  const waPhone = toWhatsAppNumber(lead.phone);
 
   return (
     <div className="space-y-6">
