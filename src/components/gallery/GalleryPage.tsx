@@ -15,17 +15,19 @@ const DimpleSheet3D = dynamic(
 
 import { PageHero } from "@/components/shared/PageHero";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { GALLERY_CATEGORIES } from "@/lib/constants";
 import type { GalleryItem } from "@/types/database";
 
 const FILTERS = [
   { id: "all", label: "All" },
-  { id: "perforated-sheets", label: "Perforated Sheets" },
-  { id: "laser-cutting", label: "Laser Cutting" },
-  { id: "expanded-metal", label: "Expanded Metal" },
-  { id: "turret-punching", label: "Turret Punching" },
-  { id: "precision-sheet-leveling", label: "Precision Leveling" },
-  { id: "custom-components", label: "Custom Components" },
-] as const;
+  ...GALLERY_CATEGORIES.map((c) => ({ id: c.slug, label: c.label })),
+];
+
+// Panoramic shots are uploaded with a "-wide" suffix and given a 2:1 crop, so
+// they take two grid cells instead of being squashed into a square.
+function isWide(imageUrl: string) {
+  return /-wide\.[a-z]+$/i.test(imageUrl);
+}
 
 function GalleryEmptyState() {
   return (
@@ -89,8 +91,7 @@ export function GalleryPage({ items = [] }: GalleryPageProps) {
             </p>
             <DimpleSheet3D />
             <p className="mt-3 text-center text-xs text-[#444]">
-              Product photography coming soon — actual shots from our Talawade
-              facility
+              Photography from our manufacturing units below
             </p>
           </section>
 
@@ -124,19 +125,31 @@ export function GalleryPage({ items = [] }: GalleryPageProps) {
                           whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: true }}
                           transition={{ delay: index * 0.04, duration: 0.4 }}
-                          className="overflow-hidden rounded-xl border"
+                          className={`overflow-hidden rounded-xl border ${
+                            isWide(item.image_url) ? "sm:col-span-2" : ""
+                          }`}
                           style={{
                             backgroundColor: "#0A0A0A",
                             borderColor: "#2A2A2A",
                           }}
                         >
-                          <div className="relative aspect-square">
+                          <div
+                            className={`relative ${
+                              isWide(item.image_url)
+                                ? "aspect-[2/1]"
+                                : "aspect-square"
+                            }`}
+                          >
                             <Image
                               src={item.image_url}
                               alt={item.title}
                               fill
                               className="object-cover"
-                              sizes="(max-width: 768px) 100vw, 25vw"
+                              sizes={
+                                isWide(item.image_url)
+                                  ? "(max-width: 768px) 100vw, 50vw"
+                                  : "(max-width: 768px) 100vw, 25vw"
+                              }
                             />
                           </div>
                           <div className="p-4">

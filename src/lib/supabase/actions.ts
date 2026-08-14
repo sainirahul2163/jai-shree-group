@@ -63,6 +63,54 @@ export async function toggleGalleryPublished(id: string, isPublished: boolean) {
   revalidatePath("/gallery");
 }
 
+export async function updateGalleryItem(
+  id: string,
+  data: { title: string; description: string | null; product_category: string }
+) {
+  const supabase = await createServerClient();
+  const { error } = await supabase
+    .from("gallery_items")
+    .update({
+      title: data.title,
+      description: data.description,
+      product_category: data.product_category,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidatePath("/admin/gallery");
+  revalidatePath("/gallery");
+}
+
+export async function bulkUpdateGalleryCategory(
+  ids: string[],
+  productCategory: string
+) {
+  if (ids.length === 0) return;
+  const supabase = await createServerClient();
+  const { error } = await supabase
+    .from("gallery_items")
+    .update({ product_category: productCategory })
+    .in("id", ids);
+  if (error) throw new Error(error.message);
+  revalidatePath("/admin/gallery");
+  revalidatePath("/gallery");
+}
+
+export async function bulkSetGalleryPublished(
+  ids: string[],
+  isPublished: boolean
+) {
+  if (ids.length === 0) return;
+  const supabase = await createServerClient();
+  const { error } = await supabase
+    .from("gallery_items")
+    .update({ is_published: isPublished })
+    .in("id", ids);
+  if (error) throw new Error(error.message);
+  revalidatePath("/admin/gallery");
+  revalidatePath("/gallery");
+}
+
 export async function saveGalleryItem(data: {
   image_url: string;
   title: string;

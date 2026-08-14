@@ -224,6 +224,18 @@ export const PRODUCTS = [
   },
 ] as const;
 
+// Single source of truth for gallery categories: the public filter tabs and the
+// admin category picker both read this, so the two can't drift apart.
+export const GALLERY_CATEGORIES = [
+  { slug: "perforated-sheets", label: "Perforated Sheets" },
+  { slug: "laser-cutting", label: "Laser Cutting" },
+  { slug: "expanded-metal", label: "Expanded Metal" },
+  { slug: "turret-punching", label: "Turret Punching" },
+  { slug: "precision-sheet-leveling", label: "Precision Leveling" },
+  { slug: "custom-components", label: "Custom Components" },
+  { slug: "manufacturing-unit", label: "Our Facility" },
+] as const;
+
 export const MATERIALS = [
   "Stainless Steel",
   "MS (Mild Steel)",
