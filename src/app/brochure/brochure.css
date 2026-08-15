@@ -390,6 +390,12 @@
   text-transform: uppercase;
 }
 
+/* SVG labels in the technical figures inherit nothing by default and fall
+   back to Helvetica, which shows up as a stray font in the exported PDF. */
+.sheet svg text {
+  font-family: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
+}
+
 /* full-bleed helper inside .pad */
 .bleed {
   margin-left: calc(-1 * var(--mx));
