@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
@@ -23,7 +24,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { BROCHURE_URL, NAV_LINKS, PRODUCTS } from "@/lib/constants";
-import { getProductIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
 function NavLink({
@@ -97,7 +97,7 @@ export function Navbar() {
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <div
-                    className="w-[640px] rounded-xl border p-4 shadow-2xl"
+                    className="w-[760px] rounded-xl border p-4 shadow-2xl"
                     style={{
                       backgroundColor: "#111111",
                       borderColor: "#2A2A2A",
@@ -121,7 +121,6 @@ export function Navbar() {
                     </div>
                     <div className="grid grid-cols-3 gap-1">
                       {PRODUCTS.map((product) => {
-                        const Icon = getProductIcon(product.icon);
                         return (
                           <NavigationMenuLink key={product.slug} asChild>
                             <Link
@@ -129,13 +128,16 @@ export function Navbar() {
                               className="group flex items-start gap-3 rounded-lg p-3 transition-colors hover:bg-[#1A1A1A]"
                             >
                               <div
-                                className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg transition-colors group-hover:text-white"
-                                style={{
-                                  backgroundColor: "rgba(232, 82, 26, 0.1)",
-                                  color: "#E8521A",
-                                }}
+                                className="relative mt-0.5 size-12 shrink-0 overflow-hidden rounded-lg"
+                                style={{ backgroundColor: "#1A1A1A" }}
                               >
-                                <Icon className="size-4" />
+                                <Image
+                                  src={`/products/${product.slug}.webp`}
+                                  alt=""
+                                  fill
+                                  sizes="48px"
+                                  className="object-cover transition-transform duration-300 group-hover:scale-110"
+                                />
                               </div>
                               <div>
                                 <p
@@ -267,7 +269,6 @@ export function Navbar() {
                 </div>
                 <div className="flex flex-col gap-1">
                   {PRODUCTS.map((product) => {
-                    const Icon = getProductIcon(product.icon);
                     return (
                       <Link
                         key={product.slug}
@@ -275,7 +276,18 @@ export function Navbar() {
                         onClick={() => setMobileOpen(false)}
                         className="flex items-center gap-3 rounded-lg px-4 py-3 transition-colors hover:bg-[#1A1A1A]"
                       >
-                        <Icon className="size-4" style={{ color: "#E8521A" }} />
+                        <div
+                          className="relative size-10 shrink-0 overflow-hidden rounded-md"
+                          style={{ backgroundColor: "#1A1A1A" }}
+                        >
+                          <Image
+                            src={`/products/${product.slug}.webp`}
+                            alt=""
+                            fill
+                            sizes="40px"
+                            className="object-cover"
+                          />
+                        </div>
                         <span
                           className="text-sm font-medium"
                           style={{ color: "#FFFFFF" }}

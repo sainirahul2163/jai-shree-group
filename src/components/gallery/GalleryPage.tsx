@@ -5,7 +5,9 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Camera } from "lucide-react";
+import { Camera, Expand } from "lucide-react";
+
+import { GalleryLightbox } from "@/components/gallery/GalleryLightbox";
 
 const DimpleSheet3D = dynamic(
   () =>
@@ -58,6 +60,7 @@ type GalleryPageProps = {
 
 export function GalleryPage({ items = [] }: GalleryPageProps) {
   const [activeFilter, setActiveFilter] = useState("all");
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const hasDbItems = items.length > 0;
 
   const dbFiltered = useMemo(() => {
@@ -133,8 +136,11 @@ export function GalleryPage({ items = [] }: GalleryPageProps) {
                             borderColor: "#2A2A2A",
                           }}
                         >
-                          <div
-                            className={`relative ${
+                          <button
+                            type="button"
+                            onClick={() => setLightboxIndex(index)}
+                            aria-label={`View ${item.title} full size`}
+                            className={`group relative block w-full cursor-zoom-in ${
                               isWide(item.image_url)
                                 ? "aspect-[2/1]"
                                 : "aspect-square"
@@ -144,14 +150,23 @@ export function GalleryPage({ items = [] }: GalleryPageProps) {
                               src={item.image_url}
                               alt={item.title}
                               fill
-                              className="object-cover"
+                              className="object-cover transition-transform duration-500 group-hover:scale-105"
                               sizes={
                                 isWide(item.image_url)
                                   ? "(max-width: 768px) 100vw, 50vw"
                                   : "(max-width: 768px) 100vw, 25vw"
                               }
                             />
-                          </div>
+                            <span
+                              className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                              style={{ backgroundColor: "rgba(10,10,10,0.45)" }}
+                            >
+                              <Expand
+                                className="size-6"
+                                style={{ color: "#FFFFFF" }}
+                              />
+                            </span>
+                          </button>
                           <div className="p-4">
                             <p
                               className="text-sm font-semibold"
@@ -182,6 +197,13 @@ export function GalleryPage({ items = [] }: GalleryPageProps) {
           </Tabs>
         </div>
       </section>
+
+      <GalleryLightbox
+        items={dbFiltered}
+        index={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onIndexChange={setLightboxIndex}
+      />
     </>
   );
 }
