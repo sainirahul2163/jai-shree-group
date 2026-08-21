@@ -1,9 +1,16 @@
 /* ═══════════════════════════════════════════════════════════════════════
    Jai Shree Group — Company Profile
-   A4 print system. Editorial light pages, dark statement pages.
+   A4, 12 pages. Follows the 2022 printed brochure page for page; the cover
+   and back cover are the new design.
 
-   Type is sized for print, not screen: body sits at 14px ≈ 10.5pt, which is
-   the comfortable floor for a 40+ reader. Everything scales from that.
+   Type is set for print, not screen: body sits at 14px ≈ 10.5pt, the
+   comfortable floor for a 40+ reader.
+
+   Set in Inter / Roboto Mono, loaded in page.tsx via next/font/local from
+   *static* weight files. Chrome cannot embed a variable font in a PDF — it
+   writes Type 3 outlines, which arrive in Canva as artwork you cannot
+   retype. Static instances embed as real TrueType, so the exported PDF stays
+   editable. Both faces are in Canva's library, so nothing is substituted.
    ═══════════════════════════════════════════════════════════════════════ */
 
 @page {
@@ -12,28 +19,35 @@
 }
 
 :root {
-  --paper: #faf9f7;
-  --paper-2: #f1efeb;
-  --paper-3: #e7e4de;
-  --ink: #16181a;
-  --ink-2: #474d54;
-  --ink-3: #8a9098;
-  --rule: #dcd8d1;
-  --brand: #e8521a;
-  --brand-deep: #c4400e;
-  --dark: #101215;
-  --dark-2: #191d21;
-  --dark-rule: #2c3238;
-  --dark-ink-2: #a9b0b8;
+  --paper: #fbfaf8;
+  --paper-2: #f2f0ec;
+  --paper-3: #e6e3dd;
+  --ink: #141618;
+  --ink-2: #454b52;
+  --ink-3: #878d95;
+  --rule: #dbd7d0;
 
-  --mx: 17mm; /* page side margin */
+  --orange: #e8521a;
+  --orange-lt: #ff7a45;
+  --orange-dk: #b83c0c;
+
+  --black: #0b0c0d;
+  --black-2: #17191c;
+  --black-rule: #2b3036;
+  --black-ink: #a8afb7;
+
+  --mx: 16mm;
 }
 
+/* The font variables must be declared on the same element that next/font
+   puts --js-*-face on. Declared on :root they would substitute there, where
+   the face variable does not exist, and resolve to invalid. */
 .bx {
-  background: #55585c;
-  font-family: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
+  --js-sans: var(--js-sans-face), ui-sans-serif, system-ui, sans-serif;
+  --js-mono: var(--js-mono-face), ui-monospace, monospace;
+  background: #52565a;
+  font-family: var(--js-sans);
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
 }
 
 /* ───────────────────────────── sheet ───────────────────────────── */
@@ -53,432 +67,270 @@
 }
 
 .sheet--dark {
-  background: var(--dark);
+  background: var(--black);
   color: #fff;
 }
 
 @media screen {
-  .bx {
-    padding: 26px 0;
-  }
-  .sheet {
-    margin-bottom: 26px;
-    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
-  }
-  .toolbar {
-    position: fixed;
-    top: 18px;
-    right: 18px;
-    z-index: 60;
-  }
+  .bx { padding: 26px 0; }
+  .sheet { margin-bottom: 26px; box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45); }
+  .toolbar { position: fixed; top: 18px; right: 18px; z-index: 60; }
 }
 
 @media print {
-  .bx {
-    padding: 0;
-    background: none;
-  }
-  .sheet {
-    margin: 0;
-    box-shadow: none;
-    break-after: page;
-  }
-  .sheet:last-child {
-    break-after: auto;
-  }
-  .toolbar {
-    display: none;
-  }
+  .bx { padding: 0; background: none; }
+  .sheet { margin: 0; box-shadow: none; break-after: page; }
+  .sheet:last-child { break-after: auto; }
+  .toolbar { display: none; }
 }
 
-/* body region + running foot */
 .pad {
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  padding: 16mm var(--mx) 0;
+  padding: 13mm var(--mx) 0;
 }
 
-.pad--tight {
-  padding-top: 9mm;
-}
+.pad--tight { padding-top: 7mm; }
 
+/* running foot */
 .foot {
   flex: none;
-  height: 14mm;
+  height: 12mm;
   margin-top: auto;
   padding: 0 var(--mx);
   display: flex;
   align-items: center;
-  gap: 5mm;
-  border-top: 1px solid var(--rule);
-  font-size: 10.5px;
+  gap: 4mm;
+  border-top: 1.5px solid var(--orange);
+  font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-3);
   font-weight: 600;
 }
 
-.sheet--dark .foot {
-  border-top-color: var(--dark-rule);
-  color: #6e767f;
-}
-
 .foot__no {
   margin-left: auto;
-  font-family: var(--font-geist-mono, ui-monospace, monospace);
-  font-size: 13px;
+  font-family: var(--js-mono);
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0;
-  color: var(--ink);
-}
-
-.sheet--dark .foot__no {
-  color: #fff;
+  color: var(--orange);
 }
 
 /* ─────────────────────────── typography ─────────────────────────── */
 
-/* globals.css forces every heading to #fff in @layer base; a directly-applied
-   colour beats inheritance, so these must state their own colour. */
-.display,
-.h1,
-.h2,
-.h3 {
-  color: var(--ink);
+/* globals.css sets every heading to #fff and to var(--font-display) inside
+   @layer base. A directly applied value beats inheritance, so restate both
+   here — otherwise headings silently fall back to Geist. */
+.sheet h1, .sheet h2, .sheet h3, .sheet h4, .sheet h5, .sheet h6 {
+  font-family: var(--js-sans);
 }
 
+.display, .h1, .h2, .h3 { color: var(--ink); font-family: var(--js-sans); }
 .sheet--dark .display,
 .sheet--dark .h1,
 .sheet--dark .h2,
-.sheet--dark .h3 {
-  color: #fff;
-}
+.sheet--dark .h3 { color: #fff; }
 
-.display {
-  font-size: 82px;
-  line-height: 0.94;
-  letter-spacing: -0.035em;
-  font-weight: 800;
-}
+.display { font-size: 54px; line-height: 1.02; letter-spacing: -0.035em; font-weight: 700; }
+.h1 { font-size: 34px; line-height: 1.06; letter-spacing: -0.028em; font-weight: 700; }
+.h2 { font-size: 22px; line-height: 1.14; letter-spacing: -0.02em; font-weight: 700; }
+.h3 { font-size: 16px; line-height: 1.3; letter-spacing: -0.01em; font-weight: 700; }
 
-.h1 {
-  font-size: 46px;
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  font-weight: 800;
-}
+.lead { font-size: 15.5px; line-height: 1.6; color: var(--ink-2); }
+.body { font-size: 14px; line-height: 1.68; color: var(--ink-2); }
+.small { font-size: 12px; line-height: 1.55; color: var(--ink-3); }
 
-.h2 {
-  font-size: 29px;
-  line-height: 1.1;
-  letter-spacing: -0.022em;
-  font-weight: 700;
-}
+.sheet--dark .lead,
+.sheet--dark .body { color: var(--black-ink); }
+.body strong { color: var(--ink); font-weight: 650; }
+.sheet--dark .body strong { color: #fff; }
 
-.h3 {
-  font-size: 19px;
-  line-height: 1.25;
-  letter-spacing: -0.012em;
-  font-weight: 700;
-}
-
-.lead {
-  font-size: 16px;
-  line-height: 1.55;
-  color: var(--ink-2);
-  letter-spacing: -0.005em;
-}
-
-.sheet--dark .lead {
-  color: var(--dark-ink-2);
-}
-
-.body {
-  font-size: 14px;
-  line-height: 1.68;
-  color: var(--ink-2);
-}
-
-.sheet--dark .body {
-  color: var(--dark-ink-2);
-}
-
-.body strong {
-  color: var(--ink);
-  font-weight: 650;
-}
-
-.sheet--dark .body strong {
-  color: #fff;
-}
-
-.small {
-  font-size: 12.5px;
-  line-height: 1.55;
-  color: var(--ink-3);
-}
-
-/* eyebrow / label */
 .label {
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--ink-3);
 }
 
-.label--brand {
-  color: var(--brand);
-}
+.label--orange { color: var(--orange); }
 
-.mono {
-  font-family: var(--font-geist-mono, ui-monospace, monospace);
-  font-size: 13px;
-  letter-spacing: -0.01em;
-}
+.mono { font-family: var(--js-mono); font-size: 12.5px; letter-spacing: -0.01em; }
 
-/* ─────────────────────────── components ─────────────────────────── */
+/* ─────────────────────── components ─────────────────────── */
 
-/* section number, e.g. 03 */
-.secno {
-  font-family: var(--font-geist-mono, ui-monospace, monospace);
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--brand);
-  letter-spacing: 0.06em;
-}
-
-/* page masthead: number + title + rule */
-.masthead {
-  display: grid;
-  gap: 4mm;
-  padding-bottom: 5mm;
-  border-bottom: 2px solid var(--ink);
-  margin-bottom: 7mm;
-}
-
-.sheet--dark .masthead {
-  border-bottom-color: #fff;
-}
-
-.masthead__top {
-  display: flex;
-  align-items: baseline;
-  gap: 5mm;
-}
-
-/* definition rows — Material / Process / Application */
-.spec {
-  border-top: 1px solid var(--rule);
-  padding: 2.9mm 0;
-  display: grid;
-  grid-template-columns: 34mm 1fr;
-  gap: 6mm;
-}
-
-.sheet--dark .spec {
-  border-top-color: var(--dark-rule);
-}
-
-.spec__k {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink);
-  padding-top: 0.9mm;
-}
-
-.sheet--dark .spec__k {
+/* Section banner — the original's angled orange tag, cleaned up. */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  background: var(--orange);
   color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 15px;
+  line-height: 1;
+  padding: 3.4mm 7mm 3.4mm 4.5mm;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 4.5mm) 100%, 0 100%);
 }
 
-.spec__v {
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--ink-2);
+.tag-row {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  margin-bottom: 5mm;
 }
 
-.sheet--dark .spec__v {
-  color: var(--dark-ink-2);
+.tag-row::after {
+  content: "";
+  flex: 1;
+  height: 1.5px;
+  background: var(--orange);
+  opacity: 0.28;
 }
 
-/* capability list — numbered, generously spaced */
-.caps {
-  counter-reset: cap;
-  display: grid;
-  gap: 2.5mm;
+/* Field heading — orange, as in the original ("Material:", "Application:") */
+.field { margin-bottom: 3.6mm; }
+
+.field__k {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 1.2mm;
+  display: flex;
+  align-items: center;
+  gap: 2mm;
 }
 
-.caps > li {
-  counter-increment: cap;
+/* the square bullet carried over from the new cover */
+.field__k::before {
+  content: "";
+  width: 2.2mm;
+  height: 2.2mm;
+  background: var(--orange);
+  flex: none;
+}
+
+.sheet--dark .field__k { color: var(--orange-lt); }
+
+/* numbered list */
+.nums { counter-reset: n; display: grid; gap: 2.2mm; }
+
+.nums > li {
+  counter-increment: n;
   list-style: none;
   display: grid;
-  grid-template-columns: 9mm 1fr;
-  gap: 2mm;
+  grid-template-columns: 8mm 1fr;
+  gap: 1.5mm;
   font-size: 14px;
   line-height: 1.55;
   color: var(--ink-2);
 }
 
-.caps > li::before {
-  content: counter(cap, decimal-leading-zero);
-  font-family: var(--font-geist-mono, ui-monospace, monospace);
-  font-size: 12px;
+.nums > li::before {
+  content: counter(n, decimal-leading-zero);
+  font-family: var(--js-mono);
+  font-size: 11.5px;
   font-weight: 700;
-  color: var(--brand);
-  padding-top: 0.7mm;
+  color: var(--orange);
+  padding-top: 0.8mm;
 }
 
-.sheet--dark .caps > li {
-  color: var(--dark-ink-2);
+.sheet--dark .nums > li { color: var(--black-ink); }
+
+/* square-bullet list, straight off the cover */
+.sqlist { display: grid; gap: 2.2mm; }
+
+.sqlist > li {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 4.6mm 1fr;
+  align-items: start;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-2);
 }
 
-/* stat */
-.stat__v {
-  font-size: 40px;
-  line-height: 1;
-  font-weight: 800;
-  letter-spacing: -0.035em;
+.sqlist > li::before {
+  content: "";
+  width: 2.2mm;
+  height: 2.2mm;
+  margin-top: 1.6mm;
+  background: var(--orange);
 }
 
-.stat__v em {
-  font-style: normal;
-  color: var(--brand);
-}
+.sheet--dark .sqlist > li { color: var(--black-ink); }
 
-.stat__k {
-  margin-top: 2mm;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-}
-
-.sheet--dark .stat__k {
-  color: #7d858e;
-}
-
-/* image frame */
-.shot {
-  position: relative;
-  overflow: hidden;
-  background: var(--paper-3);
-}
-
-.shot img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.shot__cap {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  padding: 12mm 5mm 3.4mm;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.82), transparent);
+/* orange quote banner — the original ran one at the foot of several pages */
+.quote {
+  background: var(--orange);
   color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-/* SVG labels in the technical figures inherit nothing by default and fall
-   back to Helvetica, which shows up as a stray font in the exported PDF. */
-.sheet svg text {
-  font-family: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
-}
-
-/* full-bleed helper inside .pad */
-.bleed {
-  margin-left: calc(-1 * var(--mx));
-  margin-right: calc(-1 * var(--mx));
-}
-
-/* rules */
-.rule {
-  height: 1px;
-  background: var(--rule);
-}
-
-.sheet--dark .rule {
-  background: var(--dark-rule);
-}
-
-.rule--ink {
-  height: 2px;
-  background: var(--ink);
-}
-
-/* pull quote */
-.pull {
-  border-left: 3px solid var(--brand);
-  padding: 1mm 0 1mm 6mm;
-  font-size: 19px;
-  line-height: 1.45;
-  letter-spacing: -0.012em;
-  color: var(--ink);
+  padding: 3.4mm 5mm;
+  font-size: 12.5px;
+  line-height: 1.5;
+  font-style: italic;
   font-weight: 500;
 }
 
-.sheet--dark .pull {
-  color: #fff;
-}
+/* photography */
+.shot { position: relative; overflow: hidden; background: var(--paper-3); }
+.shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* contents row */
-.toc {
-  display: grid;
-  grid-template-columns: 11mm 1fr auto;
-  align-items: baseline;
-  gap: 4mm;
-  padding: 3.6mm 0;
-  border-top: 1px solid var(--rule);
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.toc__no {
-  font-family: var(--font-geist-mono, ui-monospace, monospace);
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--brand);
-}
-
-.toc__pg {
-  font-family: var(--font-geist-mono, ui-monospace, monospace);
-  font-size: 13px;
-  color: var(--ink-3);
-  font-weight: 600;
-}
-
-/* chip */
-.chip {
-  display: inline-block;
-  border: 1px solid var(--rule);
-  border-radius: 999px;
-  padding: 1.9mm 4.2mm;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--ink-2);
-  white-space: nowrap;
-}
-
-.sheet--dark .chip {
-  border-color: var(--dark-rule);
-  color: var(--dark-ink-2);
-}
-
-/* dark page accent glow */
-.glow {
+.shot__cap {
   position: absolute;
-  border-radius: 999px;
-  pointer-events: none;
+  inset: auto 0 0 0;
+  padding: 11mm 4mm 2.8mm;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
+
+.bleed { margin-left: calc(-1 * var(--mx)); margin-right: calc(-1 * var(--mx)); }
+
+.rule { height: 1px; background: var(--rule); }
+.rule--orange { height: 1.5px; background: var(--orange); }
+.sheet--dark .rule { background: var(--black-rule); }
+
+/* stat */
+.stat__v { font-size: 32px; line-height: 1; font-weight: 700; letter-spacing: -0.035em; }
+.stat__v em { font-style: normal; color: var(--orange); }
+
+.stat__k {
+  margin-top: 1.6mm;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.sheet--dark .stat__k { color: #7b838c; }
+
+/* back-cover unit card */
+.unit { border-top: 2px solid var(--orange); padding-top: 3mm; break-inside: avoid; }
+
+.unit__n {
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--orange-lt);
+  line-height: 1.25;
+  margin-bottom: 2.4mm;
+}
+
+.unit__r { display: flex; gap: 2.2mm; font-size: 11.5px; line-height: 1.45; color: var(--black-ink); }
+.unit__r + .unit__r { margin-top: 1.4mm; }
+.unit__i { flex: none; width: 3.4mm; height: 3.4mm; margin-top: 0.4mm; color: var(--orange); }
+
+/* SVG labels in the technical figures inherit nothing by default */
+.sheet svg text { font-family: var(--js-sans); }

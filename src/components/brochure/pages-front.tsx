@@ -8,300 +8,196 @@ import {
   BROCHURE_VISION,
 } from "@/data/brochure";
 
-import { Caps, Masthead, Sheet, Stat } from "./kit";
+import { Field, NumList, Sheet, Stat, Tag } from "./kit";
+
+/** Faint hexagonal texture, the group's own motif, used to stop the black
+ *  areas of the cover reading as flat empty boxes. */
+const HEX_TEXTURE =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 0 L56 16 L56 50 L28 66 L0 50 L0 16 Z' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.07'/%3E%3C/svg%3E\")";
+
+const COVER_PRODUCTS = [
+  "Perforated Sheets",
+  "Laser Cutting",
+  "Expanded Metal",
+  "Turret Punching",
+  "Precision Sheet Leveling",
+  "Custom Components",
+] as const;
 
 /* ══════════════ 01 · Cover ══════════════ */
 
 export function PageCover() {
   return (
     <Sheet dark>
-      <img
-        src="/gallery/perforated-sheet-detail.jpg"
-        alt=""
-        className="absolute inset-0 h-full w-full object-cover"
-        style={{ opacity: 0.5 }}
-      />
       <div
         className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(16,18,21,0.94) 0%, rgba(16,18,21,0.55) 34%, rgba(16,18,21,0.93) 72%, #101215 100%)",
-        }}
-      />
-      <div
-        className="glow"
-        style={{
-          right: "-40mm",
-          top: "22mm",
-          width: "130mm",
-          height: "130mm",
-          background: "radial-gradient(circle, rgba(232,82,26,0.30), transparent 68%)",
-        }}
+        style={{ backgroundImage: HEX_TEXTURE, backgroundSize: "42px 75px" }}
       />
 
-      <div className="relative flex h-full flex-col justify-between px-[var(--mx)] pb-[18mm] pt-[16mm]">
+      {/* hero band — black above and below, photo feathered into it */}
+      <div className="absolute inset-x-0" style={{ top: "44mm", height: "171mm" }}>
+        <img src="/brochure/img/cover-hero.jpg" alt="" className="h-full w-full object-cover" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg,#0b0c0d 0%,rgba(11,12,13,0) 16%,rgba(11,12,13,0) 66%,#0b0c0d 100%)",
+          }}
+        />
+      </div>
+
+      <div className="relative flex h-full flex-col px-[var(--mx)] pb-[13mm] pt-[12mm]">
+        {/* masthead */}
         <div className="flex items-start justify-between">
-          <img src="/logo/logo-horizontal-dark.svg" alt="Jai Shree Group®" className="h-[19mm] w-auto" />
-          <div className="text-right">
-            <div className="label" style={{ color: "#fff" }}>
-              Company Profile
+          <img src="/logo/logo-stacked-dark.svg" alt="Jai Shree Group®" className="h-[30mm] w-auto" />
+
+          <div className="pt-[1mm] text-right">
+            <div
+              style={{
+                fontSize: "88px",
+                fontWeight: 800,
+                lineHeight: 0.84,
+                letterSpacing: "-0.045em",
+                background: "linear-gradient(172deg,#ffcaa3 0%,#ff8b52 22%,#ee5c22 52%,#c04310 78%,#8f2f06 100%)",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+                // stacked shadows read as an extruded face, as on the Canva cover
+                textShadow:
+                  "1px 1px 0 #a8380a, 2px 2px 0 #973108, 3px 3px 0 #862b06, 4px 5px 10px rgba(0,0,0,0.55)",
+              }}
+            >
+              50
             </div>
-            <div className="mono mt-[1.6mm]" style={{ color: "#7d858e" }}>
-              Edition 2026
+            <div className="label label--orange mt-[1.6mm]">Over Years of Experience</div>
+            <div
+              className="mt-[2.4mm]"
+              style={{
+                fontSize: "11px",
+                fontWeight: 600,
+                letterSpacing: "0.12em",
+                color: "#e4e7ea",
+                textTransform: "uppercase",
+              }}
+            >
+              Est. 1970 — ISO 9001:2015 Certified
             </div>
           </div>
         </div>
 
-        <div>
-          <div className="label label--brand mb-[6mm]">
-            Est. 1970 — ISO 9001:2015 Certified
-          </div>
+        <div className="rule--orange mt-[5mm]" />
+
+        {/* headline + product list sit over the foot of the photo */}
+        <div className="mt-auto">
           <h1 className="display" style={{ color: "#fff" }}>
-            Precision
+            Where every solution
             <br />
-            perforated
-            <br />
-            metal.
+            meets precision
           </h1>
-          <div
-            className="my-[8mm]"
-            style={{ height: "3px", width: "38mm", background: "var(--brand)" }}
-          />
-          <p className="lead" style={{ maxWidth: "128mm", color: "#c8ced5" }}>
-            Perforated sheets, laser cutting, expanded metal and custom components —
-            engineered to specification and manufactured across six units in Pune and
-            Mumbai for over fifty years.
-          </p>
-        </div>
 
-        <div className="flex items-end justify-between">
-          <div className="flex gap-[14mm]">
-            {[
-              ["50+", "Years"],
-              ["06", "Units"],
-              ["02", "Cities"],
-            ].map(([v, k]) => (
-              <div key={k}>
-                <div
-                  className="mono"
-                  style={{ fontSize: "26px", fontWeight: 700, color: "#fff", letterSpacing: "-0.02em" }}
-                >
-                  {v}
-                </div>
-                <div className="label mt-[1mm]" style={{ color: "#7d858e" }}>
-                  {k}
-                </div>
+          <div className="mt-[8mm] grid grid-cols-2 gap-x-[10mm] gap-y-[3.4mm]">
+            {COVER_PRODUCTS.map((p) => (
+              <div key={p} className="border-b border-[var(--orange)] pb-[2.4mm]">
+                <span className="flex items-center gap-[3mm]">
+                  <span
+                    className="flex-none"
+                    style={{ width: "2.6mm", height: "2.6mm", background: "var(--orange)" }}
+                  />
+                  <span style={{ fontSize: "16px", fontWeight: 500, color: "#fff" }}>{p}</span>
+                </span>
               </div>
             ))}
           </div>
-          <span className="mono" style={{ color: "#6e767f" }}>
-            jaishreegroup.com
-          </span>
+
+          <div className="rule--orange mt-[9mm]" />
         </div>
       </div>
     </Sheet>
   );
 }
 
-/* ══════════════ 02 · Contents ══════════════ */
+/* ══════════════ 02 · Introduction ══════════════ */
 
-const TOC = [
-  ["01", "The Group", "03"],
-  ["02", "Fifty Years of Growth", "04"],
-  ["03", "Vision, Mission & Edge", "05"],
-  ["04", "Our Capabilities", "06"],
-  ["05", "Perforated Sheets", "07"],
-  ["06", "Perforation Patterns", "08"],
-  ["07", "Laser Cutting", "09"],
-  ["08", "Expanded Metal", "10"],
-  ["09", "Turret Punching", "12"],
-  ["10", "Precision Sheet Leveling", "13"],
-  ["11", "Custom Components", "14"],
-  ["12", "Materials & Industries", "15"],
-  ["13", "Our Network", "16"],
-] as const;
-
-export function PageContents() {
+export function PageIntro() {
   return (
-    <Sheet foot="Contents" page={2}>
+    <Sheet page={2} foot="Introduction">
       <div className="pad">
-        <div className="masthead">
-          <div className="masthead__top">
-            <span className="secno">—</span>
-            <span className="label">Company Profile · Edition 2026</span>
-          </div>
-          <h2 className="h1">Contents</h2>
-        </div>
+        <Tag>Introduction</Tag>
 
-        <div className="grid grid-cols-2 gap-x-[12mm]">
-          <div>
-            {TOC.slice(0, 7).map(([no, title, pg]) => (
-              <div key={no} className="toc">
-                <span className="toc__no">{no}</span>
-                <span>{title}</span>
-                <span className="toc__pg">{pg}</span>
-              </div>
-            ))}
-          </div>
-          <div>
-            {TOC.slice(7).map(([no, title, pg]) => (
-              <div key={no} className="toc">
-                <span className="toc__no">{no}</span>
-                <span>{title}</span>
-                <span className="toc__pg">{pg}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-[10mm] grid grid-cols-4 gap-[8mm] border-t-2 border-[var(--ink)] pt-[7mm]">
-          <Stat value="50" accent="+" label="Years of experience" />
-          <Stat value="06" label="Manufacturing units" />
-          <Stat value="12" accent="mm" label="Max punch thickness" />
-          <Stat value="14" accent="mm" label="Max laser thickness" />
-        </div>
-
-        <figure className="shot bleed mt-auto" style={{ height: "72mm" }}>
-          <img src="/brochure/img/factory.jpg" alt="Jai Shree Group plant at Talawade, Pune" />
-          <figcaption className="shot__cap">Talawade, Pune — Group manufacturing facility</figcaption>
-        </figure>
-      </div>
-    </Sheet>
-  );
-}
-
-/* ══════════════ 03 · The Group ══════════════ */
-
-export function PageGroup() {
-  return (
-    <Sheet foot="The Group" page={3}>
-      <div className="pad">
-        <Masthead no="01" kicker="Introduction" title="The Group" />
-
-        <p className="lead mb-[7mm]" style={{ maxWidth: "150mm" }}>
-          {BROCHURE_INTRO[0]}
-        </p>
-
-        <div className="grid grid-cols-2 gap-x-[11mm] gap-y-[4mm]">
-          {BROCHURE_INTRO.slice(1).map((p) => (
-            <p key={p.slice(0, 20)} className="body">
+        <div className="grid grid-cols-2 gap-x-[9mm] gap-y-[3.4mm]">
+          {BROCHURE_INTRO.map((p) => (
+            <p key={p.slice(0, 22)} className="body">
               {p}
             </p>
           ))}
         </div>
 
-        <div className="mt-[8mm] rule" />
-
-        <div className="mt-[7mm] grid grid-cols-[1fr_62mm] items-start gap-[11mm]">
-          <p className="pull">
-            Our key goal is to reduce rejection — and our rejection percentage is
-            negligible, because our operators and supervisors are highly trained.
-          </p>
-          <div>
-            <div className="label mb-[3mm]">Certified to</div>
-            <div className="h3">ISO 9001:2015</div>
-            <p className="small mt-[2mm]">
-              Quality management across every plant, audited and maintained group-wide.
-            </p>
-          </div>
+        <div className="mt-[6mm] grid grid-cols-4 gap-[6mm] border-t border-[var(--rule)] pt-[5mm]">
+          <Stat value="50" accent="+" label="Years of experience" />
+          <Stat value="06" label="Manufacturing units" />
+          <Stat value="02" label="Cities — Pune & Mumbai" />
+          <Stat value="ISO" accent=" 9001" label="2015 certified" />
         </div>
 
-        <figure className="shot bleed mt-auto" style={{ height: "78mm" }}>
-          <img src="/brochure/img/perforated-collage.jpg" alt="Perforated sheets in a range of hole patterns" />
-          <figcaption className="shot__cap">Standard and custom perforation patterns</figcaption>
+        <div className="mt-[6mm] grid grid-cols-2 gap-[9mm]">
+          <Field k="Our Vision">{BROCHURE_VISION}</Field>
+          <Field k="Our Mission">{BROCHURE_MISSION}</Field>
+        </div>
+
+        <figure className="shot bleed mt-auto" style={{ height: "62mm" }}>
+          <img src="/brochure/img/factory.jpg" alt="Jai Shree Group plant at Talawade, Pune" />
+          <figcaption className="shot__cap">Talawade, Pune — group manufacturing facility</figcaption>
         </figure>
       </div>
     </Sheet>
   );
 }
 
-/* ══════════════ 04 · Fifty Years ══════════════ */
+/* ══════════════ 03 · History, Vision, Mission, Edge ══════════════ */
 
 export function PageHistory() {
   return (
-    <Sheet foot="Fifty Years of Growth" page={4}>
+    <Sheet page={3} foot="History of the Group">
       <div className="pad">
-        <Masthead no="02" kicker="History" title="Fifty years of growth" />
+        <Tag>History of the Group</Tag>
 
         <div className="grid gap-0">
-          {BROCHURE_HISTORY.map((item) => (
+          {BROCHURE_HISTORY.map((h) => (
             <div
-              key={item.year}
-              className="grid grid-cols-[26mm_1fr] gap-[8mm] border-t border-[var(--rule)] py-[4.2mm]"
+              key={h.year}
+              className="grid grid-cols-[20mm_1fr] gap-[6mm] border-b border-[var(--rule)] py-[2.6mm]"
             >
-              <div
+              <span
                 className="mono"
-                style={{ fontSize: "22px", fontWeight: 700, color: "var(--brand)", letterSpacing: "-0.02em" }}
+                style={{ fontSize: "17px", fontWeight: 700, color: "var(--orange)", letterSpacing: "-0.02em" }}
               >
-                {item.year}
-              </div>
-              <p className="body" style={{ marginTop: "0.6mm" }}>
-                {item.text}
+                {h.year}
+              </span>
+              <p className="body" style={{ fontSize: "13.5px" }}>
+                {h.text}
               </p>
             </div>
           ))}
         </div>
 
-        <div className="mt-[8mm] border-t-2 border-[var(--ink)] pt-[6mm]">
-          <p className="body" style={{ columnCount: 2, columnGap: "11mm" }}>
-            {BROCHURE_HISTORY_NOTE}
-          </p>
-        </div>
-      </div>
-    </Sheet>
-  );
-}
+        <p className="body mt-[4mm]" style={{ fontSize: "13.5px" }}>
+          {BROCHURE_HISTORY_NOTE}
+        </p>
 
-/* ══════════════ 05 · Vision, Mission & Edge ══════════════ */
-
-export function PagePrinciples() {
-  return (
-    <Sheet dark foot="Vision, Mission & Edge" page={5}>
-      <div
-        className="glow"
-        style={{
-          left: "-30mm",
-          top: "-30mm",
-          width: "120mm",
-          height: "120mm",
-          background: "radial-gradient(circle, rgba(232,82,26,0.22), transparent 68%)",
-        }}
-      />
-      <div className="pad relative">
-        <Masthead no="03" kicker="What drives us" title="Vision, mission & edge" />
-
-        <div className="grid grid-cols-2 gap-[11mm]">
-          <div>
-            <div className="label label--brand mb-[3.4mm]">Our Vision</div>
-            <p className="body" style={{ fontSize: "15px" }}>
-              {BROCHURE_VISION}
-            </p>
-          </div>
-          <div>
-            <div className="label label--brand mb-[3.4mm]">Our Mission</div>
-            <p className="body" style={{ fontSize: "15px" }}>
-              {BROCHURE_MISSION}
-            </p>
+        <div className="mt-[5mm]">
+          <div className="field__k mb-[2.4mm]">Edge on Others</div>
+          <div className="grid grid-cols-2 gap-x-[8mm]">
+            <NumList items={BROCHURE_EDGE.slice(0, 4)} />
+            <ol className="nums" style={{ counterReset: "n 4" }}>
+              {BROCHURE_EDGE.slice(4).map((t) => (
+                <li key={t}>
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
 
-        <div className="mt-[9mm] rule" />
-
-        <div className="mt-[7mm]">
-          <div className="label mb-[5mm]" style={{ color: "#fff" }}>
-            Our Edge on Others
-          </div>
-          <div className="grid grid-cols-2 gap-x-[11mm]">
-            <Caps items={BROCHURE_EDGE.slice(0, 4)} />
-            <Caps items={BROCHURE_EDGE.slice(4)} start={4} />
-          </div>
-        </div>
-
-        <div className="mt-auto grid grid-cols-3 gap-[8mm] border-t border-[var(--dark-rule)] pt-[7mm]">
-          <Stat value="100" accent="%" label="Privately owned, zero debt" />
-          <Stat value="02" label="Cities — Pune & Mumbai" />
-          <Stat value="All" label="States of India served" />
-        </div>
       </div>
     </Sheet>
   );

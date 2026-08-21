@@ -1,18 +1,12 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 
-import { PageCapability, PageNetwork } from "@/components/brochure/pages-back";
+import { PageBack } from "@/components/brochure/pages-back";
+import { PageCover, PageHistory, PageIntro } from "@/components/brochure/pages-front";
 import {
-  PageContents,
-  PageCover,
-  PageGroup,
-  PageHistory,
-  PagePrinciples,
-} from "@/components/brochure/pages-front";
-import {
-  PageCapabilities,
   PageCustom,
   PageExpanded,
-  PageExpandedTech,
+  PageExpandedCont,
   PageLaser,
   PageLeveling,
   PagePatterns,
@@ -24,6 +18,35 @@ import { PrintButton } from "./PrintButton";
 
 import "./brochure.css";
 
+/**
+ * Inter and Roboto Mono, as *static* weight files.
+ *
+ * These deliberately do not come from next/font/google: that serves the
+ * variable version of a family, and Chrome cannot embed a variable font in a
+ * PDF — it writes Type 3 glyph outlines, which arrive in Canva as artwork
+ * rather than text you can retype. Static instances embed as real TrueType.
+ */
+const sans = localFont({
+  src: [
+    { path: "../../../public/fonts/canva/inter-400.woff2", weight: "400", style: "normal" },
+    { path: "../../../public/fonts/canva/inter-500.woff2", weight: "500", style: "normal" },
+    { path: "../../../public/fonts/canva/inter-600.woff2", weight: "600", style: "normal" },
+    { path: "../../../public/fonts/canva/inter-700.woff2", weight: "700", style: "normal" },
+    { path: "../../../public/fonts/canva/inter-800.woff2", weight: "800", style: "normal" },
+  ],
+  variable: "--js-sans-face",
+  display: "block",
+});
+
+const mono = localFont({
+  src: [
+    { path: "../../../public/fonts/canva/robotomono-400.woff2", weight: "400", style: "normal" },
+    { path: "../../../public/fonts/canva/robotomono-700.woff2", weight: "700", style: "normal" },
+  ],
+  variable: "--js-mono-face",
+  display: "block",
+});
+
 export const metadata: Metadata = {
   title: "Company Profile | Jai Shree Group",
   description:
@@ -31,26 +54,28 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+/**
+ * 12 pages, following the 2022 printed brochure page for page. The cover and
+ * back cover are the new design; wire mesh, welded mesh and knitted mesh are
+ * out, and turret punching, sheet leveling and custom components take their
+ * place so the product set matches the website.
+ */
 export default function BrochurePage() {
   return (
-    <div className="bx">
+    <div className={`bx ${sans.variable} ${mono.variable}`}>
       <PrintButton />
       <PageCover />
-      <PageContents />
-      <PageGroup />
+      <PageIntro />
       <PageHistory />
-      <PagePrinciples />
-      <PageCapabilities />
       <PagePerforated />
       <PagePatterns />
       <PageLaser />
       <PageExpanded />
-      <PageExpandedTech />
+      <PageExpandedCont />
       <PageTurret />
       <PageLeveling />
       <PageCustom />
-      <PageCapability />
-      <PageNetwork />
+      <PageBack />
     </div>
   );
 }

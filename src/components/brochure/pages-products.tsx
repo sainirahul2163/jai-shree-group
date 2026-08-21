@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import type { ReactNode } from "react";
-
 import {
+  CONSULTANCY_QUOTE,
   CUSTOM,
   EXPANDED,
   LASER,
@@ -13,186 +12,116 @@ import {
 } from "@/data/brochure";
 
 import { ExpandedTerminologyDiagram, FormulaDiagram, PatternSwatch } from "./graphics";
-import { Caps, Masthead, Sheet, Spec } from "./kit";
+import { Field, NumList, Quote, Sheet, SqList, Tag } from "./kit";
 
-/* ══════════════ 06 · Capabilities divider ══════════════ */
-
-const CAPABILITIES = [
-  ["01", "Perforated Sheets", "CNC, turret and coil-to-coil perforation up to 12mm plate."],
-  ["02", "Laser Cutting", "Fiber laser cutting to any drawing, up to 14mm plate."],
-  ["03", "Expanded Metal", "Diamond, square, hexagonal and grating patterns."],
-  ["04", "Turret Punching", "Any hole shape, combined with laser for cost saving."],
-  ["05", "Precision Sheet Leveling", "Bow and warpage control to tight flatness tolerances."],
-  ["06", "Custom Components", "Special dies, tools and machinery built to requirement."],
-] as const;
-
-export function PageCapabilities() {
-  return (
-    <Sheet dark foot="Our Capabilities" page={6}>
-      <div
-        className="glow"
-        style={{
-          right: "-36mm",
-          bottom: "-24mm",
-          width: "125mm",
-          height: "125mm",
-          background: "radial-gradient(circle, rgba(232,82,26,0.24), transparent 68%)",
-        }}
-      />
-      <div className="pad relative">
-        <Masthead no="04" kicker="What we manufacture" title="Six capabilities, one group" />
-
-        <p className="lead mb-[9mm]" style={{ maxWidth: "142mm" }}>
-          Every process runs in-house across our own plants — so tooling, perforation,
-          cutting and finishing stay under one quality system, on one schedule.
-        </p>
-
-        <div className="grid gap-0">
-          {CAPABILITIES.map(([no, name, desc]) => (
-            <div
-              key={no}
-              className="grid grid-cols-[14mm_1fr_78mm] items-baseline gap-[6mm] border-t border-[var(--dark-rule)] py-[5.4mm]"
-            >
-              <span className="secno">{no}</span>
-              <span className="h3" style={{ color: "#fff" }}>
-                {name}
-              </span>
-              <span className="body" style={{ fontSize: "13px" }}>
-                {desc}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-auto grid grid-cols-3 gap-[3mm] pb-[2mm]">
-          {["/brochure/img/perforated-collage.jpg", "/brochure/img/laser.jpg", "/brochure/img/em-brass.jpg"].map(
-            (src) => (
-              <figure key={src} className="shot" style={{ height: "44mm" }}>
-                <img src={src} alt="" />
-              </figure>
-            ),
-          )}
-        </div>
-      </div>
-    </Sheet>
-  );
-}
-
-/* ══════════════ shared product template ══════════════ */
-
+/**
+ * Product page template, following the 2022 brochure: photograph across the
+ * top, orange section banner, then Material / Categories / Characteristics /
+ * Application, and the numbered "Our Strength" list.
+ */
 function ProductPage({
-  no,
-  title,
-  kicker,
   page,
+  title,
   image,
   caption,
-  lead,
+  imageHeight,
   material,
-  process,
-  processLabel = "Process",
+  categories,
+  categoriesLabel = "Categories",
+  characteristics,
+  characteristicsLabel,
   application,
-  capabilities,
-  imageHeight = "80mm",
-  children,
+  strengths,
+  quote = false,
 }: {
-  no: string;
-  title: string;
-  kicker: string;
   page: number;
+  title: string;
   image: string;
   caption: string;
-  lead: string;
+  imageHeight: string;
   material: string;
-  process: string;
-  processLabel?: string;
+  categories: string;
+  categoriesLabel?: string;
+  characteristics: string;
+  characteristicsLabel: string;
   application: string;
-  capabilities: readonly string[];
-  imageHeight?: string;
-  children?: ReactNode;
+  strengths: readonly string[];
+  quote?: boolean;
 }) {
   return (
-    <Sheet foot={title} page={page}>
+    <Sheet page={page} foot={title}>
       <figure className="shot" style={{ height: imageHeight }}>
         <img src={image} alt={caption} />
         <figcaption className="shot__cap">{caption}</figcaption>
       </figure>
 
       <div className="pad pad--tight">
-        <Masthead no={no} kicker={kicker} title={title} />
+        <Tag>{title}</Tag>
+        <Field k="Material">{material}</Field>
+        <Field k={categoriesLabel}>{categories}</Field>
+        <Field k={characteristicsLabel}>{characteristics}</Field>
+        <Field k="Application">{application}</Field>
 
-        <p className="lead mb-[6mm]" style={{ maxWidth: "155mm" }}>
-          {lead}
-        </p>
+        <div className="field__k mb-[2.4mm]">Our Strength</div>
+        <NumList items={strengths} />
 
-        <dl className="mb-[7mm]">
-          <Spec k="Material">{material}</Spec>
-          <Spec k={processLabel}>{process}</Spec>
-          <Spec k="Application">{application}</Spec>
-        </dl>
-
-        <div className="label mb-[4mm]">Our Strength</div>
-        <Caps items={capabilities} />
-
-        {children}
+        {quote && (
+          <div className="mt-auto pb-[4mm]">
+            <Quote>{CONSULTANCY_QUOTE}</Quote>
+          </div>
+        )}
       </div>
     </Sheet>
   );
 }
 
-/* ══════════════ 07 · Perforated Sheets ══════════════ */
+/* ══════════════ 04 · Perforated Sheet ══════════════ */
 
 export function PagePerforated() {
   return (
     <ProductPage
-      no="05"
-      kicker="Core capability"
-      title="Perforated Sheets"
-      page={7}
-      image="/gallery/perforated-round-blank.jpg"
-      caption="CNC perforated blank — round hole, 60° staggered"
-      lead={PERFORATED.characteristics}
+      page={4}
+      title="Perforated Sheet"
+      image="/brochure/img/perforated-collage.jpg"
+      caption="Perforated sheets — round, square, hexagonal and slotted"
+      imageHeight="62mm"
       material={PERFORATED.material}
-      process={PERFORATED.categories}
-      processLabel="Categories"
+      categories={PERFORATED.categories}
+      characteristics={PERFORATED.characteristics}
+      characteristicsLabel="The Characteristics of Perforated Sheet"
       application={PERFORATED.application}
-      capabilities={PERFORATED.strengths}
-      imageHeight="56mm"
+      strengths={PERFORATED.strengths}
     />
   );
 }
 
-/* ══════════════ 08 · Patterns & open area ══════════════ */
+/* ══════════════ 05 · Patterns & open area ══════════════ */
 
 export function PagePatterns() {
   return (
-    <Sheet foot="Perforation Patterns" page={8}>
+    <Sheet page={5} foot="Perforation Patterns">
       <div className="pad">
-        <Masthead no="06" kicker="Technical reference" title="Patterns & open area" />
+        <Tag>Perforation Patterns</Tag>
 
-        <div className="grid grid-cols-5 gap-x-[5mm] gap-y-[5mm]">
+        <div className="grid grid-cols-5 gap-x-[4mm] gap-y-[4mm]">
           {PATTERNS.map((p) => (
             <PatternSwatch key={p.id} id={p.id} label={p.label} />
           ))}
         </div>
 
-        <div className="mt-[7mm] border-t-2 border-[var(--ink)] pt-[5mm]">
-          <h3 className="h2 mb-[2mm]">Calculating open area</h3>
-          <p className="body mb-[5mm]" style={{ maxWidth: "168mm" }}>
-            The proportion of the sheet removed by perforation — use the formula
-            matching your hole shape and pitch.
-          </p>
+        <div className="mt-[7mm]">
+          <Tag>Formula for Calculation of Open Area</Tag>
 
-          <div className="grid grid-cols-2 gap-x-[9mm] gap-y-[4mm]">
+          <div className="grid grid-cols-2 gap-x-[8mm] gap-y-[4mm]">
             {OPEN_AREA_FORMULAS.map((f) => (
-              <div key={f.label} className="border-t border-[var(--rule)] pt-[3.4mm]">
-                <div className="mb-[2.6mm] flex items-start justify-between gap-[4mm]">
-                  <div className="h3" style={{ fontSize: "14px" }}>
+              <div key={f.label} className="border-t border-[var(--rule)] pt-[3mm]">
+                <div className="mb-[2.4mm] flex items-start justify-between gap-[4mm]">
+                  <div className="h3" style={{ fontSize: "13px" }}>
                     {f.label}
                   </div>
                   <FormulaDiagram kind={f.diagram} />
                 </div>
-                <div className="flex items-center gap-[2.6mm]" style={{ whiteSpace: "nowrap" }}>
+                <div className="flex items-center gap-[2.4mm]" style={{ whiteSpace: "nowrap" }}>
                   <span className="small" style={{ fontWeight: 600, color: "var(--ink-2)" }}>
                     % Open Area
                   </span>
@@ -202,17 +131,17 @@ export function PagePatterns() {
                   <span className="inline-grid justify-items-center">
                     <span
                       className="mono"
-                      style={{ fontSize: "12px", fontWeight: 700, padding: "0 2.4mm 0.6mm" }}
+                      style={{ fontSize: "11.5px", fontWeight: 700, padding: "0 2.4mm 0.5mm" }}
                     >
                       {f.numerator}
                     </span>
                     <span
                       className="mono"
                       style={{
-                        fontSize: "12px",
+                        fontSize: "11.5px",
                         fontWeight: 700,
-                        padding: "0.9mm 2.4mm 0",
-                        borderTop: "1.6px solid var(--brand)",
+                        padding: "0.8mm 2.4mm 0",
+                        borderTop: "1.6px solid var(--orange)",
                         color: "var(--ink-2)",
                         width: "100%",
                         textAlign: "center",
@@ -226,197 +155,213 @@ export function PagePatterns() {
             ))}
           </div>
         </div>
+
+        <div className="mt-auto pb-[4mm]">
+          <Quote>{CONSULTANCY_QUOTE}</Quote>
+        </div>
       </div>
     </Sheet>
   );
 }
 
-/* ══════════════ 09 · Laser Cutting ══════════════ */
+/* ══════════════ 06 · Laser Cutting ══════════════ */
 
 export function PageLaser() {
   return (
     <ProductPage
-      no="07"
-      kicker="Fiber laser"
+      page={6}
       title="Laser Cutting"
-      page={9}
       image="/brochure/img/laser.jpg"
       caption="Fiber laser cutting — Talawade, Pune"
-      lead={LASER.characteristics}
+      imageHeight="96mm"
       material={LASER.material}
-      process={LASER.categories}
-      processLabel="Categories"
+      categories={LASER.categories}
+      characteristics={LASER.characteristics}
+      characteristicsLabel="The Characteristics of Laser Cutting"
       application={LASER.application}
-      capabilities={LASER.strengths}
-      imageHeight="88mm"
+      strengths={LASER.strengths}
     />
   );
 }
 
-/* ══════════════ 10 · Expanded Metal ══════════════ */
+/* ══════════════ 07 · Expanded Metal ══════════════ */
 
 export function PageExpanded() {
   return (
-    <Sheet foot="Expanded Metal" page={10}>
-      <figure className="shot" style={{ height: "70mm" }}>
-        <img src="/brochure/img/em-brass.jpg" alt="Brass expanded metal sheets" />
-        <figcaption className="shot__cap">Expanded metal — brass, diamond pattern</figcaption>
-      </figure>
+    <Sheet page={7} foot="Expanded Metal">
+      <div className="pad">
+        <Tag>Expanded Metal</Tag>
 
-      <div className="pad pad--tight">
-        <Masthead no="08" kicker="Single sheet, slit and stretched" title="Expanded Metal" />
-
-        <p className="lead mb-[6mm]" style={{ maxWidth: "155mm" }}>
-          {EXPANDED.benefits}
-        </p>
-
-        <dl className="mb-[6mm]">
-          <Spec k="Material">{EXPANDED.material}</Spec>
-          <Spec k="Shapes">{EXPANDED.shapes}</Spec>
-          <Spec k="Application">{EXPANDED.application}</Spec>
-        </dl>
-
-        <div className="grid grid-cols-2 gap-[9mm]">
+        <div className="grid grid-cols-2 gap-x-[9mm]">
           <div>
-            <div className="label mb-[2.6mm]" style={{ color: "var(--brand)" }}>
-              Minimum Waste
-            </div>
-            <p className="body">{EXPANDED.minimumWaste}</p>
+            <Field k="Material">{EXPANDED.material}</Field>
+            <Field k="Expanding Shapes / Design">{EXPANDED.shapes}</Field>
           </div>
-          <div>
-            <div className="label mb-[2.6mm]" style={{ color: "var(--brand)" }}>
-              Cost Saving
-            </div>
-            <p className="body">{EXPANDED.costSaving}</p>
-          </div>
+          <Field k="Application">{EXPANDED.application}</Field>
         </div>
 
-        <div className="mt-auto grid grid-cols-4 gap-[2.6mm] pb-[3mm]">
-          {[1, 5, 8, 12].map((i) => (
-            <figure key={i} className="shot" style={{ height: "26mm" }}>
-              <img src={`/brochure/img/expanded-${i}.jpg`} alt={`Expanded metal pattern ${i}`} />
+        <Field k="Expanded Metal Benefits">{EXPANDED.benefits}</Field>
+
+        <div className="grid grid-cols-2 gap-x-[9mm]">
+          <p className="body">
+            <strong style={{ color: "var(--orange)" }}>Minimum Waste </strong>
+            {EXPANDED.minimumWaste}
+          </p>
+          <p className="body">
+            <strong style={{ color: "var(--orange)" }}>Cost Saving </strong>
+            {EXPANDED.costSaving}
+          </p>
+        </div>
+
+        <div
+          className="my-[4mm] px-[5mm] py-[2.4mm] text-center"
+          style={{
+            background: "var(--orange)",
+            color: "#fff",
+            fontSize: "12.5px",
+            fontWeight: 800,
+            letterSpacing: "0.05em",
+            textTransform: "uppercase",
+          }}
+        >
+          Special designs and sizes are also available at customer&rsquo;s request
+        </div>
+
+        <div className="grid flex-1 grid-cols-4 grid-rows-3 gap-[2.4mm]" style={{ minHeight: 0 }}>
+          {[1, 2, 3, 4, 5, 6, 8, 9, 11, 12, 15, 16].map((i) => (
+            <figure key={i} className="shot">
+              <img src={`/brochure/img/expanded-${i}.jpg`} alt={`Expanded metal design ${i}`} />
             </figure>
           ))}
         </div>
+        <div className="h-[4mm]" />
       </div>
     </Sheet>
   );
 }
 
-/* ══════════════ 11 · Expanded Metal — technical ══════════════ */
+/* ══════════════ 08 · Expanded Metal continued ══════════════ */
 
-export function PageExpandedTech() {
+export function PageExpandedCont() {
   return (
-    <Sheet foot="Expanded Metal" page={11}>
+    <Sheet page={8} foot="Expanded Metal">
       <div className="pad">
-        <div className="masthead">
-          <div className="masthead__top">
-            <span className="secno">08</span>
-            <span className="label">Continued</span>
-          </div>
-          <h2 className="h1">Terminology & range</h2>
+        <div className="grid h-[54mm] grid-cols-3 gap-[3mm]">
+          <figure className="shot">
+            <img src="/brochure/img/em-brass.jpg" alt="Brass expanded metal" />
+          </figure>
+          <figure className="shot">
+            <img src="/brochure/img/em-red-flat.jpg" alt="Powder coated expanded metal" />
+          </figure>
+          <figure className="shot">
+            <img src="/brochure/img/em-black.jpg" alt="Diamond expanded metal detail" />
+          </figure>
         </div>
 
-        <div className="grid grid-cols-[1fr_74mm] items-start gap-[10mm]">
-          <dl>
-            {EXPANDED.terminology.map(([term, def]) => (
-              <Spec key={term} k={term}>
-                {def}
-              </Spec>
-            ))}
-          </dl>
+        <div className="mt-[6mm] grid grid-cols-2 gap-x-[9mm]">
           <div>
-            <ExpandedTerminologyDiagram />
-            <div className="mt-[5mm]">
-              <div className="label mb-[3mm]">Technical Notes</div>
-              <Caps items={EXPANDED.technicalNotes} />
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-[9mm] border-t-2 border-[var(--ink)] pt-[6mm]">
-          <h3 className="h2 mb-[5mm]">Why specifiers choose it</h3>
-          <div className="grid grid-cols-3 gap-[8mm]">
-            <p className="body">
-              <strong style={{ color: "var(--brand)" }}>Aesthetics </strong>
+            <p className="body mb-[3mm]">
+              <strong style={{ color: "var(--orange)" }}>Aesthetics </strong>
               {EXPANDED.aesthetics}
             </p>
-            <p className="body">
-              <strong style={{ color: "var(--brand)" }}>Strength to weight ratio </strong>
+            <p className="body mb-[3mm]">
+              <strong style={{ color: "var(--orange)" }}>Strength to weight ratio </strong>
               {EXPANDED.strengthToWeight}
             </p>
             <p className="body">
-              <strong style={{ color: "var(--brand)" }}>Anti-skid. </strong>
+              <strong style={{ color: "var(--orange)" }}>Anti-skid. </strong>
               {EXPANDED.antiSkid}
             </p>
           </div>
+
+          <div>
+            <div className="field__k mb-[2.4mm]">Expanded Metal Terminology</div>
+            <dl className="grid gap-[1.4mm]">
+              {EXPANDED.terminology.map(([term, def]) => (
+                <div key={term} className="grid grid-cols-[30mm_1fr] gap-[3mm]">
+                  <dt style={{ fontSize: "12px", fontWeight: 700, color: "var(--ink)" }}>{term}</dt>
+                  <dd style={{ fontSize: "12.5px", lineHeight: 1.45, color: "var(--ink-2)" }}>{def}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
 
+        <div className="mt-[6mm] grid grid-cols-[1fr_74mm] items-start gap-[9mm]">
+          <div>
+            <div className="field__k mb-[2.4mm]">Technical Notes</div>
+            <SqList items={EXPANDED.technicalNotes} />
+          </div>
+          <ExpandedTerminologyDiagram />
+        </div>
+
+        <div className="mt-auto pb-[4mm]">
+          <Quote>{CONSULTANCY_QUOTE}</Quote>
+        </div>
       </div>
     </Sheet>
   );
 }
 
-/* ══════════════ 12 · Turret Punching ══════════════ */
+/* ══════════════ 09 · Turret Punching ══════════════ */
 
 export function PageTurret() {
   return (
     <ProductPage
-      no="09"
-      kicker="Any hole shape"
+      page={9}
       title="Turret Punching"
-      page={12}
-      image="/gallery/perforated-fine-blank.jpg"
-      caption="Micro-perforated screen — CNC turret punched"
-      lead={TURRET.characteristics}
-      material={TURRET.material}
-      process={TURRET.categories}
-      processLabel="Categories"
-      application={TURRET.application}
-      capabilities={TURRET.strengths}
+      image="/gallery/perforated-round-blank.jpg"
+      caption="CNC turret punched blank — round hole, 60° staggered"
       imageHeight="86mm"
+      material={TURRET.material}
+      categories={TURRET.categories}
+      characteristics={TURRET.characteristics}
+      characteristicsLabel="The Characteristics of Turret Punching"
+      application={TURRET.application}
+      strengths={TURRET.strengths}
     />
   );
 }
 
-/* ══════════════ 13 · Precision Sheet Leveling ══════════════ */
+/* ══════════════ 10 · Precision Sheet Leveling ══════════════ */
 
 export function PageLeveling() {
   return (
     <ProductPage
-      no="10"
-      kicker="Flatness control"
+      page={10}
       title="Precision Sheet Leveling"
-      page={13}
       image="/gallery/perforated-coil-stock.jpg"
       caption="Coil-to-coil stock — leveled in-house"
-      lead={LEVELING.characteristics}
-      material={LEVELING.material}
-      process={LEVELING.categories}
-      application={LEVELING.application}
-      capabilities={LEVELING.strengths}
       imageHeight="86mm"
+      material={LEVELING.material}
+      categories={LEVELING.categories}
+      categoriesLabel="Process"
+      characteristics={LEVELING.characteristics}
+      characteristicsLabel="The Characteristics of Sheet Leveling"
+      application={LEVELING.application}
+      strengths={LEVELING.strengths}
     />
   );
 }
 
-/* ══════════════ 14 · Custom Components ══════════════ */
+/* ══════════════ 11 · Custom Components ══════════════ */
 
 export function PageCustom() {
   return (
     <ProductPage
-      no="11"
-      kicker="Built to your drawing"
+      page={11}
       title="Custom Components"
-      page={14}
-      image="/gallery/perforated-sheet-detail.jpg"
-      caption="Custom perforation — round hole, staggered pitch"
-      lead={CUSTOM.characteristics}
+      image="/gallery/perforated-fine-blank.jpg"
+      caption="Micro-perforated custom screen"
+      imageHeight="76mm"
       material={CUSTOM.material}
-      process={CUSTOM.categories}
+      categories={CUSTOM.categories}
+      categoriesLabel="Process"
+      characteristics={CUSTOM.characteristics}
+      characteristicsLabel="Special Jobs We Undertake"
       application={CUSTOM.application}
-      capabilities={CUSTOM.strengths}
-      imageHeight="72mm"
+      strengths={CUSTOM.strengths}
+      quote
     />
   );
 }
