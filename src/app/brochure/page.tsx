@@ -1,18 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
-import { PageBack, PageIndustries } from "@/components/brochure/pages-back";
-import { PageCover, PageHistory, PageIntro } from "@/components/brochure/pages-front";
-import {
-  PageCustom,
-  PageExpanded,
-  PageExpandedCont,
-  PageLaser,
-  PageLeveling,
-  PagePatterns,
-  PagePerforated,
-  PageTurret,
-} from "@/components/brochure/pages-products";
+import { BrochureBody } from "@/components/brochure/BrochureBody";
 
 import { PrintButton } from "./PrintButton";
 
@@ -65,19 +54,7 @@ export default function BrochurePage() {
   return (
     <div className={`bx ${sans.variable} ${mono.variable}`}>
       <PrintButton />
-      <PageCover />
-      <PageIntro />
-      <PageHistory />
-      <PagePerforated />
-      <PagePatterns />
-      <PageLaser />
-      <PageExpanded />
-      <PageExpandedCont />
-      <PageTurret />
-      <PageLeveling />
-      <PageCustom />
-      <PageIndustries />
-      <PageBack />
+      <BrochureBody />
     </div>
   );
 }

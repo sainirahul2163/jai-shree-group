@@ -2,6 +2,7 @@
 import { NETWORK_MUMBAI, NETWORK_PUNE, type BrochureUnit } from "@/data/brochure";
 import { INDUSTRY_DETAILS } from "@/data/industries";
 
+import { INDUSTRY_ICONS } from "./industry-icons";
 import { IconGlobe, IconMail, IconPhone, IconPin, Sheet, SqList, Tag } from "./kit";
 
 /* ══════════════ 12 · Industries We Serve ══════════════ */
@@ -19,7 +20,7 @@ const INDUSTRY_ORDER = [
   "mining-quarrying",
 ] as const;
 
-export function PageIndustries() {
+export function PageIndustries({ icons = false }: { icons?: boolean }) {
   return (
     <Sheet page={12} foot="Industries We Serve">
       <div className="pad">
@@ -34,9 +35,17 @@ export function PageIndustries() {
         <div className="grid grid-cols-2 gap-x-[9mm] gap-y-[6mm]">
           {INDUSTRY_ORDER.map((key) => {
             const industry = INDUSTRY_DETAILS[key];
+            const Icon = INDUSTRY_ICONS[key];
             return (
               <div key={key} className="border-t-2 border-[var(--orange)] pt-[3mm]">
-                <h3 className="h3 mb-[1.6mm]">{industry.name}</h3>
+                {icons ? (
+                  <div className="mb-[2mm] flex items-center gap-[3mm]">
+                    <Icon className="h-[9mm] w-[9mm] flex-none" style={{ color: "var(--orange)" }} />
+                    <h3 className="h3">{industry.name}</h3>
+                  </div>
+                ) : (
+                  <h3 className="h3 mb-[1.6mm]">{industry.name}</h3>
+                )}
                 <p className="small mb-[2.6mm]" style={{ color: "var(--ink-2)" }}>
                   {industry.description}
                 </p>
