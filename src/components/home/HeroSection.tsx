@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-import { MagneticDotsBackground } from "@/components/home/MagneticDotsBackground";
+import { MagneticHexBackground } from "@/components/home/MagneticHexBackground";
 import { ProductShowcase } from "@/components/home/ProductShowcase";
 import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/lib/constants";
@@ -32,7 +32,7 @@ export function HeroSection() {
       className="relative flex min-h-screen items-center overflow-hidden pt-16 md:pt-20"
       style={{ backgroundColor: "#0A0A0A" }}
     >
-      <MagneticDotsBackground containerRef={heroRef} />
+      <MagneticHexBackground containerRef={heroRef} />
 
       <div className="pointer-events-none absolute inset-0 z-[1]">
         <div
