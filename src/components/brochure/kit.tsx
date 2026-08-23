@@ -58,9 +58,16 @@ export function NumList({ items }: { items: readonly string[] }) {
   );
 }
 
-export function SqList({ items }: { items: readonly string[] }) {
+export function SqList({
+  items,
+  size = "md",
+}: {
+  items: readonly string[];
+  /** "sm" tightens the list for two-column grids without dropping below 10pt. */
+  size?: "sm" | "md";
+}) {
   return (
-    <ul className="sqlist">
+    <ul className={`sqlist${size === "sm" ? " sqlist--sm" : ""}`}>
       {items.map((t) => (
         <li key={t}>
           <span>{t}</span>

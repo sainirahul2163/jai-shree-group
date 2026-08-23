@@ -267,6 +267,10 @@
 
 .sheet--dark .sqlist > li { color: var(--black-ink); }
 
+.sqlist--sm { gap: 1.4mm; }
+.sqlist--sm > li { font-size: 13.5px; line-height: 1.45; grid-template-columns: 4.2mm 1fr; }
+.sqlist--sm > li::before { width: 1.9mm; height: 1.9mm; margin-top: 1.4mm; }
+
 /* orange quote banner — the original ran one at the foot of several pages */
 .quote {
   background: var(--orange);

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
-import { PageBack } from "@/components/brochure/pages-back";
+import { PageBack, PageIndustries } from "@/components/brochure/pages-back";
 import { PageCover, PageHistory, PageIntro } from "@/components/brochure/pages-front";
 import {
   PageCustom,
@@ -55,10 +55,11 @@ export const metadata: Metadata = {
 };
 
 /**
- * 12 pages, following the 2022 printed brochure page for page. The cover and
+ * 13 pages, following the 2022 printed brochure page for page. The cover and
  * back cover are the new design; wire mesh, welded mesh and knitted mesh are
  * out, and turret punching, sheet leveling and custom components take their
- * place so the product set matches the website.
+ * place so the product set matches the website. Industries We Serve closes the
+ * content, drawn from the same data as the website’s industry pages.
  */
 export default function BrochurePage() {
   return (
@@ -75,6 +76,7 @@ export default function BrochurePage() {
       <PageTurret />
       <PageLeveling />
       <PageCustom />
+      <PageIndustries />
       <PageBack />
     </div>
   );

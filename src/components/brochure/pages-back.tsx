@@ -1,7 +1,55 @@
 /* eslint-disable @next/next/no-img-element */
 import { NETWORK_MUMBAI, NETWORK_PUNE, type BrochureUnit } from "@/data/brochure";
+import { INDUSTRY_DETAILS } from "@/data/industries";
 
-import { IconGlobe, IconMail, IconPhone, IconPin, Sheet } from "./kit";
+import { IconGlobe, IconMail, IconPhone, IconPin, Sheet, SqList, Tag } from "./kit";
+
+/* ══════════════ 12 · Industries We Serve ══════════════ */
+
+/** Same eight sectors, in the same order, as the website's industries pages —
+ *  imported rather than retyped so the two cannot drift apart. */
+const INDUSTRY_ORDER = [
+  "automobile",
+  "construction",
+  "food-beverage",
+  "pharmaceutical",
+  "petrochemical",
+  "architecture-interior",
+  "sugar-industry",
+  "mining-quarrying",
+] as const;
+
+export function PageIndustries() {
+  return (
+    <Sheet page={12} foot="Industries We Serve">
+      <div className="pad">
+        <Tag>Industries We Serve</Tag>
+
+        <p className="lead mb-[6mm]" style={{ maxWidth: "160mm" }}>
+          Our sheets, screens and components go into plants across India — from
+          automotive filtration and building facades to sugar mills, refineries and
+          mining operations.
+        </p>
+
+        <div className="grid grid-cols-2 gap-x-[9mm] gap-y-[6mm]">
+          {INDUSTRY_ORDER.map((key) => {
+            const industry = INDUSTRY_DETAILS[key];
+            return (
+              <div key={key} className="border-t-2 border-[var(--orange)] pt-[3mm]">
+                <h3 className="h3 mb-[1.6mm]">{industry.name}</h3>
+                <p className="small mb-[2.6mm]" style={{ color: "var(--ink-2)" }}>
+                  {industry.description}
+                </p>
+                <SqList items={industry.applications.slice(0, 3)} size="sm" />
+              </div>
+            );
+          })}
+        </div>
+
+      </div>
+    </Sheet>
+  );
+}
 
 const HEX_TEXTURE =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 0 L56 16 L56 50 L28 66 L0 50 L0 16 Z' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.07'/%3E%3C/svg%3E\")";
@@ -58,7 +106,7 @@ function CityBand({ city }: { city: string }) {
   );
 }
 
-/* ══════════════ 12 · Back cover ══════════════ */
+/* ══════════════ 13 · Back cover ══════════════ */
 
 export function PageBack() {
   return (
