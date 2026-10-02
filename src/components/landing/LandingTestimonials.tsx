@@ -14,12 +14,6 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      "We have been sourcing SS wire mesh from Jai Shree for 8 years. Consistent quality and responsive team.",
-    name: "Priya Mehta",
-    company: "Piramal Pharma",
-  },
-  {
-    quote:
       "Best expanded metal supplier in Pune. Custom sizes, quick turnaround, and competitive pricing.",
     name: "Amit Kulkarni",
     company: "L&T Construction",
@@ -60,7 +54,7 @@ export function LandingTestimonials() {
         </motion.h2>
 
         {/* Cards */}
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
+        <div className="mt-16 grid gap-6 md:grid-cols-2">
           {TESTIMONIALS.map((t, i) => (
             <motion.figure
               key={t.name}

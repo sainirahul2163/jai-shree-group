@@ -184,7 +184,6 @@ ON CONFLICT (slug) DO NOTHING;
 -- SEED TESTIMONIALS
 INSERT INTO testimonials (client_name, company_name, industry, message, rating, is_featured, is_published) VALUES
 ('Rajesh Sharma', 'Tata AutoComp', 'Automobile', 'Excellent quality perforated sheets delivered on time. The bow control is perfect — zero rejections in our assembly line.', 5, true, true),
-('Priya Mehta', 'Piramal Pharma', 'Pharmaceutical', 'We have been sourcing SS wire mesh from Jai Shree for 8 years. Consistent quality and responsive team.', 5, true, true),
 ('Amit Kulkarni', 'L&T Construction', 'Construction', 'Best expanded metal supplier in Pune. Custom sizes, quick turnaround, and competitive pricing.', 5, true, true);
 
 -- ============================================================

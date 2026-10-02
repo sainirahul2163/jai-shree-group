@@ -199,7 +199,7 @@ export const LOCATION_PAGES: Record<string, LocationPageData> = {
     products: [
       "Perforated Sheets",
       "Filtration Screens",
-      "Demister Pad Components",
+      "Expanded Metal",
       "Architectural Panels",
     ],
     industries: ["Petrochemical", "Construction", "Pharmaceutical", "Export"],

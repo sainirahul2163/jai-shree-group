@@ -19,7 +19,6 @@ export const LANDING_STATS = [
   { value: 6, suffix: "", label: "Manufacturing Units", animate: true },
   { value: null, display: "12mm", label: "Max Perforation Thickness", animate: false },
   { value: null, display: "14mm", label: "Max Laser Thickness", animate: false },
-  { value: null, display: "2-400", label: "Wire Mesh Range", animate: false },
 ] as const;
 
 export const LANDING_MILESTONES = ABOUT_TIMELINE.filter((item) =>
@@ -65,13 +64,6 @@ export const LANDING_TESTIMONIALS = [
       "Excellent quality perforated sheets delivered on time. The bow control is perfect — zero rejections in our assembly line.",
     author: "Rajesh Sharma",
     company: "Tata AutoComp",
-    rating: 5,
-  },
-  {
-    quote:
-      "We have been sourcing SS wire mesh from Jai Shree for 8 years. Consistent quality and responsive team.",
-    author: "Priya Mehta",
-    company: "Piramal Pharma",
     rating: 5,
   },
   {

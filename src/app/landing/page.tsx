@@ -25,7 +25,6 @@ export const metadata: Metadata = {
   keywords: [
     "perforated sheet manufacturers Pune",
     "laser cutting Mumbai",
-    "wire mesh India",
     "expanded metal manufacturers",
     "ISO certified metal fabrication",
   ],

@@ -85,7 +85,7 @@ function VideoPlaceholder({
         </div>
 
         <div className="mt-2 flex flex-wrap justify-center gap-2">
-          {["CNC Machines", "Fiber Laser", "Wire Mesh Plant", "Talawade Facility"].map(
+          {["CNC Machines", "Fiber Laser", "Turret Punching", "Talawade Facility"].map(
             (tag) => (
               <span
                 key={tag}
@@ -315,7 +315,7 @@ function LocalVideo({ src }: { src: string }) {
         </div>
 
         <div className="mt-2 flex flex-wrap justify-center gap-2">
-          {["CNC Machines", "Fiber Laser", "Wire Mesh Plant", "Talawade Facility"].map(
+          {["CNC Machines", "Fiber Laser", "Turret Punching", "Talawade Facility"].map(
             (tag) => (
               <span
                 key={tag}

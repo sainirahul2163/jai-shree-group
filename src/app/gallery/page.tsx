@@ -9,9 +9,9 @@ import { getPublishedGalleryItems } from "@/lib/supabase/queries";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Product Gallery | Perforated Sheets & Wire Mesh | Jai Shree Group",
+  title: "Product Gallery | Perforated Sheets & Laser Cutting | Jai Shree Group",
   description:
-    "Browse Jai Shree Group product gallery — perforated sheets, laser cutting, expanded metal, wire mesh and welded mesh samples. Contact us for product samples.",
+    "Browse Jai Shree Group product gallery — perforated sheets, laser cutting, expanded metal and custom component samples. Contact us for product samples.",
   alternates: {
     canonical: "/gallery",
   },

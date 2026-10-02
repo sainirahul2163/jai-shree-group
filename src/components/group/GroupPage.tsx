@@ -204,7 +204,7 @@ export function GroupPage() {
               {COMPANY.name} operates {COMPANY.manufacturingUnits} specialized
               manufacturing units under one family-owned group. Each unit focuses on
               specific metal fabrication capabilities — from CNC perforation and fiber
-              laser cutting to wire mesh, welded mesh, and filtration products — ensuring
+              laser cutting to expanded metal, precision leveling, and filtration products — ensuring
               expert production at every step.
             </p>
             <p

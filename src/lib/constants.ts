@@ -284,7 +284,7 @@ export const INDUSTRIES = [
     name: "Petrochemical",
     slug: "petrochemical",
     icon: "Flame",
-    description: "Demister pads, mist eliminators",
+    description: "Process screens, filtration components",
   },
   {
     name: "Architecture & Interior",
@@ -403,7 +403,6 @@ export const SEO = {
     "CNC Turret Perforated Sheet Manufacturing",
     "perforated sheet manufacturers Pune",
     "perforated sheet manufacturers India export",
-    "wire mesh exporters India",
     "expanded metal suppliers India",
     "metal fabrication India",
     "perforated metal sheets India supplier",
@@ -522,7 +521,7 @@ export const MUMBAI_BRANCHES = BRANCHES.filter(
 
 export const FOOTER = {
   description:
-    "ISO 9001:2015 certified manufacturer of perforated sheets, wire mesh & expanded metal. Serving India since 1970.",
+    "ISO 9001:2015 certified manufacturer of perforated sheets, laser cutting & expanded metal. Serving India since 1970.",
   copyright: "© 2026 Jai Shree Group. All rights reserved.",
   certification: "ISO 9001:2015 Certified | Pune & Mumbai, India",
   social: [

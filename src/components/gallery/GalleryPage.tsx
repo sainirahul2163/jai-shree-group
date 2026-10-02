@@ -73,7 +73,7 @@ export function GalleryPage({ items = [] }: GalleryPageProps) {
       <PageHero
         label="GALLERY"
         title="Product Gallery"
-        subtitle="Explore our range of perforated sheets, laser cutting, expanded metal, and wire mesh products."
+        subtitle="Explore our range of perforated sheets, laser cutting, expanded metal, and custom metal components."
       />
 
       <section className="section-padding" style={{ backgroundColor: "#111111" }}>

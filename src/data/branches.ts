@@ -16,21 +16,15 @@ export const BRANCH_PRODUCTS: Record<BranchSlug, string[]> = {
     "Custom Hole Patterns",
   ],
   "shree-weld-mesh": [
-    "Welded Mesh",
-    "Wire Mesh Panels",
     "Custom Welded Grids",
   ],
   "jai-shree-filtration": [
-    "Demister Pads",
-    "Wire Mesh",
     "Filtration Screens",
     "Perforated Sheets",
   ],
   "jai-shree-industries": [
     "Perforated Sheets",
-    "Wire Mesh",
     "Expanded Metal",
-    "Welded Mesh",
   ],
   "jai-shree-perforator": [
     "Perforated Sheets",
