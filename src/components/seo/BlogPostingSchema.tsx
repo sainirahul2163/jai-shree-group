@@ -1,6 +1,8 @@
-import { COMPANY } from "@/lib/constants";
+import { siteUrl } from "@/lib/seo";
+import type { SiteConfig } from "@/sites/types";
 
 type BlogPostingSchemaProps = {
+  site: SiteConfig;
   title: string;
   description: string;
   slug: string;
@@ -10,14 +12,15 @@ type BlogPostingSchemaProps = {
 };
 
 export function BlogPostingSchema({
+  site,
   title,
   description,
   slug,
   datePublished,
   dateModified,
-  author = "Jai Shree Group",
+  author = site.name,
 }: BlogPostingSchemaProps) {
-  const url = `${COMPANY.website}/blog/${slug}`;
+  const url = siteUrl(site, `/blog/${slug}`);
 
   const schema = {
     "@context": "https://schema.org",
@@ -29,12 +32,12 @@ export function BlogPostingSchema({
     author: {
       "@type": "Organization",
       name: author,
-      url: COMPANY.website,
+      url: site.origin,
     },
     publisher: {
       "@type": "Organization",
-      name: COMPANY.name,
-      url: COMPANY.website,
+      name: site.name,
+      url: site.origin,
     },
     mainEntityOfPage: {
       "@type": "WebPage",

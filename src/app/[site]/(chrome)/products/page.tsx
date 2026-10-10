@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { ProductsIndexPage } from "@/components/products/ProductsIndexPage";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { siteFromParams, type SiteParams } from "@/sites/params";
 
 export const metadata: Metadata = {
   title:
@@ -19,10 +20,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ProductsPage() {
+export default async function ProductsPage({ params }: SiteParams) {
+  const site = await siteFromParams(params);
+
   return (
     <>
       <BreadcrumbSchema
+        site={site}
         items={[
           { name: "Home", path: "/" },
           { name: "Products", path: "/products" },

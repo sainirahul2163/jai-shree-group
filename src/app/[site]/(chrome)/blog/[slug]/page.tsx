@@ -8,14 +8,16 @@ import { BlogPostingSchema } from "@/components/seo/BlogPostingSchema";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { Button } from "@/components/ui/button";
 import { getBlogPostBySlug as getStaticBlogPost } from "@/data/blog-posts";
-import { BLOG_POSTS, COMPANY } from "@/lib/constants";
+import { BLOG_POSTS } from "@/lib/constants";
+import { siteUrl } from "@/lib/seo";
 import {
   getAllBlogSlugs,
   getBlogPostBySlug,
 } from "@/lib/supabase/queries";
+import { siteFromParams } from "@/sites/params";
 
 type PageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ site: string; slug: string }>;
 };
 
 function resolvePost(slug: string, dbPost: Awaited<ReturnType<typeof getBlogPostBySlug>>) {
@@ -61,6 +63,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const site = await siteFromParams(params);
   const dbPost = await getBlogPostBySlug(slug);
   const post = resolvePost(slug, dbPost);
   if (!post) return {};
@@ -69,12 +72,12 @@ export async function generateMetadata({
     title: post.metaTitle,
     description: post.metaDescription,
     alternates: {
-      canonical: `${COMPANY.website}/blog/${slug}`,
+      canonical: siteUrl(site, `/blog/${slug}`),
     },
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      url: `${COMPANY.website}/blog/${slug}`,
+      url: siteUrl(site, `/blog/${slug}`),
       type: "article",
     },
   };
@@ -82,6 +85,7 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
+  const site = await siteFromParams(params);
   const dbPost = await getBlogPostBySlug(slug);
   const post = resolvePost(slug, dbPost);
 
@@ -92,12 +96,14 @@ export default async function BlogPostPage({ params }: PageProps) {
   return (
     <>
       <BlogPostingSchema
+        site={site}
         title={post.title}
         description={post.metaDescription}
         slug={slug}
         datePublished={post.date}
       />
       <BreadcrumbSchema
+        site={site}
         items={[
           { name: "Home", path: "/" },
           { name: "Blog", path: "/blog" },

@@ -2,15 +2,17 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { ProductPageClient } from "@/components/products/ProductPageClient";
-import { COMPANY } from "@/lib/constants";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import {
   getProductDetail,
   getRelatedProducts,
   PRODUCT_SLUGS,
 } from "@/data/products";
+import { siteUrl } from "@/lib/seo";
+import { siteFromParams } from "@/sites/params";
 
 type PageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ site: string; slug: string }>;
 };
 
 export async function generateStaticParams() {
@@ -21,6 +23,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const site = await siteFromParams(params);
   const product = getProductDetail(slug);
 
   if (!product) {
@@ -31,19 +34,20 @@ export async function generateMetadata({
     title: product.metaTitle,
     description: product.metaDescription,
     alternates: {
-      canonical: `${COMPANY.website}/products/${slug}`,
+      canonical: siteUrl(site, `/products/${slug}`),
     },
     openGraph: {
       title: product.metaTitle,
       description: product.metaDescription,
-      url: `${COMPANY.website}/products/${slug}`,
-      siteName: COMPANY.name,
+      url: siteUrl(site, `/products/${slug}`),
+      siteName: site.name,
     },
   };
 }
 
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
+  const site = await siteFromParams(params);
   const product = getProductDetail(slug);
 
   if (!product) {
@@ -51,31 +55,6 @@ export default async function ProductPage({ params }: PageProps) {
   }
 
   const relatedProducts = getRelatedProducts(slug, 3);
-
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: COMPANY.website,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Products",
-        item: `${COMPANY.website}/products`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: product.name,
-        item: `${COMPANY.website}/products/${slug}`,
-      },
-    ],
-  };
 
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -97,19 +76,23 @@ export default async function ProductPage({ params }: PageProps) {
     description: product.metaDescription,
     brand: {
       "@type": "Brand",
-      name: COMPANY.name,
+      name: site.name,
     },
     manufacturer: {
       "@type": "Organization",
-      name: COMPANY.name,
+      name: site.name,
     },
   };
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      <BreadcrumbSchema
+        site={site}
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Products", path: "/products" },
+          { name: product.name, path: `/products/${slug}` },
+        ]}
       />
       <script
         type="application/ld+json"

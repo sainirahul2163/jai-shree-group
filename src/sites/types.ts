@@ -83,6 +83,11 @@ export interface SiteConfig {
   theme: ThemeTokens;
   nav: { label: string; href: string }[];
   home: HomeSectionKey[];
+  /**
+   * Enabled top-level routes ("/products" enables /products/*); the proxy
+   * 404s any other first segment. Order = order of the static pages in the
+   * sitemap.
+   */
   pages: string[];
   tool: ToolKey | null;
   seo: {
@@ -91,6 +96,44 @@ export interface SiteConfig {
     description: string;
     keywords: string[];
     ogImage: string;
+    /** Emitted as og:image:width / og:image:height. */
+    ogImageSize?: { width: number; height: number };
+    /** Open Graph title and description; default to defaultTitle and description. */
+    ogTitle?: string;
+    ogDescription?: string;
+    /** Twitter card title and description; default to the Open Graph ones. */
+    twitterTitle?: string;
+    twitterDescription?: string;
+    /** Open Graph locale. Default "en_IN". */
+    locale?: string;
+    /** hreflang codes, all pointing at the same URL (the sites are English only). */
+    languages?: string[];
+    schema?: SchemaFacts;
   };
   social?: { name: string; href: string }[];
+}
+
+/**
+ * Facts for the site's JSON-LD that the rest of the config does not hold.
+ * Leave out anything the client has not confirmed (docs/08-content-checklist.md).
+ */
+export interface SchemaFacts {
+  /** schema.org type of the site's business. Default "LocalBusiness". */
+  type?: string;
+  foundingDate?: string;
+  keywords?: string[];
+  areaServed?: { type: "City" | "State" | "Country"; name: string }[];
+  /** Parts of contact.address for PostalAddress. */
+  address?: {
+    locality: string;
+    region: string;
+    postalCode?: string;
+    country: string;
+  };
+  geo?: { latitude: number; longitude: number };
+  sameAs?: string[];
+  certification?: { name: string; issuedBy: string };
+  /** Name of the product OfferCatalog. */
+  catalogName?: string;
+  priceRange?: string;
 }

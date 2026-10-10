@@ -32,22 +32,27 @@ Route tree (task 0.5):
 
 | Path | What |
 | --- | --- |
-| `src/app/layout.tsx` | `<html>`, `<body>`, Geist fonts, the group's static metadata, `GlobalSchema`. No chrome |
-| `src/app/[site]/layout.tsx` | Checks the site key (`findSite`; unknown or not-yet-built → 404), writes the site's theme variables on `:root` (`src/sites/theme-vars.ts`), `generateStaticParams` = configured sites |
+| `src/app/layout.tsx` | `<html>`, `<body>`, Geist fonts, CSS. No metadata, no brand values, no chrome |
+| `src/app/[site]/layout.tsx` | Checks the site key (`siteFromParams`; unknown or not-yet-built → 404), `generateMetadata` = site-wide metadata from the config (`siteMetadata` in `src/lib/seo.ts`: title, description, keywords, metadataBase = `config.origin`, Open Graph, Twitter, hreflang, robots, group-only verification env vars), `GlobalSchema`, the site's theme variables on `:root` (`src/sites/theme-vars.ts`), `generateStaticParams` = configured sites (task 0.6) |
 | `src/app/[site]/(chrome)/` | Route group with `SiteChrome` (Navbar, main, Footer, WhatsApp, tracker): home, about, group, products, industries, calculator, gallery, clients, certifications, contact, get-quote, blog, pune/*, mumbai/*; plus `error.tsx`, `loading.tsx`, `not-found.tsx` for those pages |
 | `src/app/[site]/landing/`, `src/app/[site]/brochure/` | Outside `(chrome)`: no Navbar/Footer, as before |
 | `src/app/[site]/[...rest]/page.tsx` + `[site]/not-found.tsx` | Unmatched paths: real 404 status with the chrome (kept outside every `loading.tsx`, which would stream a 200) |
 | `src/app/not-found.tsx`, `error.tsx` | Root fallbacks (admin, unknown site); `admin/loading.tsx` keeps the admin loading screen |
-| `src/app/sitemap.ts`, `src/app/robots.ts` | Still at the root (group only) until task 0.6 |
-| `src/proxy.ts` | Admin gate (unchanged) on `/admin*`; `x-site` header on `/api*`; host → site rewrite for every other path. Not run for `_next`, `sitemap.xml`, `robots.txt` or any path ending in a file extension (icons, `public/`) |
+| `src/app/admin/layout.tsx` | Admin metadata: `robots: noindex, nofollow` (task 0.6) |
+| `src/app/[site]/sitemap.xml/route.ts`, `src/app/[site]/robots.txt/route.ts` | Per-site sitemap and robots, prerendered per configured site (task 0.6). Sitemap: `config.pages` (in that order; city prefixes and `/brochure` left out), then `config.products` and `config.industries` that have detail pages, location pages for enabled cities, blog posts if `/blog` is enabled; all at `config.origin`. On `VERCEL_ENV=preview` robots disallows everything |
+| `src/proxy.ts` | Admin gate (unchanged) on `/admin*`; `x-site` header on `/api*`; host → site rewrite for every other path, including `/sitemap.xml` and `/robots.txt` (→ `/<key>/sitemap.xml`, `/<key>/robots.txt`). Not run for `_next` or any other path ending in a file extension (icons, `public/`) |
 
-Host → site: production hosts from `src/sites/domains.ts`; `<key>.localhost` locally; any other host (plain localhost, Vercel previews) is `group` unless `?site=<key>` chose one (kept in a `site` cookie; ignored on production domains). A path that already starts with a site key (`/group/about`) 404s.
+Host → site: production hosts from `src/sites/domains.ts`; `<key>.localhost` locally; any other host (plain localhost, Vercel previews) is `group` unless `?site=<key>` chose one (kept in a `site` cookie; ignored on production domains). A first path segment the site does not list in `config.pages` is rewritten to `/<key>/__no-page/…`, which lands on `[site]/[...rest]` (real 404). `/` is always allowed. A path that already starts with a site key (`/group/about`, `/group/sitemap.xml`) 404s.
+
+SEO (task 0.6): pages and JSON-LD build absolute URLs from the active site's `origin` (`siteUrl` in `src/lib/seo.ts`; the site comes from the `site` route param via `siteFromParams` in `src/sites/params.ts`). `components/seo/*` take a `site` prop: `GlobalSchema` (group: the group business; unit sites: the unit's own `LocalBusiness` with `parentOrganization` = Jai Shree Group, chosen by `config.unitSlug`), `BreadcrumbSchema`, `ContactPageSchema`, `BlogPostingSchema`. Structured-data facts not held elsewhere (schema type, address parts, geo, sameAs, certification) live in `config.seo.schema`. On `VERCEL_ENV=preview` every page gets `robots: noindex, nofollow`.
 
 ## Where things live
 
 | Path | What |
 | --- | --- |
-| `src/sites/` | Site config (task 0.3): `types.ts`, `domains.ts` (host → key, no imports), `keys.ts` (`SITE_KEYS`, `isSiteKey`; used by the proxy), `group.ts` (group values), `index.ts` (`getSite`, `findSite`, `ALL_SITES`, `isSiteKey`), `theme-vars.ts` (theme → `:root` CSS). Unit site files are not created yet |
+| `src/sites/` | Site config (task 0.3): `types.ts`, `domains.ts` (host → key, no imports), `keys.ts` (`SITE_KEYS`, `isSiteKey`; used by the proxy), `group.ts` (group values), `index.ts` (`getSite`, `findSite`, `ALL_SITES`, `isSiteKey`; also loaded by the proxy for `config.pages`), `params.ts` (`siteFromParams`, `SiteParams`), `theme-vars.ts` (theme → `:root` CSS). Unit site files are not created yet |
+| `src/lib/seo.ts` | `siteMetadata` (site-wide metadata), `siteUrl` (absolute URL on the site's origin), `isPreview` |
+| `src/components/seo/` | JSON-LD components (all take `site`); `schema-parts.ts` holds the shared address, geo and phone parts |
 | `src/lib/constants.ts` | Re-exports `SITE_URL`, `COMPANY`, `NAV_LINKS`, `FOOTER`, `SEO` from `src/sites/group.ts`. Still defines `BRANCHES`, `PRODUCTS`, `MATERIALS`, `INDUSTRIES`, `HOME_SECTIONS`, `DESIGN_TOKENS`, `GALLERY_CATEGORIES` |
 | `src/data/` | `products.ts`, `industries.ts`, `locations.ts`, `blog-posts.ts`, `about.ts`, `landing.ts`, `branches.ts` (products per unit — **out of date**; correct list in `docs/client/answers-2026-10-07.md`), `brochure.ts`, `calculator-faqs.ts` |
 | `src/components/<feature>/` | One folder per page area: home (11), landing (14), products (6), admin (11), brochure (7), shared (6), layout (4), seo (4), ui (12 shadcn), and one each for about, calculator, quote, contact, gallery, group, industries, location, clients, certifications, blog |
@@ -64,8 +69,8 @@ Host → site: production hosts from `src/sites/domains.ts`; `<key>.localhost` l
 
 - **Colours:** public pages use theme tokens (`bg-brand`, `text-brand-text`, `var(--brand)`, and the rest of the table in `04-architecture.md` → Theming). `#E8521A` and `#FF6B35` remain only in `src/sites/` (the group defaults), `brochure/` and `admin/`. The logo flame in `Logo.tsx` stays `#E84512`. WhatsApp stays `#25D366`.
 - **Brand name:** "Jai Shree" appears in 62 files (copy, metadata, schema, emails).
-- **Static metadata:** `src/app/layout.tsx` and each page export fixed `metadata` objects with the group's titles and keywords.
-- **Origin:** `SITE_URL` defaults to `https://www.jaishreegroup.com`, which the client confirmed is correct (older docs saying `.in` are wrong). Move it into the `group` site config.
+- **Static metadata:** site-wide metadata now comes from the config (task 0.6), but each page still exports the group's titles, descriptions and keywords as page copy (unit copy comes in Phase 1+).
+- **Origin:** `group.origin` = `NEXT_PUBLIC_SITE_URL` or `https://www.jaishreegroup.com` (confirmed by the client; older docs saying `.in` are wrong). Pages, sitemap, robots and JSON-LD use the active site's `origin`. `src/lib/email.ts` and the lead APIs still use `COMPANY` (task 0.7).
 - **Proxy:** renamed to `src/proxy.ts` (task 0.2, 2026-10-11).
 - **3D and canvas:** `ProductViewer3D`, `DimpleSheet3D` and `MagneticHexBackground` read `--brand` at runtime with `getComputedStyle`.
 

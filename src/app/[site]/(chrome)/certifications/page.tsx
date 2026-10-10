@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { CertificationsPage } from "@/components/certifications/CertificationsPage";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { siteFromParams, type SiteParams } from "@/sites/params";
 
 export const metadata: Metadata = {
   title: "ISO 9001:2015 Certification | Jai Shree Group Quality Standards",
@@ -12,10 +13,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Certifications() {
+export default async function Certifications({ params }: SiteParams) {
+  const site = await siteFromParams(params);
+
   return (
     <>
       <BreadcrumbSchema
+        site={site}
         items={[
           { name: "Home", path: "/" },
           { name: "Certifications", path: "/certifications" },

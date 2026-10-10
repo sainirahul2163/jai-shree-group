@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { IndustriesIndexPage } from "@/components/industries/IndustriesIndexPage";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { siteFromParams, type SiteParams } from "@/sites/params";
 
 export const metadata: Metadata = {
   title: "Industries We Serve | Metal Manufacturing | Jai Shree Group",
@@ -18,10 +19,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function IndustriesPage() {
+export default async function IndustriesPage({ params }: SiteParams) {
+  const site = await siteFromParams(params);
+
   return (
     <>
       <BreadcrumbSchema
+        site={site}
         items={[
           { name: "Home", path: "/" },
           { name: "Industries", path: "/industries" },

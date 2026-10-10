@@ -53,9 +53,9 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 - [x] Group-only routes (`group`, `calculator`, `brochure`, `landing`, `pune/*`, `mumbai/*`, `blog`, `clients`, `certifications`) are listed only in `group.pages`.
 
 0.6 **Per-site SEO**
-- [ ] `generateMetadata` in `[site]/layout.tsx` and pages read `config.seo` and `config.origin` (canonical, Open Graph, alternates).
-- [ ] `[site]/sitemap.ts` and `[site]/robots.txt/route.ts`; proxy maps `/sitemap.xml` and `/robots.txt`.
-- [ ] JSON-LD (`components/seo/*`) reads the site config.
+- [x] `generateMetadata` in `[site]/layout.tsx` and pages read `config.seo` and `config.origin` (canonical, Open Graph, alternates).
+- [x] `[site]/sitemap.ts` and `[site]/robots.txt/route.ts`; proxy maps `/sitemap.xml` and `/robots.txt`. (Built as `[site]/sitemap.xml/route.ts`: the `sitemap.ts` convention gets no route params.)
+- [x] JSON-LD (`components/seo/*`) reads the site config.
 
 0.7 **Data and leads**
 - [ ] Supabase migration: `site` column and per-site blog slug index (`04-architecture.md` → Data).

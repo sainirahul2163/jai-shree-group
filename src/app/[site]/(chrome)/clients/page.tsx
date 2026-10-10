@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ClientsPage } from "@/components/clients/ClientsPage";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { getPublishedTestimonials } from "@/lib/supabase/queries";
+import { siteFromParams, type SiteParams } from "@/sites/params";
 
 /** Testimonials are managed in Supabase — refresh the static page hourly so
  *  newly published entries appear without a redeploy. */
@@ -17,12 +18,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Clients() {
+export default async function Clients({ params }: SiteParams) {
+  const site = await siteFromParams(params);
   const testimonials = await getPublishedTestimonials();
 
   return (
     <>
       <BreadcrumbSchema
+        site={site}
         items={[
           { name: "Home", path: "/" },
           { name: "Clients", path: "/clients" },

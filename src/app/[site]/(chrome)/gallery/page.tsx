@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { GalleryPage } from "@/components/gallery/GalleryPage";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { getPublishedGalleryItems } from "@/lib/supabase/queries";
+import { siteFromParams, type SiteParams } from "@/sites/params";
 
 /** Gallery items are managed in Supabase — refresh the static page hourly so
  *  newly published items appear without a redeploy. */
@@ -17,12 +18,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Gallery() {
+export default async function Gallery({ params }: SiteParams) {
+  const site = await siteFromParams(params);
   const items = await getPublishedGalleryItems();
 
   return (
     <>
       <BreadcrumbSchema
+        site={site}
         items={[
           { name: "Home", path: "/" },
           { name: "Gallery", path: "/gallery" },

@@ -4,9 +4,14 @@ import { notFound } from "next/navigation";
 import { LocationPageClient } from "@/components/location/LocationPageClient";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { getLocationPage } from "@/data/locations";
-import { COMPANY } from "@/lib/constants";
+import { siteUrl } from "@/lib/seo";
+import { siteFromParams, type SiteParams } from "@/sites/params";
 
-export function locationMetadata(path: string): Metadata {
+export async function locationMetadata(
+  path: string,
+  params: SiteParams["params"]
+): Promise<Metadata> {
+  const site = await siteFromParams(params);
   const data = getLocationPage(path);
   if (!data) return {};
 
@@ -14,12 +19,16 @@ export function locationMetadata(path: string): Metadata {
     title: data.metaTitle,
     description: data.metaDescription,
     alternates: {
-      canonical: `${COMPANY.website}/${data.city}/${data.slug}`,
+      canonical: siteUrl(site, `/${data.city}/${data.slug}`),
     },
   };
 }
 
-export function renderLocationPage(path: string) {
+export async function renderLocationPage(
+  path: string,
+  params: SiteParams["params"]
+) {
+  const site = await siteFromParams(params);
   const data = getLocationPage(path);
   if (!data) {
     notFound();
@@ -27,6 +36,7 @@ export function renderLocationPage(path: string) {
   return (
     <>
       <BreadcrumbSchema
+        site={site}
         items={[
           { name: "Home", path: "/" },
           {

@@ -6,6 +6,7 @@ import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { PageHero } from "@/components/shared/PageHero";
 import { BLOG_POSTS } from "@/lib/constants";
 import { getPublishedBlogPosts } from "@/lib/supabase/queries";
+import { siteFromParams, type SiteParams } from "@/sites/params";
 
 /** Posts are managed in Supabase — refresh the static page hourly so newly
  *  published posts appear without a redeploy. */
@@ -20,7 +21,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function BlogIndexPage() {
+export default async function BlogIndexPage({ params }: SiteParams) {
+  const site = await siteFromParams(params);
   const dbPosts = await getPublishedBlogPosts();
   const posts =
     dbPosts.length > 0
@@ -44,6 +46,7 @@ export default async function BlogIndexPage() {
   return (
     <>
       <BreadcrumbSchema
+        site={site}
         items={[
           { name: "Home", path: "/" },
           { name: "Blog", path: "/blog" },

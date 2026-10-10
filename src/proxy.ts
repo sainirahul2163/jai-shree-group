@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { isAdminEmail } from "@/lib/admin";
 import { getSupabaseAnonKey, getSupabaseUrl } from "@/lib/supabase/env";
+import { findSite } from "@/sites";
 import { domains } from "@/sites/domains";
 import { isSiteKey } from "@/sites/keys";
 import type { SiteKey } from "@/sites/types";
@@ -96,6 +97,26 @@ function resolveSite(req: NextRequest): { key: SiteKey; remember?: SiteKey } {
   return { key: "group" };
 }
 
+/** Each site's sitemap and robots live at /<key>/sitemap.xml and /<key>/robots.txt. */
+const SITE_FILES = new Set(["/sitemap.xml", "/robots.txt"]);
+
+/** No route has this segment, so a path under it lands on [site]/[...rest] (a real 404). */
+const NO_PAGE = "/__no-page";
+
+/**
+ * Path under /<key> for a request. A first segment the site does not enable
+ * in config.pages goes to NO_PAGE. A path that already names a site
+ * (/group/about, /shree-perforators) also 404s, so one site is never
+ * reachable under another site's domain.
+ */
+function sitePath(key: SiteKey, pathname: string): string {
+  if (pathname === "/") return "";
+  if (SITE_FILES.has(pathname)) return pathname;
+  const first = `/${pathname.split("/")[1]}`;
+  const pages = findSite(key)?.pages ?? [];
+  return pages.includes(first) ? pathname : `${NO_PAGE}${pathname}`;
+}
+
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
@@ -112,11 +133,9 @@ export async function proxy(req: NextRequest) {
     headers.set("x-site", key);
     response = NextResponse.next({ request: { headers } });
   } else {
-    // Every page lives under /<key>. A path that already names a site
-    // (/group/about, /shree-perforators) becomes /<key>/<that path> and 404s,
-    // so one site is never reachable under another site's domain.
+    // Every page lives under /<key>.
     const url = req.nextUrl.clone();
-    url.pathname = `/${key}${pathname === "/" ? "" : pathname}`;
+    url.pathname = `/${key}${sitePath(key, pathname)}`;
     response = NextResponse.rewrite(url);
   }
 
@@ -127,7 +146,15 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  // Everything except Next internals, the root sitemap/robots, and files
-  // (anything whose last segment has a dot: icons, public/ assets).
-  matcher: ["/((?!_next/|__nextjs|sitemap\\.xml$|robots\\.txt$|.*\\.[^/]+$).*)"],
+  // Everything except Next internals and files (anything whose last segment
+  // has a dot: icons, public/ assets), plus the per-site sitemap and robots.
+  // /<key>/sitemap.xml and /<key>/robots.txt are matched too, so they 404
+  // instead of serving one site's files on another site's domain.
+  matcher: [
+    "/((?!_next/|__nextjs|.*\\.[^/]+$).*)",
+    "/sitemap.xml",
+    "/robots.txt",
+    "/:site/sitemap.xml",
+    "/:site/robots.txt",
+  ],
 };

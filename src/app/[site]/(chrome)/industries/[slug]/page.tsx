@@ -7,10 +7,11 @@ import {
   getIndustryDetail,
   INDUSTRY_SLUGS,
 } from "@/data/industries";
-import { COMPANY } from "@/lib/constants";
+import { siteUrl } from "@/lib/seo";
+import { siteFromParams } from "@/sites/params";
 
 type PageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ site: string; slug: string }>;
 };
 
 export async function generateStaticParams() {
@@ -21,6 +22,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const site = await siteFromParams(params);
   const industry = getIndustryDetail(slug);
   if (!industry) return {};
 
@@ -28,13 +30,14 @@ export async function generateMetadata({
     title: industry.metaTitle,
     description: industry.metaDescription,
     alternates: {
-      canonical: `${COMPANY.website}/industries/${slug}`,
+      canonical: siteUrl(site, `/industries/${slug}`),
     },
   };
 }
 
 export default async function IndustryPage({ params }: PageProps) {
   const { slug } = await params;
+  const site = await siteFromParams(params);
   const industry = getIndustryDetail(slug);
 
   if (!industry) {
@@ -44,6 +47,7 @@ export default async function IndustryPage({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema
+        site={site}
         items={[
           { name: "Home", path: "/" },
           { name: "Industries", path: "/industries" },

@@ -64,7 +64,7 @@ Status: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 | Site config per site (`src/sites/`) | ✅ group only; six unit configs not created yet |
 | Colour tokens replace ~1,400 hard-coded colours | ✅ |
 | Pages move under `src/app/[site]/`; domain-based routing | ✅ |
-| Per-site SEO: metadata, sitemap, robots, structured data | ⏳ |
+| Per-site SEO: metadata, sitemap, robots, structured data | ✅ |
 | `site` column on leads/blog/gallery/testimonials/page views; leads emailed to each unit; admin site filter | ⏳ |
 | Customer auto-reply with reference number | ⏳ |
 | Privacy and terms pages; Google Analytics 4 | ⏳ |
@@ -91,12 +91,13 @@ Unit logos, working hours, contact names, unit photos, client names, case studie
 
 ## 4. Current status
 
-**Where we are (2026-10-11):** Phase 0 tasks 0.1–0.5 done and verified. Dev database `jai-shree-dev` ready. Supabase MCP connected to both projects. The build loop moves to a **new Claude Code session** (local, folder `jai-shree-multisite`) that follows `docs/prompts/coordinator.md` and drives the Cursor CLI.
+**Where we are (2026-10-11):** Phase 0 tasks 0.1–0.5 done and verified; 0.6 (per-site SEO) done by Cursor, awaiting Claude's verification. Dev database `jai-shree-dev` ready. Supabase MCP connected to both projects. The build loop moves to a **new Claude Code session** (local, folder `jai-shree-multisite`) that follows `docs/prompts/coordinator.md` and drives the Cursor CLI.
 
 **Authorised by the user (2026-10-11):** run Phase 0 → Phases 1–3 (all six unit sites) as far as possible; SQL on jai-shree-dev freely; tested additive migrations on the live project when going live; merge to `main` when a phase passes its checks; Google Analytics skipped for now.
 
 **Next:**
-1. Task 0.6 (per-site SEO) — Cursor, prompt `docs/prompts/task-0.6.md`.
+1. Claude verifies 0.6 (Cursor's entry in `CURSOR-LOG.md`).
+2. Task 0.7 (data and leads).
 
 **Loop notes:** 0.5 was done by Claude directly — Claude Code's auto-mode check refused to launch the Cursor CLI (unsandboxed agent). The user added a permission rule; Cursor runs again from 0.6.
 
@@ -111,6 +112,7 @@ Newest first. One row per change. "Files" lists what changed (folder-relative).
 
 | Date | Change | Files | Why |
 | --- | --- | --- | --- |
+| 2026-10-11 | 0.6 Per-site SEO (Cursor). Site-wide metadata moved from the root layout into `generateMetadata` in `[site]/layout.tsx`, built from the site config (new optional `seo` fields for OG, Twitter, hreflang and JSON-LD facts); canonicals, OG urls, breadcrumbs and JSON-LD use the active site's `origin`; `GlobalSchema` moved into `[site]/layout.tsx` with a unit branch (`parentOrganization` = Jai Shree Group); sitemap and robots are per-site route handlers under `[site]/`, mapped by the proxy; `VERCEL_ENV=preview` → noindex and robots disallow all; proxy 404s first path segments not in `config.pages`; admin gets noindex. Checked: build, lint unchanged (18), all 40 routes + robots + sitemap identical to the pre-change capture (sitemap: `lastmod` only), status codes, a temporary unit test config (removed), preview build, 3-page visual check | `src/app/[site]/`, `src/app/layout.tsx`, `src/app/admin/layout.tsx`, `src/components/seo/`, `src/lib/seo.ts`, `src/lib/location-page.tsx`, `src/proxy.ts`, `src/sites/`, `docs/06-codebase-map.md`, `docs/05-build-plan.md` | Phase 0 task 0.6 |
 | 2026-10-11 | 0.5 Route move (done by Claude: the Cursor CLI launch was refused by Claude Code's auto-mode permission check; the user has since added a permission rule). Public pages now live under `src/app/[site]/` (chrome in the `(chrome)` route group; landing and brochure without), proxy rewrites host → `/<site>/path`, `?site=` + cookie on non-production hosts, real 404s for unmatched paths, theme variables written from the site config. Checked: build, lint unchanged, 20+ routes and status codes, all 40 pages' SEO tags identical to the baseline, pixel check of 7 pages clean | `src/app/[site]/`, `src/proxy.ts`, `src/sites/`, `src/components/`, `docs/06-codebase-map.md`, `docs/decisions.md`, `.gitignore` | Phase 0 task 0.5 |
 | 2026-10-11 | Wrote the coordinator handbook (`docs/prompts/coordinator.md`) and saved the reviewed 0.5 Cursor prompt (`docs/prompts/task-0.5.md`) so a fresh Claude session can run the loop. Recorded the user's new authorisations (Supabase SQL, merging to `main` after checks, GA4 skipped, continue through Phases 1–3). First CLI run of 0.5 was stopped by the user after ~30 s; nothing changed | `docs/prompts/`, `docs/05-build-plan.md`, `docs/README.md`, `PROJECT-LOG.md` | Hand-off to a new context window |
 | 2026-10-11 | Dev database: user created Supabase project `jai-shree-dev` (ref `icbamz…`), loaded `schema.sql`, added an admin user, and pointed `jai-shree-multisite/.env.local` at it. Checked: not the live project; tables respond; anon cannot read leads; anon page-view insert works. No Resend key in this folder, so test enquiries send no email. `ADMIN_EMAILS` still empty (admin panel locked until the user adds their email). Live site and `jai-shree-group/.env.local` stay on the live project | `.env.local` (not committed) | Test forms and migrations without touching the client's real data |

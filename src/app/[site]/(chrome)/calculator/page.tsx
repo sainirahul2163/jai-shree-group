@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { OpenAreaCalculator } from "@/components/calculator/OpenAreaCalculator";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { CALCULATOR_FAQS } from "@/data/calculator-faqs";
+import { siteFromParams, type SiteParams } from "@/sites/params";
 
 export const metadata: Metadata = {
   title: "Perforated Sheet Open Area Calculator | Jai Shree Group",
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CalculatorPage() {
+export default async function CalculatorPage({ params }: SiteParams) {
+  const site = await siteFromParams(params);
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -34,6 +36,7 @@ export default function CalculatorPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <BreadcrumbSchema
+        site={site}
         items={[
           { name: "Home", path: "/" },
           { name: "Calculator", path: "/calculator" },

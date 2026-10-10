@@ -1,11 +1,22 @@
-import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
-import { ALL_SITES, findSite } from "@/sites";
+import { GlobalSchema } from "@/components/seo/GlobalSchema";
+import { siteMetadata } from "@/lib/seo";
+import { ALL_SITES } from "@/sites";
+import { siteFromParams } from "@/sites/params";
 import { themeCss } from "@/sites/theme-vars";
 
 // One static build per configured site; the proxy rewrites each host to /<key>/….
 export function generateStaticParams() {
   return ALL_SITES.map((site) => ({ site: site.key }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ site: string }>;
+}): Promise<Metadata> {
+  return siteMetadata(await siteFromParams(params));
 }
 
 export default async function SiteLayout({
@@ -15,12 +26,11 @@ export default async function SiteLayout({
   children: React.ReactNode;
   params: Promise<{ site: string }>;
 }) {
-  const { site: key } = await params;
-  const site = findSite(key);
-  if (!site) notFound();
+  const site = await siteFromParams(params);
 
   return (
     <>
+      <GlobalSchema site={site} />
       <style>{themeCss(site.theme)}</style>
       {children}
     </>

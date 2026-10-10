@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ContactPage } from "@/components/contact/ContactPage";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { ContactPageSchema } from "@/components/seo/ContactPageSchema";
+import { siteFromParams, type SiteParams } from "@/sites/params";
 
 export const metadata: Metadata = {
   title: "Contact Jai Shree Group | Perforated Sheet Manufacturers Pune",
@@ -20,11 +21,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Contact() {
+export default async function Contact({ params }: SiteParams) {
+  const site = await siteFromParams(params);
+
   return (
     <>
-      <ContactPageSchema />
+      <ContactPageSchema site={site} />
       <BreadcrumbSchema
+        site={site}
         items={[
           { name: "Home", path: "/" },
           { name: "Contact", path: "/contact" },

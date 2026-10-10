@@ -13,43 +13,49 @@ import { LandingStats } from "@/components/landing/LandingStats";
 import { LandingStory } from "@/components/landing/LandingStory";
 import { LandingTestimonials } from "@/components/landing/LandingTestimonials";
 import { ScrollProgress } from "@/components/landing/ScrollProgress";
-import { COMPANY } from "@/lib/constants";
+import { siteFromParams, type SiteParams } from "@/sites/params";
 
 const TITLE = "Jai Shree Group — Accept Challenges, Develop, Achieve | Since 1970";
 const DESCRIPTION =
   "ISO 9001:2015 certified perforated sheet manufacturers in Pune & Mumbai. 50+ years. 6 manufacturing units. Export & global delivery. CNC perforation, fiber laser cutting.";
 
-export const metadata: Metadata = {
-  title: TITLE,
-  description: DESCRIPTION,
-  keywords: [
-    "perforated sheet manufacturers Pune",
-    "laser cutting Mumbai",
-    "expanded metal manufacturers",
-    "ISO certified metal fabrication",
-  ],
-  alternates: {
-    canonical: `${COMPANY.website}/`,
-  },
-  robots: {
-    index: false,
-    follow: false,
-  },
-  openGraph: {
+export async function generateMetadata({
+  params,
+}: SiteParams): Promise<Metadata> {
+  const site = await siteFromParams(params);
+
+  return {
     title: TITLE,
     description: DESCRIPTION,
-    url: `${COMPANY.website}/landing`,
-    siteName: COMPANY.name,
-    type: "website",
-    locale: "en_IN",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-};
+    keywords: [
+      "perforated sheet manufacturers Pune",
+      "laser cutting Mumbai",
+      "expanded metal manufacturers",
+      "ISO certified metal fabrication",
+    ],
+    alternates: {
+      canonical: `${site.origin}/`,
+    },
+    robots: {
+      index: false,
+      follow: false,
+    },
+    openGraph: {
+      title: TITLE,
+      description: DESCRIPTION,
+      url: `${site.origin}/landing`,
+      siteName: site.name,
+      type: "website",
+      locale: "en_IN",
+      images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: TITLE,
+      description: DESCRIPTION,
+    },
+  };
+}
 
 export default function LandingPage() {
   return (

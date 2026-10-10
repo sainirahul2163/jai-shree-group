@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { GetQuotePage } from "@/components/quote/GetQuotePage";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { siteFromParams, type SiteParams } from "@/sites/params";
 
 export const metadata: Metadata = {
   title:
@@ -13,10 +14,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function GetQuote() {
+export default async function GetQuote({ params }: SiteParams) {
+  const site = await siteFromParams(params);
+
   return (
     <>
       <BreadcrumbSchema
+        site={site}
         items={[
           { name: "Home", path: "/" },
           { name: "Get Quote", path: "/get-quote" },
