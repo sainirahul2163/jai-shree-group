@@ -47,12 +47,12 @@ Status: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 
 | Requirement | Status |
 | --- | --- |
-| Correct the cleanup branch `claude/pensive-feynman-t9pehu` (unit products, welded mesh at Shree Weld Mesh) and merge | ✅ merged to `main` and pushed (`2f4daec`) — ⛔ **not live**: Vercel is not deploying from GitHub pushes (see Current status) |
-| New phones on the live site: Jai Shree Metal Perforators +91 93733 24492; Jai Shree Industries and Jai Shree Perforator +91 89089 21111 | ⛔ on `main`, waiting for a Vercel deploy |
-| Weekly holidays on the contact page (Thursday Pune, Sunday Mumbai) | ⛔ on `main`, waiting for a Vercel deploy |
-| Hide website links to units without a working site (4 units pointed at a dead or wrong domain) | ⛔ on `main`, waiting for a Vercel deploy |
-| Fix the location map (CARTO tiles needed an API key) | ⛔ on `main`, waiting for a Vercel deploy |
-| Get Vercel deploying again (reconnect GitHub or deploy from the account that owns jaishreegroup.com) | ⛔ needs the owner of the Vercel project |
+| Correct the cleanup branch `claude/pensive-feynman-t9pehu` (unit products, welded mesh at Shree Weld Mesh) and merge | ✅ live 2026-10-11 |
+| New phones on the live site: Jai Shree Metal Perforators +91 93733 24492; Jai Shree Industries and Jai Shree Perforator +91 89089 21111 | ✅ live 2026-10-11 |
+| Weekly holidays on the contact page (Thursday Pune, Sunday Mumbai) | ✅ live 2026-10-11 |
+| Hide website links to units without a working site (4 units pointed at a dead or wrong domain) | ✅ live 2026-10-11 |
+| Fix the location map (CARTO tiles needed an API key) | ✅ live 2026-10-11 |
+| Get Vercel deploying again from GitHub | ✅ reconnected by the user 2026-10-11; pushes to `main` deploy automatically (Vercel team `jai-shree-s-projects`) |
 | Merge `main` into `multi-site` | ✅ `d65a458`, build passes |
 
 ### Phase 0 — Platform (weeks 1–2)
@@ -91,11 +91,10 @@ Unit logos, working hours, contact names, unit photos, client names, case studie
 
 ## 4. Current status
 
-**Where we are (2026-10-10):** planning finished and approved. Step 0 fixes are on `main` (`2f4daec`) and merged into `multi-site`, **but not live**: the Vercel project for jaishreegroup.com is not deploying GitHub pushes (live site is missing the 2026-08-24 commit too) and it belongs to a Vercel account not logged in here. `multi-site` is committed locally, not pushed.
+**Where we are (2026-10-11):** Step 0 is live on jaishreegroup.com (deploy `5035e14`, checked: new phones, holidays, unit products, no links to dead domains, map loads OpenStreetMap tiles). Vercel deploys automatically again on every push to `main`. `multi-site` has the Step 0 code merged; committed locally, not pushed. Building (Phase 0) has not started.
 
 **Next:**
-1. Owner of the Vercel project deploys `main` (Redeploy in the dashboard, or reconnect Git, or `vercel --prod` logged in as that account), then check the live site.
-2. Phase 0.1 baseline screenshots.
+1. Phase 0.1 baseline screenshots of the live main site.
 
 **Open points:**
 - Welded mesh: the agency said on 2026-10-02 it was discontinued; the client's approved answers say Shree Weld Mesh makes it. We follow the client.
@@ -108,6 +107,7 @@ Newest first. One row per change. "Files" lists what changed (folder-relative).
 
 | Date | Change | Files | Why |
 | --- | --- | --- | --- |
+| 2026-10-11 | Step 0 is live. User reconnected Vercel to GitHub; pushed an empty commit `5035e14` to trigger the deploy; Vercel status success. Checked the live site: new phones, Sunday/Thursday holidays, Welded Mesh and Ready Stock on Our Group, no jaishreefiltration.com links, no old phones, map loads 9/9 OpenStreetMap tiles. The 2026-08-23/24 commits (hex hero background, brochure Industries pages) also went live with it. Only remaining "wire mesh" text is the 1970 history line (allowed) | `jai-shree-group` `main` | User asked to redeploy after reconnecting |
 | 2026-10-10 | Merged `main` (with Step 0) into `multi-site` (`d65a458`); build passes. Not pushed | `multi-site` branch | Keep the build branch on the latest live code |
 | 2026-10-10 | Committed Step 0 (`2f4daec`, author = GitHub no-reply email), fast-forwarded `main`, build passed, pushed to GitHub. **Not deployed**: no Vercel status on the commit; GitHub's last deployment record is 2026-08-02; live `/brochure/icons` (added 2026-08-24) is 404. Local Vercel CLI is logged in to TrackHive, which has no Jai Shree project | `jai-shree-group` `main` | User approved commit and push live |
 | 2026-10-10 | Fixed the location map (home page and Our Group page): CARTO's dark map tiles now require an API key and showed "API KEY REQUIRED". Switched to OpenStreetMap tiles (no key, credit shown) darkened with a CSS filter; Leaflet CSS now bundled instead of loaded from unpkg; "Our Locations" label no longer hidden behind the map; Mumbai pin text no longer says "filtration sectors". Checked in the browser: all tiles load, no console errors. Not committed (on `step-0-live-fixes`) | `jai-shree-group`: `src/components/shared/IndiaMap.tsx` | User reported the map was not working |
