@@ -27,7 +27,7 @@ export function LocationPageClient({ data }: LocationPageClientProps) {
     <>
       <PageHero title={data.h1} subtitle={data.intro[0]} />
 
-      <section className="section-padding" style={{ backgroundColor: "#111111" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
             <motion.div
@@ -38,7 +38,7 @@ export function LocationPageClient({ data }: LocationPageClientProps) {
             >
               <h2
                 className="text-2xl font-black"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: "var(--foreground)" }}
               >
                 {data.productName} in {data.cityName}
               </h2>
@@ -47,7 +47,7 @@ export function LocationPageClient({ data }: LocationPageClientProps) {
                   <p
                     key={para.slice(0, 40)}
                     className="text-base leading-relaxed"
-                    style={{ color: "#A0A0A0" }}
+                    style={{ color: "var(--text-secondary)" }}
                   >
                     {para}
                   </p>
@@ -57,28 +57,28 @@ export function LocationPageClient({ data }: LocationPageClientProps) {
               <div
                 className="mt-8 rounded-xl border p-6"
                 style={{
-                  backgroundColor: "#0A0A0A",
-                  borderColor: "#2A2A2A",
+                  backgroundColor: "var(--background)",
+                  borderColor: "var(--border)",
                 }}
               >
                 <p
                   className="text-xs font-semibold uppercase tracking-wider"
-                  style={{ color: "#E8521A" }}
+                  style={{ color: "var(--brand-text)" }}
                 >
                   Our {data.cityName} Facility
                 </p>
                 <h3
                   className="mt-2 text-lg font-bold"
-                  style={{ color: "#FFFFFF" }}
+                  style={{ color: "var(--foreground)" }}
                 >
                   {data.facilityName}
                 </h3>
                 <div className="mt-3 flex items-start gap-2">
                   <MapPin
                     className="mt-0.5 size-4 shrink-0"
-                    style={{ color: "#E8521A" }}
+                    style={{ color: "var(--brand-text)" }}
                   />
-                  <p className="text-base" style={{ color: "#A0A0A0" }}>
+                  <p className="text-base" style={{ color: "var(--text-secondary)" }}>
                     {data.facilityAddress}
                   </p>
                 </div>
@@ -100,7 +100,7 @@ export function LocationPageClient({ data }: LocationPageClientProps) {
               viewport={{ once: true }}
               transition={{ delay: 0.1, duration: 0.6 }}
               className="overflow-hidden rounded-xl border"
-              style={{ borderColor: "#2A2A2A" }}
+              style={{ borderColor: "var(--border)" }}
             >
               <iframe
                 src={data.mapEmbedUrl}
@@ -117,13 +117,13 @@ export function LocationPageClient({ data }: LocationPageClientProps) {
         </div>
       </section>
 
-      <section className="section-padding" style={{ backgroundColor: "#0A0A0A" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--background)" }}>
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
             <div>
               <h2
                 className="mb-6 text-2xl font-black"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: "var(--foreground)" }}
               >
                 Products Available
               </h2>
@@ -133,9 +133,9 @@ export function LocationPageClient({ data }: LocationPageClientProps) {
                     key={item}
                     className="rounded-lg border px-4 py-3 text-base"
                     style={{
-                      backgroundColor: "#111111",
-                      borderColor: "#2A2A2A",
-                      color: "#A0A0A0",
+                      backgroundColor: "var(--surface)",
+                      borderColor: "var(--border)",
+                      color: "var(--text-secondary)",
                     }}
                   >
                     {item}
@@ -143,7 +143,7 @@ export function LocationPageClient({ data }: LocationPageClientProps) {
                 ))}
               </ul>
               {product && (
-                <Button asChild variant="outline" className="mt-6 border-[#2A2A2A]">
+                <Button asChild variant="outline" className="mt-6 border-border">
                   <Link href={`/products/${data.productSlug}`}>
                     View {data.productName} Details
                     <ArrowRight className="ml-2 size-4" />
@@ -155,7 +155,7 @@ export function LocationPageClient({ data }: LocationPageClientProps) {
             <div>
               <h2
                 className="mb-6 text-2xl font-black"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: "var(--foreground)" }}
               >
                 Industries Served in {data.cityName}
               </h2>
@@ -165,9 +165,9 @@ export function LocationPageClient({ data }: LocationPageClientProps) {
                     key={industry}
                     className="rounded-full border px-4 py-2 text-sm font-semibold"
                     style={{
-                      borderColor: "#E8521A",
-                      color: "#E8521A",
-                      backgroundColor: "rgba(232, 82, 26, 0.1)",
+                      borderColor: "var(--brand)",
+                      color: "var(--brand-text)",
+                      backgroundColor: "color-mix(in oklab, var(--brand) 10%, transparent)",
                     }}
                   >
                     {industry}
@@ -179,33 +179,33 @@ export function LocationPageClient({ data }: LocationPageClientProps) {
         </div>
       </section>
 
-      <section className="section-padding" style={{ backgroundColor: "#111111" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
         <div className="mx-auto max-w-7xl">
           <h2
             className="mb-8 text-2xl font-black"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             Specifications
           </h2>
-          <div className="overflow-x-auto rounded-xl border" style={{ borderColor: "#2A2A2A" }}>
+          <div className="overflow-x-auto rounded-xl border" style={{ borderColor: "var(--border)" }}>
             <table className="w-full text-left text-base">
               <tbody>
                 {data.specs.map((spec, index) => (
                   <tr
                     key={spec.label}
                     style={{
-                      backgroundColor: index % 2 === 0 ? "#0A0A0A" : "#111111",
+                      backgroundColor: index % 2 === 0 ? "var(--background)" : "var(--surface)",
                     }}
                   >
                     <th
                       className="px-6 py-4 font-semibold"
-                      style={{ color: "#FFFFFF", width: "40%" }}
+                      style={{ color: "var(--foreground)", width: "40%" }}
                     >
                       {spec.label}
                     </th>
                     <td
                       className="px-6 py-4"
-                      style={{ color: "#A0A0A0" }}
+                      style={{ color: "var(--text-secondary)" }}
                     >
                       {spec.value}
                     </td>
@@ -217,11 +217,11 @@ export function LocationPageClient({ data }: LocationPageClientProps) {
         </div>
       </section>
 
-      <section className="section-padding" style={{ backgroundColor: "#0A0A0A" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--background)" }}>
         <div className="mx-auto max-w-3xl">
           <h2
             className="mb-8 text-2xl font-black"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             Frequently Asked Questions
           </h2>
@@ -232,19 +232,19 @@ export function LocationPageClient({ data }: LocationPageClientProps) {
                 value={`faq-${index}`}
                 className="rounded-xl border px-4"
                 style={{
-                  backgroundColor: "#111111",
-                  borderColor: "#2A2A2A",
+                  backgroundColor: "var(--surface)",
+                  borderColor: "var(--border)",
                 }}
               >
                 <AccordionTrigger
                   className="text-left text-base font-semibold hover:no-underline"
-                  style={{ color: "#FFFFFF" }}
+                  style={{ color: "var(--foreground)" }}
                 >
                   {faq.q}
                 </AccordionTrigger>
                 <AccordionContent
                   className="text-base leading-relaxed"
-                  style={{ color: "#A0A0A0" }}
+                  style={{ color: "var(--text-secondary)" }}
                 >
                   {faq.a}
                 </AccordionContent>
@@ -255,17 +255,17 @@ export function LocationPageClient({ data }: LocationPageClientProps) {
       </section>
 
       {product && (
-        <section className="section-padding" style={{ backgroundColor: "#111111" }}>
+        <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
           <div className="mx-auto max-w-2xl">
             <h2
               className="mb-2 text-center text-2xl font-black"
-              style={{ color: "#FFFFFF" }}
+              style={{ color: "var(--foreground)" }}
             >
               Get a Quote for {data.productName} in {data.cityName}
             </h2>
             <p
               className="mb-8 text-center text-base"
-              style={{ color: "#A0A0A0" }}
+              style={{ color: "var(--text-secondary)" }}
             >
               Fill in your requirements and we&apos;ll respond within 24 hours.
             </p>
