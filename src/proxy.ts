@@ -4,7 +4,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { isAdminEmail } from "@/lib/admin";
 import { getSupabaseAnonKey, getSupabaseUrl } from "@/lib/supabase/env";
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   let response = NextResponse.next({ request: req });
 
   if (!getSupabaseUrl() || !getSupabaseAnonKey()) {
