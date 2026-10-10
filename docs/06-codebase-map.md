@@ -8,7 +8,7 @@ Next.js 16.2.7 (App Router) · React 19.2.4 · TypeScript · Tailwind CSS v4 + s
 
 ## Routes
 
-Public:
+Public (since task 0.5 every public page lives under `src/app/[site]/`; the proxy rewrites `host + /path` to `/<site-key>/path`, so visitors see the same URLs as before):
 
 | Route | Notes |
 | --- | --- |
@@ -28,17 +28,31 @@ Admin (protected by `src/proxy.ts` — renamed from `middleware.ts` in task 0.2 
 
 API: `/api/quote`, `/api/contact` (save lead + Resend email), `/api/track` (page views), `/api/health`.
 
-Also: `src/app/sitemap.ts`, `src/app/robots.ts`, `layout.tsx` (fonts, static metadata, `GlobalSchema`, `SiteChrome`), `error.tsx`, `loading.tsx`, `not-found.tsx`.
+Route tree (task 0.5):
+
+| Path | What |
+| --- | --- |
+| `src/app/layout.tsx` | `<html>`, `<body>`, Geist fonts, the group's static metadata, `GlobalSchema`. No chrome |
+| `src/app/[site]/layout.tsx` | Checks the site key (`findSite`; unknown or not-yet-built → 404), writes the site's theme variables on `:root` (`src/sites/theme-vars.ts`), `generateStaticParams` = configured sites |
+| `src/app/[site]/(chrome)/` | Route group with `SiteChrome` (Navbar, main, Footer, WhatsApp, tracker): home, about, group, products, industries, calculator, gallery, clients, certifications, contact, get-quote, blog, pune/*, mumbai/*; plus `error.tsx`, `loading.tsx`, `not-found.tsx` for those pages |
+| `src/app/[site]/landing/`, `src/app/[site]/brochure/` | Outside `(chrome)`: no Navbar/Footer, as before |
+| `src/app/[site]/[...rest]/page.tsx` + `[site]/not-found.tsx` | Unmatched paths: real 404 status with the chrome (kept outside every `loading.tsx`, which would stream a 200) |
+| `src/app/not-found.tsx`, `error.tsx` | Root fallbacks (admin, unknown site); `admin/loading.tsx` keeps the admin loading screen |
+| `src/app/sitemap.ts`, `src/app/robots.ts` | Still at the root (group only) until task 0.6 |
+| `src/proxy.ts` | Admin gate (unchanged) on `/admin*`; `x-site` header on `/api*`; host → site rewrite for every other path. Not run for `_next`, `sitemap.xml`, `robots.txt` or any path ending in a file extension (icons, `public/`) |
+
+Host → site: production hosts from `src/sites/domains.ts`; `<key>.localhost` locally; any other host (plain localhost, Vercel previews) is `group` unless `?site=<key>` chose one (kept in a `site` cookie; ignored on production domains). A path that already starts with a site key (`/group/about`) 404s.
 
 ## Where things live
 
 | Path | What |
 | --- | --- |
-| `src/sites/` | Site config (task 0.3): `types.ts`, `domains.ts` (host → key, no imports), `group.ts` (group values), `index.ts` (`getSite`, `ALL_SITES`, `isSiteKey`). Unit site files are not created yet |
+| `src/sites/` | Site config (task 0.3): `types.ts`, `domains.ts` (host → key, no imports), `keys.ts` (`SITE_KEYS`, `isSiteKey`; used by the proxy), `group.ts` (group values), `index.ts` (`getSite`, `findSite`, `ALL_SITES`, `isSiteKey`), `theme-vars.ts` (theme → `:root` CSS). Unit site files are not created yet |
 | `src/lib/constants.ts` | Re-exports `SITE_URL`, `COMPANY`, `NAV_LINKS`, `FOOTER`, `SEO` from `src/sites/group.ts`. Still defines `BRANCHES`, `PRODUCTS`, `MATERIALS`, `INDUSTRIES`, `HOME_SECTIONS`, `DESIGN_TOKENS`, `GALLERY_CATEGORIES` |
 | `src/data/` | `products.ts`, `industries.ts`, `locations.ts`, `blog-posts.ts`, `about.ts`, `landing.ts`, `branches.ts` (products per unit — **out of date**; correct list in `docs/client/answers-2026-10-07.md`), `brochure.ts`, `calculator-faqs.ts` |
 | `src/components/<feature>/` | One folder per page area: home (11), landing (14), products (6), admin (11), brochure (7), shared (6), layout (4), seo (4), ui (12 shadcn), and one each for about, calculator, quote, contact, gallery, group, industries, location, clients, certifications, blog |
-| `src/components/layout/SiteChrome.tsx` | Shows Navbar/Footer/WhatsApp/tracker except on `/admin`, `/landing`, `/brochure` |
+| `src/components/layout/SiteChrome.tsx` | Navbar, main, Footer, WhatsApp button, page tracker (server component; used by `[site]/(chrome)/layout.tsx` and `[site]/not-found.tsx`) |
+| `src/components/status/` | 404, error and loading views shared by the root and `[site]` route files |
 | `src/lib/supabase/` | Clients (server, browser, anon, route), queries, server actions, `schema.sql`, `migrations/` |
 | `src/lib/email.ts` | Resend HTML templates; the orange header uses `group.theme.brand` |
 | `src/lib/admin.ts` | `ADMIN_EMAILS` allow-list check |

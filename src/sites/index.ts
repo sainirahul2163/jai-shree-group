@@ -1,5 +1,6 @@
 import { domains } from "@/sites/domains";
 import { group } from "@/sites/group";
+import { isSiteKey } from "@/sites/keys";
 import type { SiteConfig, SiteKey } from "@/sites/types";
 
 // Fail the build if a hostname in domains.ts is not a SiteKey.
@@ -9,19 +10,7 @@ const CONFIGURED: Partial<Record<SiteKey, SiteConfig>> = {
   group,
 };
 
-const SITE_KEYS: readonly SiteKey[] = [
-  "group",
-  "shree-perforators",
-  "jai-shree-metal-perforators",
-  "jai-shree-industries",
-  "jai-shree-perforator",
-  "jai-shree-filtration",
-  "shree-weld-mesh",
-];
-
-export function isSiteKey(value: string): value is SiteKey {
-  return (SITE_KEYS as readonly string[]).includes(value);
-}
+export { isSiteKey };
 
 export function getSite(key: SiteKey): SiteConfig {
   const site = CONFIGURED[key];
@@ -29,6 +18,11 @@ export function getSite(key: SiteKey): SiteConfig {
     throw new Error(`No site config for "${key}" yet`);
   }
   return site;
+}
+
+/** The config for a key, or undefined when the key is unknown or not built yet. */
+export function findSite(key: string): SiteConfig | undefined {
+  return isSiteKey(key) ? CONFIGURED[key] : undefined;
 }
 
 /** Configs that exist today. The six unit sites are not created yet. */

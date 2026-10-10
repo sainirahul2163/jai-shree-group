@@ -58,3 +58,6 @@ scripts/gallery-restyle/venv/
 /docs/research/baseline/
 /docs/research/after-*/
 !.env.example
+
+# Claude Code local settings (personal permissions)
+/.claude/settings.local.json

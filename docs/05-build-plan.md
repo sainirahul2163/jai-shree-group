@@ -47,10 +47,10 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 - [x] Three.js and canvas components read `--brand` at runtime.
 
 0.5 **Route move**
-- [ ] Move public routes into `src/app/[site]/`. Keep `admin/` and `api/` at the root.
-- [ ] `[site]/layout.tsx`: theme variables, fonts, Navbar, Footer, WhatsApp button, page tracker (replaces `SiteChrome` logic; keep the `/landing` and `/brochure` no-chrome behaviour).
-- [ ] Proxy rewrites host → `/${key}${pathname}`; local `*.localhost` and preview `?site=` work.
-- [ ] Group-only routes (`group`, `calculator`, `brochure`, `landing`, `pune/*`, `mumbai/*`, `blog`, `clients`, `certifications`) are listed only in `group.pages`.
+- [x] Move public routes into `src/app/[site]/`. Keep `admin/` and `api/` at the root.
+- [x] `[site]/layout.tsx`: theme variables, fonts, Navbar, Footer, WhatsApp button, page tracker (replaces `SiteChrome` logic; keep the `/landing` and `/brochure` no-chrome behaviour).
+- [x] Proxy rewrites host → `/${key}${pathname}`; local `*.localhost` and preview `?site=` work.
+- [x] Group-only routes (`group`, `calculator`, `brochure`, `landing`, `pune/*`, `mumbai/*`, `blog`, `clients`, `certifications`) are listed only in `group.pages`.
 
 0.6 **Per-site SEO**
 - [ ] `generateMetadata` in `[site]/layout.tsx` and pages read `config.seo` and `config.origin` (canonical, Open Graph, alternates).

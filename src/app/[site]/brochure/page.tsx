@@ -17,11 +17,11 @@ import "./brochure.css";
  */
 const sans = localFont({
   src: [
-    { path: "../../../public/fonts/canva/inter-400.woff2", weight: "400", style: "normal" },
-    { path: "../../../public/fonts/canva/inter-500.woff2", weight: "500", style: "normal" },
-    { path: "../../../public/fonts/canva/inter-600.woff2", weight: "600", style: "normal" },
-    { path: "../../../public/fonts/canva/inter-700.woff2", weight: "700", style: "normal" },
-    { path: "../../../public/fonts/canva/inter-800.woff2", weight: "800", style: "normal" },
+    { path: "../../../../public/fonts/canva/inter-400.woff2", weight: "400", style: "normal" },
+    { path: "../../../../public/fonts/canva/inter-500.woff2", weight: "500", style: "normal" },
+    { path: "../../../../public/fonts/canva/inter-600.woff2", weight: "600", style: "normal" },
+    { path: "../../../../public/fonts/canva/inter-700.woff2", weight: "700", style: "normal" },
+    { path: "../../../../public/fonts/canva/inter-800.woff2", weight: "800", style: "normal" },
   ],
   variable: "--js-sans-face",
   display: "block",
@@ -29,8 +29,8 @@ const sans = localFont({
 
 const mono = localFont({
   src: [
-    { path: "../../../public/fonts/canva/robotomono-400.woff2", weight: "400", style: "normal" },
-    { path: "../../../public/fonts/canva/robotomono-700.woff2", weight: "700", style: "normal" },
+    { path: "../../../../public/fonts/canva/robotomono-400.woff2", weight: "400", style: "normal" },
+    { path: "../../../../public/fonts/canva/robotomono-700.woff2", weight: "700", style: "normal" },
   ],
   variable: "--js-mono-face",
   display: "block",

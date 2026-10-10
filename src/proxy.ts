@@ -3,8 +3,11 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { isAdminEmail } from "@/lib/admin";
 import { getSupabaseAnonKey, getSupabaseUrl } from "@/lib/supabase/env";
+import { domains } from "@/sites/domains";
+import { isSiteKey } from "@/sites/keys";
+import type { SiteKey } from "@/sites/types";
 
-export async function proxy(req: NextRequest) {
+async function adminGate(req: NextRequest) {
   let response = NextResponse.next({ request: req });
 
   if (!getSupabaseUrl() || !getSupabaseAnonKey()) {
@@ -64,6 +67,67 @@ export async function proxy(req: NextRequest) {
   return response;
 }
 
+const SITE_COOKIE = "site";
+const LOCAL_SUFFIX = ".localhost";
+
+/**
+ * Host → site key. Production hosts come from domains.ts; `<key>.localhost`
+ * selects a site locally. Any other host (plain localhost, Vercel previews)
+ * is the group site unless `?site=<key>` chose one — remembered in a cookie.
+ * Production domains never honour the query or the cookie.
+ */
+function resolveSite(req: NextRequest): { key: SiteKey; remember?: SiteKey } {
+  const host = (req.headers.get("host") ?? "").split(":")[0].toLowerCase();
+
+  const production = (domains as Record<string, SiteKey>)[host];
+  if (production) return { key: production };
+
+  if (host.endsWith(LOCAL_SUFFIX)) {
+    const sub = host.slice(0, -LOCAL_SUFFIX.length);
+    if (isSiteKey(sub)) return { key: sub };
+  }
+
+  const query = req.nextUrl.searchParams.get("site");
+  if (query && isSiteKey(query)) return { key: query, remember: query };
+
+  const cookie = req.cookies.get(SITE_COOKIE)?.value;
+  if (cookie && isSiteKey(cookie)) return { key: cookie };
+
+  return { key: "group" };
+}
+
+export async function proxy(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+
+  if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+    return adminGate(req);
+  }
+
+  const { key, remember } = resolveSite(req);
+
+  let response: NextResponse;
+  if (pathname === "/api" || pathname.startsWith("/api/")) {
+    // API routes stay at the root; they read the site from this header.
+    const headers = new Headers(req.headers);
+    headers.set("x-site", key);
+    response = NextResponse.next({ request: { headers } });
+  } else {
+    // Every page lives under /<key>. A path that already names a site
+    // (/group/about, /shree-perforators) becomes /<key>/<that path> and 404s,
+    // so one site is never reachable under another site's domain.
+    const url = req.nextUrl.clone();
+    url.pathname = `/${key}${pathname === "/" ? "" : pathname}`;
+    response = NextResponse.rewrite(url);
+  }
+
+  if (remember) {
+    response.cookies.set(SITE_COOKIE, remember, { path: "/", sameSite: "lax" });
+  }
+  return response;
+}
+
 export const config = {
-  matcher: ["/admin/:path*"],
+  // Everything except Next internals, the root sitemap/robots, and files
+  // (anything whose last segment has a dot: icons, public/ assets).
+  matcher: ["/((?!_next/|__nextjs|sitemap\\.xml$|robots\\.txt$|.*\\.[^/]+$).*)"],
 };

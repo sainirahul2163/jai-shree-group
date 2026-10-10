@@ -33,6 +33,24 @@ Cursor's own work diary for the Jai Shree Group multi-site build. **Cursor write
 
 ## Entries
 
+### 2026-10-11 — 0.5 Route move (done by Claude, not Cursor)
+
+- **Status:** ✅ done
+- **What I did:** (Claude Code. The Cursor CLI run was refused by Claude Code's auto-mode permission check, so Claude did this task directly.)
+  - Moved every public page into `src/app/[site]/`. Pages with the site chrome sit in the route group `[site]/(chrome)/`; `landing/` and `brochure/` sit beside it and keep drawing their own chrome. Fixed the brochure font paths (one folder deeper).
+  - `[site]/layout.tsx`: validates the key with `findSite` (unknown or not-yet-built site → 404), writes the theme variables on `:root` from `config.theme` (`src/sites/theme-vars.ts`, including the shadcn aliases), `generateStaticParams` = configured sites (group only), so pages stay static. ISR settings unchanged.
+  - `SiteChrome` is now a server component used by `(chrome)/layout.tsx` and `[site]/not-found.tsx`. 404/error/loading views moved to `src/components/status/` and are used by both the root and `[site]` route files.
+  - Unmatched paths go to `[site]/[...rest]` (calls `notFound()`), outside every `loading.tsx`, so they keep a real 404 status with the chrome. Root `loading.tsx` removed (it streamed a 200 for every 404); loading screens kept in `(chrome)`, `landing`, `brochure` and `admin`.
+  - `src/proxy.ts`: admin gate unchanged (now runs for `/admin` and `/admin/*`); `/api/*` gets an `x-site` request header; every other path is rewritten to `/<key><path>`. Host → key from `domains.ts`; `<key>.localhost` locally; other hosts → `group` unless `?site=<key>` (cookie `site`; never on production domains). Matcher skips `_next`, `sitemap.xml`, `robots.txt` and any path ending in a file extension. New `src/sites/keys.ts` (no config imports) for the proxy; `findSite` in `src/sites/index.ts`.
+  - `PageViewTracker` reads `window.location.pathname`, so page views store the visible URL, not `/group/...`.
+  - Root layout: `<html>`, `<body>`, fonts, metadata and `GlobalSchema` unchanged; only the chrome left it.
+- **Files changed:** `src/app/[site]/**` (moved pages + new layouts, not-found, catch-all, loading/error files), `src/app/layout.tsx`, `src/app/not-found.tsx`, `src/app/error.tsx`, `src/app/admin/loading.tsx`, `src/proxy.ts`, `src/sites/index.ts`, `src/sites/keys.ts`, `src/sites/theme-vars.ts`, `src/components/layout/SiteChrome.tsx`, `src/components/status/*`, `src/components/shared/PageViewTracker.tsx`, `docs/06-codebase-map.md`, `docs/decisions.md`, `docs/05-build-plan.md`, `PROJECT-LOG.md`, `CURSOR-LOG.md`, `.gitignore` (user's line for `.claude/settings.local.json`)
+- **Checks:** lint ✅ unchanged (18 problems: 12 old errors, 6 warnings) · build ✅ · production server on 3100: `/`, `/contact`, `/products/perforated-sheets`, `/industries/automobile`, `/pune/perforated-sheet-manufacturers`, `/blog/expanded-metal-vs-perforated-sheet`, `/brochure`, `/brochure/icons`, `/landing`, `/group` → 200; `/does-not-exist`, `/this-page-does-not-exist`, `/group/about`, `/shree-perforators`, `/pune` → 404 with chrome; `/products/nope` → 200 soft 404 (same as live today); `/products/wire-mesh` → 308 `/products`; logged-out `/admin/dashboard` → 307 `/admin/login`; `/api/health` 200; `shree-perforators.localhost` → 404; `?site=` cookie works on localhost and is ignored on `www.jaishreegroup.com`. Sitemap identical except build-time `lastmod`; robots identical. Title/meta/canonical/hreflang tags of all 40 baseline pages identical. Pixel check of 7 pages × 2 widths: 0.00–0.14% (animated hero, landing, brochure flame) and 0.52% on mobile `/products/perforated-sheets` (rotating 3D sheet only); no height changes. Browser: client navigation home → contact works, no console errors, page views stored as `/` and `/contact` in jai-shree-dev.
+- **Commit:** "0.5 Move public pages under [site] and route by host" (this entry is part of that commit)
+- **Left to do in this task:** nothing
+- **Next task:** 0.6 Per-site SEO
+- **Questions / assumptions:** `next.config.ts` redirects (`/products/welded-mesh` → `/products` and the others) apply on every host; Shree Weld Mesh will need a host condition on them before its site goes live (Phase 3). `color-scheme` is not set per theme yet (would change form-control rendering on the group site); add it for the light sites.
+
 ### 2026-10-11 — 0.4 Theme tokens
 
 - **Status:** ✅ done

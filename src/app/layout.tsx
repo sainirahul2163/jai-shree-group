@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { GlobalSchema } from "@/components/seo/GlobalSchema";
-import { SiteChrome } from "@/components/layout/SiteChrome";
 import { COMPANY, SITE_URL } from "@/lib/constants";
 
 import "./globals.css";
@@ -106,7 +105,7 @@ export default function RootLayout({
         style={{ backgroundColor: "var(--background)", color: "var(--foreground)" }}
       >
         <GlobalSchema />
-        <SiteChrome>{children}</SiteChrome>
+        {children}
       </body>
     </html>
   );
