@@ -1,3 +1,5 @@
+import { group } from "@/sites/group";
+
 export {
   COMPANY,
   FOOTER,
@@ -361,15 +363,15 @@ export const SITE_ROUTES = {
 export { BLOG_POSTS } from "@/data/blog-posts";
 
 export const DESIGN_TOKENS = {
-  background: "#0A0A0A",
-  surface: "#111111",
-  surface2: "#1A1A1A",
-  border: "#2A2A2A",
-  primary: "#E8521A",
-  primaryHover: "#FF6B35",
-  textPrimary: "#FFFFFF",
-  textSecondary: "#A0A0A0",
-  textMuted: "#666666",
+  background: group.theme.background,
+  surface: group.theme.surface,
+  surface2: group.theme.surface2,
+  border: group.theme.border,
+  primary: group.theme.brand,
+  primaryHover: group.theme.brandHover,
+  textPrimary: group.theme.foreground,
+  textSecondary: group.theme.textSecondary,
+  textMuted: group.theme.textMuted,
 } as const;
 
 export const HOME_SECTIONS = {

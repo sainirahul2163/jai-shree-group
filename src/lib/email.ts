@@ -1,4 +1,5 @@
 import { COMPANY } from "@/lib/constants";
+import { group } from "@/sites/group";
 
 function escapeHtml(text: string): string {
   return text
@@ -15,8 +16,8 @@ function baseTemplate(title: string, body: string): string {
 <head><meta charset="utf-8"><title>${escapeHtml(title)}</title></head>
 <body style="font-family: Arial, sans-serif; background:#f5f5f5; padding:24px;">
   <div style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:8px;overflow:hidden;border:1px solid #e5e5e5;">
-    <div style="background:#E8521A;padding:20px 24px;">
-      <h1 style="margin:0;color:#ffffff;font-size:20px;">${escapeHtml(COMPANY.name)}</h1>
+    <div style="background:${group.theme.brand};padding:20px 24px;">
+      <h1 style="margin:0;color:${group.theme.brandForeground};font-size:20px;">${escapeHtml(COMPANY.name)}</h1>
       <p style="margin:8px 0 0;color:#ffe8de;font-size:14px;">${escapeHtml(title)}</p>
     </div>
     <div style="padding:24px;color:#333333;font-size:15px;line-height:1.6;">
