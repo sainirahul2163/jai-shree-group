@@ -36,7 +36,7 @@ src/
       page.tsx                # home: renders config.home sections in order
       products/…  industries/…  contact/…  get-quote/…  gallery/…  about/…
       export/  privacy/  terms/  tools/<tool>/
-      sitemap.ts              # → /<site>/sitemap.xml, proxy maps /sitemap.xml here
+      sitemap.xml/route.ts    # → /<site>/sitemap.xml, proxy maps /sitemap.xml here (route handler: Next's sitemap.ts cannot read [site])
       robots.txt/route.ts     # → /<site>/robots.txt, proxy maps /robots.txt here
       (group-only routes: group/, calculator/, brochure/, landing/, pune/, mumbai/, blog/ …)
     admin/                    # NOT under [site]; one panel for all sites
