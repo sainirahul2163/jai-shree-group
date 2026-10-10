@@ -24,7 +24,7 @@ Public:
 | `/landing` | Alternative marketing page, noindex, own chrome |
 | `/brochure`, `/brochure/icons` | Printable brochure (A4 pages), own chrome; `icons` is a comparison variant |
 
-Admin (protected by `src/middleware.ts` + `ADMIN_EMAILS` allow-list): `/admin/login`, `/admin/dashboard`, `/admin/leads`, `/admin/leads/[id]`, `/admin/blog`, `/admin/blog/new`, `/admin/blog/[id]`, `/admin/gallery`, `/admin/testimonials`, `/admin/settings`.
+Admin (protected by `src/proxy.ts` — renamed from `middleware.ts` in task 0.2 — + `ADMIN_EMAILS` allow-list): `/admin/login`, `/admin/dashboard`, `/admin/leads`, `/admin/leads/[id]`, `/admin/blog`, `/admin/blog/new`, `/admin/blog/[id]`, `/admin/gallery`, `/admin/testimonials`, `/admin/settings`.
 
 API: `/api/quote`, `/api/contact` (save lead + Resend email), `/api/track` (page views), `/api/health`.
 
@@ -51,7 +51,7 @@ Also: `src/app/sitemap.ts`, `src/app/robots.ts`, `layout.tsx` (fonts, static met
 - **Brand name:** "Jai Shree" appears in 62 files (copy, metadata, schema, emails).
 - **Static metadata:** `src/app/layout.tsx` and each page export fixed `metadata` objects with the group's titles and keywords.
 - **Origin:** `SITE_URL` defaults to `https://www.jaishreegroup.com`, which the client confirmed is correct (older docs saying `.in` are wrong). Move it into the `group` site config.
-- **Proxy:** `src/middleware.ts` uses the deprecated name.
+- **Proxy:** renamed to `src/proxy.ts` (task 0.2, 2026-10-11).
 - **3D and canvas:** `ProductViewer3D`, `DimpleSheet3D`, `MagneticHexBackground` set colours in JavaScript.
 
 ## Known issues carried over

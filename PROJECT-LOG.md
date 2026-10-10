@@ -59,7 +59,7 @@ Status: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 
 | Requirement | Status |
 | --- | --- |
-| Baseline screenshots of every main-site page | ⏳ |
+| Baseline screenshots of every main-site page | ✅ 80 screenshots + heads + SEO files; guide `docs/research/baseline.md` |
 | `middleware.ts` → `proxy.ts` | ✅ |
 | Site config per site (`src/sites/`) | ⏳ |
 | Colour tokens replace ~1,400 hard-coded colours | ⏳ |
@@ -94,7 +94,7 @@ Unit logos, working hours, contact names, unit photos, client names, case studie
 **Where we are (2026-10-11):** Step 0 is live on jaishreegroup.com (deploy `5035e14`, checked: new phones, holidays, unit products, no links to dead domains, map loads OpenStreetMap tiles). Vercel deploys automatically again on every push to `main`. Phase 0 task 0.2 is done on `multi-site` (`85f9286`, not pushed): `src/middleware.ts` is now `src/proxy.ts`. Task 0.1 baseline screenshots are still in progress.
 
 **Next:**
-1. Finish Phase 0.1 baseline screenshots, then Phase 0.3 site config.
+1. Phase 0.3 site config.
 
 **Open points:**
 - Welded mesh: the agency said on 2026-10-02 it was discontinued; the client's approved answers say Shree Weld Mesh makes it. We follow the client.
@@ -107,6 +107,7 @@ Newest first. One row per change. "Files" lists what changed (folder-relative).
 
 | Date | Change | Files | Why |
 | --- | --- | --- | --- |
+| 2026-10-11 | 0.1 Baseline done (Claude): production build of `main` @ `5035e14`, 40 pages × desktop 1440 + phone 390 = 80 full-page screenshots, every page's `<head>`, local and live sitemap/robots — all pages 200/304, no console errors. Saved in `docs/research/baseline/` (git-ignored, 54 MB). Added reusable `scripts/baseline/capture.js` and `compare.js` (pixel diff per page) and the guide. Also: fixed the Cursor log rule so code and log go in one commit (Cursor's 0.2 log was left uncommitted), updated the codebase map for `proxy.ts` | `docs/research/baseline.md`, `scripts/baseline/`, `docs/05-build-plan.md`, `docs/06-codebase-map.md`, `CURSOR-LOG.md`, `.cursor/rules/05-cursor-log.mdc` | Phase 0 acceptance needs a before-picture |
 | 2026-10-11 | Renamed `src/middleware.ts` to `src/proxy.ts` and the export to `proxy` (Next.js 16). Admin gate unchanged: logged-out `/admin/dashboard` returns 307 to `/admin/login`. Commit `85f9286`, not pushed | `src/proxy.ts` | Phase 0 task 0.2 |
 | 2026-10-11 | Step 0 is live. User reconnected Vercel to GitHub; pushed an empty commit `5035e14` to trigger the deploy; Vercel status success. Checked the live site: new phones, Sunday/Thursday holidays, Welded Mesh and Ready Stock on Our Group, no jaishreefiltration.com links, no old phones, map loads 9/9 OpenStreetMap tiles. The 2026-08-23/24 commits (hex hero background, brochure Industries pages) also went live with it. Only remaining "wire mesh" text is the 1970 history line (allowed) | `jai-shree-group` `main` | User asked to redeploy after reconnecting |
 | 2026-10-10 | Merged `main` (with Step 0) into `multi-site` (`d65a458`); build passes. Not pushed | `multi-site` branch | Keep the build branch on the latest live code |

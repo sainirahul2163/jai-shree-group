@@ -28,8 +28,9 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 ## Phase 0 — Make the app multi-site (main site must look identical)
 
 0.1 **Baseline**
-- [ ] Run the current site locally and save full-page screenshots of every public route at 1440 px and 390 px wide into `docs/research/baseline/` (git-ignored if large). Routes: see `06-codebase-map.md` → Routes.
-- [ ] Save the current `sitemap.xml` and `robots.txt` output and the HTML `<head>` of `/`, `/products/perforated-sheets` and `/contact`.
+- [x] Run the current site locally and save full-page screenshots of every public route at 1440 px and 390 px wide into `docs/research/baseline/` (git-ignored if large). Routes: see `06-codebase-map.md` → Routes.
+- [x] Save the current `sitemap.xml` and `robots.txt` output and the HTML `<head>` of every page (not just three).
+- How to re-capture and compare after a change: `docs/research/baseline.md` (scripts in `scripts/baseline/`).
 
 0.2 **Proxy rename**
 - [x] Rename `src/middleware.ts` → `src/proxy.ts`, export `proxy`. Admin gate behaves exactly as before.
@@ -67,7 +68,7 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 - [ ] Google Analytics 4 per site (measurement ID in config) with events for quote submit, WhatsApp click, call click, tool use.
 
 **Phase 0 acceptance**
-- [ ] Every main-site route matches its baseline screenshot (no visible difference at 1440 px and 390 px).
+- [ ] Every main-site route matches its baseline screenshot (no visible difference at 1440 px and 390 px) — run `scripts/baseline/compare.js` as in `docs/research/baseline.md`.
 - [ ] `sitemap.xml`, `robots.txt` and the saved `<head>` tags are unchanged for the group site.
 - [ ] `grep -rniE "#e8521a|#ff6b35" src` finds matches only in `src/sites/`, `brochure/` and `admin/`.
 - [ ] A test lead from the group site lands in Supabase with `site = 'group'` and emails the override inbox.
