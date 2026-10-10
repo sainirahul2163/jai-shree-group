@@ -13,7 +13,7 @@ export function PageHero({ label, title, subtitle, badges }: PageHeroProps) {
   return (
     <section
       className="section-padding relative overflow-hidden pt-28 md:pt-32"
-      style={{ backgroundColor: "#0A0A0A" }}
+      style={{ backgroundColor: "var(--background)" }}
     >
       <div className="hex-grid-bg pointer-events-none absolute inset-0 opacity-[0.04]" />
       <div className="relative mx-auto max-w-7xl">
@@ -26,20 +26,20 @@ export function PageHero({ label, title, subtitle, badges }: PageHeroProps) {
           {label && (
             <p
               className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
-              style={{ color: "#E8521A" }}
+              style={{ color: "var(--brand-text)" }}
             >
               {label}
             </p>
           )}
           <h1
             className="text-4xl font-black tracking-tight sm:text-5xl"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             {title}
           </h1>
           <p
             className="mt-4 text-lg leading-relaxed sm:text-xl"
-            style={{ color: "#A0A0A0" }}
+            style={{ color: "var(--text-secondary)" }}
           >
             {subtitle}
           </p>
@@ -50,9 +50,9 @@ export function PageHero({ label, title, subtitle, badges }: PageHeroProps) {
                   key={badge.text}
                   className="rounded-full border px-4 py-1.5 text-sm font-semibold"
                   style={{
-                    borderColor: "#E8521A",
-                    color: "#E8521A",
-                    backgroundColor: "rgba(232, 82, 26, 0.1)",
+                    borderColor: "var(--brand)",
+                    color: "var(--brand-text)",
+                    backgroundColor: "color-mix(in oklab, var(--brand) 10%, transparent)",
                   }}
                 >
                   {badge.text}

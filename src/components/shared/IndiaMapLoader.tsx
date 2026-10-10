@@ -7,7 +7,7 @@ export const IndiaMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-[480px] w-full animate-pulse items-center justify-center rounded-2xl border border-[#2A2A2A] bg-[#111111]">
+      <div className="flex h-[480px] w-full animate-pulse items-center justify-center rounded-2xl border border-border bg-surface">
         <span className="text-sm text-[#444]">Loading map...</span>
       </div>
     ),
