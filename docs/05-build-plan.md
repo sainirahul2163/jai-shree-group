@@ -68,8 +68,8 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 - [ ] ~~Google Analytics 4 per site~~ — **skipped for now** (user, 2026-10-11). Leave analytics out or behind an empty env var, off by default.
 
 **Phase 0 acceptance**
-- [ ] Every main-site route matches its baseline screenshot (no visible difference at 1440 px and 390 px) — run `scripts/baseline/compare.js` as in `docs/research/baseline.md`.
-- [ ] `sitemap.xml`, `robots.txt` and the saved `<head>` tags are unchanged for the group site.
+- [x] Every main-site route matches its baseline screenshot (no visible difference at 1440 px and 390 px) — run `scripts/baseline/compare.js` as in `docs/research/baseline.md`.
+- [x] `sitemap.xml`, `robots.txt` and the saved `<head>` tags are unchanged for the group site (sitemap: +`/privacy`, `/terms`).
 - [ ] `grep -rniE "#e8521a|#ff6b35" src` finds matches only in `src/sites/`, `brochure/` and `admin/`.
 - [ ] A test lead from the group site lands in Supabase with `site = 'group'` and emails the override inbox.
 - [ ] `npm run lint` and `npm run build` pass. Merge `multi-site` → `main`.

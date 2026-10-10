@@ -18,6 +18,7 @@ No fixed dates. We work as fast as possible, **phase by phase, task by task**: a
 
 | # | Site | Unit location | What it shows | Domain |
 | --- | --- | --- | --- | --- |
+| 2026-10-11 | **Phase 0 acceptance (Claude):** full 80-screenshot compare (`docs/research/after-phase-0` vs `baseline`, production build of `82f5a06`). Differences are all intended or data: the 0.8 footer "Privacy · Terms" links (+25 px on phones, every page) and the form privacy note (contact, get-quote, product and city pages: +34 px desktop, +76 px phone); `/clients`, `/blog`, `/gallery` show dev-database content (baseline was taken with live data); animated areas (hero, landing, 3D). SEO tags of all 40 pages identical; robots identical; sitemap +2 (`/privacy`, `/terms`). Lint unchanged (18 problems). Branch `phase-0` marks this commit for the merge to `main`, which waits on the Vercel build failure | `docs/research/after-phase-0/` (git-ignored), branch `phase-0` | Phase 0 acceptance |
 | 2026-10-11 | Vercel preview builds fail from 0.6 on; could not reproduce locally (plain build, preview env without `.env.local`, live public Supabase keys, `vercel build` all pass; import-path casing checked). Recorded as a blocker for the Phase 0 merge; Phase 1 work continues on `multi-site` | — | Need Vercel's build log |
 | 2026-10-11 | Reviewed Cursor's 0.8 (Claude): one commit `40a83ab`; build ✅, lint unchanged, 40 pages' SEO tags unchanged; `/privacy`, `/terms` 200 with chrome, own titles and canonicals, in the sitemap; `/group/privacy` 404; text checked against what the code really does (forms, Supabase, Resend, page views, cookies). Wording is an agency template awaiting legal review | — | Verify before the Phase 0 acceptance |
 | 2026-10-11 | Reviewed Cursor's 0.7 (Claude): one commit `7b8d518`; build ✅, lint unchanged, 40 pages' SEO tags unchanged; test lead from localhost saved with `site='group'` and `reference` returned (deleted after); unknown-site API calls → 400. Fixed the admin actions' `revalidatePath` calls Cursor flagged: since 0.5 they named visible URLs (`/gallery`, `/blog`, `/clients`) and no longer refreshed the rewritten pages; now they revalidate `/[site]/(chrome)/…` route patterns for every site. Not tested: admin panel logged in (filter, badges, site pickers) — no admin password available to Claude | `src/lib/supabase/actions.ts`, `docs/06-codebase-map.md` | Verify before 0.8 |
@@ -77,7 +78,7 @@ Status: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 | `site` column on leads/blog/gallery/testimonials/page views; leads emailed to each unit; admin site filter | 🔄 column, saving and lead email done (dev database); admin filter built but not yet checked logged in |
 | Customer auto-reply with reference number | ✅ reference on screen; email checked with a stubbed send (no Resend key locally) |
 | Privacy and terms pages; Google Analytics 4 | ✅ privacy and terms pages (agency wording, legal review still to do); GA4 skipped (user, 2026-10-11) |
-| Main site looks identical to baseline; merge to `main` | ⏳ |
+| Main site looks identical to baseline; merge to `main` | 🔄 compare passed; merge blocked (Vercel build) |
 
 ### Phases 1–4 — Sites and launch
 
@@ -105,7 +106,7 @@ Unit logos, working hours, contact names, unit photos, client names, case studie
 **Authorised by the user (2026-10-11):** run Phase 0 → Phases 1–3 (all six unit sites) as far as possible; SQL on jai-shree-dev freely; tested additive migrations on the live project when going live; merge to `main` when a phase passes its checks; Google Analytics skipped for now; admin-access hardening on the live project (applied).
 
 **Next:**
-1. Phase 0 acceptance: full screenshot compare; then task 1.1 (site-aware components) while the Vercel build failure is open.
+1. Claude verifies 1.1 (site-aware components), then 1.2 (Shree Perforators site).
 2. Full screenshot compare, multi-site migration on the live project, merge Phase 0 to `main`.
 
 **Waiting on the user:**
