@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Node scripts for the Phase 0 screenshot check (CommonJS, not app code).
+    "scripts/baseline/**",
   ]),
 ]);
 
