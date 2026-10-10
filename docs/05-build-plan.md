@@ -80,10 +80,10 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 - [x] Crawl the live shreeperforators.com and list every URL (`research/legacy-sites.md`) — done by Claude 2026-10-11, with a draft 301 map.
 
 1.1 **Site-aware components** (group site must not change)
-- [ ] Chrome, home sections, products, industries, about, contact and quote read the active site (`useSite()` / `siteFromParams`) and a per-site content module (`src/sites/content/<key>.ts`); group copy moves into `content/group.ts`.
-- [ ] Product and industry lists, menus and static params follow `site.products` / `site.industries`.
-- [ ] Open-area formulas move to `src/lib/open-area.ts`; `PerforationPatterns` takes props.
-- [ ] Group SEO output identical; full screenshot compare clean.
+- [x] Chrome, home sections, products, industries, about, contact and quote read the active site (`useSite()` / `siteFromParams`) and a per-site content module (`src/sites/content/<key>.ts`); group copy moves into `content/group.ts`.
+- [x] Product and industry lists, menus and static params follow `site.products` / `site.industries`.
+- [x] Open-area formulas move to `src/lib/open-area.ts`; `PerforationPatterns` takes props.
+- [x] Group SEO output identical; full screenshot compare clean.
 
 1.2 **Shree Perforators site**
 - [ ] `src/sites/shree-perforators.ts` (theme from `03-sites.md`, contact, products, industries, pages, nav, SEO) + `content/shree-perforators.ts` with unique copy (`07-seo-rules.md`); fallbacks from `08-content-checklist.md`.
