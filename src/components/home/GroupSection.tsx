@@ -35,17 +35,17 @@ function BranchCard({ branch, index }: { branch: Branch; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.08, duration: 0.5 }}
-      className="group rounded-xl border p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#E8521A] hover:shadow-[0_8px_32px_rgba(232,82,26,0.12)]"
+      className="group rounded-xl border p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-[0_8px_32px_rgba(232,82,26,0.12)]"
       style={{
-        backgroundColor: "#111111",
-        borderColor: "#2A2A2A",
+        backgroundColor: "var(--surface)",
+        borderColor: "var(--border)",
       }}
     >
       <span
         className="inline-block rounded-full px-3 py-0.5 text-xs font-semibold"
         style={{
-          backgroundColor: "rgba(232, 82, 26, 0.15)",
-          color: "#E8521A",
+          backgroundColor: "color-mix(in oklab, var(--brand) 15%, transparent)",
+          color: "var(--brand-text)",
         }}
       >
         {branch.area}, {branch.city}
@@ -53,7 +53,7 @@ function BranchCard({ branch, index }: { branch: Branch; index: number }) {
 
       <h3
         className="mt-3 text-base font-bold"
-        style={{ color: "#FFFFFF" }}
+        style={{ color: "var(--foreground)" }}
       >
         {branch.name}
       </h3>
@@ -62,9 +62,9 @@ function BranchCard({ branch, index }: { branch: Branch; index: number }) {
         <div className="flex items-start gap-2">
           <MapPin
             className="mt-0.5 size-3.5 shrink-0"
-            style={{ color: "#666666" }}
+            style={{ color: "var(--text-muted)" }}
           />
-          <p className="text-base leading-relaxed" style={{ color: "#A0A0A0" }}>
+          <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
             {branch.address}
           </p>
         </div>
@@ -73,16 +73,16 @@ function BranchCard({ branch, index }: { branch: Branch; index: number }) {
           href={`tel:${branch.phone.replace(/\s/g, "")}`}
           className="flex items-center gap-2 text-base transition-opacity hover:opacity-80"
         >
-          <Phone className="size-3.5" style={{ color: "#E8521A" }} />
-          <span style={{ color: "#FFFFFF" }}>{branch.phone}</span>
+          <Phone className="size-3.5" style={{ color: "var(--brand-text)" }} />
+          <span style={{ color: "var(--foreground)" }}>{branch.phone}</span>
         </a>
 
         <a
           href={`mailto:${branch.email}`}
           className="flex items-center gap-2 text-base transition-opacity hover:opacity-80"
         >
-          <Mail className="size-3.5" style={{ color: "#E8521A" }} />
-          <span style={{ color: "#A0A0A0" }}>{branch.email}</span>
+          <Mail className="size-3.5" style={{ color: "var(--brand-text)" }} />
+          <span style={{ color: "var(--text-secondary)" }}>{branch.email}</span>
         </a>
 
         {branch.website && (
@@ -92,8 +92,8 @@ function BranchCard({ branch, index }: { branch: Branch; index: number }) {
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-base transition-opacity hover:opacity-80"
           >
-            <ExternalLink className="size-3.5" style={{ color: "#E8521A" }} />
-            <span style={{ color: "#E8521A" }}>{branch.website}</span>
+            <ExternalLink className="size-3.5" style={{ color: "var(--brand-text)" }} />
+            <span style={{ color: "var(--brand-text)" }}>{branch.website}</span>
           </a>
         )}
       </div>
@@ -118,7 +118,7 @@ export function GroupSection() {
     <section
       id={section.id}
       className="section-padding"
-      style={{ backgroundColor: "#0A0A0A" }}
+      style={{ backgroundColor: "var(--background)" }}
     >
       <div className="mx-auto max-w-7xl">
         <motion.div
@@ -130,17 +130,17 @@ export function GroupSection() {
         >
           <p
             className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
-            style={{ color: "#E8521A" }}
+            style={{ color: "var(--brand-text)" }}
           >
             {section.label}
           </p>
           <h2
             className="text-3xl font-black tracking-tight sm:text-4xl"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             {section.heading}
           </h2>
-          <p className="mt-4 text-lg" style={{ color: "#A0A0A0" }}>
+          <p className="mt-4 text-lg" style={{ color: "var(--text-secondary)" }}>
             {section.subtext}
           </p>
         </motion.div>
@@ -149,21 +149,21 @@ export function GroupSection() {
           <TabsList
             className="h-auto w-full justify-start gap-2 rounded-xl border p-1 sm:w-auto"
             style={{
-              backgroundColor: "#111111",
-              borderColor: "#2A2A2A",
+              backgroundColor: "var(--surface)",
+              borderColor: "var(--border)",
             }}
           >
             <TabsTrigger
               value="pune"
-              className="rounded-lg px-6 py-2 data-active:bg-[#E8521A] data-active:text-white"
-              style={{ color: "#A0A0A0" }}
+              className="rounded-lg px-6 py-2 data-active:bg-brand data-active:text-foreground"
+              style={{ color: "var(--text-secondary)" }}
             >
               {section.tabs.pune} ({PUNE_BRANCHES.length})
             </TabsTrigger>
             <TabsTrigger
               value="mumbai"
-              className="rounded-lg px-6 py-2 data-active:bg-[#E8521A] data-active:text-white"
-              style={{ color: "#A0A0A0" }}
+              className="rounded-lg px-6 py-2 data-active:bg-brand data-active:text-foreground"
+              style={{ color: "var(--text-secondary)" }}
             >
               {section.tabs.mumbai} ({MUMBAI_BRANCHES.length})
             </TabsTrigger>

@@ -17,9 +17,9 @@ const MICRO_STATS = [
 ];
 
 const H1_LINES = [
-  { text: "PERFORATED SHEET", color: "#FFFFFF" },
-  { text: "MANUFACTURERS", color: "#FFFFFF" },
-  { text: "SINCE 1970", color: "#E8521A" },
+  { text: "PERFORATED SHEET", color: "var(--foreground)" },
+  { text: "MANUFACTURERS", color: "var(--foreground)" },
+  { text: "SINCE 1970", color: "var(--brand-text)" },
 ] as const;
 
 export function HeroSection() {
@@ -30,7 +30,7 @@ export function HeroSection() {
       ref={heroRef}
       id="home"
       className="relative flex min-h-screen items-center overflow-hidden pt-16 md:pt-20"
-      style={{ backgroundColor: "#0A0A0A" }}
+      style={{ backgroundColor: "var(--background)" }}
     >
       <MagneticHexBackground containerRef={heroRef} />
 
@@ -39,15 +39,15 @@ export function HeroSection() {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse at top right, rgba(232, 82, 26, 0.18) 0%, transparent 55%)",
+              "radial-gradient(ellipse at top right, color-mix(in oklab, var(--brand) 18%, transparent) 0%, transparent 55%)",
           }}
         />
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage: `
-              linear-gradient(to right, #ffffff 1px, transparent 1px),
-              linear-gradient(to bottom, #ffffff 1px, transparent 1px)
+              linear-gradient(to right, var(--foreground) 1px, transparent 1px),
+              linear-gradient(to bottom, var(--foreground) 1px, transparent 1px)
             `,
             backgroundSize: "60px 60px",
           }}
@@ -62,17 +62,17 @@ export function HeroSection() {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="mb-6 inline-flex items-center rounded-full px-4 py-1.5"
             style={{
-              backgroundColor: "#1A1A1A",
-              border: "1px solid #E8521A",
+              backgroundColor: "var(--surface-2)",
+              border: "1px solid var(--brand)",
             }}
           >
             <span
               className="mr-2 size-1.5 rounded-full"
-              style={{ backgroundColor: "#E8521A" }}
+              style={{ backgroundColor: "var(--brand)" }}
             />
             <span
               className="text-xs font-medium sm:text-sm"
-              style={{ color: "#A0A0A0" }}
+              style={{ color: "var(--text-secondary)" }}
             >
               {COMPANY.iso} Certified • Since {COMPANY.founded}
             </span>
@@ -103,7 +103,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
             className="mt-6 max-w-xl text-lg leading-relaxed"
-            style={{ color: "#A0A0A0" }}
+            style={{ color: "var(--text-secondary)" }}
           >
             India&apos;s trusted manufacturer of perforated sheets, expanded
             metal, laser cutting &amp; precision components. {COMPANY.iso}{" "}
@@ -120,7 +120,7 @@ export function HeroSection() {
               asChild
               size="lg"
               className="glow-orange-hover h-12 border-0 px-6 text-base font-semibold hover:opacity-90"
-              style={{ backgroundColor: "#E8521A", color: "#FFFFFF" }}
+              style={{ backgroundColor: "var(--brand)", color: "var(--brand-foreground)" }}
             >
               <Link href="/get-quote">
                 Get a Free Quote
@@ -131,10 +131,10 @@ export function HeroSection() {
               asChild
               variant="outline"
               size="lg"
-              className="h-12 bg-transparent px-6 text-base font-semibold hover:bg-[#1A1A1A]"
+              className="h-12 bg-transparent px-6 text-base font-semibold hover:bg-surface-2"
               style={{
-                borderColor: "#FFFFFF",
-                color: "#FFFFFF",
+                borderColor: "var(--foreground)",
+                color: "var(--foreground)",
               }}
             >
               <Link href="/products">
@@ -155,18 +155,18 @@ export function HeroSection() {
                 <div>
                   <p
                     className="text-sm font-bold sm:text-base"
-                    style={{ color: "#FFFFFF" }}
+                    style={{ color: "var(--foreground)" }}
                   >
                     {stat.value}
                   </p>
-                  <p className="text-xs" style={{ color: "#666666" }}>
+                  <p className="text-xs" style={{ color: "var(--text-muted)" }}>
                     {stat.label}
                   </p>
                 </div>
                 {index < MICRO_STATS.length - 1 && (
                   <div
                     className="hidden h-8 w-px sm:block"
-                    style={{ backgroundColor: "#2A2A2A" }}
+                    style={{ backgroundColor: "var(--border)" }}
                   />
                 )}
               </div>

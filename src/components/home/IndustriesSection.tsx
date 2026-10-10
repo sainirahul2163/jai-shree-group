@@ -15,7 +15,7 @@ export function IndustriesSection() {
     <section
       id={section.id}
       className="section-padding"
-      style={{ backgroundColor: "#0A0A0A" }}
+      style={{ backgroundColor: "var(--background)" }}
     >
       <div className="mx-auto max-w-7xl">
         <motion.div
@@ -27,13 +27,13 @@ export function IndustriesSection() {
         >
           <p
             className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
-            style={{ color: "#E8521A" }}
+            style={{ color: "var(--brand-text)" }}
           >
             {section.label}
           </p>
           <h2
             className="text-3xl font-black tracking-tight sm:text-4xl"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             {section.heading}
           </h2>
@@ -52,25 +52,25 @@ export function IndustriesSection() {
               >
                 <Link
                   href={`/industries/${industry.slug}`}
-                  className="group flex h-full flex-col rounded-xl border p-6 transition-all duration-300 hover:border-[#E8521A] hover:bg-[#1A1A1A]"
+                  className="group flex h-full flex-col rounded-xl border p-6 transition-all duration-300 hover:border-brand hover:bg-surface-2"
                   style={{
-                    backgroundColor: "#111111",
-                    borderColor: "#2A2A2A",
+                    backgroundColor: "var(--surface)",
+                    borderColor: "var(--border)",
                   }}
                 >
                   <Icon
                     className="mb-4 size-10 transition-colors"
-                    style={{ color: "#E8521A" }}
+                    style={{ color: "var(--brand-text)" }}
                   />
                   <h3
                     className="text-base font-bold"
-                    style={{ color: "#FFFFFF" }}
+                    style={{ color: "var(--foreground)" }}
                   >
                     {industry.name}
                   </h3>
                   <p
                     className="mt-2 text-base leading-relaxed"
-                    style={{ color: "#A0A0A0" }}
+                    style={{ color: "var(--text-secondary)" }}
                   >
                     {industry.description}
                   </p>
@@ -87,13 +87,13 @@ export function IndustriesSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-12 flex flex-col items-center justify-between gap-6 rounded-xl border p-8 sm:flex-row"
           style={{
-            backgroundColor: "#1A1A1A",
-            borderColor: "#2A2A2A",
+            backgroundColor: "var(--surface-2)",
+            borderColor: "var(--border)",
           }}
         >
           <p
             className="text-center text-base sm:text-left sm:text-lg"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             {section.banner.text}
           </p>
@@ -101,7 +101,7 @@ export function IndustriesSection() {
             asChild
             size="lg"
             className="shrink-0 border-0 px-6 font-semibold hover:opacity-90"
-            style={{ backgroundColor: "#E8521A", color: "#FFFFFF" }}
+            style={{ backgroundColor: "var(--brand)", color: "var(--brand-foreground)" }}
           >
             <Link href={section.banner.cta.href}>
               {section.banner.cta.label}

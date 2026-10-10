@@ -20,7 +20,7 @@ function VideoPlaceholder({
 }) {
   return (
     <div
-      className="group relative flex aspect-video w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl border border-[#2A2A2A] bg-[#0C0C0C]"
+      className="group relative flex aspect-video w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl border border-border bg-background"
       onClick={onOpen}
       role="button"
       tabIndex={0}
@@ -32,7 +32,7 @@ function VideoPlaceholder({
         className="absolute inset-0 opacity-30"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(232,82,26,0.4) 1px, transparent 1px)",
+            "radial-gradient(circle, color-mix(in oklab, var(--brand) 40%, transparent) 1px, transparent 1px)",
           backgroundSize: "32px 28px",
         }}
       />
@@ -41,14 +41,14 @@ function VideoPlaceholder({
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(232,82,26,0.08), transparent 70%)",
+            "radial-gradient(ellipse 60% 50% at 50% 50%, color-mix(in oklab, var(--brand) 8%, transparent), transparent 70%)",
         }}
       />
 
-      <div className="absolute top-4 left-4 h-8 w-8 rounded-tl border-t-2 border-l-2 border-[#E8521A]/40" />
-      <div className="absolute top-4 right-4 h-8 w-8 rounded-tr border-t-2 border-r-2 border-[#E8521A]/40" />
-      <div className="absolute bottom-4 left-4 h-8 w-8 rounded-bl border-b-2 border-l-2 border-[#E8521A]/40" />
-      <div className="absolute bottom-4 right-4 h-8 w-8 rounded-br border-b-2 border-r-2 border-[#E8521A]/40" />
+      <div className="absolute top-4 left-4 h-8 w-8 rounded-tl border-t-2 border-l-2 border-brand/40" />
+      <div className="absolute top-4 right-4 h-8 w-8 rounded-tr border-t-2 border-r-2 border-brand/40" />
+      <div className="absolute bottom-4 left-4 h-8 w-8 rounded-bl border-b-2 border-l-2 border-brand/40" />
+      <div className="absolute bottom-4 right-4 h-8 w-8 rounded-br border-b-2 border-r-2 border-brand/40" />
 
       <div className="relative z-10 flex flex-col items-center gap-4 px-8 text-center">
         <motion.div
@@ -58,12 +58,12 @@ function VideoPlaceholder({
           className="relative"
         >
           <motion.div
-            className="absolute inset-0 rounded-full bg-[#E8521A]/20"
+            className="absolute inset-0 rounded-full bg-brand/20"
             animate={{ scale: [1, 1.8, 1], opacity: [0.5, 0, 0.5] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute inset-0 rounded-full bg-[#E8521A]/15"
+            className="absolute inset-0 rounded-full bg-brand/15"
             animate={{ scale: [1, 2.4, 1], opacity: [0.3, 0, 0.3] }}
             transition={{
               duration: 2.5,
@@ -72,14 +72,14 @@ function VideoPlaceholder({
               delay: 0.4,
             }}
           />
-          <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-[#E8521A] shadow-[0_0_40px_rgba(232,82,26,0.4)]">
-            <Play className="ml-1 h-8 w-8 fill-white text-white" />
+          <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-brand shadow-[0_0_40px_rgba(232,82,26,0.4)]">
+            <Play className="ml-1 h-8 w-8 fill-foreground text-foreground" />
           </div>
         </motion.div>
 
         <div>
-          <p className="text-lg font-bold text-white">Factory Tour</p>
-          <p className="mt-1 text-sm text-[#666]">
+          <p className="text-lg font-bold text-foreground">Factory Tour</p>
+          <p className="mt-1 text-sm text-text-muted">
             Coming Soon — Drone &amp; walkthrough footage
           </p>
         </div>
@@ -89,7 +89,7 @@ function VideoPlaceholder({
             (tag) => (
               <span
                 key={tag}
-                className="rounded-full border border-[#2A2A2A] px-3 py-1 text-xs text-[#666]"
+                className="rounded-full border border-border px-3 py-1 text-xs text-text-muted"
               >
                 {tag}
               </span>
@@ -117,28 +117,28 @@ function VideoPlaceholder({
             aria-modal="true"
             aria-labelledby="factory-tour-soon-title"
           >
-            <Video className="size-10" style={{ color: "#E8521A" }} />
+            <Video className="size-10" style={{ color: "var(--brand-text)" }} />
             <h3
               id="factory-tour-soon-title"
-              className="mt-4 text-xl font-bold text-white"
+              className="mt-4 text-xl font-bold text-foreground"
             >
               Factory Tour Coming Soon
             </h3>
-            <p className="mt-2 max-w-xs text-center text-sm text-[#A0A0A0]">
+            <p className="mt-2 max-w-xs text-center text-sm text-text-secondary">
               We&apos;re filming a complete walkthrough of our 6 manufacturing
               units.
             </p>
             <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row">
               <Link
                 href="/products"
-                className="rounded-lg bg-[#E8521A] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#FF6B35]"
+                className="rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-brand-foreground transition-colors hover:bg-brand-hover"
               >
                 Explore Products →
               </Link>
               <button
                 type="button"
                 onClick={onClose}
-                className="text-sm text-[#A0A0A0] transition-colors hover:text-white"
+                className="text-sm text-text-secondary transition-colors hover:text-foreground"
               >
                 Close
               </button>
@@ -155,7 +155,7 @@ function YoutubeEmbed({ videoId }: { videoId: string }) {
   const [muted, setMuted] = useState(true);
 
   return (
-    <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-[#2A2A2A] bg-black">
+    <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border bg-black">
       {!playing ? (
         <div
           className="group relative h-full w-full cursor-pointer"
@@ -181,17 +181,17 @@ function YoutubeEmbed({ videoId }: { videoId: string }) {
               className="relative"
             >
               <motion.div
-                className="absolute inset-0 rounded-full bg-[#E8521A]/30"
+                className="absolute inset-0 rounded-full bg-brand/30"
                 animate={{ scale: [1, 1.6], opacity: [0.6, 0] }}
                 transition={{ duration: 1.8, repeat: Infinity }}
               />
-              <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-[#E8521A] shadow-[0_0_40px_rgba(232,82,26,0.5)]">
-                <Play className="ml-1 h-8 w-8 fill-white text-white" />
+              <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-brand shadow-[0_0_40px_rgba(232,82,26,0.5)]">
+                <Play className="ml-1 h-8 w-8 fill-foreground text-foreground" />
               </div>
             </motion.div>
           </div>
           <div className="absolute right-4 bottom-4 rounded bg-black/70 px-2 py-1 backdrop-blur-sm">
-            <span className="text-xs font-medium text-white">Factory Tour</span>
+            <span className="text-xs font-medium text-foreground">Factory Tour</span>
           </div>
         </div>
       ) : (
@@ -206,7 +206,7 @@ function YoutubeEmbed({ videoId }: { videoId: string }) {
           <button
             type="button"
             onClick={() => setMuted(!muted)}
-            className="absolute right-4 bottom-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-black/60 text-white backdrop-blur-sm transition-colors hover:bg-[#E8521A]"
+            className="absolute right-4 bottom-4 flex h-9 w-9 items-center justify-center rounded-full border border-foreground/10 bg-black/60 text-brand-foreground backdrop-blur-sm transition-colors hover:bg-brand"
             aria-label={muted ? "Unmute video" : "Mute video"}
           >
             {muted ? (
@@ -232,7 +232,7 @@ function LocalVideo({ src }: { src: string }) {
   // Once the play button is pressed, swap the poster for the real player.
   if (playing) {
     return (
-      <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-[#2A2A2A] bg-black">
+      <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border bg-black">
         <video
           ref={videoRef}
           src={src}
@@ -252,7 +252,7 @@ function LocalVideo({ src }: { src: string }) {
   // Poster: same framed design + pulsing play button + tags (no "coming soon").
   return (
     <div
-      className="group relative flex aspect-video w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl border border-[#2A2A2A] bg-[#0C0C0C]"
+      className="group relative flex aspect-video w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl border border-border bg-background"
       onClick={() => setPlaying(true)}
       role="button"
       tabIndex={0}
@@ -265,7 +265,7 @@ function LocalVideo({ src }: { src: string }) {
         className="absolute inset-0 opacity-30"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(232,82,26,0.4) 1px, transparent 1px)",
+            "radial-gradient(circle, color-mix(in oklab, var(--brand) 40%, transparent) 1px, transparent 1px)",
           backgroundSize: "32px 28px",
         }}
       />
@@ -274,14 +274,14 @@ function LocalVideo({ src }: { src: string }) {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(232,82,26,0.08), transparent 70%)",
+            "radial-gradient(ellipse 60% 50% at 50% 50%, color-mix(in oklab, var(--brand) 8%, transparent), transparent 70%)",
         }}
       />
 
-      <div className="absolute top-4 left-4 h-8 w-8 rounded-tl border-t-2 border-l-2 border-[#E8521A]/40" />
-      <div className="absolute top-4 right-4 h-8 w-8 rounded-tr border-t-2 border-r-2 border-[#E8521A]/40" />
-      <div className="absolute bottom-4 left-4 h-8 w-8 rounded-bl border-b-2 border-l-2 border-[#E8521A]/40" />
-      <div className="absolute bottom-4 right-4 h-8 w-8 rounded-br border-b-2 border-r-2 border-[#E8521A]/40" />
+      <div className="absolute top-4 left-4 h-8 w-8 rounded-tl border-t-2 border-l-2 border-brand/40" />
+      <div className="absolute top-4 right-4 h-8 w-8 rounded-tr border-t-2 border-r-2 border-brand/40" />
+      <div className="absolute bottom-4 left-4 h-8 w-8 rounded-bl border-b-2 border-l-2 border-brand/40" />
+      <div className="absolute bottom-4 right-4 h-8 w-8 rounded-br border-b-2 border-r-2 border-brand/40" />
 
       <div className="relative z-10 flex flex-col items-center gap-4 px-8 text-center">
         <motion.div
@@ -291,12 +291,12 @@ function LocalVideo({ src }: { src: string }) {
           className="relative"
         >
           <motion.div
-            className="absolute inset-0 rounded-full bg-[#E8521A]/20"
+            className="absolute inset-0 rounded-full bg-brand/20"
             animate={{ scale: [1, 1.8, 1], opacity: [0.5, 0, 0.5] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute inset-0 rounded-full bg-[#E8521A]/15"
+            className="absolute inset-0 rounded-full bg-brand/15"
             animate={{ scale: [1, 2.4, 1], opacity: [0.3, 0, 0.3] }}
             transition={{
               duration: 2.5,
@@ -305,13 +305,13 @@ function LocalVideo({ src }: { src: string }) {
               delay: 0.4,
             }}
           />
-          <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-[#E8521A] shadow-[0_0_40px_rgba(232,82,26,0.4)]">
-            <Play className="ml-1 h-8 w-8 fill-white text-white" />
+          <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-brand shadow-[0_0_40px_rgba(232,82,26,0.4)]">
+            <Play className="ml-1 h-8 w-8 fill-foreground text-foreground" />
           </div>
         </motion.div>
 
         <div>
-          <p className="text-lg font-bold text-white">Factory Tour</p>
+          <p className="text-lg font-bold text-foreground">Factory Tour</p>
         </div>
 
         <div className="mt-2 flex flex-wrap justify-center gap-2">
@@ -319,7 +319,7 @@ function LocalVideo({ src }: { src: string }) {
             (tag) => (
               <span
                 key={tag}
-                className="rounded-full border border-[#2A2A2A] px-3 py-1 text-xs text-[#666]"
+                className="rounded-full border border-border px-3 py-1 text-xs text-text-muted"
               >
                 {tag}
               </span>
@@ -348,7 +348,7 @@ export function VideoSection() {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#060606] px-4 py-24 md:px-8 lg:px-16"
+      className="bg-background px-4 py-24 md:px-8 lg:px-16"
     >
       <div className="mx-auto max-w-7xl">
         <div className="mb-14 grid grid-cols-1 items-end gap-12 lg:grid-cols-2">
@@ -364,9 +364,9 @@ export function VideoSection() {
               {...reveal(0.1)}
               className="text-4xl leading-[1.05] font-black tracking-tight md:text-5xl"
             >
-              <span className="text-white">{COMPANY_VIDEO.heading}</span>
+              <span className="text-foreground">{COMPANY_VIDEO.heading}</span>
               <br />
-              <span className="bg-gradient-to-r from-[#E8521A] via-[#FF6B35] to-[#E8521A] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-brand via-brand-hover to-brand bg-clip-text text-transparent">
                 {COMPANY_VIDEO.headingOrange}
               </span>
             </motion.h2>
@@ -375,7 +375,7 @@ export function VideoSection() {
           <div>
             <motion.p
               {...reveal(0.2)}
-              className="mb-8 text-base leading-relaxed text-[#8A8A8A]"
+              className="mb-8 text-base leading-relaxed text-text-secondary"
             >
               {COMPANY_VIDEO.subtext}
             </motion.p>
@@ -384,12 +384,12 @@ export function VideoSection() {
               {COMPANY_VIDEO.stats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="rounded-xl border border-[#1E1E1E] bg-[#0C0C0C] p-4"
+                  className="rounded-xl border border-surface-2 bg-background p-4"
                 >
-                  <p className="text-2xl font-black text-[#E8521A] tabular-nums">
+                  <p className="text-2xl font-black text-brand-text tabular-nums">
                     {stat.value}
                   </p>
-                  <p className="mt-1 text-xs leading-snug text-[#666]">
+                  <p className="mt-1 text-xs leading-snug text-text-muted">
                     {stat.label}
                   </p>
                 </div>
@@ -414,7 +414,7 @@ export function VideoSection() {
 
         <motion.p
           {...reveal(0.4)}
-          className="mt-6 text-center text-sm text-[#3A3A3A]"
+          className="mt-6 text-center text-sm text-border-strong"
         >
           Jai Shree Group Manufacturing Facility — Talawade, Pune, Maharashtra
         </motion.p>

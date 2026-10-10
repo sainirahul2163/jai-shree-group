@@ -65,8 +65,8 @@ export function TrustBar() {
       ref={ref}
       className="border-y"
       style={{
-        backgroundColor: "#111111",
-        borderColor: "#2A2A2A",
+        backgroundColor: "var(--surface)",
+        borderColor: "var(--border)",
       }}
       aria-label="Company credentials"
     >
@@ -79,11 +79,11 @@ export function TrustBar() {
         {TRUST_STATS.map((stat) => (
           <div
             key={stat.label}
-            className="flex flex-col items-center justify-center border-[#2A2A2A] px-4 py-8 text-center sm:px-6 sm:py-10 [&:not(:last-child)]:border-r"
+            className="flex flex-col items-center justify-center border-border px-4 py-8 text-center sm:px-6 sm:py-10 [&:not(:last-child)]:border-r"
           >
             <p
               className="text-2xl font-black sm:text-3xl md:text-4xl"
-              style={{ color: "#E8521A" }}
+              style={{ color: "var(--brand-text)" }}
             >
               {stat.animate && stat.value !== null ? (
                 <AnimatedNumber
@@ -97,7 +97,7 @@ export function TrustBar() {
             </p>
             <p
               className="mt-2 text-xs font-medium sm:text-sm"
-              style={{ color: "#A0A0A0" }}
+              style={{ color: "var(--text-secondary)" }}
             >
               {stat.label}
             </p>
