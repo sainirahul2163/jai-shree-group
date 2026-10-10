@@ -35,7 +35,7 @@ export function LandingTestimonials() {
   });
 
   return (
-    <section className="bg-[#060606] px-6 py-32">
+    <section className="bg-background px-6 py-32">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <motion.div {...reveal(0)} className="flex items-center gap-3">
@@ -49,8 +49,8 @@ export function LandingTestimonials() {
           {...reveal(0.1)}
           className="mt-6 text-5xl font-black tracking-tight md:text-7xl"
         >
-          <span className="text-white">Trusted by </span>
-          <span className="text-[#3A3A3A]">Industry Leaders</span>
+          <span className="text-foreground">Trusted by </span>
+          <span className="text-border-strong">Industry Leaders</span>
         </motion.h2>
 
         {/* Cards */}
@@ -65,7 +65,7 @@ export function LandingTestimonials() {
                 transition: { ...SPRING, delay: i * 0.08 },
               }}
               viewport={{ once: true, margin: "-10% 0px" }}
-              className="flex flex-col rounded-2xl border border-[#1C1C1C] bg-[#0C0C0C] p-8 transition-colors duration-300 hover:border-[#E8521A]/30"
+              className="flex flex-col rounded-2xl border border-surface-2 bg-background p-8 transition-colors duration-300 hover:border-brand/30"
             >
               <div
                 className="flex gap-1 opacity-90"
@@ -74,17 +74,17 @@ export function LandingTestimonials() {
                 {Array.from({ length: 5 }).map((_, s) => (
                   <Star
                     key={s}
-                    className="h-3 w-3 fill-[#E8521A] text-[#E8521A]"
+                    className="h-3 w-3 fill-brand-text text-brand-text"
                   />
                 ))}
               </div>
 
-              <blockquote className="mt-6 flex-1 leading-relaxed text-white/90">
+              <blockquote className="mt-6 flex-1 leading-relaxed text-foreground/90">
                 {t.quote}
               </blockquote>
 
-              <figcaption className="mt-6 border-t border-[#1C1C1C] pt-5">
-                <p className="text-sm font-semibold text-white">{t.name}</p>
+              <figcaption className="mt-6 border-t border-surface-2 pt-5">
+                <p className="text-sm font-semibold text-foreground">{t.name}</p>
                 <p className="mt-0.5 text-xs text-orange-500/80">{t.company}</p>
               </figcaption>
             </motion.figure>

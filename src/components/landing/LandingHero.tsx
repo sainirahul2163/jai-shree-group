@@ -14,12 +14,12 @@ import {
 const SPRING = { type: "spring", stiffness: 100, damping: 30 } as const;
 
 const HEADLINE_LINES = [
-  { text: "PRECISION", className: "text-[#FAFAFA]" },
-  { text: "IN EVERY", className: "text-[#3A3A3A]" },
+  { text: "PRECISION", className: "text-foreground" },
+  { text: "IN EVERY", className: "text-border-strong" },
   {
     text: "PERFORATION",
     className:
-      "bg-gradient-to-r from-[#E8521A] via-[#FF6B35] to-[#E8521A] bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(232,82,26,0.25)]",
+      "bg-gradient-to-r from-brand via-brand-hover to-brand bg-clip-text text-transparent drop-shadow-[0_0_30px_color-mix(in_oklab,var(--brand)_25%,transparent)]",
   },
 ] as const;
 
@@ -33,7 +33,7 @@ export function LandingHero() {
   const x = useSpring(rawX, { stiffness: 100, damping: 50 });
   const y = useSpring(rawY, { stiffness: 100, damping: 50 });
 
-  const glow = useMotionTemplate`radial-gradient(600px circle at ${x}px ${y}px, rgba(232,82,26,0.07), transparent 60%)`;
+  const glow = useMotionTemplate`radial-gradient(600px circle at ${x}px ${y}px, color-mix(in oklab, var(--brand) 7%, transparent), transparent 60%)`;
   const litMask = useMotionTemplate`radial-gradient(600px circle at ${x}px ${y}px, black, transparent 60%)`;
 
   useEffect(() => {
@@ -83,7 +83,7 @@ export function LandingHero() {
     <section
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#060606]"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background"
     >
       {/* Perforation field */}
       <div
@@ -91,7 +91,7 @@ export function LandingHero() {
         className="absolute inset-0"
         style={{
           backgroundImage:
-            "radial-gradient(circle, #1A1A1A 1px, transparent 1px)",
+            "radial-gradient(circle, var(--surface-2) 1px, transparent 1px)",
           backgroundSize: "32px 32px",
         }}
       />
@@ -102,7 +102,7 @@ export function LandingHero() {
         className="absolute inset-0"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(232,82,26,0.45) 1px, transparent 1px)",
+            "radial-gradient(circle, color-mix(in oklab, var(--brand) 45%, transparent) 1px, transparent 1px)",
           backgroundSize: "32px 32px",
           maskImage: litMask,
           WebkitMaskImage: litMask,
@@ -120,7 +120,7 @@ export function LandingHero() {
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
-        style={{ boxShadow: "inset 0 0 180px 60px #060606" }}
+        style={{ boxShadow: "inset 0 0 180px 60px var(--background)" }}
       />
 
       <div className="relative z-10 flex flex-col items-center px-6 py-32 text-center">
@@ -150,7 +150,7 @@ export function LandingHero() {
         {/* Subheadline */}
         <motion.p
           {...enter(0.95)}
-          className="mt-8 max-w-xl text-lg leading-relaxed text-[#8A8A8A] md:text-xl"
+          className="mt-8 max-w-xl text-lg leading-relaxed text-text-secondary md:text-xl"
         >
           Fifty years of metal engineering. Nine manufacturing units. One
           uncompromising standard.
@@ -168,7 +168,7 @@ export function LandingHero() {
           >
             <Link
               href="/get-quote"
-              className="group flex items-center gap-2 rounded-full bg-[#E8521A] px-8 py-4 font-semibold text-white transition-[background-color,box-shadow] duration-300 hover:bg-[#FF6B35] hover:shadow-[0_0_40px_rgba(232,82,26,0.35)]"
+              className="group flex items-center gap-2 rounded-full bg-brand px-8 py-4 font-semibold text-brand-foreground transition-[background-color,box-shadow] duration-300 hover:bg-brand-hover hover:shadow-[0_0_40px_color-mix(in_oklab,var(--brand)_35%,transparent)]"
             >
               Get a Free Quote
               <ArrowRight
@@ -180,12 +180,12 @@ export function LandingHero() {
 
           <Link
             href="/products"
-            className="group relative font-medium text-white/80 transition-colors duration-300 hover:text-white"
+            className="group relative font-medium text-foreground/80 transition-colors duration-300 hover:text-foreground"
           >
             Explore Products
             <span
               aria-hidden
-              className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-white transition-transform duration-300 ease-out group-hover:scale-x-100"
+              className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-foreground transition-transform duration-300 ease-out group-hover:scale-x-100"
             />
           </Link>
         </motion.div>
@@ -198,10 +198,10 @@ export function LandingHero() {
         transition={{ duration: 0.8, delay: 1.8 }}
         className="absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3"
       >
-        <div className="relative h-12 w-px bg-gradient-to-b from-white/40 to-transparent">
-          <span className="landing-cue-dot absolute left-1/2 top-0 h-1 w-1 -translate-x-1/2 rounded-full bg-white/70" />
+        <div className="relative h-12 w-px bg-gradient-to-b from-foreground/40 to-transparent">
+          <span className="landing-cue-dot absolute left-1/2 top-0 h-1 w-1 -translate-x-1/2 rounded-full bg-foreground/70" />
         </div>
-        <span className="text-[10px] tracking-[0.3em] text-white/30">
+        <span className="text-[10px] tracking-[0.3em] text-foreground/30">
           SCROLL
         </span>
       </motion.div>

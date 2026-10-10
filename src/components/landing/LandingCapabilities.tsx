@@ -56,7 +56,7 @@ export function LandingCapabilities() {
   });
 
   return (
-    <section className="bg-[#060606] px-6 py-32">
+    <section className="bg-background px-6 py-32">
       <div className="mx-auto max-w-5xl">
         {/* Header */}
         <motion.div
@@ -74,8 +74,8 @@ export function LandingCapabilities() {
           {...reveal(0.1)}
           className="mt-6 text-center text-5xl font-black tracking-tight md:text-7xl"
         >
-          <span className="text-white">Engineered to </span>
-          <span className="bg-gradient-to-r from-[#E8521A] via-[#FF6B35] to-[#E8521A] bg-clip-text text-transparent">
+          <span className="text-foreground">Engineered to </span>
+          <span className="bg-gradient-to-r from-brand via-brand-hover to-brand bg-clip-text text-transparent">
             Extremes
           </span>
         </motion.h2>
@@ -92,13 +92,13 @@ export function LandingCapabilities() {
                 transition: { ...SPRING, delay: i * 0.06 },
               }}
               viewport={{ once: true, margin: "-10% 0px" }}
-              className="group relative flex flex-col gap-2 border-b border-[#1C1C1C] py-10 md:flex-row md:items-center md:justify-between"
+              className="group relative flex flex-col gap-2 border-b border-surface-2 py-10 md:flex-row md:items-center md:justify-between"
             >
-              <span className="text-sm uppercase tracking-[0.2em] text-[#8A8A8A]">
+              <span className="text-sm uppercase tracking-[0.2em] text-text-secondary">
                 {row.label}
               </span>
 
-              <span className="text-6xl font-black tabular-nums text-white transition-[color,transform] duration-300 ease-out group-hover:-translate-x-2 group-hover:text-[#E8521A] md:text-8xl">
+              <span className="text-6xl font-black tabular-nums text-foreground transition-[color,transform] duration-300 ease-out group-hover:-translate-x-2 group-hover:text-brand-text md:text-8xl">
                 {row.parts.map((part, j) =>
                   "num" in part ? (
                     <CountNum key={j} target={part.num} pad={part.pad} />
@@ -111,7 +111,7 @@ export function LandingCapabilities() {
               {/* Orange line draws across on hover */}
               <span
                 aria-hidden
-                className="absolute bottom-[-1px] left-0 h-px w-full origin-left scale-x-0 bg-[#E8521A] transition-transform duration-500 ease-out group-hover:scale-x-100"
+                className="absolute bottom-[-1px] left-0 h-px w-full origin-left scale-x-0 bg-brand transition-transform duration-500 ease-out group-hover:scale-x-100"
               />
             </motion.div>
           ))}

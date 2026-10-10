@@ -15,7 +15,7 @@ const WHATSAPP_URL = whatsappUrl(
 );
 
 const telClass =
-  "flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white";
+  "flex items-center gap-2 text-sm text-foreground/60 transition-colors hover:text-foreground";
 
 export function LandingCTA() {
   const reduceMotion = useReducedMotion() ?? false;
@@ -33,13 +33,13 @@ export function LandingCTA() {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-[#060606] px-6 py-40">
+      <section className="relative overflow-hidden bg-background px-6 py-40">
         <div
           aria-hidden
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 70% 50% at 50% 100%, rgba(232,82,26,0.12), transparent 70%)",
+              "radial-gradient(ellipse 70% 50% at 50% 100%, color-mix(in oklab, var(--brand) 12%, transparent), transparent 70%)",
           }}
         />
         <div
@@ -47,7 +47,7 @@ export function LandingCTA() {
           className="absolute inset-0"
           style={{
             backgroundImage:
-              "radial-gradient(circle, #1A1A1A 1px, transparent 1px)",
+              "radial-gradient(circle, var(--surface-2) 1px, transparent 1px)",
             backgroundSize: "32px 32px",
             maskImage: "linear-gradient(to bottom, transparent, black 80%)",
             WebkitMaskImage:
@@ -57,18 +57,18 @@ export function LandingCTA() {
 
         <div className="relative z-10 flex flex-col items-center text-center">
           <h2 className="text-6xl font-black leading-[0.95] tracking-tight md:text-8xl">
-            <motion.span {...enter(0)} className="block text-white">
+            <motion.span {...enter(0)} className="block text-foreground">
               Ready to Work
             </motion.span>
             <motion.span
               {...enter(0.15)}
-              className="block bg-gradient-to-r from-[#E8521A] via-[#FF6B35] to-[#E8521A] bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(232,82,26,0.25)]"
+              className="block bg-gradient-to-r from-brand via-brand-hover to-brand bg-clip-text text-transparent drop-shadow-[0_0_30px_color-mix(in_oklab,var(--brand)_25%,transparent)]"
             >
               With Us?
             </motion.span>
           </h2>
 
-          <motion.p {...enter(0.3)} className="mt-8 text-lg text-[#8A8A8A]">
+          <motion.p {...enter(0.3)} className="mt-8 text-lg text-text-secondary">
             Share your requirement. Get a quote within 24 hours.
           </motion.p>
 
@@ -80,7 +80,7 @@ export function LandingCTA() {
             >
               <Link
                 href="/get-quote"
-                className="group flex items-center gap-2 rounded-full bg-[#E8521A] px-10 py-5 text-lg font-semibold text-white transition-[background-color,box-shadow] duration-300 hover:bg-[#FF6B35] hover:shadow-[0_0_50px_rgba(232,82,26,0.4)]"
+                className="group flex items-center gap-2 rounded-full bg-brand px-10 py-5 text-lg font-semibold text-brand-foreground transition-[background-color,box-shadow] duration-300 hover:bg-brand-hover hover:shadow-[0_0_50px_color-mix(in_oklab,var(--brand)_40%,transparent)]"
               >
                 Get a Free Quote
                 <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={2.5} />
@@ -107,28 +107,28 @@ export function LandingCTA() {
 
           <motion.p
             {...enter(0.65)}
-            className="mt-12 text-xs uppercase tracking-[0.2em] text-white/40"
+            className="mt-12 text-xs uppercase tracking-[0.2em] text-foreground/40"
           >
-            24hr Response <span className="text-[#E8521A]">◆</span> ISO
-            9001:2015 <span className="text-[#E8521A]">◆</span> Global Delivery
+            24hr Response <span className="text-brand-text">◆</span> ISO
+            9001:2015 <span className="text-brand-text">◆</span> Global Delivery
             Delivery
           </motion.p>
         </div>
       </section>
 
-      <footer className="border-t border-[#1C1C1C] bg-[#060606] px-6 py-10">
+      <footer className="border-t border-surface-2 bg-background px-6 py-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-center md:flex-row md:text-left">
-          <span className="text-sm tracking-widest text-white/80">
+          <span className="text-sm tracking-widest text-foreground/80">
             JAI SHREE GROUP
           </span>
-          <span className="text-xs text-white/30">
+          <span className="text-xs text-foreground/30">
             © 2026 Jai Shree Group. All rights reserved.
           </span>
           <div className="flex items-center gap-6">
-            <Link href="/" className="text-xs text-white/50 transition-colors hover:text-white">
+            <Link href="/" className="text-xs text-foreground/50 transition-colors hover:text-foreground">
               Main Site →
             </Link>
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-xs text-white/50 transition-colors hover:text-white">
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-xs text-foreground/50 transition-colors hover:text-foreground">
               WhatsApp →
             </a>
           </div>
