@@ -114,7 +114,7 @@ Unit logos, working hours, contact names, unit photos, client names, case studie
 - Log in to the admin panel (dev: `npm run dev`, or live after the Phase 0 merge) and check the 0.7 site filter, badges and site pickers; Claude and Cursor have no admin password. Create the second admin's Supabase login when convenient.
 - Optional: turn on "Leaked password protection" in the live Supabase Auth settings (security advisor warning).
 
-**Loop notes:** 0.5 was done by Claude directly — Claude Code's auto-mode check refused to launch the Cursor CLI. The user added permission rules (Cursor CLI, Supabase `apply_migration`); Cursor runs again from 0.6.
+**Loop notes:** ⛔ **Cursor CLI stopped mid-1.1 (03:57):** "You've hit your usage limit for Opus … resets when your monthly cycle ends on 11/4/2026". Claude finishes 1.1 from Cursor's partial work and does the following tasks itself until the user raises the Cursor limit or picks another model. 0.5 was done by Claude directly — Claude Code's auto-mode check refused to launch the Cursor CLI. The user added permission rules (Cursor CLI, Supabase `apply_migration`); Cursor runs again from 0.6.
 
 **Open points:**
 - Welded mesh: the agency said on 2026-10-02 it was discontinued; the client's approved answers say Shree Weld Mesh makes it. We follow the client.
