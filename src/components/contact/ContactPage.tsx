@@ -102,17 +102,17 @@ export function ContactPage() {
   return (
     <div
       className="section-padding pt-28 md:pt-32"
-      style={{ backgroundColor: "#0A0A0A" }}
+      style={{ backgroundColor: "var(--background)" }}
     >
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 max-w-2xl">
           <h1
             className="text-4xl font-black tracking-tight sm:text-5xl"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             Contact Perforated Sheet Manufacturers — Pune & Mumbai
           </h1>
-          <p className="mt-4 text-lg" style={{ color: "#A0A0A0" }}>
+          <p className="mt-4 text-lg" style={{ color: "var(--text-secondary)" }}>
             Have a requirement? Our team responds within 24 hours.
           </p>
         </div>
@@ -122,14 +122,14 @@ export function ContactPage() {
           <div className="space-y-6">
             <div
               className="rounded-xl border p-5"
-              style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
             >
               <a
                 href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}
                 className="flex items-center gap-3 transition-opacity hover:opacity-80"
               >
-                <Phone className="size-5" style={{ color: "#E8521A" }} />
-                <span className="text-base" style={{ color: "#FFFFFF" }}>
+                <Phone className="size-5" style={{ color: "var(--brand-text)" }} />
+                <span className="text-base" style={{ color: "var(--foreground)" }}>
                   {COMPANY.phone}
                 </span>
               </a>
@@ -137,7 +137,7 @@ export function ContactPage() {
 
             <div
               className="rounded-xl border p-5"
-              style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
             >
               <a
                 href={whatsappUrl(COMPANY.whatsapp, "Hi, I have an enquiry.")}
@@ -146,7 +146,7 @@ export function ContactPage() {
                 className="flex items-center gap-3 transition-opacity hover:opacity-80"
               >
                 <span className="text-lg">💬</span>
-                <span className="text-base" style={{ color: "#FFFFFF" }}>
+                <span className="text-base" style={{ color: "var(--foreground)" }}>
                   WhatsApp: {whatsappDisplay}
                 </span>
               </a>
@@ -154,14 +154,14 @@ export function ContactPage() {
 
             <div
               className="rounded-xl border p-5"
-              style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
             >
               <a
                 href={`mailto:${COMPANY.email}`}
                 className="flex items-center gap-3 transition-opacity hover:opacity-80"
               >
-                <Mail className="size-5" style={{ color: "#E8521A" }} />
-                <span className="text-base" style={{ color: "#FFFFFF" }}>
+                <Mail className="size-5" style={{ color: "var(--brand-text)" }} />
+                <span className="text-base" style={{ color: "var(--foreground)" }}>
                   {COMPANY.email}
                 </span>
               </a>
@@ -169,7 +169,7 @@ export function ContactPage() {
 
             <div
               className="rounded-xl border p-5"
-              style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
             >
               <a
                 href={mapsUrl}
@@ -179,9 +179,9 @@ export function ContactPage() {
               >
                 <MapPin
                   className="mt-0.5 size-5 shrink-0"
-                  style={{ color: "#E8521A" }}
+                  style={{ color: "var(--brand-text)" }}
                 />
-                <span className="text-base leading-relaxed" style={{ color: "#A0A0A0" }}>
+                <span className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                   {COMPANY.address}
                 </span>
               </a>
@@ -189,10 +189,10 @@ export function ContactPage() {
 
             <div
               className="rounded-xl border p-5"
-              style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
             >
               <div className="flex items-start gap-3">
-                <Clock className="mt-0.5 size-5 shrink-0" style={{ color: "#E8521A" }} />
+                <Clock className="mt-0.5 size-5 shrink-0" style={{ color: "var(--brand-text)" }} />
                 <div className="space-y-2">
                   {WORKING_HOURS.map((row) => (
                     <div
@@ -201,13 +201,13 @@ export function ContactPage() {
                     >
                       <span
                         className="text-base font-medium"
-                        style={{ color: row.closed ? "#E8521A" : "#FFFFFF" }}
+                        style={{ color: row.closed ? "var(--brand-text)" : "var(--foreground)" }}
                       >
                         {row.days}
                       </span>
                       <span
                         className="text-base"
-                        style={{ color: row.closed ? "#E8521A" : "#A0A0A0" }}
+                        style={{ color: row.closed ? "var(--brand-text)" : "var(--text-secondary)" }}
                       >
                         {row.hours}
                       </span>
@@ -220,7 +220,7 @@ export function ContactPage() {
             <div>
               <h3
                 className="mb-3 text-lg font-bold"
-                style={{ color: "#E8521A" }}
+                style={{ color: "var(--brand-text)" }}
               >
                 Our Branches
               </h3>
@@ -229,9 +229,9 @@ export function ContactPage() {
                   <li
                     key={b.slug}
                     className="text-base leading-relaxed"
-                    style={{ color: "#A0A0A0" }}
+                    style={{ color: "var(--text-secondary)" }}
                   >
-                    <p className="font-semibold" style={{ color: "#FFFFFF" }}>
+                    <p className="font-semibold" style={{ color: "var(--foreground)" }}>
                       {b.name}
                     </p>
                     <p>
@@ -242,14 +242,14 @@ export function ContactPage() {
                     <a
                       href={`tel:${b.phone.replace(/\s/g, "")}`}
                       className="block transition-opacity hover:opacity-80"
-                      style={{ color: "#E8521A" }}
+                      style={{ color: "var(--brand-text)" }}
                     >
                       {b.phone}
                     </a>
                     <a
                       href={`mailto:${b.email}`}
                       className="block transition-opacity hover:opacity-80"
-                      style={{ color: "#E8521A" }}
+                      style={{ color: "var(--brand-text)" }}
                     >
                       {b.email}
                     </a>
@@ -262,7 +262,7 @@ export function ContactPage() {
           {/* Right — Form */}
           <div
             className="rounded-xl border p-6 lg:p-8"
-            style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
+            style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
           >
             {status === "success" ? (
               <div className="py-8 text-center">
@@ -274,18 +274,18 @@ export function ContactPage() {
                 </div>
                 <h2
                   className="text-xl font-bold"
-                  style={{ color: "#FFFFFF" }}
+                  style={{ color: "var(--foreground)" }}
                 >
                   Enquiry Sent!
                 </h2>
-                <p className="mt-2 text-base" style={{ color: "#A0A0A0" }}>
+                <p className="mt-2 text-base" style={{ color: "var(--text-secondary)" }}>
                   We&apos;ll get back to you within 24 hours.
                 </p>
                 {waLink && (
                   <Button
                     asChild
                     className="mt-6 h-12 border-0"
-                    style={{ backgroundColor: "#25D366", color: "#FFF" }}
+                    style={{ backgroundColor: "#25D366", color: "var(--foreground)" }}
                   >
                     <a href={waLink} target="_blank" rel="noopener noreferrer">
                       Continue on WhatsApp
@@ -298,7 +298,7 @@ export function ContactPage() {
                     setStatus("idle");
                     setWaLink(null);
                   }}
-                  style={{ backgroundColor: "#E8521A", color: "#FFF" }}
+                  style={{ backgroundColor: "var(--brand)", color: "var(--brand-foreground)" }}
                 >
                   Send Another Enquiry
                 </Button>
@@ -309,9 +309,9 @@ export function ContactPage() {
                 className="space-y-4"
               >
                 <div>
-                  <Label style={{ color: "#A0A0A0" }}>Name *</Label>
+                  <Label style={{ color: "var(--text-secondary)" }}>Name *</Label>
                   <Input
-                    className="mt-1.5 h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                    className="mt-1.5 h-10 border-border bg-surface-2 text-foreground"
                     {...form.register("name")}
                   />
                   {form.formState.errors.name && (
@@ -322,17 +322,17 @@ export function ContactPage() {
                 </div>
 
                 <div>
-                  <Label style={{ color: "#A0A0A0" }}>Company Name</Label>
+                  <Label style={{ color: "var(--text-secondary)" }}>Company Name</Label>
                   <Input
-                    className="mt-1.5 h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                    className="mt-1.5 h-10 border-border bg-surface-2 text-foreground"
                     {...form.register("companyName")}
                   />
                 </div>
 
                 <div>
-                  <Label style={{ color: "#A0A0A0" }}>Phone *</Label>
+                  <Label style={{ color: "var(--text-secondary)" }}>Phone *</Label>
                   <Input
-                    className="mt-1.5 h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                    className="mt-1.5 h-10 border-border bg-surface-2 text-foreground"
                     {...form.register("phone")}
                   />
                   {form.formState.errors.phone && (
@@ -343,10 +343,10 @@ export function ContactPage() {
                 </div>
 
                 <div>
-                  <Label style={{ color: "#A0A0A0" }}>Email *</Label>
+                  <Label style={{ color: "var(--text-secondary)" }}>Email *</Label>
                   <Input
                     type="email"
-                    className="mt-1.5 h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                    className="mt-1.5 h-10 border-border bg-surface-2 text-foreground"
                     {...form.register("email")}
                   />
                   {form.formState.errors.email && (
@@ -357,7 +357,7 @@ export function ContactPage() {
                 </div>
 
                 <div>
-                  <Label style={{ color: "#A0A0A0" }}>Product Interest *</Label>
+                  <Label style={{ color: "var(--text-secondary)" }}>Product Interest *</Label>
                   <Select
                     value={form.watch("productInterest")}
                     onValueChange={(v) =>
@@ -366,7 +366,7 @@ export function ContactPage() {
                       })
                     }
                   >
-                    <SelectTrigger className="mt-1.5 h-10 w-full border-[#2A2A2A] bg-[#1A1A1A] text-white">
+                    <SelectTrigger className="mt-1.5 h-10 w-full border-border bg-surface-2 text-foreground">
                       <SelectValue placeholder="Select a product" />
                     </SelectTrigger>
                     <SelectContent>
@@ -385,12 +385,12 @@ export function ContactPage() {
                 </div>
 
                 <div>
-                  <Label style={{ color: "#A0A0A0" }}>
+                  <Label style={{ color: "var(--text-secondary)" }}>
                     Message / Requirements *
                   </Label>
                   <Textarea
                     rows={5}
-                    className="mt-1.5 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                    className="mt-1.5 border-border bg-surface-2 text-foreground"
                     {...form.register("message")}
                   />
                   {form.formState.errors.message && (
@@ -401,8 +401,8 @@ export function ContactPage() {
                 </div>
 
                 {status === "unavailable" && (
-                  <div className="space-y-3 rounded-xl border p-4" style={{ borderColor: "#2A2A2A", backgroundColor: "#111111" }}>
-                    <p className="text-sm" style={{ color: "#A0A0A0" }}>
+                  <div className="space-y-3 rounded-xl border p-4" style={{ borderColor: "var(--border)", backgroundColor: "var(--surface)" }}>
+                    <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
                       Our online form is temporarily unavailable. Please WhatsApp
                       us directly for a quick response.
                     </p>
@@ -410,7 +410,7 @@ export function ContactPage() {
                       <Button
                         asChild
                         className="h-11 w-full border-0"
-                        style={{ backgroundColor: "#25D366", color: "#FFF" }}
+                        style={{ backgroundColor: "#25D366", color: "var(--foreground)" }}
                       >
                         <a
                           href={waLink}
@@ -434,7 +434,7 @@ export function ContactPage() {
                       <Button
                         asChild
                         className="h-11 w-full border-0"
-                        style={{ backgroundColor: "#25D366", color: "#FFF" }}
+                        style={{ backgroundColor: "#25D366", color: "var(--foreground)" }}
                       >
                         <a
                           href={waLink}
@@ -452,7 +452,7 @@ export function ContactPage() {
                   type="submit"
                   disabled={status === "loading"}
                   className="h-12 w-full border-0 text-base font-semibold"
-                  style={{ backgroundColor: "#E8521A", color: "#FFFFFF" }}
+                  style={{ backgroundColor: "var(--brand)", color: "var(--brand-foreground)" }}
                 >
                   {status === "loading" ? (
                     <>
