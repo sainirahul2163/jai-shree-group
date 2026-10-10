@@ -298,8 +298,8 @@ function SheetRect() {
       y="30"
       width="360"
       height="140"
-      fill="#1A1A1A"
-      stroke="#E8521A"
+      fill="var(--surface-2)"
+      stroke="var(--brand-text)"
       strokeWidth="1.5"
       rx="4"
     />
@@ -323,7 +323,7 @@ function DimLine({
       y1={y1}
       x2={x2}
       y2={y2}
-      stroke="#666666"
+      stroke="var(--text-muted)"
       strokeWidth="1"
       strokeDasharray="4 2"
     />
@@ -343,7 +343,7 @@ function VarLabel({
     <text
       x={x}
       y={y}
-      fill="#E8521A"
+      fill="var(--brand-text)"
       fontSize="13"
       fontFamily="monospace"
       fontWeight="bold"
@@ -388,8 +388,8 @@ function RoundHoles({
           cx={h.cx}
           cy={h.cy}
           r={r}
-          fill="#0A0A0A"
-          stroke="#E8521A"
+          fill="var(--background)"
+          stroke="var(--brand-text)"
           strokeWidth="1"
         />
       ))}
@@ -416,8 +416,8 @@ function SquareHoles({ stagger = false }: { stagger?: boolean }) {
           width={size}
           height={size}
           rx="2"
-          fill="#0A0A0A"
-          stroke="#E8521A"
+          fill="var(--background)"
+          stroke="var(--brand-text)"
           strokeWidth="1"
         />
       ))}
@@ -457,8 +457,8 @@ function HexHoles() {
         <polygon
           key={i}
           points={hexPoints(cx, cy, 14)}
-          fill="#0A0A0A"
-          stroke="#E8521A"
+          fill="var(--background)"
+          stroke="var(--brand-text)"
           strokeWidth="1"
         />
       ))}
@@ -473,8 +473,8 @@ function SlotSheetRect() {
       y="30"
       width="320"
       height="150"
-      fill="#1A1A1A"
-      stroke="#E8521A"
+      fill="var(--surface-2)"
+      stroke="var(--brand-text)"
       strokeWidth="1.5"
       rx="4"
     />
@@ -532,7 +532,7 @@ function SlotShape({
       rx={roundEnd ? SLOT_RX : 0}
       ry={roundEnd ? SLOT_RX : 0}
       fill="rgba(0,0,0,0.6)"
-      stroke="#E8521A"
+      stroke="var(--brand-text)"
       strokeWidth="1.2"
     />
   );
@@ -564,7 +564,7 @@ function SlotDimLabels() {
       <text
         x="28"
         y="70"
-        fill="#E8521A"
+        fill="var(--brand-text)"
         fontSize="11"
         fontFamily="monospace"
         fontWeight="bold"
@@ -575,7 +575,7 @@ function SlotDimLabels() {
       <text
         x="82"
         y="44"
-        fill="#E8521A"
+        fill="var(--brand-text)"
         fontSize="11"
         fontFamily="monospace"
         fontWeight="bold"
@@ -586,7 +586,7 @@ function SlotDimLabels() {
       <text
         x="124"
         y="198"
-        fill="#E8521A"
+        fill="var(--brand-text)"
         fontSize="11"
         fontFamily="monospace"
         fontWeight="bold"
@@ -597,7 +597,7 @@ function SlotDimLabels() {
       <text
         x="10"
         y="92"
-        fill="#E8521A"
+        fill="var(--brand-text)"
         fontSize="11"
         fontFamily="monospace"
         fontWeight="bold"
@@ -655,7 +655,7 @@ function CalculatorDiagram({ calculatorId }: { calculatorId: number }) {
           <path
             d="M 130 130 A 20 20 0 0 1 145 115"
             fill="none"
-            stroke="#A0A0A0"
+            stroke="var(--text-secondary)"
             strokeWidth="1"
           />
           <VarLabel x="148" y="118">
@@ -679,7 +679,7 @@ function CalculatorDiagram({ calculatorId }: { calculatorId: number }) {
           <path
             d="M 130 130 A 20 20 0 0 1 144 112"
             fill="none"
-            stroke="#A0A0A0"
+            stroke="var(--text-secondary)"
             strokeWidth="1"
           />
           <VarLabel x="148" y="112">
@@ -805,7 +805,7 @@ function CalculatorDiagram({ calculatorId }: { calculatorId: number }) {
 }
 
 function RoundIcon({ selected }: { selected: boolean }) {
-  const stroke = selected ? "#E8521A" : "#666666";
+  const stroke = selected ? "var(--brand-text)" : "var(--text-muted)";
   return (
     <svg viewBox="0 0 40 40" className="mx-auto size-10" aria-hidden>
       <circle cx="20" cy="20" r="12" fill="none" stroke={stroke} strokeWidth="2" />
@@ -814,7 +814,7 @@ function RoundIcon({ selected }: { selected: boolean }) {
 }
 
 function SquareIcon({ selected }: { selected: boolean }) {
-  const stroke = selected ? "#E8521A" : "#666666";
+  const stroke = selected ? "var(--brand-text)" : "var(--text-muted)";
   return (
     <svg viewBox="0 0 40 40" className="mx-auto size-10" aria-hidden>
       <rect
@@ -832,7 +832,7 @@ function SquareIcon({ selected }: { selected: boolean }) {
 }
 
 function HexIcon({ selected }: { selected: boolean }) {
-  const stroke = selected ? "#E8521A" : "#666666";
+  const stroke = selected ? "var(--brand-text)" : "var(--text-muted)";
   return (
     <svg viewBox="0 0 40 40" className="mx-auto size-10" aria-hidden>
       <polygon
@@ -846,7 +846,7 @@ function HexIcon({ selected }: { selected: boolean }) {
 }
 
 function SlotIcon({ selected }: { selected: boolean }) {
-  const stroke = selected ? "#E8521A" : "#666666";
+  const stroke = selected ? "var(--brand-text)" : "var(--text-muted)";
   return (
     <svg viewBox="0 0 40 40" className="mx-auto size-10" aria-hidden>
       <rect
@@ -1064,26 +1064,26 @@ export function OpenAreaCalculator() {
   const arrangementButtonClass = (selected: boolean) =>
     `flex-1 min-w-[120px] rounded-lg border px-3 text-sm font-medium transition-all h-[52px] ${
       selected
-        ? "border-[#E8521A] bg-[#E8521A]/10 text-white"
-        : "border-[#2A2A2A] bg-[#111111] text-[#A0A0A0] hover:border-[#E8521A]/50"
+        ? "border-brand bg-brand/10 text-foreground"
+        : "border-border bg-surface text-text-secondary hover:border-brand/50"
     }`;
 
   return (
     <div
       className="section-padding pt-28 md:pt-32"
-      style={{ backgroundColor: "#0A0A0A" }}
+      style={{ backgroundColor: "var(--background)" }}
     >
       <div className="mx-auto max-w-[760px]">
         <div className="mb-10">
           <h1
             className="text-4xl font-black tracking-tight sm:text-5xl"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             Perforated Sheet Open Area Calculator
           </h1>
           <p
             className="mt-4 text-lg leading-relaxed"
-            style={{ color: "#A0A0A0" }}
+            style={{ color: "var(--text-secondary)" }}
           >
             Select your hole shape and arrangement, then enter dimensions to
             calculate open area percentage using industry-standard formulas.
@@ -1095,12 +1095,12 @@ export function OpenAreaCalculator() {
           <section>
             <p
               className="text-xs font-semibold uppercase tracking-[0.2em]"
-              style={{ color: "#E8521A" }}
+              style={{ color: "var(--brand-text)" }}
             >
               Step 1
             </p>
             <div className="mt-2 flex flex-wrap items-start justify-between gap-3">
-              <h2 className="text-2xl font-bold text-white">
+              <h2 className="text-2xl font-bold text-foreground">
                 Select Hole Shape
               </h2>
               {holeShape !== null && (
@@ -1108,7 +1108,7 @@ export function OpenAreaCalculator() {
                   type="button"
                   onClick={handleReset}
                   className="text-sm transition-opacity hover:opacity-80"
-                  style={{ color: "#A0A0A0" }}
+                  style={{ color: "var(--text-secondary)" }}
                 >
                   ← Start over
                 </button>
@@ -1124,8 +1124,8 @@ export function OpenAreaCalculator() {
                     onClick={() => selectHoleShape(shape.id as HoleShape)}
                     className={`flex h-[100px] flex-col items-center justify-center rounded-xl border text-center transition-all ${
                       selected
-                        ? "border-[#E8521A] bg-[#E8521A]/10 text-white"
-                        : "border-[#2A2A2A] bg-[#111111] text-[#A0A0A0] hover:border-[#E8521A]/50"
+                        ? "border-brand bg-brand/10 text-foreground"
+                        : "border-border bg-surface text-text-secondary hover:border-brand/50"
                     }`}
                   >
                     <HoleShapeIcon shape={shape.id} selected={selected} />
@@ -1149,17 +1149,17 @@ export function OpenAreaCalculator() {
               >
                 <p
                   className="text-xs font-semibold uppercase tracking-[0.2em]"
-                  style={{ color: "#E8521A" }}
+                  style={{ color: "var(--brand-text)" }}
                 >
                   Step 2
                 </p>
-                <h2 className="mt-2 text-2xl font-bold text-white">
+                <h2 className="mt-2 text-2xl font-bold text-foreground">
                   Select Arrangement
                 </h2>
 
                 {showSlotEndStep && (
                   <div className="mt-4">
-                    <p className="mb-2 text-sm text-[#A0A0A0]">End Type</p>
+                    <p className="mb-2 text-sm text-text-secondary">End Type</p>
                     <div className="flex gap-2">
                       {(
                         [
@@ -1181,7 +1181,7 @@ export function OpenAreaCalculator() {
                 )}
 
                 {holeShape === "hex" && (
-                  <p className="mt-4 text-sm" style={{ color: "#666666" }}>
+                  <p className="mt-4 text-sm" style={{ color: "var(--text-muted)" }}>
                     Hex perforation uses standard honeycomb arrangement
                   </p>
                 )}
@@ -1191,7 +1191,7 @@ export function OpenAreaCalculator() {
                   arrangements.length > 0 && (
                     <div className={showSlotEndStep ? "mt-4" : "mt-4"}>
                       {showSlotEndStep && (
-                        <p className="mb-2 text-sm text-[#A0A0A0]">
+                        <p className="mb-2 text-sm text-text-secondary">
                           Arrangement
                         </p>
                       )}
@@ -1225,7 +1225,7 @@ export function OpenAreaCalculator() {
                 transition={{ duration: 0.25 }}
                 className="grid grid-cols-1 gap-4 md:grid-cols-[55%_45%]"
               >
-                <div className="rounded-xl border border-[#2A2A2A] bg-[#111111] p-5">
+                <div className="rounded-xl border border-border bg-surface p-5">
                   <motion.div
                     key={calculatorId}
                     initial={{ opacity: 0 }}
@@ -1235,11 +1235,11 @@ export function OpenAreaCalculator() {
                     <CalculatorDiagram calculatorId={calculatorId} />
                   </motion.div>
                 </div>
-                <div className="rounded-xl border-l-4 border-l-[#E8521A] bg-[#111111] p-5">
-                  <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#E8521A]">
+                <div className="rounded-xl border-l-4 border-l-brand bg-surface p-5">
+                  <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-brand-text">
                     Formula
                   </p>
-                  <p className="font-mono text-lg text-white">
+                  <p className="font-mono text-lg text-foreground">
                     {config.formulaDisplay}
                   </p>
                 </div>
@@ -1266,12 +1266,12 @@ export function OpenAreaCalculator() {
                   >
                     <label
                       htmlFor={`input-${field.key}`}
-                      className="mb-1 block text-sm text-[#A0A0A0]"
+                      className="mb-1 block text-sm text-text-secondary"
                     >
                       {field.label}
                     </label>
                     <div className="flex items-center gap-3">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#E8521A] text-sm font-bold text-white">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand text-sm font-bold text-brand-foreground">
                         {field.variable}
                       </span>
                       <Input
@@ -1284,10 +1284,10 @@ export function OpenAreaCalculator() {
                         onChange={(e) =>
                           handleInputChange(field.key, e.target.value)
                         }
-                        className={`h-12 flex-1 rounded-lg border bg-[#111111] px-4 py-3 text-white placeholder-[#666666] ${
+                        className={`h-12 flex-1 rounded-lg border bg-surface px-4 py-3 text-foreground placeholder-[var(--text-muted)] ${
                           errors[field.key]
                             ? "border-red-500"
-                            : "border-[#2A2A2A]"
+                            : "border-border"
                         }`}
                       />
                     </div>
@@ -1314,7 +1314,7 @@ export function OpenAreaCalculator() {
                 type="button"
                 onClick={handleCalculate}
                 disabled={isCalculating}
-                className="h-auto w-full rounded-xl border-0 bg-[#E8521A] py-4 font-semibold text-white hover:bg-[#FF6B35]"
+                className="h-auto w-full rounded-xl border-0 bg-brand py-4 font-semibold text-brand-foreground hover:bg-brand-hover"
               >
                 {isCalculating ? (
                   <>
@@ -1336,16 +1336,16 @@ export function OpenAreaCalculator() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 0.4 }}
-                className="mt-4 rounded-xl border border-[#E8521A] bg-[#111111] p-6"
+                className="mt-4 rounded-xl border border-brand bg-surface p-6"
               >
-                <p className="text-xs font-semibold uppercase tracking-wider text-[#E8521A]">
+                <p className="text-xs font-semibold uppercase tracking-wider text-brand-text">
                   Open Area Result
                 </p>
-                <p className="mt-2 text-6xl font-black text-[#E8521A]">
+                <p className="mt-2 text-6xl font-black text-brand-text">
                   {result.toFixed(2)}%
                 </p>
                 {inputSummary && (
-                  <p className="mt-2 text-sm text-[#666666]">{inputSummary}</p>
+                  <p className="mt-2 text-sm text-text-muted">{inputSummary}</p>
                 )}
 
                 {result > 100 && (
@@ -1363,14 +1363,14 @@ export function OpenAreaCalculator() {
                   <button
                     type="button"
                     onClick={handleRecalculate}
-                    className="text-sm text-[#A0A0A0] hover:text-white"
+                    className="text-sm text-text-secondary hover:text-foreground"
                   >
                     Recalculate
                   </button>
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="text-sm text-[#E8521A] hover:text-[#FF6B35]"
+                    className="text-sm text-brand-text hover:text-brand-hover"
                   >
                     Start Over
                   </button>
@@ -1379,20 +1379,20 @@ export function OpenAreaCalculator() {
             )}
           </AnimatePresence>
 
-          <div className="mt-8 rounded-xl border border-[#2A2A2A] bg-[#111111] p-6 text-center">
-            <p className="mb-1 text-sm text-[#A0A0A0]">
+          <div className="mt-8 rounded-xl border border-border bg-surface p-6 text-center">
+            <p className="mb-1 text-sm text-text-secondary">
               Know your specifications?
             </p>
-            <p className="mb-4 font-semibold text-white">
+            <p className="mb-4 font-semibold text-foreground">
               Get an instant quote from our team
             </p>
             <Link
               href="/get-quote"
-              className="inline-block rounded-lg bg-[#E8521A] px-8 py-3 font-semibold text-white transition-colors hover:bg-[#FF6B35]"
+              className="inline-block rounded-lg bg-brand px-8 py-3 font-semibold text-brand-foreground transition-colors hover:bg-brand-hover"
             >
               Get a Free Quote →
             </Link>
-            <p className="mt-3 text-xs text-[#666666]">
+            <p className="mt-3 text-xs text-text-muted">
               Usually responds within 2 hours
             </p>
           </div>
