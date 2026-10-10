@@ -85,15 +85,17 @@ function BranchCard({ branch, index }: { branch: Branch; index: number }) {
           <span style={{ color: "#A0A0A0" }}>{branch.email}</span>
         </a>
 
-        <a
-          href={websiteUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 text-base transition-opacity hover:opacity-80"
-        >
-          <ExternalLink className="size-3.5" style={{ color: "#E8521A" }} />
-          <span style={{ color: "#E8521A" }}>{branch.website}</span>
-        </a>
+        {branch.website && (
+          <a
+            href={websiteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-base transition-opacity hover:opacity-80"
+          >
+            <ExternalLink className="size-3.5" style={{ color: "#E8521A" }} />
+            <span style={{ color: "#E8521A" }}>{branch.website}</span>
+          </a>
+        )}
       </div>
     </motion.div>
   );

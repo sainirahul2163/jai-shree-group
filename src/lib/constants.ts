@@ -52,9 +52,10 @@ export const BRANCHES = [
     city: "Pune",
     address:
       "Gat no. 93, Near Sonawane Wasti, Jyotibanagar, Talawade, Pune- 411062",
-    phone: "+91 9320204156",
+    phone: "+91 9373324492",
     email: "jsmppune@gmail.com",
     website: "www.metalperforatedsheets.com",
+    weeklyOff: "Thursday",
   },
   {
     name: "Shree Perforators",
@@ -66,6 +67,7 @@ export const BRANCHES = [
     phone: "+91 9370606017",
     email: "shreeperforator@gmail.com",
     website: "www.shreeperforators.com",
+    weeklyOff: "Thursday",
   },
   {
     name: "Shree Weld Mesh",
@@ -76,7 +78,8 @@ export const BRANCHES = [
       "Gat no. 93, Near Sonawane Wasti, Jyotibanagar, Talawade, Pune- 411062",
     phone: "+91 9049456019",
     email: "balajiwelded@gmail.com",
-    website: "www.shreeperforators.com",
+    website: "",
+    weeklyOff: "Thursday",
   },
   {
     name: "Jai Shree Filtration",
@@ -87,7 +90,8 @@ export const BRANCHES = [
       "Shop No. 80-B, Gr. Floor, Keshavji Jadhavji Bldg., 24/26, Khadak Street, Nr. Satkar Hotel, Masjid Bunder Road, Mumbai-400009",
     phone: "+91 9320204151",
     email: "inderjangid@gmail.com",
-    website: "www.jaishreefiltration.com",
+    website: "",
+    weeklyOff: "Sunday",
   },
   {
     name: "Jai Shree Industries",
@@ -96,9 +100,10 @@ export const BRANCHES = [
     city: "Mumbai",
     address:
       "L-9, Swastik Industrial Estate, Behind Gaurav Dharam Kanta, Bhayander East, Mumbai- 401105",
-    phone: "+91 8181815592",
+    phone: "+91 8908921111",
     email: "inderjangid@gmail.com",
-    website: "www.jaishreefiltration.com",
+    website: "",
+    weeklyOff: "Sunday",
   },
   {
     name: "Jai Shree Perforator",
@@ -107,9 +112,10 @@ export const BRANCHES = [
     city: "Maharashtra",
     address:
       "2, Marudhar Estate, Vill. Aliyali, Next to Tembhode Village, New Satpati Road, Palghar West- Maharashtra",
-    phone: "+91 9320204151",
+    phone: "+91 8908921111",
     email: "inderjangid@gmail.com",
-    website: "www.jaishreefiltration.com",
+    website: "",
+    weeklyOff: "Sunday",
   },
 ] as const;
 

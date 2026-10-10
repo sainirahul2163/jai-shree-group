@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import type { Map as LeafletMap, Marker } from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 const LOCATIONS = [
   {
@@ -31,16 +32,20 @@ const LOCATIONS = [
       "Jai Shree Perforator — Palghar",
     ],
     description:
-      "Strategic units serving Mumbai's industrial and filtration sectors.",
+      "Strategic units serving the Mumbai region's industries, including ready stock from our Masjid Bunder godown.",
   },
 ] as const;
 
-const TILE_URL =
-  "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+// OpenStreetMap's standard tiles need no API key (CARTO's dark tiles now do).
+// They are darkened with a CSS filter (.map-tiles-dark) to match the site.
+const TILE_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 const TILE_ATTRIBUTION =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
 const POPUP_STYLES = `
+  .map-tiles-dark {
+    filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(0.9) saturate(0.35);
+  }
   .custom-popup .leaflet-popup-content-wrapper {
     background: transparent !important;
     border: none !important;
@@ -112,8 +117,8 @@ export function IndiaMap() {
 
       L.tileLayer(TILE_URL, {
         attribution: TILE_ATTRIBUTION,
-        subdomains: "abcd",
         maxZoom: 19,
+        className: "map-tiles-dark",
       }).addTo(map);
 
       L.control
@@ -224,13 +229,6 @@ export function IndiaMap() {
       styleEl.textContent = POPUP_STYLES;
       document.head.appendChild(styleEl);
 
-      if (!document.querySelector('link[href*="leaflet"]')) {
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-        document.head.appendChild(link);
-      }
-
       const bounds = L.latLngBounds(
         LOCATIONS.map((l) => [l.lat, l.lng] as [number, number])
       );
@@ -270,8 +268,8 @@ export function IndiaMap() {
 
         <div
           ref={mapRef}
-          className="min-h-[320px] w-full sm:min-h-[480px]"
-          style={{ height: "480px" }}
+          className="relative z-0 min-h-[320px] w-full sm:min-h-[480px]"
+          style={{ height: "480px", backgroundColor: "#0A0A0A" }}
         />
 
         <div className="absolute top-4 left-4 z-20 rounded-full border border-[#2A2A2A] bg-black/70 px-4 py-1.5 backdrop-blur-sm">

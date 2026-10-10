@@ -2,35 +2,33 @@ import type { BRANCHES } from "@/lib/constants";
 
 type BranchSlug = (typeof BRANCHES)[number]["slug"];
 
-/** Products available at each branch */
+/** Products available at each branch, as confirmed by the client on 2026-10-07 */
 export const BRANCH_PRODUCTS: Record<BranchSlug, string[]> = {
   "jai-shree-metal-perforators": [
-    "Perforated Sheets",
-    "Turret Punching",
     "Laser Cutting",
-    "Shearing & Bending",
+    "Turret Punching",
+    "Perforated Sheets",
+    "Sheet Leveling",
+    "Custom Parts & Screens",
   ],
   "shree-perforators": [
     "Perforated Sheets",
-    "CNC Perforation",
     "Custom Hole Patterns",
+    "Expanded Metal",
+    "Turret Punching",
+    "Sheet Leveling",
+    "Custom Parts & Screens",
   ],
-  "shree-weld-mesh": [
-    "Custom Welded Grids",
-  ],
-  "jai-shree-filtration": [
-    "Filtration Screens",
-    "Perforated Sheets",
-  ],
+  "shree-weld-mesh": ["Welded Mesh"],
+  "jai-shree-filtration": ["Perforated Sheets (Ready Stock)"],
   "jai-shree-industries": [
-    "Perforated Sheets",
     "Expanded Metal",
-  ],
-  "jai-shree-perforator": [
+    "CNC Punching",
+    "Mechanical Punching",
     "Perforated Sheets",
-    "Laser Cutting",
-    "Expanded Metal",
+    "Sheet Leveling",
   ],
+  "jai-shree-perforator": ["Perforated Sheets", "Mechanical Punching"],
 };
 
 export function getGoogleMapsUrl(address: string): string {
