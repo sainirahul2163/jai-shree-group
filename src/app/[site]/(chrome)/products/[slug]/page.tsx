@@ -3,20 +3,23 @@ import { notFound } from "next/navigation";
 
 import { ProductPageClient } from "@/components/products/ProductPageClient";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
-import {
-  getProductDetail,
-  getRelatedProducts,
-  PRODUCT_SLUGS,
-} from "@/data/products";
 import { siteUrl } from "@/lib/seo";
+import { findSite } from "@/sites";
+import { siteProductDetail, siteRelatedProducts } from "@/sites/catalog";
 import { siteFromParams } from "@/sites/params";
 
 type PageProps = {
   params: Promise<{ site: string; slug: string }>;
 };
 
-export async function generateStaticParams() {
-  return PRODUCT_SLUGS.map((slug) => ({ slug }));
+// Only the products the site offers; any other slug 404s.
+export async function generateStaticParams({
+  params,
+}: {
+  params: { site: string };
+}) {
+  const site = findSite(params.site);
+  return site ? site.products.map((slug) => ({ slug })) : [];
 }
 
 export async function generateMetadata({
@@ -24,7 +27,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const site = await siteFromParams(params);
-  const product = getProductDetail(slug);
+  const product = siteProductDetail(site, slug);
 
   if (!product) {
     return { title: "Product Not Found" };
@@ -48,13 +51,13 @@ export async function generateMetadata({
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
   const site = await siteFromParams(params);
-  const product = getProductDetail(slug);
+  const product = siteProductDetail(site, slug);
 
   if (!product) {
     notFound();
   }
 
-  const relatedProducts = getRelatedProducts(slug, 3);
+  const relatedProducts = siteRelatedProducts(site, slug, 3);
 
   const faqJsonLd = {
     "@context": "https://schema.org",

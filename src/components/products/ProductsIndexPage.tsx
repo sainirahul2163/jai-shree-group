@@ -11,15 +11,17 @@ import {
 import { ArrowRight } from "lucide-react";
 
 import { PageHero } from "@/components/shared/PageHero";
-import { PRODUCTS } from "@/lib/constants";
+import type { ProductCard as ProductCardData } from "@/data/products";
 import { getProductIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
+import type { PageHeroContent } from "@/sites/content/types";
+import { useSiteProducts } from "@/sites/SiteProvider";
 
 function ProductCard({
   product,
   index,
 }: {
-  product: (typeof PRODUCTS)[number];
+  product: ProductCardData;
   index: number;
 }) {
   const ref = useRef<HTMLAnchorElement>(null);
@@ -128,13 +130,22 @@ function ProductCard({
   );
 }
 
-export function ProductsIndexPage() {
+export function ProductsIndexPage({
+  hero,
+  intro,
+}: {
+  hero: PageHeroContent;
+  intro: string;
+}) {
+  const products = useSiteProducts();
+
   return (
     <>
       <PageHero
-        label="PRODUCTS"
-        title="Metal Manufacturing Products — Pune & Mumbai"
-        subtitle="Six specialized metal fabrication capabilities — from CNC perforation to fiber laser cutting and custom components, serving industries across India."
+        label={hero.label}
+        title={hero.title}
+        subtitle={hero.subtitle}
+        badges={hero.badges?.map((text) => ({ text }))}
       />
       <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
         <div className="mx-auto max-w-7xl">
@@ -142,13 +153,10 @@ export function ProductsIndexPage() {
             className="mb-10 max-w-3xl text-base leading-relaxed"
             style={{ color: "var(--text-secondary)" }}
           >
-            Jai Shree Group (Shree Perforators) manufactures precision metal
-            products across 8 facilities in Pune and Mumbai. ISO 9001:2015
-            certified with 50+ years of experience, we supply perforated sheets,
-            expanded metal, laser-cut components, and more across India.
+            {intro}
           </p>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {PRODUCTS.map((product, index) => (
+            {products.map((product, index) => (
               <ProductCard key={product.slug} product={product} index={index} />
             ))}
           </div>

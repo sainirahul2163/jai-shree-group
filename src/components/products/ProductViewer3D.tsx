@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import type * as THREE_NS from "three";
 
+import { useSite } from "@/sites/SiteProvider";
+
 /**
  * Interactive 3D product viewer.
  *
@@ -290,6 +292,7 @@ export function ProductViewer3D({
   variant: ProductModel;
   height?: number;
 }) {
+  const { name: siteName } = useSite();
   const mountRef = useRef<HTMLDivElement>(null);
   const [loaded, setLoaded] = useState(false);
   const spec = MODEL_SPECS[variant];
@@ -529,7 +532,7 @@ export function ProductViewer3D({
           </span>
         ))}
         <span className="ml-auto text-[10px] font-medium text-brand-text">
-          Jai Shree Group
+          {siteName}
         </span>
       </div>
     </div>

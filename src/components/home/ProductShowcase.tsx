@@ -1,13 +1,15 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 
+import { useSiteProducts } from "@/sites/SiteProvider";
+
 const INTERVAL = 3500;
 
-const SHOWCASE_PRODUCTS = [
+const ALL_SHOWCASE_PRODUCTS = [
   {
     name: "Perforated Sheets",
     slug: "perforated-sheets",
@@ -382,6 +384,17 @@ const PATTERN_MAP: Record<string, React.FC> = {
 };
 
 export function ProductShowcase() {
+  // Only the products the active site offers, in its order.
+  const siteProducts = useSiteProducts();
+  const SHOWCASE_PRODUCTS = useMemo(
+    () =>
+      siteProducts.flatMap(
+        (card) => ALL_SHOWCASE_PRODUCTS.find((item) => item.slug === card.slug) ?? []
+      ),
+    [siteProducts]
+  );
+  const total = SHOWCASE_PRODUCTS.length;
+
   const [current, setCurrent] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -397,9 +410,9 @@ export function ProductShowcase() {
   const startAutoRotate = useCallback(() => {
     stopAutoRotate();
     intervalRef.current = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % SHOWCASE_PRODUCTS.length);
+      setCurrent((prev) => (prev + 1) % total);
     }, INTERVAL);
-  }, [stopAutoRotate]);
+  }, [stopAutoRotate, total]);
 
   const restartAutoRotate = useCallback(() => {
     if (isHovered) return;
@@ -416,13 +429,10 @@ export function ProductShowcase() {
 
   const next = useCallback(
     (dir = 1) => {
-      setCurrent(
-        (prev) =>
-          (prev + dir + SHOWCASE_PRODUCTS.length) % SHOWCASE_PRODUCTS.length
-      );
+      setCurrent((prev) => (prev + dir + total) % total);
       restartAutoRotate();
     },
-    [restartAutoRotate]
+    [restartAutoRotate, total]
   );
 
   useEffect(() => {

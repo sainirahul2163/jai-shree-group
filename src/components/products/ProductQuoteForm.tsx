@@ -11,8 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { COMPANY } from "@/lib/constants";
 import { whatsappUrl } from "@/lib/email";
+import { useSite } from "@/sites/SiteProvider";
 import {
   productQuoteFormSchema,
   type ProductQuoteFormValues,
@@ -27,6 +27,7 @@ export function ProductQuoteForm({
   productName,
   compact = false,
 }: ProductQuoteFormProps) {
+  const { contact } = useSite();
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error" | "unavailable"
   >("idle");
@@ -207,7 +208,7 @@ export function ProductQuoteForm({
             >
               <a
                 href={whatsappUrl(
-                  COMPANY.whatsapp,
+                  contact.whatsapp,
                   `Hi, I need a quote for ${productName}.`
                 )}
                 target="_blank"
@@ -242,7 +243,7 @@ export function ProductQuoteForm({
 
       <Link
         href={whatsappUrl(
-          COMPANY.whatsapp,
+          contact.whatsapp,
           `Hi, I need a quote for ${productName}.`
         )}
         target="_blank"

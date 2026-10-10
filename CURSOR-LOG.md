@@ -33,6 +33,14 @@ Cursor's own work diary for the Jai Shree Group multi-site build. **Cursor write
 
 ## Entries
 
+### 2026-10-11 — 1.1 Site-aware components (started by Cursor, finished by Claude)
+
+- **Status:** 🔄 code done and checked; the full screenshot compare (`docs/research/after-1.1` vs `after-phase-0`) was still running when the session's usage limit hit. Re-run it before ticking 1.1.
+- **What was done:** Cursor (stopped by its Opus usage limit) added `SiteProvider`/`useSite()`, `src/sites/catalog.ts`, `src/sites/content/` (types + group copy) and moved the formulas to `src/lib/open-area.ts`. Claude finished it: Navbar (nav order from `site.nav`), Footer (client, `site.footer`, endorsement line for units), Logo (`flame-and-name` unit fallback), WhatsApp, home page rendering `site.home` through a section map with content props (hero, trust, video, products, about, industries, process, CTA; Group section group-only), product/industry pages and components from the site catalog (static params per site), about, products index, industries index, contact (unit shows only its own details + weekly holiday), get-quote (`QuoteContent`), 3D viewer labels, page metadata from `content.meta` via `contentMetadata`. Admin layout provides the group site. Group-only components (home Group section, certifications, clients, city pages, Our Group) still read group constants.
+- **Checks:** tsc ✅ · build ✅ · lint unchanged (18 problems) · 40 group routes: title/meta/canonical/hreflang identical to baseline and JSON-LD identical to the 0.6 snapshot · statuses as before (`/does-not-exist` 404, `/products/nope` soft 404) · formula bodies identical to the old calculator · screenshot compare: **pending** · unit-site render test: **not done yet** (do it with the real 1.2 config).
+- **Left to do:** finish the screenshot compare; 1.2 must let unit content override `materials`, `specifications` and industry `clients` (shared data lists titanium/PVC and client names).
+- **Questions / assumptions:** VideoSection still uses Tailwind `orange-500` and `#444` (pre-0.4 leftovers; group-only section). Group products index says "8 facilities" (live text, breaks the 6-units rule) — fix as a separate intentional change.
+
 ### 2026-10-11 — 0.8 Shared upgrades: privacy and terms
 
 - **Status:** ✅ done. Google Analytics skipped (user, 2026-10-11): no analytics code was added.

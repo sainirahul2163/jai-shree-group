@@ -1,14 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import { Download, Mail, MapPin, Phone } from "lucide-react";
 
 import { Logo } from "@/components/layout/Logo";
 import { Button } from "@/components/ui/button";
-import {
-  BROCHURE_URL,
-  COMPANY,
-  FOOTER,
-  PRODUCTS,
-} from "@/lib/constants";
+import { group } from "@/sites/group";
+import { useSite, useSiteProducts } from "@/sites/SiteProvider";
 
 const LEGAL_LINKS = [
   { label: "Privacy", href: "/privacy" },
@@ -65,7 +63,13 @@ const SOCIAL_ICONS = {
   Instagram: InstagramIcon,
 } as const;
 
+// A client component so the [site] 404 page (which gets no route params) can
+// render it too; it reads the active site from <SiteProvider>.
 export function Footer() {
+  const site = useSite();
+  const products = useSiteProducts();
+  const { footer, contact } = site;
+
   return (
     <footer
       className="border-t"
@@ -79,36 +83,57 @@ export function Footer() {
           {/* Column 1 — Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Logo />
-            <p
-              className="mt-4 text-sm italic"
-              style={{ color: "var(--text-secondary)" }}
-            >
-              {COMPANY.tagline}
-            </p>
-            <p
-              className="mt-2 text-xs"
-              style={{ color: "var(--text-muted)" }}
-            >
-              Also known as Shree Perforators | Jai Shree Metal Perforators
-            </p>
-            <span
-              className="mt-4 inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium"
-              style={{
-                borderColor: "var(--brand)",
-                backgroundColor: "var(--surface-2)",
-                color: "var(--brand-text)",
-              }}
-            >
-              {COMPANY.iso} Certified
-            </span>
+            {site.tagline && (
+              <p
+                className="mt-4 text-sm italic"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                {site.tagline}
+              </p>
+            )}
+            {footer.alsoKnownAs && (
+              <p
+                className="mt-2 text-xs"
+                style={{ color: "var(--text-muted)" }}
+              >
+                {footer.alsoKnownAs}
+              </p>
+            )}
+            {site.endorsed && (
+              <p
+                className="mt-2 text-xs"
+                style={{ color: "var(--text-muted)" }}
+              >
+                A{" "}
+                <a
+                  href={group.origin}
+                  className="underline underline-offset-2 transition-colors hover:text-brand-text"
+                >
+                  {group.name}
+                </a>{" "}
+                company
+              </p>
+            )}
+            {site.iso && (
+              <span
+                className="mt-4 inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium"
+                style={{
+                  borderColor: "var(--brand)",
+                  backgroundColor: "var(--surface-2)",
+                  color: "var(--brand-text)",
+                }}
+              >
+                {site.iso} Certified
+              </span>
+            )}
             <p
               className="mt-4 text-sm leading-relaxed"
               style={{ color: "var(--text-secondary)" }}
             >
-              {FOOTER.description}
+              {footer.description}
             </p>
             <div className="mt-6 flex gap-3">
-              {FOOTER.social.map((item) => {
+              {(site.social ?? []).map((item) => {
                 const Icon =
                   SOCIAL_ICONS[item.icon as keyof typeof SOCIAL_ICONS] ??
                   LinkedInIcon;
@@ -160,10 +185,10 @@ export function Footer() {
               className="mb-4 text-sm font-bold uppercase tracking-wider"
               style={{ color: "var(--brand-text)" }}
             >
-              {FOOTER.headings.products}
+              {footer.headings.products}
             </h3>
             <ul className="space-y-2.5">
-              {PRODUCTS.map((product) => (
+              {products.map((product) => (
                 <li key={product.slug}>
                   <Link
                     href={`/products/${product.slug}`}
@@ -183,10 +208,10 @@ export function Footer() {
               className="mb-4 text-sm font-bold uppercase tracking-wider"
               style={{ color: "var(--brand-text)" }}
             >
-              {FOOTER.headings.company}
+              {footer.headings.company}
             </h3>
             <ul className="space-y-2.5">
-              {FOOTER.quickLinks.map((link) => (
+              {footer.quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -206,7 +231,7 @@ export function Footer() {
               className="mb-4 text-sm font-bold uppercase tracking-wider"
               style={{ color: "var(--brand-text)" }}
             >
-              {FOOTER.headings.contact}
+              {footer.headings.contact}
             </h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5">
@@ -215,32 +240,33 @@ export function Footer() {
                   style={{ color: "var(--brand-text)" }}
                 />
                 <span className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                  {COMPANY.address}
+                  {contact.address}
                 </span>
               </li>
               <li>
                 <a
-                  href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}
+                  href={`tel:${contact.phone.replace(/\s/g, "")}`}
                   className="flex items-center gap-2.5 text-sm transition-colors hover:text-foreground"
                   style={{ color: "var(--text-secondary)" }}
                 >
                   <Phone className="size-4 shrink-0" style={{ color: "var(--brand-text)" }} />
-                  {COMPANY.phone}
+                  {contact.phone}
                 </a>
               </li>
               <li>
                 <a
-                  href={`mailto:${COMPANY.email}`}
+                  href={`mailto:${contact.email}`}
                   className="flex items-center gap-2.5 text-sm transition-colors hover:text-foreground"
                   style={{ color: "var(--text-secondary)" }}
                 >
                   <Mail className="size-4 shrink-0" style={{ color: "var(--brand-text)" }} />
-                  {COMPANY.email}
+                  {contact.email}
                 </a>
               </li>
             </ul>
 
             <div className="mt-6 flex flex-col gap-3">
+              {site.brochureUrl && (
               <Button
                 asChild
                 variant="outline"
@@ -251,14 +277,15 @@ export function Footer() {
                 }}
               >
                 <a
-                  href={BROCHURE_URL}
+                  href={site.brochureUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <Download className="size-4" />
-                  {FOOTER.buttons.brochure}
+                  {footer.buttons.brochure}
                 </a>
               </Button>
+              )}
               <Button
                 asChild
                 className="h-10 w-full border-0 font-semibold hover:opacity-90"
@@ -268,11 +295,11 @@ export function Footer() {
                 }}
               >
                 <a
-                  href={whatsappUrl(COMPANY.whatsapp)}
+                  href={whatsappUrl(contact.whatsapp)}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {FOOTER.buttons.whatsapp}
+                  {footer.buttons.whatsapp}
                 </a>
               </Button>
             </div>
@@ -290,7 +317,7 @@ export function Footer() {
           style={{ color: "var(--text-muted)" }}
         >
           <div className="flex flex-col items-center gap-2 md:flex-row md:gap-4">
-            <p>{FOOTER.copyright}</p>
+            <p>{footer.copyright}</p>
             <nav aria-label="Legal" className="flex gap-4">
               {LEGAL_LINKS.map((link) => (
                 <Link
@@ -304,7 +331,7 @@ export function Footer() {
               ))}
             </nav>
           </div>
-          <p>{FOOTER.certification}</p>
+          <p>{footer.certification}</p>
         </div>
       </div>
     </footer>

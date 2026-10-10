@@ -6,20 +6,18 @@ import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { PageHero } from "@/components/shared/PageHero";
 import { BLOG_POSTS } from "@/lib/constants";
 import { getPublishedBlogPosts } from "@/lib/supabase/queries";
+import { contentMetadata } from "@/lib/seo";
+import { getContent } from "@/sites/content";
 import { siteFromParams, type SiteParams } from "@/sites/params";
 
 /** Posts are managed in Supabase — refresh the static page hourly so newly
  *  published posts appear without a redeploy. */
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: "Metal Manufacturing Insights | Blog | Jai Shree Group",
-  description:
-    "Technical guides, product tutorials, and industry insights on perforated sheets, laser cutting, expanded metal and turret punching from Jai Shree Group.",
-  alternates: {
-    canonical: "/blog",
-  },
-};
+export async function generateMetadata({ params }: SiteParams): Promise<Metadata> {
+  const site = await siteFromParams(params);
+  return contentMetadata(getContent(site.key).meta.blog!, "/blog");
+}
 
 export default async function BlogIndexPage({ params }: SiteParams) {
   const site = await siteFromParams(params);

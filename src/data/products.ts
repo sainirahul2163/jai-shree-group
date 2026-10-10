@@ -1,8 +1,19 @@
 export type ProductFaq = { q: string; a: string };
 export type ProductSpec = { label: string; value: string };
 
+/** Short form of a product for menus, cards, pickers and the schema catalog. */
+export type ProductCard = {
+  name: string;
+  slug: string;
+  description: string;
+  icon: string;
+  specs: Record<string, string>;
+  materials: string[];
+};
+
 export type ProductDetail = {
   slug: string;
+  card: Omit<ProductCard, "slug">;
   name: string;
   tagline: string;
   overview: string[];
@@ -19,6 +30,24 @@ export type ProductDetail = {
 export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
   "perforated-sheets": {
     slug: "perforated-sheets",
+    card: {
+      name: "Perforated Sheets",
+      description:
+        "CNC & Turret perforation in all metals. Up to 12mm thickness.",
+      icon: "Grid3X3",
+      specs: {
+        maxThickness: "12mm",
+        process: "CNC / Turret",
+      },
+      materials: [
+        "Stainless Steel",
+        "MS (Mild Steel)",
+        "GI (Galvanized Iron)",
+        "Aluminum",
+        "Copper",
+        "Brass",
+      ],
+    },
     name: "Perforated Sheet Manufacturer — Pune & Mumbai",
     tagline: "Precision perforated to your exact specifications",
     overview: [
@@ -100,6 +129,24 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
   },
   "laser-cutting": {
     slug: "laser-cutting",
+    card: {
+      name: "Laser Cutting",
+      description:
+        "Fiber laser cutting for any custom drawing. Up to 14mm thickness.",
+      icon: "Zap",
+      specs: {
+        maxThickness: "14mm",
+        process: "Fiber Laser",
+      },
+      materials: [
+        "Stainless Steel",
+        "MS (Mild Steel)",
+        "Aluminum",
+        "Copper",
+        "Brass",
+        "Titanium",
+      ],
+    },
     name: "Laser Cutting Services — Pune & Mumbai",
     tagline: "Fiber laser precision for any metal, any drawing",
     overview: [
@@ -170,6 +217,26 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
   },
   "expanded-metal": {
     slug: "expanded-metal",
+    card: {
+      name: "Expanded Metal",
+      description:
+        "Diamond, square & hexagonal patterns. Up to 6mm thick.",
+      icon: "Diamond",
+      specs: {
+        maxThickness: "6mm",
+        widths: "900 / 1250 / 1500mm",
+        patterns: "Diamond / Square / Hex",
+      },
+      materials: [
+        "Stainless Steel",
+        "MS (Mild Steel)",
+        "GI (Galvanized Iron)",
+        "Brass",
+        "Copper",
+        "Aluminum",
+        "Titanium",
+      ],
+    },
     name: "Expanded Metal Manufacturer — Pune & Mumbai",
     tagline: "Versatile expanded metal sheets for every application",
     overview: [
@@ -238,6 +305,24 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
   },
   "turret-punching": {
     slug: "turret-punching",
+    card: {
+      name: "Turret Punching",
+      description:
+        "CNC turret punching. Any hole shape. Combined with laser for cost saving.",
+      icon: "Circle",
+      specs: {
+        process: "CNC Turret",
+        shapes: "Any hole shape",
+      },
+      materials: [
+        "Stainless Steel",
+        "MS (Mild Steel)",
+        "GI (Galvanized Iron)",
+        "Aluminum",
+        "Copper",
+        "Brass",
+      ],
+    },
     name: "CNC Turret Punching — Pune",
     tagline: "CNC turret punching for any hole shape in any metal",
     overview: [
@@ -309,6 +394,16 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
   },
   "precision-sheet-leveling": {
     slug: "precision-sheet-leveling",
+    card: {
+      name: "Precision Sheet Leveling",
+      description:
+        "Specialized bow/warpage control for perforated and laser cut sheets.",
+      icon: "Ruler",
+      specs: {
+        specialization: "Bow / Warpage Control",
+      },
+      materials: ["All Metals"],
+    },
     name: "Precision Sheet Leveling — Pune & Mumbai",
     tagline: "Bow and warpage control for perfectly flat sheets",
     overview: [
@@ -363,6 +458,24 @@ export const PRODUCT_DETAILS: Record<string, ProductDetail> = {
   },
   "custom-components": {
     slug: "custom-components",
+    card: {
+      name: "Custom Components",
+      description:
+        "Custom-engineered metal components, special dies, embossed plates, dimple de-stoners, huller screens, herringbone screens and any special job as per drawing.",
+      icon: "Settings2",
+      specs: {
+        process: "Custom Fabrication",
+        drawings: "DXF / DWG / Sample",
+      },
+      materials: [
+        "Stainless Steel",
+        "MS (Mild Steel)",
+        "GI (Galvanized Iron)",
+        "Aluminum",
+        "Brass",
+        "Copper",
+      ],
+    },
     name: "Custom Metal Components — Pune",
     tagline: "Any shape, any metal, any specification — we engineer it.",
     overview: [
@@ -443,11 +556,12 @@ export function getProductDetail(slug: string): ProductDetail | undefined {
   return PRODUCT_DETAILS[slug];
 }
 
-export function getRelatedProducts(
-  currentSlug: string,
-  count = 3
-): ProductDetail[] {
-  return PRODUCT_SLUGS.filter((slug) => slug !== currentSlug)
-    .slice(0, count)
-    .map((slug) => PRODUCT_DETAILS[slug]);
+export function productCard(detail: ProductDetail): ProductCard {
+  const { name, description, icon, specs, materials } = detail.card;
+  return { name, slug: detail.slug, description, icon, specs, materials };
 }
+
+/** Every product's card, in PRODUCT_DETAILS order (`PRODUCTS` in constants). */
+export const PRODUCT_CARDS: ProductCard[] = PRODUCT_SLUGS.map((slug) =>
+  productCard(PRODUCT_DETAILS[slug])
+);

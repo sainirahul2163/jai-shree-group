@@ -3,16 +3,14 @@ import type { Metadata } from "next";
 import { OpenAreaCalculator } from "@/components/calculator/OpenAreaCalculator";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { CALCULATOR_FAQS } from "@/data/calculator-faqs";
+import { contentMetadata } from "@/lib/seo";
+import { getContent } from "@/sites/content";
 import { siteFromParams, type SiteParams } from "@/sites/params";
 
-export const metadata: Metadata = {
-  title: "Perforated Sheet Open Area Calculator | Jai Shree Group",
-  description:
-    "Calculate open area percentage for perforated sheets — round, square, hex, and slot patterns. 10 formula calculators for all perforation types.",
-  alternates: {
-    canonical: "/calculator",
-  },
-};
+export async function generateMetadata({ params }: SiteParams): Promise<Metadata> {
+  const site = await siteFromParams(params);
+  return contentMetadata(getContent(site.key).meta.calculator!, "/calculator");
+}
 
 export default async function CalculatorPage({ params }: SiteParams) {
   const site = await siteFromParams(params);

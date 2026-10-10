@@ -5,24 +5,31 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 import { PageHero } from "@/components/shared/PageHero";
-import { HOME_INDUSTRIES } from "@/lib/constants";
-import { INDUSTRY_DETAILS } from "@/data/industries";
 import { getIndustryIcon } from "@/lib/icons";
+import type { IndustryCard } from "@/sites/catalog";
+import type { PageHeroContent } from "@/sites/content/types";
 
-export function IndustriesIndexPage() {
+export function IndustriesIndexPage({
+  hero,
+  industries,
+}: {
+  hero: PageHeroContent;
+  /** The site's industry cards (`siteIndustryCards`), in order. */
+  industries: IndustryCard[];
+}) {
   return (
     <>
       <PageHero
-        label="INDUSTRIES"
-        title="Industries We Serve"
-        subtitle="Precision metal products for every sector — from automotive filters to petrochemical precision components."
+        label={hero.label}
+        title={hero.title}
+        subtitle={hero.subtitle}
+        badges={hero.badges?.map((text) => ({ text }))}
       />
       <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {HOME_INDUSTRIES.map((industry, index) => {
+            {industries.map((industry, index) => {
               const Icon = getIndustryIcon(industry.icon);
-              const detail = INDUSTRY_DETAILS[industry.slug];
               return (
                 <motion.div
                   key={industry.slug}
@@ -53,7 +60,7 @@ export function IndustriesIndexPage() {
                       className="mt-3 flex-1 text-base leading-relaxed"
                       style={{ color: "var(--text-secondary)" }}
                     >
-                      {detail?.description ?? industry.description}
+                      {industry.description}
                     </p>
                     <span
                       className="mt-5 inline-flex items-center text-sm font-semibold"

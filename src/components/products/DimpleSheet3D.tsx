@@ -3,7 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import type * as THREE from "three";
 
+import { useSite } from "@/sites/SiteProvider";
+
 export function DimpleSheet3D() {
+  const { name: siteName } = useSite();
   const mountRef = useRef<HTMLDivElement>(null);
   const [loaded, setLoaded] = useState(false);
 
@@ -220,7 +223,7 @@ export function DimpleSheet3D() {
         <span className="text-[10px] text-[#555]">Pattern: Dome / Dimple</span>
         <span className="text-[10px] text-[#555]">Process: Embossing</span>
         <span className="ml-auto text-[10px] font-medium text-brand-text">
-          Jai Shree Group
+          {siteName}
         </span>
       </div>
     </div>

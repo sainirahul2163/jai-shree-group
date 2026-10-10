@@ -1,5 +1,5 @@
-import { PRODUCTS } from "@/lib/constants";
 import { siteUrl } from "@/lib/seo";
+import { siteProductCards } from "@/sites/catalog";
 import { group } from "@/sites/group";
 import type { SiteConfig } from "@/sites/types";
 
@@ -7,9 +7,7 @@ import { geoCoordinates, postalAddress, telephone } from "./schema-parts";
 
 /** The site's products that have shared product data, in config order. */
 function offerCatalog(site: SiteConfig) {
-  const products = site.products.flatMap(
-    (slug) => PRODUCTS.find((product) => product.slug === slug) ?? []
-  );
+  const products = siteProductCards(site);
   if (!products.length) return undefined;
   return {
     "@type": "OfferCatalog",

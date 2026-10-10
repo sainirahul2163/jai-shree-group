@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Fragment } from "react";
 import { motion } from "framer-motion";
 import {
   Award,
@@ -17,14 +18,7 @@ import {
 import { CtaBanner } from "@/components/shared/CtaBanner";
 import { PageHero } from "@/components/shared/PageHero";
 import { Button } from "@/components/ui/button";
-import {
-  ABOUT_STATS,
-  ABOUT_STRENGTHS,
-  ABOUT_TIMELINE_DETAILED,
-  FAMILY_LEADERSHIP,
-  VISION_MISSION,
-} from "@/data/about";
-import { COMPANY } from "@/lib/constants";
+import type { AboutPageContent } from "@/sites/content/types";
 
 const STRENGTH_ICONS = {
   Shield,
@@ -37,16 +31,16 @@ const STRENGTH_ICONS = {
   Heart,
 } as const;
 
-export function AboutPage() {
+export function AboutPage({ content }: { content: AboutPageContent }) {
+  const { hero, story, numbers, strengths, quality } = content;
+
   return (
     <>
       <PageHero
-        title="About Jai Shree Group"
-        subtitle="50+ years of precision metal manufacturing from Pune & Mumbai"
-        badges={[
-          { text: COMPANY.iso },
-          { text: `Est. ${COMPANY.founded}` },
-        ]}
+        label={hero.label}
+        title={hero.title}
+        subtitle={hero.subtitle}
+        badges={hero.badges?.map((text) => ({ text }))}
       />
 
       {/* Our Story */}
@@ -62,33 +56,31 @@ export function AboutPage() {
               className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
               style={{ color: "var(--brand-text)" }}
             >
-              OUR STORY
+              {story.label}
             </p>
             <h2
               className="text-3xl font-black tracking-tight sm:text-4xl"
               style={{ color: "var(--foreground)" }}
             >
-              From Delhi to India&apos;s Leading Metal Manufacturer
+              {story.heading}
             </h2>
             <div className="mt-6 max-w-3xl space-y-4">
-              <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                Founded in 1970 by {COMPANY.founder} in {COMPANY.foundedIn}, Jai
-                Shree Group began as a wire mesh manufacturer with a commitment to
-                precision and quality. Over five decades, the group has grown into
-                one of India&apos;s most trusted metal fabrication companies.
-              </p>
-              <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                Today, with 6 manufacturing units across Pune and Mumbai, we serve
-                industries from automobile and construction to pharmaceutical and
-                petrochemical — delivering perforated sheets, laser cutting, expanded
-                metal, turret punching, and more with ISO 9001:2015 certified processes.
-              </p>
+              {story.paragraphs.map((text) => (
+                <p
+                  key={text.slice(0, 24)}
+                  className="text-base leading-relaxed"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  {text}
+                </p>
+              ))}
             </div>
           </motion.div>
 
           {/* Timeline */}
+          {story.timeline && (
           <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {ABOUT_TIMELINE_DETAILED.map((item, index) => (
+            {story.timeline.map((item, index) => (
               <motion.div
                 key={item.year + item.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -123,16 +115,19 @@ export function AboutPage() {
             ))}
           </div>
 
-          {/* Family Leadership */}
+          )}
+
+          {/* Leadership */}
+          {story.leadership && (
           <div className="mt-16">
             <h3
               className="text-2xl font-black"
               style={{ color: "var(--foreground)" }}
             >
-              Family Leadership
+              {story.leadership.heading}
             </h3>
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {FAMILY_LEADERSHIP.map((leader, index) => (
+              {story.leadership.people.map((leader, index) => (
                 <motion.div
                   key={leader.name}
                   initial={{ opacity: 0, y: 16 }}
@@ -164,6 +159,7 @@ export function AboutPage() {
               ))}
             </div>
           </div>
+          )}
         </div>
       </section>
 
@@ -181,18 +177,18 @@ export function AboutPage() {
               className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
               style={{ color: "var(--brand-text)" }}
             >
-              BY THE NUMBERS
+              {numbers.label}
             </p>
             <h2
               className="text-3xl font-black tracking-tight sm:text-4xl"
               style={{ color: "var(--foreground)" }}
             >
-              Manufacturing at Scale
+              {numbers.heading}
             </h2>
           </motion.div>
 
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
-            {ABOUT_STATS.map((stat, index) => (
+            {numbers.stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, y: 20 }}
@@ -237,18 +233,18 @@ export function AboutPage() {
               className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
               style={{ color: "var(--brand-text)" }}
             >
-              OUR STRENGTHS
+              {strengths.label}
             </p>
             <h2
               className="text-3xl font-black tracking-tight sm:text-4xl"
               style={{ color: "var(--foreground)" }}
             >
-              Our Edge on Others
+              {strengths.heading}
             </h2>
           </motion.div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {ABOUT_STRENGTHS.map((strength, index) => {
+            {strengths.items.map((strength, index) => {
               const Icon =
                 STRENGTH_ICONS[
                   strength.icon as keyof typeof STRENGTH_ICONS
@@ -289,7 +285,8 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* ISO Certification */}
+      {/* Certification */}
+      {quality && (
       <section className="section-padding" style={{ backgroundColor: "var(--background)" }}>
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
@@ -315,16 +312,19 @@ export function AboutPage() {
                   className="text-center text-sm font-black leading-tight"
                   style={{ color: "var(--brand-text)" }}
                 >
-                  ISO
-                  <br />
-                  9001:2015
+                  {quality.badgeLines.map((line, index) => (
+                    <Fragment key={line}>
+                      {index > 0 && <br />}
+                      {line}
+                    </Fragment>
+                  ))}
                 </span>
               </div>
               <p
                 className="mt-4 text-sm font-semibold"
                 style={{ color: "var(--text-secondary)" }}
               >
-                Certified Quality Management System
+                {quality.badgeCaption}
               </p>
             </motion.div>
 
@@ -338,43 +338,48 @@ export function AboutPage() {
                 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
                 style={{ color: "var(--brand-text)" }}
               >
-                ISO CERTIFICATION
+                {quality.label}
               </p>
               <h2
                 className="text-3xl font-black tracking-tight"
                 style={{ color: "var(--foreground)" }}
               >
-                Committed to Total Quality Management
+                {quality.heading}
               </h2>
               <div className="mt-6 space-y-4">
-                <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                  Jai Shree Group operates under {COMPANY.iso} certified quality
-                  management systems. Every process — from raw material procurement to
-                  final inspection — is controlled under direct supervision of our
-                  promoters.
-                </p>
-                <p
-                  className="text-base font-semibold leading-relaxed"
-                  style={{ color: "var(--foreground)" }}
-                >
-                  Our rejection percentage is negligible.
-                </p>
-                <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                  This commitment to quality has earned us long-term partnerships
-                  with leading manufacturers across automobile, pharmaceutical,
-                  construction, and industrial sectors.
-                </p>
+                {quality.paragraphs.map((paragraph) =>
+                  paragraph.emphasis ? (
+                    <p
+                      key={paragraph.text.slice(0, 24)}
+                      className="text-base font-semibold leading-relaxed"
+                      style={{ color: "var(--foreground)" }}
+                    >
+                      {paragraph.text}
+                    </p>
+                  ) : (
+                    <p
+                      key={paragraph.text.slice(0, 24)}
+                      className="text-base leading-relaxed"
+                      style={{ color: "var(--text-secondary)" }}
+                    >
+                      {paragraph.text}
+                    </p>
+                  )
+                )}
               </div>
-              <Button asChild className="mt-8 glow-orange">
-                <Link href="/certifications">
-                  <ArrowRight className="mr-2 size-4" />
-                  View Certifications →
-                </Link>
-              </Button>
+              {quality.cta && (
+                <Button asChild className="mt-8 glow-orange">
+                  <Link href={quality.cta.href}>
+                    <ArrowRight className="mr-2 size-4" />
+                    {quality.cta.label}
+                  </Link>
+                </Button>
+              )}
             </motion.div>
           </div>
         </div>
       </section>
+      )}
 
       {/* Vision & Mission */}
       <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
@@ -401,7 +406,7 @@ export function AboutPage() {
                 className="mt-4 text-base leading-relaxed"
                 style={{ color: "var(--text-secondary)" }}
               >
-                {VISION_MISSION.vision}
+                {content.vision}
               </p>
             </motion.div>
             <motion.div
@@ -425,7 +430,7 @@ export function AboutPage() {
                 className="mt-4 text-base leading-relaxed"
                 style={{ color: "var(--text-secondary)" }}
               >
-                {VISION_MISSION.mission}
+                {content.mission}
               </p>
             </motion.div>
           </div>

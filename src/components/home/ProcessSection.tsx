@@ -3,11 +3,11 @@
 import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 
-import { HOME_SECTIONS, PROCESS_STEPS } from "@/lib/constants";
+import type { ProcessContent } from "@/sites/content/types";
 import { getProcessIcon } from "@/lib/icons";
 
-export function ProcessSection() {
-  const { process: section } = HOME_SECTIONS;
+export function ProcessSection({ content: section }: { content: ProcessContent }) {
+  const steps = section.steps;
 
   return (
     <section
@@ -39,7 +39,7 @@ export function ProcessSection() {
 
         {/* Desktop horizontal flow */}
         <div className="hidden lg:flex lg:items-start lg:justify-between">
-          {PROCESS_STEPS.map((step, index) => {
+          {steps.map((step, index) => {
             const Icon = getProcessIcon(step.icon);
             return (
               <div key={step.step} className="flex flex-1 items-start">
@@ -83,7 +83,7 @@ export function ProcessSection() {
                   </p>
                 </motion.div>
 
-                {index < PROCESS_STEPS.length - 1 && (
+                {index < steps.length - 1 && (
                   <div className="flex shrink-0 items-center px-2 pt-7">
                     <div
                       className="h-px w-8 border-t border-dashed sm:w-12"
@@ -102,7 +102,7 @@ export function ProcessSection() {
 
         {/* Mobile vertical stack */}
         <div className="flex flex-col gap-0 lg:hidden">
-          {PROCESS_STEPS.map((step, index) => {
+          {steps.map((step, index) => {
             const Icon = getProcessIcon(step.icon);
             return (
               <motion.div
@@ -113,7 +113,7 @@ export function ProcessSection() {
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 className="relative flex gap-4 pb-8 last:pb-0"
               >
-                {index < PROCESS_STEPS.length - 1 && (
+                {index < steps.length - 1 && (
                   <div
                     className="absolute top-14 left-[27px] h-[calc(100%-3rem)] w-px border-l border-dashed"
                     style={{ borderColor: "var(--brand)" }}

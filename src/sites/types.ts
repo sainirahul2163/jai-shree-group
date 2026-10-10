@@ -61,6 +61,38 @@ export interface ThemeTokens {
   fontBody: FontKey;
 }
 
+export interface SiteLink {
+  label: string;
+  href: string;
+}
+
+/** Header and footer mark. */
+export interface SiteLogo {
+  /**
+   * "jai-shree" = the client's official JAI SHREE artwork (group).
+   * "flame-and-name" = the group flame next to `SiteConfig.name` (unit
+   * fallback until unit logos arrive, docs/08-content-checklist.md).
+   */
+  kind: "jai-shree" | "flame-and-name";
+  /** Accessible name of the mark itself. */
+  label: string;
+  /** Accessible name of the home link around it. */
+  homeLabel: string;
+}
+
+/** Footer block: copy and links the footer shows next to `contact`. */
+export interface SiteFooter {
+  /** Small line under the tagline, e.g. other names the business trades as. */
+  alsoKnownAs?: string;
+  description: string;
+  quickLinks: SiteLink[];
+  headings: { products: string; company: string; contact: string };
+  buttons: { brochure: string; whatsapp: string };
+  copyright: string;
+  /** Right side of the bottom bar. */
+  certification: string;
+}
+
 export interface SiteConfig {
   key: SiteKey;
   origin: string;
@@ -68,6 +100,12 @@ export interface SiteConfig {
   descriptor?: string;
   unitSlug: string | null;
   endorsed: boolean;
+  logo: SiteLogo;
+  /** Certification held, e.g. "ISO 9001:2015"; leave out when not confirmed. */
+  iso?: string;
+  /** Catalogue PDF; the catalogue buttons are hidden without it. */
+  brochureUrl?: string;
+  footer: SiteFooter;
   contact: {
     phone: string;
     whatsapp: string;
@@ -86,7 +124,9 @@ export interface SiteConfig {
   products: ProductSlug[];
   industries: string[];
   theme: ThemeTokens;
-  nav: { label: string; href: string }[];
+  /** Header links in order; the "/products" entry opens the products menu. */
+  nav: SiteLink[];
+  /** Home sections in render order (`[site]/(chrome)/page.tsx`). */
   home: HomeSectionKey[];
   /**
    * Enabled top-level routes ("/products" enables /products/*); the proxy
@@ -115,7 +155,11 @@ export interface SiteConfig {
     languages?: string[];
     schema?: SchemaFacts;
   };
-  social?: { name: string; href: string }[];
+  social?: {
+    name: string;
+    href: string;
+    icon?: "Linkedin" | "Facebook" | "Instagram";
+  }[];
 }
 
 /**

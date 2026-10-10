@@ -5,15 +5,17 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Play, Video, Volume2, VolumeX } from "lucide-react";
 
-import { COMPANY_VIDEO } from "@/lib/constants";
+import type { VideoContent } from "@/sites/content/types";
 
 const SPRING = { type: "spring", stiffness: 100, damping: 30 } as const;
 
 function VideoPlaceholder({
+  content,
   showComingSoon,
   onOpen,
   onClose,
 }: {
+  content: VideoContent;
   showComingSoon: boolean;
   onOpen: () => void;
   onClose: () => void;
@@ -78,14 +80,14 @@ function VideoPlaceholder({
         </motion.div>
 
         <div>
-          <p className="text-lg font-bold text-foreground">Factory Tour</p>
+          <p className="text-lg font-bold text-foreground">{content.posterTitle}</p>
           <p className="mt-1 text-sm text-text-muted">
             Coming Soon — Drone &amp; walkthrough footage
           </p>
         </div>
 
         <div className="mt-2 flex flex-wrap justify-center gap-2">
-          {["CNC Machines", "Fiber Laser", "Turret Punching", "Talawade Facility"].map(
+          {content.tags.map(
             (tag) => (
               <span
                 key={tag}
@@ -122,11 +124,10 @@ function VideoPlaceholder({
               id="factory-tour-soon-title"
               className="mt-4 text-xl font-bold text-foreground"
             >
-              Factory Tour Coming Soon
+              {content.posterTitle} Coming Soon
             </h3>
             <p className="mt-2 max-w-xs text-center text-sm text-text-secondary">
-              We&apos;re filming a complete walkthrough of our 6 manufacturing
-              units.
+              {content.comingSoonText}
             </p>
             <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row">
               <Link
@@ -150,7 +151,13 @@ function VideoPlaceholder({
   );
 }
 
-function YoutubeEmbed({ videoId }: { videoId: string }) {
+function YoutubeEmbed({
+  videoId,
+  content,
+}: {
+  videoId: string;
+  content: VideoContent;
+}) {
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
 
@@ -191,14 +198,14 @@ function YoutubeEmbed({ videoId }: { videoId: string }) {
             </motion.div>
           </div>
           <div className="absolute right-4 bottom-4 rounded bg-black/70 px-2 py-1 backdrop-blur-sm">
-            <span className="text-xs font-medium text-foreground">Factory Tour</span>
+            <span className="text-xs font-medium text-foreground">{content.posterTitle}</span>
           </div>
         </div>
       ) : (
         <div className="relative h-full w-full">
           <iframe
             className="h-full w-full"
-            title="Jai Shree Group factory tour"
+            title={content.iframeTitle}
             src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=${muted ? 1 : 0}&rel=0&modestbranding=1&playsinline=1`}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
@@ -221,7 +228,13 @@ function YoutubeEmbed({ videoId }: { videoId: string }) {
   );
 }
 
-function LocalVideo({ src }: { src: string }) {
+function LocalVideo({
+  src,
+  content,
+}: {
+  src: string;
+  content: VideoContent;
+}) {
   const [playing, setPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -311,11 +324,11 @@ function LocalVideo({ src }: { src: string }) {
         </motion.div>
 
         <div>
-          <p className="text-lg font-bold text-foreground">Factory Tour</p>
+          <p className="text-lg font-bold text-foreground">{content.posterTitle}</p>
         </div>
 
         <div className="mt-2 flex flex-wrap justify-center gap-2">
-          {["CNC Machines", "Fiber Laser", "Turret Punching", "Talawade Facility"].map(
+          {content.tags.map(
             (tag) => (
               <span
                 key={tag}
@@ -331,13 +344,13 @@ function LocalVideo({ src }: { src: string }) {
   );
 }
 
-export function VideoSection() {
+export function VideoSection({ content }: { content: VideoContent }) {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-10% 0px" });
   const [showComingSoon, setShowComingSoon] = useState(false);
 
-  const hasYoutube = Boolean(COMPANY_VIDEO.youtubeId);
-  const hasLocal = Boolean(COMPANY_VIDEO.localVideo);
+  const hasYoutube = Boolean(content.youtubeId);
+  const hasLocal = Boolean(content.localVideo);
 
   const reveal = (delay: number) => ({
     initial: { opacity: 0, y: 40, filter: "blur(8px)" },
@@ -356,7 +369,7 @@ export function VideoSection() {
             <motion.div {...reveal(0)} className="mb-5 flex items-center gap-3">
               <span aria-hidden className="h-px w-6 bg-orange-500/40" />
               <span className="text-xs font-medium tracking-[0.25em] text-orange-500 uppercase">
-                {COMPANY_VIDEO.label}
+                {content.label}
               </span>
             </motion.div>
 
@@ -364,10 +377,10 @@ export function VideoSection() {
               {...reveal(0.1)}
               className="text-4xl leading-[1.05] font-black tracking-tight md:text-5xl"
             >
-              <span className="text-foreground">{COMPANY_VIDEO.heading}</span>
+              <span className="text-foreground">{content.heading}</span>
               <br />
               <span className="bg-gradient-to-r from-brand via-brand-hover to-brand bg-clip-text text-transparent">
-                {COMPANY_VIDEO.headingOrange}
+                {content.headingAccent}
               </span>
             </motion.h2>
           </div>
@@ -377,11 +390,11 @@ export function VideoSection() {
               {...reveal(0.2)}
               className="mb-8 text-base leading-relaxed text-text-secondary"
             >
-              {COMPANY_VIDEO.subtext}
+              {content.subtext}
             </motion.p>
 
             <motion.div {...reveal(0.3)} className="grid grid-cols-3 gap-4">
-              {COMPANY_VIDEO.stats.map((stat) => (
+              {content.stats.map((stat) => (
                 <div
                   key={stat.label}
                   className="rounded-xl border border-surface-2 bg-background p-4"
@@ -400,11 +413,12 @@ export function VideoSection() {
 
         <motion.div {...reveal(0.25)}>
           {hasYoutube ? (
-            <YoutubeEmbed videoId={COMPANY_VIDEO.youtubeId} />
+            <YoutubeEmbed videoId={content.youtubeId ?? ""} content={content} />
           ) : hasLocal ? (
-            <LocalVideo src={COMPANY_VIDEO.localVideo} />
+            <LocalVideo src={content.localVideo ?? ""} content={content} />
           ) : (
             <VideoPlaceholder
+              content={content}
               showComingSoon={showComingSoon}
               onOpen={() => setShowComingSoon(true)}
               onClose={() => setShowComingSoon(false)}
@@ -416,7 +430,7 @@ export function VideoSection() {
           {...reveal(0.4)}
           className="mt-6 text-center text-sm text-border-strong"
         >
-          Jai Shree Group Manufacturing Facility — Talawade, Pune, Maharashtra
+          {content.caption}
         </motion.p>
       </div>
     </section>

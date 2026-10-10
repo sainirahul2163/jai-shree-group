@@ -3,7 +3,9 @@ import type { Metadata } from "next";
 import { GlobalSchema } from "@/components/seo/GlobalSchema";
 import { siteMetadata } from "@/lib/seo";
 import { ALL_SITES } from "@/sites";
+import { siteProductCards } from "@/sites/catalog";
 import { siteFromParams } from "@/sites/params";
+import { SiteProvider } from "@/sites/SiteProvider";
 import { themeCss } from "@/sites/theme-vars";
 
 // One static build per configured site; the proxy rewrites each host to /<key>/….
@@ -32,7 +34,9 @@ export default async function SiteLayout({
     <>
       <GlobalSchema site={site} />
       <style>{themeCss(site.theme)}</style>
-      {children}
+      <SiteProvider site={site} products={siteProductCards(site)}>
+        {children}
+      </SiteProvider>
     </>
   );
 }

@@ -18,11 +18,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { BROCHURE_URL } from "@/lib/constants";
 import type { ProductDetail } from "@/data/products";
 import type { ProductModel } from "./ProductViewer3D";
 import { getProductIcon } from "@/lib/icons";
-import { PRODUCTS } from "@/lib/constants";
+import { useSite } from "@/sites/SiteProvider";
 
 const PerforationPatterns = dynamic(
   () =>
@@ -68,9 +67,8 @@ export function ProductPageClient({
   product,
   relatedProducts,
 }: ProductPageClientProps) {
-  const iconName =
-    PRODUCTS.find((p) => p.slug === product.slug)?.icon ?? "Grid3X3";
-  const Icon = getProductIcon(iconName);
+  const site = useSite();
+  const Icon = getProductIcon(product.card.icon);
 
   return (
     <>
@@ -159,22 +157,24 @@ export function ProductPageClient({
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="h-12 bg-transparent font-semibold hover:bg-surface-2"
-                style={{ borderColor: "var(--foreground)", color: "var(--foreground)" }}
-              >
-                <a
-                  href={BROCHURE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              {site.brochureUrl && (
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="h-12 bg-transparent font-semibold hover:bg-surface-2"
+                  style={{ borderColor: "var(--foreground)", color: "var(--foreground)" }}
                 >
-                  <Download className="size-4" />
-                  Download Product Catalogue
-                </a>
-              </Button>
+                  <a
+                    href={site.brochureUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Download className="size-4" />
+                    Download Product Catalogue
+                  </a>
+                </Button>
+              )}
             </div>
           </motion.div>
 
@@ -446,9 +446,7 @@ export function ProductPageClient({
           </h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
             {relatedProducts.map((related, index) => {
-              const relIcon =
-                PRODUCTS.find((p) => p.slug === related.slug)?.icon ?? "Grid3X3";
-              const RelIcon = getProductIcon(relIcon);
+              const RelIcon = getProductIcon(related.card.icon);
               return (
                 <motion.div
                   key={related.slug}

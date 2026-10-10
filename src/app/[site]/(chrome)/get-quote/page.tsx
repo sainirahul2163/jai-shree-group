@@ -2,17 +2,14 @@ import type { Metadata } from "next";
 
 import { GetQuotePage } from "@/components/quote/GetQuotePage";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { contentMetadata } from "@/lib/seo";
+import { getContent } from "@/sites/content";
 import { siteFromParams, type SiteParams } from "@/sites/params";
 
-export const metadata: Metadata = {
-  title:
-    "Get Free Quote | Perforated Sheets, Laser Cutting, Expanded Metal | Jai Shree Group",
-  description:
-    "Request a free quote for perforated sheets, laser cutting, expanded metal, turret punching and more. ISO certified manufacturers in Pune & Mumbai.",
-  alternates: {
-    canonical: "/get-quote",
-  },
-};
+export async function generateMetadata({ params }: SiteParams): Promise<Metadata> {
+  const site = await siteFromParams(params);
+  return contentMetadata(getContent(site.key).meta.getQuote, "/get-quote");
+}
 
 export default async function GetQuote({ params }: SiteParams) {
   const site = await siteFromParams(params);
@@ -26,7 +23,7 @@ export default async function GetQuote({ params }: SiteParams) {
           { name: "Get Quote", path: "/get-quote" },
         ]}
       />
-      <GetQuotePage />
+      <GetQuotePage content={getContent(site.key).quote} />
     </>
   );
 }

@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 
-import { COMPANY } from "@/lib/constants";
 import { whatsappUrl } from "@/lib/email";
+import { useSite } from "@/sites/SiteProvider";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -19,8 +19,9 @@ function WhatsAppIcon({ className }: { className?: string }) {
 }
 
 export function WhatsAppButton() {
+  const { contact } = useSite();
   const href = whatsappUrl(
-    COMPANY.whatsapp,
+    contact.whatsapp,
     "Hi, I need a quote for metal products."
   );
 

@@ -112,12 +112,26 @@ const LAYOUT_KEYWORDS = [
   "metal manufacturing",
 ];
 
+export const BROCHURE_URL = "/brochure/jai-shree-brochure.pdf";
+
 export const group: SiteConfig = {
   key: "group",
   origin: SITE_URL,
   name: COMPANY.name,
   unitSlug: null,
   endorsed: false,
+  logo: { kind: "jai-shree", label: "Jai Shree", homeLabel: "Jai Shree Home" },
+  iso: COMPANY.iso,
+  brochureUrl: BROCHURE_URL,
+  footer: {
+    alsoKnownAs: "Also known as Shree Perforators | Jai Shree Metal Perforators",
+    description: FOOTER.description,
+    quickLinks: FOOTER.quickLinks.map((item) => ({ ...item })),
+    headings: { ...FOOTER.headings },
+    buttons: { ...FOOTER.buttons },
+    copyright: FOOTER.copyright,
+    certification: FOOTER.certification,
+  },
   contact: {
     phone: COMPANY.phone,
     whatsapp: COMPANY.whatsapp,
@@ -166,7 +180,11 @@ export const group: SiteConfig = {
     fontHeading: "geist",
     fontBody: "geist",
   },
-  nav: NAV_LINKS.map((item) => ({ label: item.label, href: item.href })),
+  nav: [
+    ...NAV_LINKS.slice(0, 2),
+    { label: "Products", href: "/products" },
+    ...NAV_LINKS.slice(2),
+  ].map((item) => ({ label: item.label, href: item.href })),
   home: [
     "hero",
     "trust",
@@ -245,5 +263,9 @@ export const group: SiteConfig = {
       priceRange: "$$",
     },
   },
-  social: FOOTER.social.map((item) => ({ name: item.name, href: item.href })),
+  social: FOOTER.social.map((item) => ({
+    name: item.name,
+    href: item.href,
+    icon: item.icon,
+  })),
 };

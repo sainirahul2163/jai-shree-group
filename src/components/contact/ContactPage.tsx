@@ -23,25 +23,29 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  BRANCHES,
-  COMPANY,
-  PRODUCTS,
-} from "@/lib/constants";
+import type { ContactContent } from "@/sites/content/types";
+import { useSite, useSiteProducts } from "@/sites/SiteProvider";
 import { whatsappUrl } from "@/lib/email";
 import {
   contactFormSchema,
   type ContactFormValues,
 } from "@/lib/validations";
 
-const WORKING_HOURS = [
-  { days: "Working hours", hours: "9:00 AM – 6:00 PM", closed: false },
-  { days: "Pune units (Talawade)", hours: "Closed Thursday", closed: true },
-  { days: "Mumbai units (Masjid Bunder, Bhayander, Palghar)", hours: "Closed Sunday", closed: true },
-] as const;
 const SUBMIT_TIMEOUT_MS = 10_000;
 
-export function ContactPage() {
+export function ContactPage({ content }: { content: ContactContent }) {
+  const site = useSite();
+  const products = useSiteProducts();
+  const { contact } = site;
+  // Without a written table: the site's hours (or the fallback) and its weekly holiday.
+  const hoursRows = content.hours ?? [
+    {
+      days: "Working hours",
+      hours: contact.hours ?? "Call or WhatsApp for timings",
+      closed: false,
+    },
+    { days: "Weekly holiday", hours: `Closed ${contact.weeklyHoliday}`, closed: true },
+  ];
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error" | "unavailable"
   >("idle");
@@ -66,7 +70,7 @@ export function ContactPage() {
     setReference(null);
 
     const fallbackWa = whatsappUrl(
-      COMPANY.whatsapp,
+      contact.whatsapp,
       `Hi, I'm ${values.name}. Product: ${values.productInterest}. ${values.message}`
     );
 
@@ -100,8 +104,8 @@ export function ContactPage() {
     }
   }
 
-  const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(COMPANY.address)}`;
-  const whatsappDisplay = `+91 ${COMPANY.phone.replace(/^\+91\s?/, "")}`;
+  const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(contact.address)}`;
+  const whatsappDisplay = `+91 ${contact.phone.replace(/^\+91\s?/, "")}`;
 
   return (
     <div
@@ -114,10 +118,10 @@ export function ContactPage() {
             className="text-4xl font-black tracking-tight sm:text-5xl"
             style={{ color: "var(--foreground)" }}
           >
-            Contact Perforated Sheet Manufacturers — Pune & Mumbai
+            {content.heading}
           </h1>
           <p className="mt-4 text-lg" style={{ color: "var(--text-secondary)" }}>
-            Have a requirement? Our team responds within 24 hours.
+            {content.intro}
           </p>
         </div>
 
@@ -129,12 +133,12 @@ export function ContactPage() {
               style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
             >
               <a
-                href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}
+                href={`tel:${contact.phone.replace(/\s/g, "")}`}
                 className="flex items-center gap-3 transition-opacity hover:opacity-80"
               >
                 <Phone className="size-5" style={{ color: "var(--brand-text)" }} />
                 <span className="text-base" style={{ color: "var(--foreground)" }}>
-                  {COMPANY.phone}
+                  {contact.phone}
                 </span>
               </a>
             </div>
@@ -144,7 +148,7 @@ export function ContactPage() {
               style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
             >
               <a
-                href={whatsappUrl(COMPANY.whatsapp, "Hi, I have an enquiry.")}
+                href={whatsappUrl(contact.whatsapp, "Hi, I have an enquiry.")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 transition-opacity hover:opacity-80"
@@ -161,12 +165,12 @@ export function ContactPage() {
               style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
             >
               <a
-                href={`mailto:${COMPANY.email}`}
+                href={`mailto:${contact.email}`}
                 className="flex items-center gap-3 transition-opacity hover:opacity-80"
               >
                 <Mail className="size-5" style={{ color: "var(--brand-text)" }} />
                 <span className="text-base" style={{ color: "var(--foreground)" }}>
-                  {COMPANY.email}
+                  {contact.email}
                 </span>
               </a>
             </div>
@@ -186,7 +190,7 @@ export function ContactPage() {
                   style={{ color: "var(--brand-text)" }}
                 />
                 <span className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                  {COMPANY.address}
+                  {contact.address}
                 </span>
               </a>
             </div>
@@ -198,7 +202,7 @@ export function ContactPage() {
               <div className="flex items-start gap-3">
                 <Clock className="mt-0.5 size-5 shrink-0" style={{ color: "var(--brand-text)" }} />
                 <div className="space-y-2">
-                  {WORKING_HOURS.map((row) => (
+                  {hoursRows.map((row) => (
                     <div
                       key={row.days}
                       className="flex flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
@@ -221,15 +225,16 @@ export function ContactPage() {
               </div>
             </div>
 
+            {content.branches && (
             <div>
               <h3
                 className="mb-3 text-lg font-bold"
                 style={{ color: "var(--brand-text)" }}
               >
-                Our Branches
+                {content.branches.heading}
               </h3>
               <ul className="space-y-4">
-                {BRANCHES.map((b) => (
+                {content.branches.list.map((b) => (
                   <li
                     key={b.slug}
                     className="text-base leading-relaxed"
@@ -261,6 +266,7 @@ export function ContactPage() {
                 ))}
               </ul>
             </div>
+            )}
           </div>
 
           {/* Right — Form */}
@@ -283,7 +289,7 @@ export function ContactPage() {
                   Enquiry Sent!
                 </h2>
                 <p className="mt-2 text-base" style={{ color: "var(--text-secondary)" }}>
-                  We&apos;ll get back to you within 24 hours.
+                  {content.successText}
                 </p>
                 {reference && (
                   <p className="mt-2 text-base" style={{ color: "var(--text-secondary)" }}>
@@ -383,7 +389,7 @@ export function ContactPage() {
                       <SelectValue placeholder="Select a product" />
                     </SelectTrigger>
                     <SelectContent>
-                      {PRODUCTS.map((p) => (
+                      {products.map((p) => (
                         <SelectItem key={p.slug} value={p.name}>
                           {p.name}
                         </SelectItem>

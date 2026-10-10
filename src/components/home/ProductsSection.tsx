@@ -10,15 +10,17 @@ import {
 } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-import { HOME_SECTIONS, PRODUCTS } from "@/lib/constants";
+import type { ProductCard as ProductCardData } from "@/data/products";
 import { getProductIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
+import type { ProductsIntroContent } from "@/sites/content/types";
+import { useSiteProducts } from "@/sites/SiteProvider";
 
 function ProductCard({
   product,
   index,
 }: {
-  product: (typeof PRODUCTS)[number];
+  product: ProductCardData;
   index: number;
 }) {
   const ref = useRef<HTMLAnchorElement>(null);
@@ -116,8 +118,12 @@ function ProductCard({
   );
 }
 
-export function ProductsSection() {
-  const { products: section } = HOME_SECTIONS;
+export function ProductsSection({
+  content: section,
+}: {
+  content: ProductsIntroContent;
+}) {
+  const products = useSiteProducts();
 
   return (
     <section
@@ -151,7 +157,7 @@ export function ProductsSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {PRODUCTS.map((product, index) => (
+          {products.map((product, index) => (
             <ProductCard key={product.slug} product={product} index={index} />
           ))}
         </div>

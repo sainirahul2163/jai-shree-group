@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import type { PageMeta } from "@/sites/content/types";
 import type { SiteConfig } from "@/sites/types";
 
 /** Vercel preview deployments must never be indexed. */
@@ -99,5 +100,28 @@ export function siteMetadata(site: SiteConfig): Metadata {
     robots: isPreview()
       ? { index: false, follow: false }
       : { index: true, follow: true },
+  };
+}
+
+/**
+ * Metadata for a page whose copy lives in the site's content module
+ * (`content.meta.*`). Same shape the pages used to export by hand: title,
+ * description, canonical and, when given, the page's own Open Graph block.
+ */
+export function contentMetadata(meta: PageMeta, path: string): Metadata {
+  return {
+    title: meta.title,
+    description: meta.description,
+    alternates: { canonical: path },
+    ...(meta.openGraph
+      ? {
+          openGraph: {
+            title: meta.openGraph.title,
+            description: meta.openGraph.description,
+            url: path,
+            ...(meta.openGraph.images ? { images: meta.openGraph.images } : {}),
+          },
+        }
+      : {}),
   };
 }

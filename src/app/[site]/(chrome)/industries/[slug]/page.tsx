@@ -3,19 +3,26 @@ import { notFound } from "next/navigation";
 
 import { IndustryPageClient } from "@/components/industries/IndustryPageClient";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
-import {
-  getIndustryDetail,
-  INDUSTRY_SLUGS,
-} from "@/data/industries";
 import { siteUrl } from "@/lib/seo";
+import { findSite } from "@/sites";
+import { siteIndustryDetail, siteIndustryProducts } from "@/sites/catalog";
 import { siteFromParams } from "@/sites/params";
 
 type PageProps = {
   params: Promise<{ site: string; slug: string }>;
 };
 
-export async function generateStaticParams() {
-  return INDUSTRY_SLUGS.map((slug) => ({ slug }));
+// Only the site's industries that have a page; any other slug 404s.
+export async function generateStaticParams({
+  params,
+}: {
+  params: { site: string };
+}) {
+  const site = findSite(params.site);
+  if (!site) return [];
+  return site.industries.flatMap((slug) =>
+    siteIndustryDetail(site, slug) ? [{ slug }] : []
+  );
 }
 
 export async function generateMetadata({
@@ -23,7 +30,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const site = await siteFromParams(params);
-  const industry = getIndustryDetail(slug);
+  const industry = siteIndustryDetail(site, slug);
   if (!industry) return {};
 
   return {
@@ -38,7 +45,7 @@ export async function generateMetadata({
 export default async function IndustryPage({ params }: PageProps) {
   const { slug } = await params;
   const site = await siteFromParams(params);
-  const industry = getIndustryDetail(slug);
+  const industry = siteIndustryDetail(site, slug);
 
   if (!industry) {
     notFound();
@@ -54,7 +61,10 @@ export default async function IndustryPage({ params }: PageProps) {
           { name: industry.name, path: `/industries/${slug}` },
         ]}
       />
-      <IndustryPageClient industry={industry} />
+      <IndustryPageClient
+        industry={industry}
+        relatedProducts={siteIndustryProducts(site, industry)}
+      />
     </>
   );
 }

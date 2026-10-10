@@ -4,13 +4,19 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-import { HOME_INDUSTRIES, HOME_SECTIONS } from "@/lib/constants";
 import { getIndustryIcon } from "@/lib/icons";
 import { Button } from "@/components/ui/button";
+import type { IndustryCard } from "@/sites/catalog";
+import type { IndustriesIntroContent } from "@/sites/content/types";
 
-export function IndustriesSection() {
-  const { industries: section } = HOME_SECTIONS;
-
+export function IndustriesSection({
+  content: section,
+  industries,
+}: {
+  content: IndustriesIntroContent;
+  /** The site's industry cards (`siteIndustryCards`), in order. */
+  industries: IndustryCard[];
+}) {
   return (
     <section
       id={section.id}
@@ -40,7 +46,7 @@ export function IndustriesSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {HOME_INDUSTRIES.map((industry, index) => {
+          {industries.map((industry, index) => {
             const Icon = getIndustryIcon(industry.icon);
             return (
               <motion.div
@@ -72,7 +78,7 @@ export function IndustriesSection() {
                     className="mt-2 text-base leading-relaxed"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    {industry.description}
+                    {industry.summary}
                   </p>
                 </Link>
               </motion.div>

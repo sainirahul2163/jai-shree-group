@@ -4,12 +4,14 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-import { ABOUT_TIMELINE, HOME_SECTIONS } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
+import type { AboutSectionContent } from "@/sites/content/types";
 
-export function AboutSection() {
-  const { about: section } = HOME_SECTIONS;
-
+export function AboutSection({
+  content: section,
+}: {
+  content: AboutSectionContent;
+}) {
   return (
     <section
       id={section.id}
@@ -49,14 +51,6 @@ export function AboutSection() {
                 {para}
               </p>
             ))}
-            <p
-              className="text-base leading-relaxed"
-              style={{ color: "var(--text-secondary)" }}
-            >
-              Operating as Shree Perforators and Jai Shree Metal Perforators
-              across our 6 manufacturing units in Pune and Mumbai, we bring over
-              50 years of precision to every order.
-            </p>
           </div>
 
           <div className="mt-8 grid grid-cols-2 gap-4">
@@ -106,7 +100,7 @@ export function AboutSection() {
             style={{ backgroundColor: "var(--border)" }}
           />
 
-          {ABOUT_TIMELINE.map((milestone, index) => (
+          {section.timeline.map((milestone, index) => (
             <motion.div
               key={milestone.year}
               initial={{ opacity: 0, x: 20 }}

@@ -2,22 +2,15 @@ import type { Metadata } from "next";
 
 import { IndustriesIndexPage } from "@/components/industries/IndustriesIndexPage";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { contentMetadata } from "@/lib/seo";
+import { siteIndustryCards } from "@/sites/catalog";
+import { getContent } from "@/sites/content";
 import { siteFromParams, type SiteParams } from "@/sites/params";
 
-export const metadata: Metadata = {
-  title: "Industries We Serve | Metal Manufacturing | Jai Shree Group",
-  description:
-    "Jai Shree Group serves automobile, construction, pharmaceutical, petrochemical, food processing, sugar, mining and architecture industries from Pune & Mumbai.",
-  alternates: {
-    canonical: "/industries",
-  },
-  openGraph: {
-    title: "Industries We Serve | Jai Shree Group",
-    description:
-      "Trusted metal manufacturing partner across 8+ industries from Pune & Mumbai.",
-    url: "/industries",
-  },
-};
+export async function generateMetadata({ params }: SiteParams): Promise<Metadata> {
+  const site = await siteFromParams(params);
+  return contentMetadata(getContent(site.key).meta.industries, "/industries");
+}
 
 export default async function IndustriesPage({ params }: SiteParams) {
   const site = await siteFromParams(params);
@@ -31,7 +24,10 @@ export default async function IndustriesPage({ params }: SiteParams) {
           { name: "Industries", path: "/industries" },
         ]}
       />
-      <IndustriesIndexPage />
+      <IndustriesIndexPage
+        hero={getContent(site.key).industriesIndex.hero}
+        industries={siteIndustryCards(site)}
+      />
     </>
   );
 }

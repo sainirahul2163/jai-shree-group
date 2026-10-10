@@ -2,17 +2,14 @@ import type { Metadata } from "next";
 
 import { AboutPage } from "@/components/about/AboutPage";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { contentMetadata } from "@/lib/seo";
+import { getContent } from "@/sites/content";
 import { siteFromParams, type SiteParams } from "@/sites/params";
 
-export const metadata: Metadata = {
-  title:
-    "About Jai Shree Group | 50+ Years Metal Manufacturing | ISO 9001:2015 Pune",
-  description:
-    "Learn about Jai Shree Group and Shree Perforators — ISO 9001:2015 certified metal manufacturer since 1970. 6 manufacturing units in Pune & Mumbai. Perforated sheets, laser cutting, custom components.",
-  alternates: {
-    canonical: "/about",
-  },
-};
+export async function generateMetadata({ params }: SiteParams): Promise<Metadata> {
+  const site = await siteFromParams(params);
+  return contentMetadata(getContent(site.key).meta.about, "/about");
+}
 
 export default async function About({ params }: SiteParams) {
   const site = await siteFromParams(params);
@@ -26,7 +23,7 @@ export default async function About({ params }: SiteParams) {
           { name: "About", path: "/about" },
         ]}
       />
-      <AboutPage />
+      <AboutPage content={getContent(site.key).about} />
     </>
   );
 }

@@ -8,20 +8,19 @@ import { CtaBanner } from "@/components/shared/CtaBanner";
 import { PageHero } from "@/components/shared/PageHero";
 import { Button } from "@/components/ui/button";
 import type { IndustryDetail } from "@/data/industries";
-import { PRODUCT_DETAILS } from "@/data/products";
+import type { ProductDetail } from "@/data/products";
 import { getProductIcon } from "@/lib/icons";
-import { PRODUCTS } from "@/lib/constants";
 
 type IndustryPageClientProps = {
   industry: IndustryDetail;
+  /** The industry's products that this site offers (`siteIndustryProducts`). */
+  relatedProducts: ProductDetail[];
 };
 
-export function IndustryPageClient({ industry }: IndustryPageClientProps) {
-  const relatedProducts = industry.products
-    .slice(0, 3)
-    .map((slug) => PRODUCT_DETAILS[slug])
-    .filter(Boolean);
-
+export function IndustryPageClient({
+  industry,
+  relatedProducts,
+}: IndustryPageClientProps) {
   return (
     <>
       <PageHero
@@ -100,10 +99,7 @@ export function IndustryPageClient({ industry }: IndustryPageClientProps) {
           </h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {relatedProducts.map((product, index) => {
-              const iconName =
-                PRODUCTS.find((p) => p.slug === product.slug)?.icon ??
-                "Grid3X3";
-              const Icon = getProductIcon(iconName);
+              const Icon = getProductIcon(product.card.icon);
               return (
                 <motion.div
                   key={product.slug}

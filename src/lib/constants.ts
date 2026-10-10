@@ -1,14 +1,14 @@
+import { PRODUCT_CARDS } from "@/data/products";
 import { group } from "@/sites/group";
 
 export {
+  BROCHURE_URL,
   COMPANY,
   FOOTER,
   NAV_LINKS,
   SEO,
   SITE_URL,
 } from "@/sites/group";
-
-export const BROCHURE_URL = "/brochure/jai-shree-brochure.pdf";
 
 export const COMPANY_VIDEO = {
   youtubeId: "",
@@ -101,116 +101,8 @@ export const BRANCHES = [
   },
 ] as const;
 
-export const PRODUCTS = [
-  {
-    name: "Perforated Sheets",
-    slug: "perforated-sheets",
-    description:
-      "CNC & Turret perforation in all metals. Up to 12mm thickness.",
-    icon: "Grid3X3",
-    specs: {
-      maxThickness: "12mm",
-      process: "CNC / Turret",
-    },
-    materials: [
-      "Stainless Steel",
-      "MS (Mild Steel)",
-      "GI (Galvanized Iron)",
-      "Aluminum",
-      "Copper",
-      "Brass",
-    ],
-  },
-  {
-    name: "Laser Cutting",
-    slug: "laser-cutting",
-    description:
-      "Fiber laser cutting for any custom drawing. Up to 14mm thickness.",
-    icon: "Zap",
-    specs: {
-      maxThickness: "14mm",
-      process: "Fiber Laser",
-    },
-    materials: [
-      "Stainless Steel",
-      "MS (Mild Steel)",
-      "Aluminum",
-      "Copper",
-      "Brass",
-      "Titanium",
-    ],
-  },
-  {
-    name: "Expanded Metal",
-    slug: "expanded-metal",
-    description:
-      "Diamond, square & hexagonal patterns. Up to 6mm thick.",
-    icon: "Diamond",
-    specs: {
-      maxThickness: "6mm",
-      widths: "900 / 1250 / 1500mm",
-      patterns: "Diamond / Square / Hex",
-    },
-    materials: [
-      "Stainless Steel",
-      "MS (Mild Steel)",
-      "GI (Galvanized Iron)",
-      "Brass",
-      "Copper",
-      "Aluminum",
-      "Titanium",
-    ],
-  },
-  {
-    name: "Turret Punching",
-    slug: "turret-punching",
-    description:
-      "CNC turret punching. Any hole shape. Combined with laser for cost saving.",
-    icon: "Circle",
-    specs: {
-      process: "CNC Turret",
-      shapes: "Any hole shape",
-    },
-    materials: [
-      "Stainless Steel",
-      "MS (Mild Steel)",
-      "GI (Galvanized Iron)",
-      "Aluminum",
-      "Copper",
-      "Brass",
-    ],
-  },
-  {
-    name: "Precision Sheet Leveling",
-    slug: "precision-sheet-leveling",
-    description:
-      "Specialized bow/warpage control for perforated and laser cut sheets.",
-    icon: "Ruler",
-    specs: {
-      specialization: "Bow / Warpage Control",
-    },
-    materials: ["All Metals"],
-  },
-  {
-    name: "Custom Components",
-    slug: "custom-components",
-    description:
-      "Custom-engineered metal components, special dies, embossed plates, dimple de-stoners, huller screens, herringbone screens and any special job as per drawing.",
-    icon: "Settings2",
-    specs: {
-      process: "Custom Fabrication",
-      drawings: "DXF / DWG / Sample",
-    },
-    materials: [
-      "Stainless Steel",
-      "MS (Mild Steel)",
-      "GI (Galvanized Iron)",
-      "Aluminum",
-      "Brass",
-      "Copper",
-    ],
-  },
-] as const;
+/** Product cards, derived from `src/data/products.ts` (the one product source). */
+export const PRODUCTS = PRODUCT_CARDS;
 
 // Single source of truth for gallery categories: the public filter tabs and the
 // admin category picker both read this, so the two can't drift apart.

@@ -25,7 +25,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { COMPANY, MATERIALS, PRODUCTS } from "@/lib/constants";
+import { MATERIALS } from "@/lib/constants";
+import type { QuoteContent } from "@/sites/content/types";
+import { useSite, useSiteProducts } from "@/sites/SiteProvider";
 import { getProductIcon } from "@/lib/icons";
 import { whatsappUrl } from "@/lib/email";
 import { quoteFormSchema, type QuoteFormValues } from "@/lib/validations";
@@ -71,10 +73,6 @@ function getDisabledProducts(selected: string[]): Set<string> {
   return disabled;
 }
 
-function getProductLabel(slug: string): string {
-  return PRODUCTS.find((p) => p.slug === slug)?.name ?? slug;
-}
-
 const initialForm: QuoteFormValues = {
   products: [],
   material: "",
@@ -92,7 +90,11 @@ const initialForm: QuoteFormValues = {
   sendWhatsApp: false,
 };
 
-export function GetQuotePage() {
+export function GetQuotePage({ content }: { content: QuoteContent }) {
+  const { contact } = useSite();
+  const products = useSiteProducts();
+  const getProductLabel = (slug: string) =>
+    products.find((p) => p.slug === slug)?.name ?? slug;
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<QuoteFormValues>(initialForm);
   const [status, setStatus] = useState<
@@ -137,7 +139,7 @@ export function GetQuotePage() {
     form.material.trim() !== "" && form.thickness.trim().length >= 1;
 
   const directWhatsAppUrl = whatsappUrl(
-    COMPANY.whatsapp,
+    contact.whatsapp,
     "Hi, I need a quote for metal products."
   );
 
@@ -248,7 +250,7 @@ export function GetQuotePage() {
             Thank you!
           </h1>
           <p className="mt-3 text-lg" style={{ color: "var(--text-secondary)" }}>
-            We&apos;ll send your quote within 24 hours.
+            {content.successText}
           </p>
           {reference && (
             <p className="mt-2 text-base" style={{ color: "var(--text-secondary)" }}>
@@ -292,7 +294,7 @@ export function GetQuotePage() {
           className="text-4xl font-black tracking-tight"
           style={{ color: "var(--foreground)" }}
         >
-          Get a Free Quote
+          {content.heading}
         </h1>
 
         <div
@@ -304,12 +306,12 @@ export function GetQuotePage() {
           </p>
           <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-6">
             <a
-              href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}
+              href={`tel:${contact.phone.replace(/\s/g, "")}`}
               className="flex items-center gap-2 text-sm transition-opacity hover:opacity-80"
               style={{ color: "var(--foreground)" }}
             >
               <Phone className="size-4" style={{ color: "var(--brand-text)" }} />
-              Prefer to call? {COMPANY.phone}
+              Prefer to call? {contact.phone}
             </a>
             <a
               href={directWhatsAppUrl}
@@ -318,15 +320,15 @@ export function GetQuotePage() {
               className="flex items-center gap-2 text-sm transition-opacity hover:opacity-80"
               style={{ color: "var(--foreground)" }}
             >
-              WhatsApp: {COMPANY.phone}
+              WhatsApp: {contact.phone}
             </a>
             <a
-              href={`mailto:${COMPANY.email}`}
+              href={`mailto:${contact.email}`}
               className="flex items-center gap-2 text-sm transition-opacity hover:opacity-80"
               style={{ color: "var(--text-secondary)" }}
             >
               <Mail className="size-4" style={{ color: "var(--brand-text)" }} />
-              Email: {COMPANY.email}
+              Email: {contact.email}
             </a>
           </div>
           <Button
@@ -383,7 +385,7 @@ export function GetQuotePage() {
                 What do you need?
               </h2>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {PRODUCTS.map((product) => {
+                {products.map((product) => {
                   const Icon = getProductIcon(product.icon);
                   const selected = form.products.includes(product.slug);
                   const disabled = disabledProducts.has(product.slug);
@@ -754,7 +756,7 @@ export function GetQuotePage() {
               {status === "error" && (
                 <p className="text-sm text-red-400">
                   {stepError ??
-                    `Submission failed. Please call ${COMPANY.phone}.`}
+                    `Submission failed. Please call ${contact.phone}.`}
                 </p>
               )}
 
