@@ -25,6 +25,8 @@ const HIGH_PRIORITY_PATHS = new Set([
   "/group",
 ]);
 
+const LEGAL_PATHS = new Set(["/privacy", "/terms"]);
+
 /** City prefixes ("/pune"): enabled in config.pages, but only their sub-pages exist. */
 const LOCATION_CITIES = new Set(LOCATION_PATHS.map((path) => `/${path.split("/")[0]}`));
 
@@ -34,7 +36,16 @@ const NOT_LISTED = new Set(["/brochure"]);
 function staticPriority(path: string): number {
   if (path === "/") return 1.0;
   if (HIGH_PRIORITY_PATHS.has(path)) return 0.95;
+  if (LEGAL_PATHS.has(path)) return 0.3;
   return 0.7;
+}
+
+function staticChangeFrequency(
+  path: string
+): MetadataRoute.Sitemap[number]["changeFrequency"] {
+  if (path === "/") return "weekly";
+  if (LEGAL_PATHS.has(path)) return "yearly";
+  return "monthly";
 }
 
 function sitemapEntries(site: SiteConfig, now: Date): MetadataRoute.Sitemap {
@@ -45,7 +56,7 @@ function sitemapEntries(site: SiteConfig, now: Date): MetadataRoute.Sitemap {
     .map((path) => ({
       url: siteUrl(site, path),
       lastModified: now,
-      changeFrequency: path === "/" ? "weekly" : "monthly",
+      changeFrequency: staticChangeFrequency(path),
       priority: staticPriority(path),
     }));
 

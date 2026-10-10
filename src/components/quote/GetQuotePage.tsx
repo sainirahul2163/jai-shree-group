@@ -13,6 +13,7 @@ import {
   Phone,
 } from "lucide-react";
 
+import { FormPrivacyNote } from "@/components/shared/FormPrivacyNote";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -785,6 +786,8 @@ export function GetQuotePage() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        <FormPrivacyNote className="mt-6 md:text-right" />
       </div>
     </div>
   );

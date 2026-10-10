@@ -64,7 +64,7 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 - [ ] Admin site filter on leads, blog, gallery, testimonials. (Built, type-checked and in the build; not yet opened while logged in as admin.)
 
 0.8 **Shared upgrades**
-- [ ] Privacy policy and terms page templates (content per site from config; follow India's Digital Personal Data Protection Act 2023 — get the wording reviewed).
+- [x] Privacy policy and terms page templates (content per site from config; follow India's Digital Personal Data Protection Act 2023 — get the wording reviewed). (`/privacy`, `/terms`; wording is an agency template, legal review still to do.)
 - [ ] ~~Google Analytics 4 per site~~ — **skipped for now** (user, 2026-10-11). Leave analytics out or behind an empty env var, off by default.
 
 **Phase 0 acceptance**

@@ -12,6 +12,40 @@ export function siteUrl(site: SiteConfig, path: string): string {
   return `${site.origin}${path === "/" ? "" : path}`;
 }
 
+/** Host shown to visitors, e.g. "www.jaishreegroup.com". */
+export function siteHost(site: SiteConfig): string {
+  return new URL(site.origin).host;
+}
+
+/**
+ * Metadata for a page whose title is built from the site name. The title is
+ * absolute so a unit site's titleTemplate does not repeat the name.
+ */
+export function pageMetadata(
+  site: SiteConfig,
+  page: { path: string; title: string; description: string }
+): Metadata {
+  return {
+    title: { absolute: page.title },
+    description: page.description,
+    alternates: { canonical: page.path },
+    openGraph: {
+      type: "website",
+      locale: site.seo.locale ?? "en_IN",
+      url: page.path,
+      siteName: site.name,
+      title: page.title,
+      description: page.description,
+      images: [{ url: site.seo.ogImage, ...site.seo.ogImageSize }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: page.title,
+      description: page.description,
+    },
+  };
+}
+
 /** Google and Bing meta-tag verification. Group only; unit domains verify by DNS. */
 function siteVerification(site: SiteConfig): Metadata["verification"] | undefined {
   if (site.key !== "group") return undefined;

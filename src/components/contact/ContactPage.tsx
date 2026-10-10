@@ -11,6 +11,7 @@ import {
   Phone,
 } from "lucide-react";
 
+import { FormPrivacyNote } from "@/components/shared/FormPrivacyNote";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -475,6 +476,7 @@ export function ContactPage() {
                     "Send Enquiry"
                   )}
                 </Button>
+                <FormPrivacyNote />
               </form>
             )}
           </div>

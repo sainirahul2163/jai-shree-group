@@ -77,6 +77,11 @@ export interface SiteConfig {
     hours?: string;
   };
   tagline?: string;
+  /**
+   * City whose courts hear disputes under the site's terms of use. Default
+   * "Pune"; Mumbai-region units set "Mumbai".
+   */
+  jurisdiction?: string;
   leadEmail: string;
   products: ProductSlug[];
   industries: string[];

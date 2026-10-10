@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, Loader2 } from "lucide-react";
 
+import { FormPrivacyNote } from "@/components/shared/FormPrivacyNote";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -236,6 +237,7 @@ export function ProductQuoteForm({
             "Submit Enquiry"
           )}
         </Button>
+        <FormPrivacyNote />
       </form>
 
       <Link

@@ -10,6 +10,11 @@ import {
   PRODUCTS,
 } from "@/lib/constants";
 
+const LEGAL_LINKS = [
+  { label: "Privacy", href: "/privacy" },
+  { label: "Terms", href: "/terms" },
+];
+
 function whatsappUrl(phone: string) {
   const digits = phone.replace(/\D/g, "");
   return `https://wa.me/${digits}`;
@@ -284,7 +289,21 @@ export function Footer() {
           className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-6 text-center text-xs md:flex-row md:px-8 md:text-left lg:px-16"
           style={{ color: "var(--text-muted)" }}
         >
-          <p>{FOOTER.copyright}</p>
+          <div className="flex flex-col items-center gap-2 md:flex-row md:gap-4">
+            <p>{FOOTER.copyright}</p>
+            <nav aria-label="Legal" className="flex gap-4">
+              {LEGAL_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="transition-colors hover:text-brand-text"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
           <p>{FOOTER.certification}</p>
         </div>
       </div>

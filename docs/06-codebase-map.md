@@ -23,6 +23,7 @@ Public (since task 0.5 every public page lives under `src/app/[site]/`; the prox
 | `/pune/*`, `/mumbai/*` | 6 city × product SEO pages from `src/data/locations.ts` |
 | `/landing` | Alternative marketing page, noindex, own chrome |
 | `/brochure`, `/brochure/icons` | Printable brochure (A4 pages), own chrome; `icons` is a comparison variant |
+| `/privacy`, `/terms` | Privacy policy (DPDP Act 2023) and terms of use (task 0.8). One template each in `src/components/legal/` filled from the site config (name, "a Jai Shree Group company" when `endorsed`, address, email, phone, origin; courts' city from `config.jurisdiction`, default Pune). Wording is an agency template awaiting legal review. Linked from the footer's bottom bar and from the note under every lead form's submit button (`FormPrivacyNote`). Sitemap priority 0.3, `yearly` |
 
 Admin (protected by `src/proxy.ts` — renamed from `middleware.ts` in task 0.2 — + `ADMIN_EMAILS` allow-list): `/admin/login`, `/admin/dashboard`, `/admin/leads`, `/admin/leads/[id]`, `/admin/blog`, `/admin/blog/new`, `/admin/blog/[id]`, `/admin/gallery`, `/admin/testimonials`, `/admin/settings`.
 
@@ -40,7 +41,7 @@ Route tree (task 0.5):
 | --- | --- |
 | `src/app/layout.tsx` | `<html>`, `<body>`, Geist fonts, CSS. No metadata, no brand values, no chrome |
 | `src/app/[site]/layout.tsx` | Checks the site key (`siteFromParams`; unknown or not-yet-built → 404), `generateMetadata` = site-wide metadata from the config (`siteMetadata` in `src/lib/seo.ts`: title, description, keywords, metadataBase = `config.origin`, Open Graph, Twitter, hreflang, robots, group-only verification env vars), `GlobalSchema`, the site's theme variables on `:root` (`src/sites/theme-vars.ts`), `generateStaticParams` = configured sites (task 0.6) |
-| `src/app/[site]/(chrome)/` | Route group with `SiteChrome` (Navbar, main, Footer, WhatsApp, tracker): home, about, group, products, industries, calculator, gallery, clients, certifications, contact, get-quote, blog, pune/*, mumbai/*; plus `error.tsx`, `loading.tsx`, `not-found.tsx` for those pages |
+| `src/app/[site]/(chrome)/` | Route group with `SiteChrome` (Navbar, main, Footer, WhatsApp, tracker): home, about, group, products, industries, calculator, gallery, clients, certifications, contact, get-quote, blog, pune/*, mumbai/*, privacy, terms; plus `error.tsx`, `loading.tsx`, `not-found.tsx` for those pages |
 | `src/app/[site]/landing/`, `src/app/[site]/brochure/` | Outside `(chrome)`: no Navbar/Footer, as before |
 | `src/app/[site]/[...rest]/page.tsx` + `[site]/not-found.tsx` | Unmatched paths: real 404 status with the chrome (kept outside every `loading.tsx`, which would stream a 200) |
 | `src/app/not-found.tsx`, `error.tsx` | Root fallbacks (admin, unknown site); `admin/loading.tsx` keeps the admin loading screen |
@@ -57,11 +58,12 @@ SEO (task 0.6): pages and JSON-LD build absolute URLs from the active site's `or
 | Path | What |
 | --- | --- |
 | `src/sites/` | Site config (task 0.3): `types.ts`, `domains.ts` (host → key, no imports), `keys.ts` (`SITE_KEYS`, `isSiteKey`; used by the proxy), `group.ts` (group values), `index.ts` (`getSite`, `findSite`, `ALL_SITES`, `isSiteKey`; also loaded by the proxy for `config.pages`), `params.ts` (`siteFromParams`, `SiteParams`), `theme-vars.ts` (theme → `:root` CSS), `names.ts` (`SITE_NAMES` and `SITE_OPTIONS` for all 7 keys, `siteName`, `parseSiteFilter`; used by the admin panel). Unit site files are not created yet |
-| `src/lib/seo.ts` | `siteMetadata` (site-wide metadata), `siteUrl` (absolute URL on the site's origin), `isPreview` |
+| `src/lib/seo.ts` | `siteMetadata` (site-wide metadata), `pageMetadata` (absolute title, description, canonical, Open Graph and Twitter for a page; used by `/privacy` and `/terms`), `siteUrl` (absolute URL on the site's origin), `siteHost`, `isPreview` |
+| `src/components/legal/` | `LegalDocument` (hero, last-updated line, `LegalSection`, `BusinessContact`, `businessName`), `PrivacyPolicy`, `TermsOfUse` (task 0.8) |
 | `src/components/seo/` | JSON-LD components (all take `site`); `schema-parts.ts` holds the shared address, geo and phone parts |
 | `src/lib/constants.ts` | Re-exports `SITE_URL`, `COMPANY`, `NAV_LINKS`, `FOOTER`, `SEO` from `src/sites/group.ts`. Still defines `BRANCHES`, `PRODUCTS`, `MATERIALS`, `INDUSTRIES`, `HOME_SECTIONS`, `DESIGN_TOKENS`, `GALLERY_CATEGORIES` |
 | `src/data/` | `products.ts`, `industries.ts`, `locations.ts`, `blog-posts.ts`, `about.ts`, `landing.ts`, `branches.ts` (products per unit — **out of date**; correct list in `docs/client/answers-2026-10-07.md`), `brochure.ts`, `calculator-faqs.ts` |
-| `src/components/<feature>/` | One folder per page area: home (11), landing (14), products (6), admin (11), brochure (7), shared (6), layout (4), seo (4), ui (12 shadcn), and one each for about, calculator, quote, contact, gallery, group, industries, location, clients, certifications, blog |
+| `src/components/<feature>/` | One folder per page area: home (11), landing (14), products (6), admin (11), brochure (7), shared (7), layout (4), seo (4), legal (3), ui (12 shadcn), and one each for about, calculator, quote, contact, gallery, group, industries, location, clients, certifications, blog |
 | `src/components/layout/SiteChrome.tsx` | Navbar, main, Footer, WhatsApp button, page tracker (server component; used by `[site]/(chrome)/layout.tsx` and `[site]/not-found.tsx`) |
 | `src/components/status/` | 404, error and loading views shared by the root and `[site]` route files |
 | `src/lib/supabase/` | Clients (server, browser, anon, route), queries, server actions, `schema.sql`, `migrations/` |

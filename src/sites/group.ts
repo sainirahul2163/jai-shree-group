@@ -128,6 +128,7 @@ export const group: SiteConfig = {
     hours: "9:00 AM – 6:00 PM",
   },
   tagline: COMPANY.tagline,
+  jurisdiction: "Pune",
   leadEmail: COMPANY.email,
   products: [
     "perforated-sheets",
@@ -194,6 +195,8 @@ export const group: SiteConfig = {
     "/brochure",
     "/pune",
     "/mumbai",
+    "/privacy",
+    "/terms",
   ],
   tool: "open-area-calculator",
   seo: {

@@ -33,6 +33,65 @@ Cursor's own work diary for the Jai Shree Group multi-site build. **Cursor write
 
 ## Entries
 
+### 2026-10-11 — 0.8 Shared upgrades: privacy and terms
+
+- **Status:** ✅ done. Google Analytics skipped (user, 2026-10-11): no analytics code was added.
+- **What I did:**
+  - **Wording status:** both texts are an **agency template awaiting legal review**. There is no "draft" note on the pages; a comment at the top of `PrivacyPolicy.tsx` and `TermsOfUse.tsx` says so.
+  - Pages `src/app/[site]/(chrome)/privacy/page.tsx` and `terms/page.tsx`. Each reads the site from the param (`siteFromParams`), renders `BreadcrumbSchema` (Home → page) and the shared template. Metadata comes from the new `pageMetadata(site, { path, title, description })` in `src/lib/seo.ts`: `title.absolute` (so a unit's `titleTemplate` does not repeat the name), own description, canonical `/privacy` or `/terms` at `config.origin`, and Open Graph and Twitter with the same title, description and page URL. Titles: "Privacy Policy | <name>" and "Terms of Use | <name>". Both are prerendered (● `/group/privacy`, `/group/terms`).
+  - Templates in `src/components/legal/` (server components): `LegalDocument.tsx` (the existing `PageHero` with label "LEGAL", a "Last updated: 11 October 2026" line in a `<time>`, `LegalSection` with token colours, `BusinessContact`, `businessName`), `PrivacyPolicy.tsx`, `TermsOfUse.tsx`. The text uses only config values: `businessName` gives `config.name`, plus ", a Jai Shree Group company" (from `group.name`) when `endorsed`. It also uses the address, email, phone and origin (shown as the host from new `siteHost`). After the first mention, the text says "we" and uses `config.name`, so it reads correctly for a unit (e.g. "Shree Weld Mesh, a Jai Shree Group company ("we", "us", "our") runs the website www.weldedmeshindia.com").
+  - Privacy policy (12 short sections): who we are (Data Fiduciary under the DPDP Act 2023; no online sales or payments); what we collect; why; basis (consent by sending the form, can be withdrawn); who else handles it; cookies; how long we keep it; how we protect it; your rights; contact and grievances; children; changes. I checked each claim against the code:
+    - Form fields from `src/lib/validations.ts`: name, phone, email, optional company and city; products, material, thickness, quantity, deadline, message. The source page and time are saved (`leads.source_page`, `created_at`). No file uploads exist, so none are mentioned.
+    - Leads are stored in Supabase. Resend sends the lead email and the customer confirmation with a reference. Vercel hosts the site (technical logs). Some providers store data outside India.
+    - Page views (`/api/track`, `page_views`): page, product or city parsed from the path, referrer, time. No IP or identifier. In the dev database the stored `referrer` is the page's own URL (the `Referer` header of the tracking request), so the text says "the address of the page you opened, as your browser reports it" and does not claim the external referring site.
+    - WhatsApp buttons open WhatsApp under its own terms. Maps: home and Our Group load OpenStreetMap tiles (and Leaflet marker icons from unpkg); the city pages embed Google Maps. The text says "Some pages may show a map … for example OpenStreetMap or Google Maps".
+    - Cookies: none for ordinary visitors on the live address. Staff sign-in cookies in the admin area. The `site` cookie is set only by `?site=` on non-production hosts, which the text calls "test and preview addresses".
+    - No advertising, no analytics trackers, no selling of data.
+    - Retention: as long as needed to answer and follow up the enquiry, handle any order, and for business records and what the law requires. No number of years.
+    - Rights: summary of data and processing plus who it was shared with; correction, completion and updating; erasure; withdrawing consent; grievance redressal; nomination. Complaint to the Data Protection Board of India after our response. No response-time promise.
+    - Under-18s are asked not to send details.
+  - Terms of use (10 sections): about these terms; using the website; information on the website (general; specs, open-area results, weights and calculator figures approximate; quotes, prices, delivery dates and orders bind only when confirmed in writing; written quotation and order terms apply); intellectual property (belongs to `config.name`, or "<name> or Jai Shree Group" for endorsed units); links to other websites; limitation of liability in plain terms; your personal data (link to privacy); governing law (India, exclusive jurisdiction of the courts at `config.jurisdiction ?? "Pune"`); changes; contact.
+  - `SiteConfig.jurisdiction?: string` (new, optional; comment: default "Pune", Mumbai-region units set "Mumbai"). `group.ts` sets `jurisdiction: "Pune"` and adds `/privacy` and `/terms` to the end of `group.pages`.
+  - Sitemap (`[site]/sitemap.xml/route.ts`): `LEGAL_PATHS` → priority 0.3 and `changefreq` `yearly` (`staticChangeFrequency`). Every other entry is unchanged.
+  - Footer (`Footer.tsx`): the copyright in the bottom bar is now in a small flex group with a `<nav aria-label="Legal">` of "Privacy" and "Terms" links. They use the existing footer link style (`var(--text-secondary)`, `hover:text-brand-text`, `transition-colors`) at the bar's text-xs size. The certification line on the right is unchanged.
+  - Form note: new `src/components/shared/FormPrivacyNote.tsx`, "By sending this form you agree to our Privacy Policy." (link to `/privacy`), text-xs, `var(--text-muted)`, underlined link with brand hover. Placed:
+    - under "Send Enquiry" on `/contact` (`ContactPage.tsx`);
+    - once below the step area of the quote wizard (`GetQuotePage.tsx`), so it shows under the button row on all three steps (Next, Next, Submit Quote Request) and not on the success screen;
+    - under "Submit Enquiry" in `ProductQuoteForm.tsx` (product pages). The task named contact and quote forms; this one is a quote form that also sends personal data, so it has the same note.
+  - `docs/06-codebase-map.md`: routes table (`/privacy`, `/terms`), `(chrome)` route list, `src/lib/seo.ts` (`pageMetadata`, `siteHost`), new `src/components/legal/` row, component counts.
+- **Files changed:** `src/components/legal/{LegalDocument,PrivacyPolicy,TermsOfUse}.tsx` (new), `src/app/[site]/(chrome)/privacy/page.tsx` (new), `src/app/[site]/(chrome)/terms/page.tsx` (new), `src/components/shared/FormPrivacyNote.tsx` (new), `src/components/layout/Footer.tsx`, `src/components/contact/ContactPage.tsx`, `src/components/quote/GetQuotePage.tsx`, `src/components/products/ProductQuoteForm.tsx`, `src/app/[site]/sitemap.xml/route.ts`, `src/lib/seo.ts`, `src/sites/types.ts`, `src/sites/group.ts`, `docs/06-codebase-map.md`, `docs/05-build-plan.md`, `PROJECT-LOG.md`, `CURSOR-LOG.md`
+- **Checks:**
+  - `npx tsc --noEmit` ✅ clean.
+  - lint ✅ unchanged: 18 problems (12 errors, 6 warnings). ESLint on every touched or new file shows only the old `ContactPage.tsx` React Compiler warning on `form.watch` (now line 375 instead of 374 because of the new import); the same files at HEAD (via `git stash`) gave the same one warning.
+  - build ✅, run twice (the second time after a one-sentence wording fix in the privacy text). `/[site]/privacy` and `/[site]/terms` are ● with `/group/privacy` and `/group/terms`. The rest of the route table is unchanged.
+  - Production server on port 3000. It uses this folder's `.env.local`, whose `NEXT_PUBLIC_SITE_URL` is `http://localhost:3000`, so origins read localhost here. On production they read `https://www.jaishreegroup.com`.
+    - `/`, `/privacy`, `/terms`, `/contact`, `/get-quote`, `/products/perforated-sheets`, `/sitemap.xml` → 200; `/group/privacy` → 404.
+    - `/privacy`: `<title>Privacy Policy | Jai Shree Group</title>`, own description, canonical and `og:url` `…/privacy`, `robots: index, follow`, one `<footer>` (chrome), "Last updated: 11 October 2026". `/terms`: `<title>Terms of Use | Jai Shree Group</title>`, canonical and `og:url` `…/terms`, chrome. The word "draft" does not appear on either page.
+    - Sitemap: 39 URLs (37 before). Diffed against `docs/research/baseline/seo/sitemap.local.xml` without `lastmod`: the only change is the two new entries (`/privacy`, `/terms`, `yearly`, 0.3), after `/blog` and before the product pages.
+  - Browser (Playwright, 1440 px):
+    - `/`: footer bar shows "© 2026 Jai Shree Group. All rights reserved.  Privacy  Terms" (links `rgb(160,160,160)`, 12.75 px). Clicking Privacy opened `/privacy` (client navigation, correct title, 12 section headings).
+    - `/contact`: the note sits directly under "Send Enquiry" in `rgb(102,102,102)` (text-muted), linking to `/privacy`. Clicking the footer's Terms opened `/terms`, which reads "The courts at Pune have exclusive jurisdiction…".
+    - `/get-quote`: the note shows on step 1 (under Next), step 2 "Your Requirements" and step 3 "Contact Details" (under Back / Submit Quote Request). I picked Perforated Sheets, a material and "2mm" to move between steps and did not submit.
+    - Console: only Next's CSS-preload warnings, no errors.
+  - Quick visual check (not the full compare): full-page 1440 px capture of `/`, `/contact` and `/products/perforated-sheets` with a `/tmp` copy of `scripts/baseline/capture.js` (3 routes, desktop only), diffed with `scripts/baseline/compare.js`. No height changes.
+    - `/contact` 0.02%: only the form note row and the footer bar.
+    - `/` 0.06%: the animated hero area and the footer bar.
+    - `/products/perforated-sheets` 0.09%: the hero animation, the rotating 3D sheet, and the side quote card (the new note, plus "Or WhatsApp us directly" moving down one line inside the card).
+  - Cleanup: my browser runs recorded 9 page views in the dev database (`jai-shree-dev`, all `site = 'group'`, referrer `http://localhost:3000/...`, after my start time). I deleted them by id; a re-read found 0 rows since my start, and no leads were created. All servers I started are stopped and port 3000 is free. `.playwright-mcp/` was deleted. Throwaway files are only in `/tmp` (`js08-*`).
+  - Not checked: a unit site rendering of the pages (no unit config exists yet, and I did not add a temporary one this time); mobile width beyond the existing responsive classes.
+- **Commit:** "0.8 Privacy and terms pages from the site config, footer links and form privacy note" (this entry is part of that commit)
+- **Left to do in this task:** legal review of both texts (agency/client step, outside the code). GA4 stays skipped.
+- **Next task:** Phase 0 acceptance (full screenshot compare, multi-site migration on the live project, merge to `main`), as listed in PROJECT-LOG "Next".
+- **Questions / assumptions:**
+  - **Expected baseline differences for the Phase 0 acceptance:** the full screenshot compare will now show the footer bar links on every chrome page, the form note on `/contact`, `/get-quote` and all six product pages, and two new sitemap URLs.
+  - Court cities: Pune for the group and the three Talawade units; Mumbai for the three Mumbai-region units, including Palghar (per the task). Each unit config must set `jurisdiction: "Mumbai"` where needed, because the fallback is Pune. I did not add a `docs/decisions.md` row (told not to edit other docs); Claude may want to record the `jurisdiction` field and the city rule there.
+  - The form note says "agree to our Privacy Policy". Consent under the DPDP Act should be "free, specific, informed"; a legal reviewer may prefer an unticked checkbox or a short purpose line ("so we can answer your enquiry"). I kept the one line the task asked for.
+  - The privacy text names Supabase, Resend and Vercel as service providers, and OpenStreetMap and Google Maps as map providers. If a unit site drops maps, the "Some pages may show a map" line still reads correctly.
+  - The `site` cookie is set on any non-production host (plain localhost too, not only Vercel previews). The policy says "test and preview addresses", which covers both.
+  - The page-view table's `referrer` column holds the page's own URL (see above), not the external referrer. If the intent was to store the external referrer, `PageViewTracker` would have to send `document.referrer`. I did not change it; that is outside this task.
+  - Unit sites will need `/privacy` and `/terms` in their `pages` (build plan 1.2 already lists Privacy and Terms). The footer links are always shown, so a unit config without those pages would show broken links.
+  - PROJECT-LOG layout: the seven newest Change log rows (Claude's 0.7 review back to the 0.6 review) sit inside the "seven sites" table in section 2, not in the Change log. I left them where they are and added my row at the top of the Change log table in section 5.
+
 ### 2026-10-11 — 0.7 Data and leads
 
 - **Status:** ✅ done, except one box: the admin site filter is built but I could not open it logged in (no admin password), so its build-plan box is left open.
