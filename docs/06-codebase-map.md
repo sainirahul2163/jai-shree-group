@@ -34,7 +34,8 @@ Also: `src/app/sitemap.ts`, `src/app/robots.ts`, `layout.tsx` (fonts, static met
 
 | Path | What |
 | --- | --- |
-| `src/lib/constants.ts` | `SITE_URL`, `COMPANY`, `BRANCHES` (6 units), `PRODUCTS`, `MATERIALS`, `INDUSTRIES`, `NAV_LINKS`, `FOOTER`, `SEO`, `HOME_SECTIONS`, `DESIGN_TOKENS`, `GALLERY_CATEGORIES` — imported by 44 files |
+| `src/sites/` | Site config (task 0.3): `types.ts`, `domains.ts` (host → key, no imports), `group.ts` (group values), `index.ts` (`getSite`, `ALL_SITES`, `isSiteKey`). Unit site files are not created yet |
+| `src/lib/constants.ts` | Re-exports `SITE_URL`, `COMPANY`, `NAV_LINKS`, `FOOTER`, `SEO` from `src/sites/group.ts`. Still defines `BRANCHES`, `PRODUCTS`, `MATERIALS`, `INDUSTRIES`, `HOME_SECTIONS`, `DESIGN_TOKENS`, `GALLERY_CATEGORIES` |
 | `src/data/` | `products.ts`, `industries.ts`, `locations.ts`, `blog-posts.ts`, `about.ts`, `landing.ts`, `branches.ts` (products per unit — **out of date**; correct list in `docs/client/answers-2026-10-07.md`), `brochure.ts`, `calculator-faqs.ts` |
 | `src/components/<feature>/` | One folder per page area: home (11), landing (14), products (6), admin (11), brochure (7), shared (6), layout (4), seo (4), ui (12 shadcn), and one each for about, calculator, quote, contact, gallery, group, industries, location, clients, certifications, blog |
 | `src/components/layout/SiteChrome.tsx` | Shows Navbar/Footer/WhatsApp/tracker except on `/admin`, `/landing`, `/brochure` |

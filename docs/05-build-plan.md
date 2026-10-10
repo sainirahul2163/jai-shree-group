@@ -36,9 +36,9 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 - [x] Rename `src/middleware.ts` → `src/proxy.ts`, export `proxy`. Admin gate behaves exactly as before.
 
 0.3 **Site config**
-- [ ] Create `src/sites/` (`types.ts`, `domains.ts`, `index.ts`, `group.ts`) per `04-architecture.md`.
-- [ ] `group.ts` holds today's values from `constants.ts` (`COMPANY`, `NAV_LINKS`, `FOOTER`, SEO, theme hex values). `constants.ts` re-exports from it during the transition.
-- [ ] `group.origin` = `https://www.jaishreegroup.com` (confirmed by the client).
+- [x] Create `src/sites/` (`types.ts`, `domains.ts`, `index.ts`, `group.ts`) per `04-architecture.md`.
+- [x] `group.ts` holds today's values from `constants.ts` (`COMPANY`, `NAV_LINKS`, `FOOTER`, SEO, theme hex values). `constants.ts` re-exports from it during the transition.
+- [x] `group.origin` = `https://www.jaishreegroup.com` (confirmed by the client).
 
 0.4 **Theme tokens**
 - [ ] Add the CSS variables and `@theme inline` mapping to `globals.css` (`04-architecture.md` → Theming). Default values = today's group colours.

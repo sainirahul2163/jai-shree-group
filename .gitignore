@@ -56,4 +56,5 @@ scripts/gallery-restyle/venv/
 
 # multi-site baseline screenshots (large, local only)
 /docs/research/baseline/
+/docs/research/after-*/
 !.env.example

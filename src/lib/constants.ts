@@ -1,30 +1,10 @@
-/**
- * Canonical production origin — the single source of truth for the site URL.
- * Override per-environment with NEXT_PUBLIC_SITE_URL (no trailing slash).
- * Defaults to the live Vercel domain (apex 308-redirects to www, so we use www).
- */
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") ??
-  "https://www.jaishreegroup.com";
-
-export const COMPANY = {
-  name: "Jai Shree Group",
-  tagline: "Accept Challenges – Develop – Achieve",
-  founded: "1970",
-  founder: "Mr. Tejaram Jangid",
-  foundedIn: "Delhi",
-  experience: "50+",
-  iso: "ISO 9001:2015",
-  email: "shreeperforator@gmail.com",
-  phone: "+91 9370606017",
-  whatsapp:
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "919370606017",
-  address:
-    "Gat No. 94, Near Sonawane Wasti, Jyotibanagar, Talawade, Pune - 411062",
-  website: SITE_URL,
-  locations: ["Pune (Talawade)", "Mumbai (Bhayander, Palghar)"],
-  manufacturingUnits: 6,
-} as const;
+export {
+  COMPANY,
+  FOOTER,
+  NAV_LINKS,
+  SEO,
+  SITE_URL,
+} from "@/sites/group";
 
 export const BROCHURE_URL = "/brochure/jai-shree-brochure.pdf";
 
@@ -378,16 +358,6 @@ export const SITE_ROUTES = {
   seoCities: DELIVERY_CITIES.map((c) => `/${c.slug}/`),
 } as const;
 
-export const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Industries", href: "/industries" },
-  { label: "Our Group", href: "/group" },
-  { label: "Calculator", href: "/calculator" },
-  { label: "Gallery", href: "/gallery" },
-  { label: "Contact", href: "/contact" },
-] as const;
-
 export { BLOG_POSTS } from "@/data/blog-posts";
 
 export const DESIGN_TOKENS = {
@@ -400,25 +370,6 @@ export const DESIGN_TOKENS = {
   textPrimary: "#FFFFFF",
   textSecondary: "#A0A0A0",
   textMuted: "#666666",
-} as const;
-
-export const SEO = {
-  primaryKeywords: [
-    "Perforated Sheet Manufacturer",
-    "Expanded Mesh Manufacturers",
-    "CNC Turret Perforated Sheet Manufacturing",
-    "perforated sheet manufacturers Pune",
-    "perforated sheet manufacturers India export",
-    "expanded metal suppliers India",
-    "metal fabrication India",
-    "perforated metal sheets India supplier",
-  ],
-  schemaTypes: [
-    "LocalBusiness",
-    "Product",
-    "FAQPage",
-    "BreadcrumbList",
-  ] as const,
 } as const;
 
 export const HOME_SECTIONS = {
@@ -525,46 +476,3 @@ export const MUMBAI_BRANCHES = BRANCHES.filter(
   (b) => b.city === "Mumbai" || b.city === "Maharashtra"
 );
 
-export const FOOTER = {
-  description:
-    "ISO 9001:2015 certified manufacturer of perforated sheets, laser cutting & expanded metal. Serving India since 1970.",
-  copyright: "© 2026 Jai Shree Group. All rights reserved.",
-  certification: "ISO 9001:2015 Certified | Pune & Mumbai, India",
-  social: [
-    {
-      name: "LinkedIn",
-      href: "https://www.linkedin.com/company/jai-shree-group/",
-      icon: "Linkedin",
-    },
-    {
-      name: "Facebook",
-      href: "https://www.facebook.com/jaishreegroup/",
-      icon: "Facebook",
-    },
-    {
-      name: "Instagram",
-      href: "https://www.instagram.com/jaishreegroup/",
-      icon: "Instagram",
-    },
-  ],
-  quickLinks: [
-    { label: "About", href: "/about" },
-    { label: "Our Group", href: "/group" },
-    { label: "Industries", href: "/industries" },
-    { label: "Calculator", href: "/calculator" },
-    { label: "Gallery", href: "/gallery" },
-    { label: "Certifications", href: "/certifications" },
-    { label: "Contact", href: "/contact" },
-    { label: "Get Quote", href: "/get-quote" },
-  ],
-  headings: {
-    products: "Products",
-    company: "Company",
-    contact: "Contact Us",
-  },
-  buttons: {
-    brochure: "Download Catalogue",
-    whatsapp: "WhatsApp Us",
-  },
-
-} as const;
