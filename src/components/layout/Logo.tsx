@@ -30,7 +30,7 @@ export function Logo({ className = "", size = "md" }: LogoProps) {
         width={w}
         height={h}
         viewBox="0 0 303.78 83.67"
-        style={{ color: "#FFFFFF" }}
+        style={{ color: "var(--foreground)" }}
         role="img"
         aria-label="Jai Shree"
       >

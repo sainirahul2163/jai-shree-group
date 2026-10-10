@@ -65,8 +65,8 @@ export function Footer() {
     <footer
       className="border-t"
       style={{
-        backgroundColor: "#0A0A0A",
-        borderColor: "#2A2A2A",
+        backgroundColor: "var(--background)",
+        borderColor: "var(--border)",
       }}
     >
       <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 lg:px-16">
@@ -76,29 +76,29 @@ export function Footer() {
             <Logo />
             <p
               className="mt-4 text-sm italic"
-              style={{ color: "#A0A0A0" }}
+              style={{ color: "var(--text-secondary)" }}
             >
               {COMPANY.tagline}
             </p>
             <p
               className="mt-2 text-xs"
-              style={{ color: "#666666" }}
+              style={{ color: "var(--text-muted)" }}
             >
               Also known as Shree Perforators | Jai Shree Metal Perforators
             </p>
             <span
               className="mt-4 inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium"
               style={{
-                borderColor: "#E8521A",
-                backgroundColor: "#1A1A1A",
-                color: "#E8521A",
+                borderColor: "var(--brand)",
+                backgroundColor: "var(--surface-2)",
+                color: "var(--brand-text)",
               }}
             >
               {COMPANY.iso} Certified
             </span>
             <p
               className="mt-4 text-sm leading-relaxed"
-              style={{ color: "#A0A0A0" }}
+              style={{ color: "var(--text-secondary)" }}
             >
               {FOOTER.description}
             </p>
@@ -117,9 +117,9 @@ export function Footer() {
                       title={`${item.name} — coming soon`}
                       className="flex size-9 cursor-not-allowed items-center justify-center rounded-lg border opacity-50"
                       style={{
-                        borderColor: "#2A2A2A",
-                        color: "#A0A0A0",
-                        backgroundColor: "#111111",
+                        borderColor: "var(--border)",
+                        color: "var(--text-secondary)",
+                        backgroundColor: "var(--surface)",
                       }}
                       aria-label={`${item.name} coming soon`}
                     >
@@ -135,11 +135,11 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={item.name}
-                    className="flex size-9 items-center justify-center rounded-lg border transition-colors hover:border-[#E8521A] hover:text-[#E8521A]"
+                    className="flex size-9 items-center justify-center rounded-lg border transition-colors hover:border-brand hover:text-brand-text"
                     style={{
-                      borderColor: "#2A2A2A",
-                      color: "#A0A0A0",
-                      backgroundColor: "#111111",
+                      borderColor: "var(--border)",
+                      color: "var(--text-secondary)",
+                      backgroundColor: "var(--surface)",
                     }}
                   >
                     <Icon className="size-4" />
@@ -153,7 +153,7 @@ export function Footer() {
           <div>
             <h3
               className="mb-4 text-sm font-bold uppercase tracking-wider"
-              style={{ color: "#E8521A" }}
+              style={{ color: "var(--brand-text)" }}
             >
               {FOOTER.headings.products}
             </h3>
@@ -162,8 +162,8 @@ export function Footer() {
                 <li key={product.slug}>
                   <Link
                     href={`/products/${product.slug}`}
-                    className="text-sm transition-colors hover:text-[#E8521A]"
-                    style={{ color: "#A0A0A0" }}
+                    className="text-sm transition-colors hover:text-brand-text"
+                    style={{ color: "var(--text-secondary)" }}
                   >
                     {product.name}
                   </Link>
@@ -176,7 +176,7 @@ export function Footer() {
           <div>
             <h3
               className="mb-4 text-sm font-bold uppercase tracking-wider"
-              style={{ color: "#E8521A" }}
+              style={{ color: "var(--brand-text)" }}
             >
               {FOOTER.headings.company}
             </h3>
@@ -185,8 +185,8 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm transition-colors hover:text-[#E8521A]"
-                    style={{ color: "#A0A0A0" }}
+                    className="text-sm transition-colors hover:text-brand-text"
+                    style={{ color: "var(--text-secondary)" }}
                   >
                     {link.label}
                   </Link>
@@ -199,7 +199,7 @@ export function Footer() {
           <div>
             <h3
               className="mb-4 text-sm font-bold uppercase tracking-wider"
-              style={{ color: "#E8521A" }}
+              style={{ color: "var(--brand-text)" }}
             >
               {FOOTER.headings.contact}
             </h3>
@@ -207,29 +207,29 @@ export function Footer() {
               <li className="flex items-start gap-2.5">
                 <MapPin
                   className="mt-0.5 size-4 shrink-0"
-                  style={{ color: "#E8521A" }}
+                  style={{ color: "var(--brand-text)" }}
                 />
-                <span className="text-sm" style={{ color: "#A0A0A0" }}>
+                <span className="text-sm" style={{ color: "var(--text-secondary)" }}>
                   {COMPANY.address}
                 </span>
               </li>
               <li>
                 <a
                   href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}
-                  className="flex items-center gap-2.5 text-sm transition-colors hover:text-[#FFFFFF]"
-                  style={{ color: "#A0A0A0" }}
+                  className="flex items-center gap-2.5 text-sm transition-colors hover:text-foreground"
+                  style={{ color: "var(--text-secondary)" }}
                 >
-                  <Phone className="size-4 shrink-0" style={{ color: "#E8521A" }} />
+                  <Phone className="size-4 shrink-0" style={{ color: "var(--brand-text)" }} />
                   {COMPANY.phone}
                 </a>
               </li>
               <li>
                 <a
                   href={`mailto:${COMPANY.email}`}
-                  className="flex items-center gap-2.5 text-sm transition-colors hover:text-[#FFFFFF]"
-                  style={{ color: "#A0A0A0" }}
+                  className="flex items-center gap-2.5 text-sm transition-colors hover:text-foreground"
+                  style={{ color: "var(--text-secondary)" }}
                 >
-                  <Mail className="size-4 shrink-0" style={{ color: "#E8521A" }} />
+                  <Mail className="size-4 shrink-0" style={{ color: "var(--brand-text)" }} />
                   {COMPANY.email}
                 </a>
               </li>
@@ -239,10 +239,10 @@ export function Footer() {
               <Button
                 asChild
                 variant="outline"
-                className="h-10 w-full bg-transparent font-semibold hover:bg-[#1A1A1A]"
+                className="h-10 w-full bg-transparent font-semibold hover:bg-surface-2"
                 style={{
-                  borderColor: "#E8521A",
-                  color: "#E8521A",
+                  borderColor: "var(--brand)",
+                  color: "var(--brand-text)",
                 }}
               >
                 <a
@@ -259,7 +259,7 @@ export function Footer() {
                 className="h-10 w-full border-0 font-semibold hover:opacity-90"
                 style={{
                   backgroundColor: "#25D366",
-                  color: "#FFFFFF",
+                  color: "var(--foreground)",
                 }}
               >
                 <a
@@ -278,11 +278,11 @@ export function Footer() {
       {/* Bottom bar */}
       <div
         className="border-t"
-        style={{ borderColor: "#2A2A2A" }}
+        style={{ borderColor: "var(--border)" }}
       >
         <div
           className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-6 text-center text-xs md:flex-row md:px-8 md:text-left lg:px-16"
-          style={{ color: "#666666" }}
+          style={{ color: "var(--text-muted)" }}
         >
           <p>{FOOTER.copyright}</p>
           <p>{FOOTER.certification}</p>

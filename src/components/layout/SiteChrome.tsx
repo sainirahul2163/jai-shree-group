@@ -20,7 +20,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen flex-1 bg-[#0A0A0A]">{children}</main>
+      <main className="min-h-screen flex-1 bg-background">{children}</main>
       <Footer />
       <WhatsAppButton />
       <PageViewTracker />

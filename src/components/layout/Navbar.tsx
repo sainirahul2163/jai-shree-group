@@ -45,7 +45,7 @@ function NavLink({
         "nav-link-underline relative px-3 py-2 text-[15px] font-medium transition-colors hover:opacity-80",
         className
       )}
-      style={{ color: "#FFFFFF" }}
+      style={{ color: "var(--foreground)" }}
     >
       {children}
     </Link>
@@ -74,7 +74,7 @@ export function Navbar() {
         scrolled
           ? {
               backgroundColor: "rgba(10, 10, 10, 0.95)",
-              borderColor: "#2A2A2A",
+              borderColor: "var(--border)",
             }
           : undefined
       }
@@ -91,7 +91,7 @@ export function Navbar() {
               <NavigationMenuItem>
                 <NavigationMenuTrigger
                   className="nav-link-underline h-auto bg-transparent px-3 py-2 text-[15px] font-medium hover:bg-transparent data-open:bg-transparent"
-                  style={{ color: "#FFFFFF" }}
+                  style={{ color: "var(--foreground)" }}
                 >
                   Products
                 </NavigationMenuTrigger>
@@ -99,22 +99,22 @@ export function Navbar() {
                   <div
                     className="w-[760px] rounded-xl border p-4 shadow-2xl"
                     style={{
-                      backgroundColor: "#111111",
-                      borderColor: "#2A2A2A",
+                      backgroundColor: "var(--surface)",
+                      borderColor: "var(--border)",
                       boxShadow: "0 25px 50px rgba(0, 0, 0, 0.5)",
                     }}
                   >
                     <div className="mb-3 flex items-center justify-between px-2">
                       <p
                         className="text-xs font-semibold uppercase tracking-widest"
-                        style={{ color: "#666666" }}
+                        style={{ color: "var(--text-muted)" }}
                       >
                         Our Products
                       </p>
                       <Link
                         href="/products"
                         className="text-xs font-semibold hover:underline"
-                        style={{ color: "#E8521A" }}
+                        style={{ color: "var(--brand-text)" }}
                       >
                         View All →
                       </Link>
@@ -125,11 +125,11 @@ export function Navbar() {
                           <NavigationMenuLink key={product.slug} asChild>
                             <Link
                               href={`/products/${product.slug}`}
-                              className="group flex items-start gap-3 rounded-lg p-3 transition-colors hover:bg-[#1A1A1A]"
+                              className="group flex items-start gap-3 rounded-lg p-3 transition-colors hover:bg-surface-2"
                             >
                               <div
                                 className="relative mt-0.5 size-12 shrink-0 overflow-hidden rounded-lg"
-                                style={{ backgroundColor: "#1A1A1A" }}
+                                style={{ backgroundColor: "var(--surface-2)" }}
                               >
                                 <Image
                                   src={`/products/${product.slug}.webp`}
@@ -142,13 +142,13 @@ export function Navbar() {
                               <div>
                                 <p
                                   className="text-sm font-semibold"
-                                  style={{ color: "#FFFFFF" }}
+                                  style={{ color: "var(--foreground)" }}
                                 >
                                   {product.name}
                                 </p>
                                 <p
                                   className="mt-0.5 line-clamp-2 text-xs"
-                                  style={{ color: "#666666" }}
+                                  style={{ color: "var(--text-muted)" }}
                                 >
                                   {product.description}
                                 </p>
@@ -176,10 +176,10 @@ export function Navbar() {
             asChild
             variant="outline"
             size="lg"
-            className="h-10 bg-transparent px-4 font-semibold hover:bg-[#1A1A1A]"
+            className="h-10 bg-transparent px-4 font-semibold hover:bg-surface-2"
             style={{
-              borderColor: "#2A2A2A",
-              color: "#FFFFFF",
+              borderColor: "var(--border)",
+              color: "var(--foreground)",
             }}
           >
             <a
@@ -195,7 +195,7 @@ export function Navbar() {
             asChild
             size="lg"
             className="glow-orange-hover h-10 border-0 px-5 font-semibold hover:opacity-90"
-            style={{ backgroundColor: "#E8521A", color: "#FFFFFF" }}
+            style={{ backgroundColor: "var(--brand)", color: "var(--brand-foreground)" }}
           >
             <Link href="/get-quote">
               Get Quote
@@ -209,8 +209,8 @@ export function Navbar() {
             <Button
               variant="ghost"
               size="icon-lg"
-              className="hover:bg-[#1A1A1A]"
-              style={{ color: "#FFFFFF" }}
+              className="hover:bg-surface-2"
+              style={{ color: "var(--foreground)" }}
               aria-label="Open menu"
             >
               <Menu className="size-5" />
@@ -220,13 +220,13 @@ export function Navbar() {
             side="right"
             className="w-full max-w-sm border p-0 sm:max-w-sm"
             style={{
-              backgroundColor: "#0A0A0A",
-              borderColor: "#2A2A2A",
+              backgroundColor: "var(--background)",
+              borderColor: "var(--border)",
             }}
           >
             <SheetHeader
               className="border-b p-6"
-              style={{ borderColor: "#2A2A2A" }}
+              style={{ borderColor: "var(--border)" }}
             >
               <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
               <Logo />
@@ -236,14 +236,14 @@ export function Navbar() {
               <div className="flex flex-col gap-1">
                 <NavLink
                   href="/"
-                  className="rounded-lg px-4 py-3 hover:bg-[#1A1A1A]"
+                  className="rounded-lg px-4 py-3 hover:bg-surface-2"
                   onClick={() => setMobileOpen(false)}
                 >
                   Home
                 </NavLink>
                 <NavLink
                   href="/about"
-                  className="rounded-lg px-4 py-3 hover:bg-[#1A1A1A]"
+                  className="rounded-lg px-4 py-3 hover:bg-surface-2"
                   onClick={() => setMobileOpen(false)}
                 >
                   About
@@ -254,7 +254,7 @@ export function Navbar() {
                 <div className="mb-3 flex items-center justify-between px-4">
                   <p
                     className="text-xs font-semibold uppercase tracking-widest"
-                    style={{ color: "#666666" }}
+                    style={{ color: "var(--text-muted)" }}
                   >
                     Products
                   </p>
@@ -262,7 +262,7 @@ export function Navbar() {
                     href="/products"
                     onClick={() => setMobileOpen(false)}
                     className="text-xs font-semibold"
-                    style={{ color: "#E8521A" }}
+                    style={{ color: "var(--brand-text)" }}
                   >
                     View All
                   </Link>
@@ -274,11 +274,11 @@ export function Navbar() {
                         key={product.slug}
                         href={`/products/${product.slug}`}
                         onClick={() => setMobileOpen(false)}
-                        className="flex items-center gap-3 rounded-lg px-4 py-3 transition-colors hover:bg-[#1A1A1A]"
+                        className="flex items-center gap-3 rounded-lg px-4 py-3 transition-colors hover:bg-surface-2"
                       >
                         <div
                           className="relative size-10 shrink-0 overflow-hidden rounded-md"
-                          style={{ backgroundColor: "#1A1A1A" }}
+                          style={{ backgroundColor: "var(--surface-2)" }}
                         >
                           <Image
                             src={`/products/${product.slug}.webp`}
@@ -290,7 +290,7 @@ export function Navbar() {
                         </div>
                         <span
                           className="text-sm font-medium"
-                          style={{ color: "#FFFFFF" }}
+                          style={{ color: "var(--foreground)" }}
                         >
                           {product.name}
                         </span>
@@ -305,7 +305,7 @@ export function Navbar() {
                   <NavLink
                     key={link.href}
                     href={link.href}
-                    className="rounded-lg px-4 py-3 hover:bg-[#1A1A1A]"
+                    className="rounded-lg px-4 py-3 hover:bg-surface-2"
                     onClick={() => setMobileOpen(false)}
                   >
                     {link.label}
@@ -318,10 +318,10 @@ export function Navbar() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="h-12 w-full bg-transparent font-semibold hover:bg-[#1A1A1A]"
+                  className="h-12 w-full bg-transparent font-semibold hover:bg-surface-2"
                   style={{
-                    borderColor: "#2A2A2A",
-                    color: "#FFFFFF",
+                    borderColor: "var(--border)",
+                    color: "var(--foreground)",
                   }}
                 >
                   <a
@@ -338,7 +338,7 @@ export function Navbar() {
                   asChild
                   size="lg"
                   className="glow-orange h-12 w-full border-0 font-semibold"
-                  style={{ backgroundColor: "#E8521A", color: "#FFFFFF" }}
+                  style={{ backgroundColor: "var(--brand)", color: "var(--brand-foreground)" }}
                 >
                   <Link href="/get-quote" onClick={() => setMobileOpen(false)}>
                     Get Quote
