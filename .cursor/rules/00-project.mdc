@@ -1,0 +1,17 @@
+---
+description: Project context and hard rules for the Jai Shree Group multi-site platform
+alwaysApply: true
+---
+
+# Jai Shree Group — Multi-Site Platform
+
+- Read `PROJECT-LOG.md`, `AGENTS.md` and `docs/README.md` before starting a task. The build order is `docs/05-build-plan.md`; work the next unticked task and tick it when its check passes.
+- Next.js 16.2.7, React 19, Tailwind CSS v4. APIs differ from older versions: read `node_modules/next/dist/docs/` before using a Next API. `middleware.ts` is now `proxy.ts`.
+- Work on branch `multi-site`. `main` deploys straight to production; never push to it from here.
+- The main group site must look identical after every Phase 0 change. Compare against `docs/research/baseline/` screenshots.
+- Products: the group's six (perforated sheets, laser cutting, expanded metal, turret punching, precision sheet leveling, custom components) plus welded mesh at Shree Weld Mesh only. Never offer wire mesh, crimped mesh or demister pads. Each unit site offers only its unit's products (`docs/03-sites.md`).
+- Client answers (`docs/client/answers-2026-10-07.md`) are final. Never invent specs, stock, machine lists or client names; use the fallbacks in `docs/08-content-checklist.md`.
+- Client rules: "Global delivery" not "Pan India"; 6 units not 8; no Carbon Steel; thickness only, no sheet sizes; main hero H1 locked.
+- After every change, add a dated row to the Change log in `PROJECT-LOG.md` (newest first) and update its requirement status and Current status. A task is not done until it is logged.
+- Also log any scope, site or rule change in `docs/decisions.md` with the date.
+- Never commit `.env.local` or print secrets.

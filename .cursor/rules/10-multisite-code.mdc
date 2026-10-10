@@ -1,0 +1,17 @@
+---
+description: How to write components and routes so they work for all seven sites
+globs: src/**
+alwaysApply: false
+---
+
+# Multi-site code rules (details: docs/04-architecture.md)
+
+- Brand values (name, phone, email, address, origin, SEO text, colours, fonts) come from the active `SiteConfig` in `src/sites/`. Never hard-code them in components.
+- Colours: use token classes only — `bg-background`, `bg-surface`, `bg-surface-2`, `border-border`, `text-foreground`, `text-text-secondary`, `text-text-muted`, `bg-brand`, `hover:bg-brand-hover`, `text-brand-foreground` (text on a brand fill), `text-brand-text` (brand-coloured words on the page). No `[#hex]` classes, no inline hex. Exceptions: WhatsApp green `#25D366`, `brochure/`, `admin/`.
+- Canvas and three.js read colours at runtime from CSS variables (`--brand`, etc.).
+- Public pages live under `src/app/[site]/` and take `params.site`. Pages not in `config.pages` call `notFound()`. `admin/` and `api/` stay at the root.
+- `src/sites/domains.ts` must stay a plain object with no imports — `proxy.ts` loads it.
+- APIs get the site from the `x-site` request header, save `site` on every row, and email `config.leadEmail` (or `LEAD_EMAIL_OVERRIDE` when set).
+- Supabase reads for blog, gallery and testimonials always filter by `site`.
+- Keep pages static: `generateStaticParams` returns all site keys; avoid request-time APIs in pages unless needed.
+- Run `npm run lint` and `npm run build` before finishing a task.
