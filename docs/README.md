@@ -20,6 +20,8 @@ If a doc and the code disagree, the code is the truth for *how things work today
 | [client/answers-2026-10-07.md](client/answers-2026-10-07.md) | The client's approved answers: unit focus, products per unit, names, contacts, holidays | Final word on business facts |
 | [client/](client/) | Proposal PDF, questionnaire, and the client's filled-in answers (.docx) | Reference |
 | [research/legacy-sites.md](research/legacy-sites.md) | What we found on the group's existing unit websites | Before migrating sites 1 and 2 |
+| [prompts/coordinator.md](prompts/coordinator.md) | How Claude runs the Cursor build loop: authorisations, loop steps, checks, go-live procedure, lessons learned | Start of every coordinator session |
+| [prompts/](prompts/) | One Cursor prompt per task (`task-<n>.md`) | When starting a task |
 | [archive/](archive/) | Older docs from the single-site build (June 2026) | Reference only — may be out of date |
 
 The client-facing version of the plan is the Claude doc "Jai Shree Group — Multi-Site Digital Plan" (https://claude.ai/code/artifact/7ecf8ef1-4bd6-4dcc-80e8-f868002c814b). These files are the developer version and go into more detail.

@@ -91,10 +91,12 @@ Unit logos, working hours, contact names, unit photos, client names, case studie
 
 ## 4. Current status
 
-**Where we are (2026-10-11):** Step 0 is live on jaishreegroup.com (deploy `5035e14`). Phase 0 tasks 0.1 (baseline), 0.2 (`proxy.ts`), 0.3 (group site config) and 0.4 (theme tokens) are done on `multi-site`. The six unit site configs are not created yet. Not pushed.
+**Where we are (2026-10-11):** Phase 0 tasks 0.1–0.4 done and verified. Dev database `jai-shree-dev` ready. Supabase MCP connected to both projects. The build loop moves to a **new Claude Code session** (local, folder `jai-shree-multisite`) that follows `docs/prompts/coordinator.md` and drives the Cursor CLI.
+
+**Authorised by the user (2026-10-11):** run Phase 0 → Phases 1–3 (all six unit sites) as far as possible; SQL on jai-shree-dev freely; tested additive migrations on the live project when going live; merge to `main` when a phase passes its checks; Google Analytics skipped for now.
 
 **Next:**
-1. Phase 0.5 route move.
+1. Task 0.5 (route move) — prompt ready in `docs/prompts/task-0.5.md`.
 
 **Open points:**
 - Welded mesh: the agency said on 2026-10-02 it was discontinued; the client's approved answers say Shree Weld Mesh makes it. We follow the client.
@@ -107,6 +109,7 @@ Newest first. One row per change. "Files" lists what changed (folder-relative).
 
 | Date | Change | Files | Why |
 | --- | --- | --- | --- |
+| 2026-10-11 | Wrote the coordinator handbook (`docs/prompts/coordinator.md`) and saved the reviewed 0.5 Cursor prompt (`docs/prompts/task-0.5.md`) so a fresh Claude session can run the loop. Recorded the user's new authorisations (Supabase SQL, merging to `main` after checks, GA4 skipped, continue through Phases 1–3). First CLI run of 0.5 was stopped by the user after ~30 s; nothing changed | `docs/prompts/`, `docs/05-build-plan.md`, `docs/README.md`, `PROJECT-LOG.md` | Hand-off to a new context window |
 | 2026-10-11 | Dev database: user created Supabase project `jai-shree-dev` (ref `icbamz…`), loaded `schema.sql`, added an admin user, and pointed `jai-shree-multisite/.env.local` at it. Checked: not the live project; tables respond; anon cannot read leads; anon page-view insert works. No Resend key in this folder, so test enquiries send no email. `ADMIN_EMAILS` still empty (admin panel locked until the user adds their email). Live site and `jai-shree-group/.env.local` stay on the live project | `.env.local` (not committed) | Test forms and migrations without touching the client's real data |
 | 2026-10-11 | Cursor CLI (`agent`) installed and logged in; Claude now runs the build loop: one fresh Cursor session per task, then Claude verifies | — | User asked Claude to coordinate Cursor directly |
 | 2026-10-11 | Reviewed Cursor's 0.4 (Claude): 20 commits (`863004d`…`cb75260`), 70 files; token choices sampled and correct (fills → brand, words/icons → brand-text, white-on-orange → brand-foreground, neutrals → foreground/text-secondary); orange only left in `src/sites/`, brochure, admin; Cursor's helper script not committed; lint unchanged (12 old errors — Cursor had skipped lint). **Follow-up for the first light-theme site:** a few neutral greys are still hard-coded (`ProductShowcase` `#0F0F0F`, `LandingLocations` `#141414`, map popup `#CCCCCC`, `ProductViewer3D` canvas/background shades, `email.ts` colours — the last one belongs to 0.7) | — | Verify before 0.5 |

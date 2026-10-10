@@ -65,7 +65,7 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 
 0.8 **Shared upgrades**
 - [ ] Privacy policy and terms page templates (content per site from config; follow India's Digital Personal Data Protection Act 2023 — get the wording reviewed).
-- [ ] Google Analytics 4 per site (measurement ID in config) with events for quote submit, WhatsApp click, call click, tool use.
+- [ ] ~~Google Analytics 4 per site~~ — **skipped for now** (user, 2026-10-11). Leave analytics out or behind an empty env var, off by default.
 
 **Phase 0 acceptance**
 - [ ] Every main-site route matches its baseline screenshot (no visible difference at 1440 px and 390 px) — run `scripts/baseline/compare.js` as in `docs/research/baseline.md`.
