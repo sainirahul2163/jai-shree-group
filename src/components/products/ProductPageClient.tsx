@@ -37,9 +37,9 @@ const ProductViewer3D = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-[440px] w-full items-center justify-center rounded-2xl border border-[#1E1E1E] bg-[#0C0C0C]">
+      <div className="flex h-[440px] w-full items-center justify-center rounded-2xl border border-surface-2 bg-background">
         <div className="flex flex-col items-center gap-3">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#E8521A] border-t-transparent" />
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand border-t-transparent" />
           <span className="text-xs text-[#444]">Loading 3D render...</span>
         </div>
       </div>
@@ -77,7 +77,7 @@ export function ProductPageClient({
       {/* Hero */}
       <section
         className="section-padding pt-28 md:pt-32"
-        style={{ backgroundColor: "#0A0A0A" }}
+        style={{ backgroundColor: "var(--background)" }}
       >
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <motion.div
@@ -88,7 +88,7 @@ export function ProductPageClient({
             <nav aria-label="Breadcrumb">
               <ol
                 className="mb-6 flex flex-wrap items-center gap-1 text-base"
-                style={{ color: "#A0A0A0" }}
+                style={{ color: "var(--text-secondary)" }}
                 itemScope
                 itemType="https://schema.org/BreadcrumbList"
               >
@@ -100,7 +100,7 @@ export function ProductPageClient({
                   <Link
                     href="/"
                     itemProp="item"
-                    className="hover:text-white"
+                    className="hover:text-foreground"
                   >
                     <span itemProp="name">Home</span>
                   </Link>
@@ -115,7 +115,7 @@ export function ProductPageClient({
                   <Link
                     href="/products"
                     itemProp="item"
-                    className="hover:text-white"
+                    className="hover:text-foreground"
                   >
                     <span itemProp="name">Products</span>
                   </Link>
@@ -126,7 +126,7 @@ export function ProductPageClient({
                   itemProp="itemListElement"
                   itemScope
                   itemType="https://schema.org/ListItem"
-                  style={{ color: "#E8521A" }}
+                  style={{ color: "var(--brand-text)" }}
                 >
                   <span itemProp="name">{product.name}</span>
                   <meta itemProp="position" content="3" />
@@ -136,13 +136,13 @@ export function ProductPageClient({
 
             <h1
               className="text-4xl font-black tracking-tight sm:text-5xl"
-              style={{ color: "#FFFFFF" }}
+              style={{ color: "var(--foreground)" }}
             >
               {product.name}
             </h1>
             <p
               className="mt-4 text-lg leading-relaxed"
-              style={{ color: "#A0A0A0" }}
+              style={{ color: "var(--text-secondary)" }}
             >
               {product.tagline}
             </p>
@@ -152,7 +152,7 @@ export function ProductPageClient({
                 asChild
                 size="lg"
                 className="h-12 border-0 font-semibold"
-                style={{ backgroundColor: "#E8521A", color: "#FFFFFF" }}
+                style={{ backgroundColor: "var(--brand)", color: "var(--brand-foreground)" }}
               >
                 <Link href="/get-quote">
                   Get Quote for This Product
@@ -163,8 +163,8 @@ export function ProductPageClient({
                 asChild
                 variant="outline"
                 size="lg"
-                className="h-12 bg-transparent font-semibold hover:bg-[#1A1A1A]"
-                style={{ borderColor: "#FFFFFF", color: "#FFFFFF" }}
+                className="h-12 bg-transparent font-semibold hover:bg-surface-2"
+                style={{ borderColor: "var(--foreground)", color: "var(--foreground)" }}
               >
                 <a
                   href={BROCHURE_URL}
@@ -188,21 +188,21 @@ export function ProductPageClient({
               animate={{ scale: [1, 1.08, 1], opacity: [0.4, 0.7, 0.4] }}
               transition={{ duration: 3, repeat: Infinity }}
               className="absolute size-48 rounded-full blur-3xl lg:size-64"
-              style={{ backgroundColor: "rgba(232, 82, 26, 0.25)" }}
+              style={{ backgroundColor: "color-mix(in oklab, var(--brand) 25%, transparent)" }}
             />
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               className="absolute size-56 rounded-full border border-dashed lg:size-72"
-              style={{ borderColor: "rgba(232, 82, 26, 0.4)" }}
+              style={{ borderColor: "color-mix(in oklab, var(--brand) 40%, transparent)" }}
             />
             <div
               className="relative flex size-40 items-center justify-center rounded-full lg:size-48"
-              style={{ backgroundColor: "rgba(232, 82, 26, 0.1)" }}
+              style={{ backgroundColor: "color-mix(in oklab, var(--brand) 10%, transparent)" }}
             >
               <Icon
                 className="size-20 lg:size-24"
-                style={{ color: "#E8521A" }}
+                style={{ color: "var(--brand-text)" }}
               />
             </div>
           </motion.div>
@@ -212,7 +212,7 @@ export function ProductPageClient({
       {/* Details + Quote */}
       <section
         className="section-padding"
-        style={{ backgroundColor: "#111111" }}
+        style={{ backgroundColor: "var(--surface)" }}
       >
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 lg:grid-cols-3">
           <div className="space-y-10 lg:col-span-2">
@@ -223,7 +223,7 @@ export function ProductPageClient({
             >
               <h2
                 className="mb-4 text-2xl font-bold"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: "var(--foreground)" }}
               >
                 Overview
               </h2>
@@ -232,7 +232,7 @@ export function ProductPageClient({
                   <p
                     key={para.slice(0, 30)}
                     className="text-base leading-relaxed"
-                    style={{ color: "#A0A0A0" }}
+                    style={{ color: "var(--text-secondary)" }}
                   >
                     {para}
                   </p>
@@ -262,7 +262,7 @@ export function ProductPageClient({
             >
               <h2
                 className="mb-4 text-2xl font-bold"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: "var(--foreground)" }}
               >
                 Materials Available
               </h2>
@@ -272,9 +272,9 @@ export function ProductPageClient({
                     key={m}
                     className="rounded-full px-3 py-1 text-base"
                     style={{
-                      backgroundColor: "#1A1A1A",
-                      color: "#A0A0A0",
-                      border: "1px solid #2A2A2A",
+                      backgroundColor: "var(--surface-2)",
+                      color: "var(--text-secondary)",
+                      border: "1px solid var(--border)",
                     }}
                   >
                     {m}
@@ -290,13 +290,13 @@ export function ProductPageClient({
             >
               <h2
                 className="mb-4 text-2xl font-bold"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: "var(--foreground)" }}
               >
                 Key Specifications
               </h2>
               <div
                 className="overflow-hidden rounded-xl border"
-                style={{ borderColor: "#2A2A2A" }}
+                style={{ borderColor: "var(--border)" }}
               >
                 <table className="w-full text-base">
                   <tbody>
@@ -304,18 +304,18 @@ export function ProductPageClient({
                       <tr
                         key={spec.label}
                         style={{
-                          backgroundColor: i % 2 === 0 ? "#111111" : "#0A0A0A",
+                          backgroundColor: i % 2 === 0 ? "var(--surface)" : "var(--background)",
                         }}
                       >
                         <td
                           className="px-4 py-3 font-medium"
-                          style={{ color: "#FFFFFF", width: "40%" }}
+                          style={{ color: "var(--foreground)", width: "40%" }}
                         >
                           {spec.label}
                         </td>
                         <td
                           className="px-4 py-3"
-                          style={{ color: "#A0A0A0" }}
+                          style={{ color: "var(--text-secondary)" }}
                         >
                           {spec.value}
                         </td>
@@ -333,7 +333,7 @@ export function ProductPageClient({
             >
               <h2
                 className="mb-4 text-2xl font-bold"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: "var(--foreground)" }}
               >
                 Our Strength
               </h2>
@@ -342,9 +342,9 @@ export function ProductPageClient({
                   <li key={s} className="flex items-start gap-3">
                     <Check
                       className="mt-0.5 size-5 shrink-0"
-                      style={{ color: "#E8521A" }}
+                      style={{ color: "var(--brand-text)" }}
                     />
-                    <span className="text-base" style={{ color: "#A0A0A0" }}>
+                    <span className="text-base" style={{ color: "var(--text-secondary)" }}>
                       {s}
                     </span>
                   </li>
@@ -359,7 +359,7 @@ export function ProductPageClient({
             >
               <h2
                 className="mb-4 text-2xl font-bold"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: "var(--foreground)" }}
               >
                 Applications
               </h2>
@@ -369,9 +369,9 @@ export function ProductPageClient({
                     key={app}
                     className="rounded-lg border px-3 py-2 text-base"
                     style={{
-                      borderColor: "#2A2A2A",
-                      backgroundColor: "#0A0A0A",
-                      color: "#FFFFFF",
+                      borderColor: "var(--border)",
+                      backgroundColor: "var(--background)",
+                      color: "var(--foreground)",
                     }}
                   >
                     {app}
@@ -390,7 +390,7 @@ export function ProductPageClient({
               >
                 <h2
                   className="mb-4 text-2xl font-bold"
-                  style={{ color: "#FFFFFF" }}
+                  style={{ color: "var(--foreground)" }}
                 >
                   Hole Patterns / Types
                 </h2>
@@ -400,9 +400,9 @@ export function ProductPageClient({
                       key={pattern}
                       className="rounded-lg border px-4 py-3 text-base"
                       style={{
-                        borderColor: "#2A2A2A",
-                        backgroundColor: "#0A0A0A",
-                        color: "#A0A0A0",
+                        borderColor: "var(--border)",
+                        backgroundColor: "var(--background)",
+                        color: "var(--text-secondary)",
                       }}
                     >
                       {pattern}
@@ -424,7 +424,7 @@ export function ProductPageClient({
       {product.slug === "perforated-sheets" && (
         <section
           className="section-padding"
-          style={{ backgroundColor: "#0A0A0A" }}
+          style={{ backgroundColor: "var(--background)" }}
         >
           <div className="mx-auto max-w-7xl">
             <PerforationPatterns />
@@ -435,12 +435,12 @@ export function ProductPageClient({
       {/* Related Products */}
       <section
         className="section-padding"
-        style={{ backgroundColor: "#0A0A0A" }}
+        style={{ backgroundColor: "var(--background)" }}
       >
         <div className="mx-auto max-w-7xl">
           <h2
             className="mb-8 text-2xl font-bold"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             Related Products
           </h2>
@@ -459,36 +459,36 @@ export function ProductPageClient({
                 >
                   <Link
                     href={`/products/${related.slug}`}
-                    className="group flex h-full flex-col rounded-xl border p-6 transition-all hover:-translate-y-1 hover:border-[#E8521A]"
+                    className="group flex h-full flex-col rounded-xl border p-6 transition-all hover:-translate-y-1 hover:border-brand"
                     style={{
-                      backgroundColor: "#111111",
-                      borderColor: "#2A2A2A",
+                      backgroundColor: "var(--surface)",
+                      borderColor: "var(--border)",
                     }}
                   >
                     <div
                       className="mb-4 flex size-12 items-center justify-center rounded-full"
-                      style={{ backgroundColor: "rgba(232, 82, 26, 0.1)" }}
+                      style={{ backgroundColor: "color-mix(in oklab, var(--brand) 10%, transparent)" }}
                     >
                       <RelIcon
                         className="size-6"
-                        style={{ color: "#E8521A" }}
+                        style={{ color: "var(--brand-text)" }}
                       />
                     </div>
                     <h3
                       className="text-lg font-bold"
-                      style={{ color: "#FFFFFF" }}
+                      style={{ color: "var(--foreground)" }}
                     >
                       {related.name}
                     </h3>
                     <p
                       className="mt-2 flex-1 text-base"
-                      style={{ color: "#A0A0A0" }}
+                      style={{ color: "var(--text-secondary)" }}
                     >
                       {related.tagline}
                     </p>
                     <span
                       className="mt-4 flex items-center gap-1 text-base font-semibold opacity-0 transition-opacity group-hover:opacity-100"
-                      style={{ color: "#E8521A" }}
+                      style={{ color: "var(--brand-text)" }}
                     >
                       View Details
                       <ArrowRight className="size-4" />
@@ -504,12 +504,12 @@ export function ProductPageClient({
       {/* FAQ */}
       <section
         className="section-padding"
-        style={{ backgroundColor: "#111111" }}
+        style={{ backgroundColor: "var(--surface)" }}
       >
         <div className="mx-auto max-w-3xl">
           <h2
             className="mb-8 text-2xl font-bold"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             Frequently Asked Questions
           </h2>
@@ -518,17 +518,17 @@ export function ProductPageClient({
               <AccordionItem
                 key={faq.q}
                 value={`faq-${i}`}
-                className="border-[#2A2A2A]"
+                className="border-border"
               >
                 <AccordionTrigger
                   className="text-base hover:no-underline"
-                  style={{ color: "#FFFFFF" }}
+                  style={{ color: "var(--foreground)" }}
                 >
                   {faq.q}
                 </AccordionTrigger>
                 <AccordionContent
                   className="text-base"
-                  style={{ color: "#A0A0A0" }}
+                  style={{ color: "var(--text-secondary)" }}
                 >
                   {faq.a}
                 </AccordionContent>

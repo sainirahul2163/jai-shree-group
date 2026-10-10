@@ -96,7 +96,13 @@ export function DimpleSheet3D() {
       key.shadow.mapSize.height = 2048;
       scene.add(key);
 
-      const orange = new THREE.PointLight(0xe8521a, 6, 18);
+      const brandHex = getComputedStyle(document.documentElement)
+        .getPropertyValue("--brand")
+        .trim();
+      const brandColor = /^#[0-9a-f]{6}$/i.test(brandHex)
+        ? Number.parseInt(brandHex.slice(1), 16)
+        : 0xe8521a;
+      const orange = new THREE.PointLight(brandColor, 6, 18);
       orange.position.set(-4, 3, 2);
       scene.add(orange);
 
@@ -181,13 +187,13 @@ export function DimpleSheet3D() {
 
   return (
     <div
-      className="relative w-full overflow-hidden rounded-2xl border border-[#1E1E1E]"
-      style={{ background: "#0A0A0A" }}
+      className="relative w-full overflow-hidden rounded-2xl border border-surface-2"
+      style={{ background: "var(--background)" }}
     >
-      <div className="flex items-center justify-between border-b border-[#1A1A1A] px-4 py-2.5">
+      <div className="flex items-center justify-between border-b border-surface-2 px-4 py-2.5">
         <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#E8521A]" />
-          <span className="text-xs font-bold uppercase tracking-[3px] text-[#E8521A]">
+          <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+          <span className="text-xs font-bold uppercase tracking-[3px] text-brand-text">
             3D Preview — Dimple Sheet
           </span>
         </div>
@@ -201,19 +207,19 @@ export function DimpleSheet3D() {
       />
 
       {!loaded && (
-        <div className="absolute inset-0 flex items-center justify-center bg-[#0A0A0A]">
+        <div className="absolute inset-0 flex items-center justify-center bg-background">
           <div className="flex flex-col items-center gap-3">
-            <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#E8521A] border-t-transparent" />
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand border-t-transparent" />
             <span className="text-xs text-[#444]">Loading 3D render...</span>
           </div>
         </div>
       )}
 
-      <div className="flex items-center gap-6 border-t border-[#1A1A1A] px-4 py-2.5">
+      <div className="flex items-center gap-6 border-t border-surface-2 px-4 py-2.5">
         <span className="text-[10px] text-[#555]">Material: Stainless Steel</span>
         <span className="text-[10px] text-[#555]">Pattern: Dome / Dimple</span>
         <span className="text-[10px] text-[#555]">Process: Embossing</span>
-        <span className="ml-auto text-[10px] font-medium text-[#E8521A]">
+        <span className="ml-auto text-[10px] font-medium text-brand-text">
           Jai Shree Group
         </span>
       </div>
