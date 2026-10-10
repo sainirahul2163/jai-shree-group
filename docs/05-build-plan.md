@@ -76,12 +76,25 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 
 ## Phase 1 — Pilot: Shree Perforators
 
-- [ ] Crawl the live shreeperforators.com and list every URL (`research/legacy-sites.md`).
-- [ ] `src/sites/shree-perforators.ts` + `content/shree-perforators/` with unique copy (`07-seo-rules.md`).
-- [ ] Pattern library tool (`03-sites.md` → site 1).
-- [ ] Home, Products, Industries, Gallery, About, Export, Contact, Get quote, Privacy, Terms.
+1.0 **Legacy crawl**
+- [x] Crawl the live shreeperforators.com and list every URL (`research/legacy-sites.md`) — done by Claude 2026-10-11, with a draft 301 map.
+
+1.1 **Site-aware components** (group site must not change)
+- [ ] Chrome, home sections, products, industries, about, contact and quote read the active site (`useSite()` / `siteFromParams`) and a per-site content module (`src/sites/content/<key>.ts`); group copy moves into `content/group.ts`.
+- [ ] Product and industry lists, menus and static params follow `site.products` / `site.industries`.
+- [ ] Open-area formulas move to `src/lib/open-area.ts`; `PerforationPatterns` takes props.
+- [ ] Group SEO output identical; full screenshot compare clean.
+
+1.2 **Shree Perforators site**
+- [ ] `src/sites/shree-perforators.ts` (theme from `03-sites.md`, contact, products, industries, pages, nav, SEO) + `content/shree-perforators.ts` with unique copy (`07-seo-rules.md`); fallbacks from `08-content-checklist.md`.
+- [ ] Home, Products, Industries, Gallery, About (unit first, then "Part of Jai Shree Group"), Export, Contact (Thursday holiday), Get quote, Privacy, Terms.
+
+1.3 **Pattern library tool**
+- [ ] Hole shape, size, pitch and layout → open area % (shared formulas), live 2D pattern, 3D preview; "Request this pattern" pre-fills the quote form.
+
+1.4 **Legacy redirects and launch checklist**
 - [ ] Legacy redirect map (old URL → new URL, 301) in `next.config.ts` with a `host` condition.
-- [ ] Launch checklist (below), then point DNS to Vercel.
+- [ ] Launch checklist (below). DNS to Vercel is the agency's step.
 
 ## Phase 2 — Jai Shree Metal Perforators
 

@@ -91,7 +91,7 @@ SEO (task 0.6): pages and JSON-LD build absolute URLs from the active site's `or
 | `/clients` not in nav or footer | `constants.ts` `NAV_LINKS` |
 | Calculator results have no quote link | `components/calculator/` |
 | ~~API routes log request bodies~~ — fixed in task 0.7: only lead ids and errors are logged | `app/api/*` |
-| `revalidatePath("/gallery")`, `("/blog")`, `("/clients")` in admin actions name the visible URL. Since task 0.5 the pages live at `/<site>/…`, and the Next docs (`revalidatePath` → "Using revalidatePath with rewrites") say the destination path is needed, so these calls probably no longer refresh the public pages; they still refresh within the hourly `revalidate`. Not tested | `src/lib/supabase/actions.ts` |
+| ~~Admin actions revalidated `/gallery`, `/blog`, `/clients` (visible URLs) after the 0.5 route move~~ Fixed 2026-10-11: they revalidate the route patterns `/[site]/(chrome)/gallery` etc. with `"page"`, which covers every site | `src/lib/supabase/actions.ts` |
 | No privacy policy or terms pages | — |
 | No Google Analytics (only the Supabase page-view tracker) | — |
 | White-on-orange buttons are 3.7:1 contrast | Group theme (see `03-sites.md`) |
