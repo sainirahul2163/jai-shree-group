@@ -229,7 +229,7 @@ export function GetQuotePage() {
     return (
       <div
         className="section-padding flex min-h-[70vh] items-center justify-center pt-28"
-        style={{ backgroundColor: "#0A0A0A" }}
+        style={{ backgroundColor: "var(--background)" }}
       >
         <div className="max-w-md text-center">
           <div
@@ -240,18 +240,18 @@ export function GetQuotePage() {
           </div>
           <h1
             className="text-2xl font-bold"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             Thank you!
           </h1>
-          <p className="mt-3 text-lg" style={{ color: "#A0A0A0" }}>
+          <p className="mt-3 text-lg" style={{ color: "var(--text-secondary)" }}>
             We&apos;ll send your quote within 24 hours.
           </p>
           {waLink && (
             <Button
               asChild
               className="mt-6 h-12 border-0"
-              style={{ backgroundColor: "#25D366", color: "#FFF" }}
+              style={{ backgroundColor: "#25D366", color: "var(--foreground)" }}
             >
               <a href={waLink} target="_blank" rel="noopener noreferrer">
                 Continue on WhatsApp
@@ -262,7 +262,7 @@ export function GetQuotePage() {
             asChild
             variant="outline"
             className="mt-4 block w-full"
-            style={{ borderColor: "#2A2A2A", color: "#FFF" }}
+            style={{ borderColor: "var(--border)", color: "var(--foreground)" }}
           >
             <Link href="/">Back to Home</Link>
           </Button>
@@ -274,30 +274,30 @@ export function GetQuotePage() {
   return (
     <div
       className="section-padding pt-28 md:pt-32"
-      style={{ backgroundColor: "#0A0A0A" }}
+      style={{ backgroundColor: "var(--background)" }}
     >
       <div className="mx-auto max-w-4xl">
         <h1
           className="text-4xl font-black tracking-tight"
-          style={{ color: "#FFFFFF" }}
+          style={{ color: "var(--foreground)" }}
         >
           Get a Free Quote
         </h1>
 
         <div
           className="mt-6 rounded-xl border p-5"
-          style={{ backgroundColor: "#111111", borderColor: "#2A2A2A" }}
+          style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
         >
-          <p className="text-sm font-semibold" style={{ color: "#E8521A" }}>
+          <p className="text-sm font-semibold" style={{ color: "var(--brand-text)" }}>
             Prefer to talk directly?
           </p>
           <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-6">
             <a
               href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}
               className="flex items-center gap-2 text-sm transition-opacity hover:opacity-80"
-              style={{ color: "#FFFFFF" }}
+              style={{ color: "var(--foreground)" }}
             >
-              <Phone className="size-4" style={{ color: "#E8521A" }} />
+              <Phone className="size-4" style={{ color: "var(--brand-text)" }} />
               Prefer to call? {COMPANY.phone}
             </a>
             <a
@@ -305,23 +305,23 @@ export function GetQuotePage() {
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-sm transition-opacity hover:opacity-80"
-              style={{ color: "#FFFFFF" }}
+              style={{ color: "var(--foreground)" }}
             >
               WhatsApp: {COMPANY.phone}
             </a>
             <a
               href={`mailto:${COMPANY.email}`}
               className="flex items-center gap-2 text-sm transition-opacity hover:opacity-80"
-              style={{ color: "#A0A0A0" }}
+              style={{ color: "var(--text-secondary)" }}
             >
-              <Mail className="size-4" style={{ color: "#E8521A" }} />
+              <Mail className="size-4" style={{ color: "var(--brand-text)" }} />
               Email: {COMPANY.email}
             </a>
           </div>
           <Button
             asChild
             className="mt-4 h-12 w-full border-0 sm:w-auto"
-            style={{ backgroundColor: "#25D366", color: "#FFFFFF" }}
+            style={{ backgroundColor: "#25D366", color: "var(--foreground)" }}
           >
             <a href={directWhatsAppUrl} target="_blank" rel="noopener noreferrer">
               Get Quote on WhatsApp
@@ -336,7 +336,7 @@ export function GetQuotePage() {
               <span
                 key={label}
                 style={{
-                  color: i <= step ? "#E8521A" : "#666666",
+                  color: i <= step ? "var(--brand-text)" : "var(--text-muted)",
                 }}
               >
                 Step {i + 1}
@@ -345,13 +345,13 @@ export function GetQuotePage() {
           </div>
           <div
             className="h-2 overflow-hidden rounded-full"
-            style={{ backgroundColor: "#1A1A1A" }}
+            style={{ backgroundColor: "var(--surface-2)" }}
           >
             <div
               className="h-full transition-all duration-500"
               style={{
                 width: `${((step + 1) / 3) * 100}%`,
-                backgroundColor: "#E8521A",
+                backgroundColor: "var(--brand)",
               }}
             />
           </div>
@@ -367,7 +367,7 @@ export function GetQuotePage() {
             >
               <h2
                 className="mb-6 text-2xl font-bold"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: "var(--foreground)" }}
               >
                 What do you need?
               </h2>
@@ -386,32 +386,32 @@ export function GetQuotePage() {
                           ? "cursor-not-allowed opacity-40"
                           : selected
                             ? ""
-                            : "hover:border-[#E8521A]"
+                            : "hover:border-brand"
                       }`}
                       style={{
-                        backgroundColor: selected ? "#1A1A1A" : "#111111",
-                        borderColor: selected ? "#E8521A" : "#2A2A2A",
+                        backgroundColor: selected ? "var(--surface-2)" : "var(--surface)",
+                        borderColor: selected ? "var(--brand)" : "var(--border)",
                       }}
                     >
                       {selected && !disabled && (
                         <Check
                           className="absolute top-3 right-3 size-5"
-                          style={{ color: "#E8521A" }}
+                          style={{ color: "var(--brand-text)" }}
                         />
                       )}
                       {disabled && (
                         <Lock
                           className="absolute top-3 right-3 size-4"
-                          style={{ color: "#666666" }}
+                          style={{ color: "var(--text-muted)" }}
                         />
                       )}
                       <Icon
                         className="mb-2 size-6"
-                        style={{ color: disabled ? "#666666" : "#E8521A" }}
+                        style={{ color: disabled ? "var(--text-muted)" : "var(--brand-text)" }}
                       />
                       <p
                         className="font-bold"
-                        style={{ color: disabled ? "#666666" : "#FFFFFF" }}
+                        style={{ color: disabled ? "var(--text-muted)" : "var(--foreground)" }}
                       >
                         {product.name}
                       </p>
@@ -429,9 +429,9 @@ export function GetQuotePage() {
                     transition={{ duration: 0.2 }}
                     className="mt-4 rounded-xl border p-4 text-sm"
                     style={{
-                      backgroundColor: "#111111",
-                      borderColor: "#E8521A",
-                      color: "#A0A0A0",
+                      backgroundColor: "var(--surface)",
+                      borderColor: "var(--brand)",
+                      color: "var(--text-secondary)",
                     }}
                   >
                     Precision Sheet Leveling works best alongside another
@@ -441,13 +441,13 @@ export function GetQuotePage() {
               </AnimatePresence>
 
               {incompatMessage && (
-                <p className="mt-3 text-sm" style={{ color: "#A0A0A0" }}>
+                <p className="mt-3 text-sm" style={{ color: "var(--text-secondary)" }}>
                   {incompatMessage}
                 </p>
               )}
 
               {selectionSummary && (
-                <p className="mt-4 text-sm" style={{ color: "#A0A0A0" }}>
+                <p className="mt-4 text-sm" style={{ color: "var(--text-secondary)" }}>
                   {selectionSummary}
                 </p>
               )}
@@ -462,14 +462,14 @@ export function GetQuotePage() {
                     className="overflow-hidden"
                   >
                     <div className="pt-4">
-                      <Label style={{ color: "#A0A0A0" }}>
+                      <Label style={{ color: "var(--text-secondary)" }}>
                         {customSelectedAlone
                           ? "Describe your custom component requirement *"
                           : "Any custom component notes? (optional)"}
                       </Label>
                       <Textarea
                         rows={4}
-                        className="mt-1.5 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                        className="mt-1.5 border-border bg-surface-2 text-foreground"
                         placeholder={
                           customSelectedAlone
                             ? "Please describe the product you want to customize — material, shape, application, quantity, any reference dimensions or drawings..."
@@ -505,7 +505,7 @@ export function GetQuotePage() {
                   }}
                   disabled={form.products.length === 0}
                   className="h-11 border-0 px-6"
-                  style={{ backgroundColor: "#E8521A", color: "#FFF" }}
+                  style={{ backgroundColor: "var(--brand)", color: "var(--brand-foreground)" }}
                 >
                   Next
                   <ArrowRight className="size-4" />
@@ -524,22 +524,22 @@ export function GetQuotePage() {
             >
               <h2
                 className="mb-4 text-2xl font-bold"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: "var(--foreground)" }}
               >
                 Your Requirements
               </h2>
-              <p className="mb-6 text-sm" style={{ color: "#A0A0A0" }}>
+              <p className="mb-6 text-sm" style={{ color: "var(--text-secondary)" }}>
                 Tell us the material, thickness, and quantity. Our team will
                 follow up for any missing details.
               </p>
 
               <div>
-                <Label style={{ color: "#A0A0A0" }}>Material Required *</Label>
+                <Label style={{ color: "var(--text-secondary)" }}>Material Required *</Label>
                 <Select
                   value={form.material}
                   onValueChange={(v) => updateField("material", v)}
                 >
-                  <SelectTrigger className="mt-1.5 h-10 w-full border-[#2A2A2A] bg-[#1A1A1A] text-white">
+                  <SelectTrigger className="mt-1.5 h-10 w-full border-border bg-surface-2 text-foreground">
                     <SelectValue placeholder="Select material" />
                   </SelectTrigger>
                   <SelectContent>
@@ -554,9 +554,9 @@ export function GetQuotePage() {
               </div>
 
               <div>
-                <Label style={{ color: "#A0A0A0" }}>Thickness *</Label>
+                <Label style={{ color: "var(--text-secondary)" }}>Thickness *</Label>
                 <Input
-                  className="mt-1.5 h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                  className="mt-1.5 h-10 border-border bg-surface-2 text-foreground"
                   placeholder="e.g. 2mm"
                   value={form.thickness}
                   onChange={(e) => updateField("thickness", e.target.value)}
@@ -564,9 +564,9 @@ export function GetQuotePage() {
               </div>
 
               <div>
-                <Label style={{ color: "#A0A0A0" }}>Quantity</Label>
+                <Label style={{ color: "var(--text-secondary)" }}>Quantity</Label>
                 <Input
-                  className="mt-1.5 h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                  className="mt-1.5 h-10 border-border bg-surface-2 text-foreground"
                   placeholder="e.g. 50 pcs"
                   value={form.quantity}
                   onChange={(e) => updateField("quantity", e.target.value)}
@@ -574,14 +574,14 @@ export function GetQuotePage() {
               </div>
 
               <div>
-                <Label style={{ color: "#A0A0A0" }}>When do you need it?</Label>
+                <Label style={{ color: "var(--text-secondary)" }}>When do you need it?</Label>
                 <Select
                   value={form.deadline}
                   onValueChange={(v) =>
                     updateField("deadline", v as QuoteFormValues["deadline"])
                   }
                 >
-                  <SelectTrigger className="mt-1.5 h-10 w-full border-[#2A2A2A] bg-[#1A1A1A] text-white">
+                  <SelectTrigger className="mt-1.5 h-10 w-full border-border bg-surface-2 text-foreground">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -595,12 +595,12 @@ export function GetQuotePage() {
               </div>
 
               <div>
-                <Label style={{ color: "#A0A0A0" }}>
+                <Label style={{ color: "var(--text-secondary)" }}>
                   Anything else we should know?
                 </Label>
                 <Textarea
                   rows={3}
-                  className="mt-1.5 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                  className="mt-1.5 border-border bg-surface-2 text-foreground"
                   placeholder="Drawing reference, finishing, delivery city, etc."
                   value={form.additionalRequirements}
                   onChange={(e) =>
@@ -613,7 +613,7 @@ export function GetQuotePage() {
                 <Button
                   variant="outline"
                   onClick={() => setStep(0)}
-                  className="border-[#2A2A2A] text-white"
+                  className="border-border text-foreground"
                 >
                   <ArrowLeft className="size-4" />
                   Back
@@ -631,7 +631,7 @@ export function GetQuotePage() {
                   }}
                   disabled={!specsComplete}
                   className="border-0"
-                  style={{ backgroundColor: "#E8521A", color: "#FFF" }}
+                  style={{ backgroundColor: "var(--brand)", color: "var(--brand-foreground)" }}
                 >
                   Next
                   <ArrowRight className="size-4" />
@@ -653,52 +653,52 @@ export function GetQuotePage() {
             >
               <h2
                 className="mb-4 text-2xl font-bold"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: "var(--foreground)" }}
               >
                 Contact Details
               </h2>
 
               <div>
-                <Label style={{ color: "#A0A0A0" }}>Name *</Label>
+                <Label style={{ color: "var(--text-secondary)" }}>Name *</Label>
                 <Input
-                  className="mt-1.5 h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                  className="mt-1.5 h-10 border-border bg-surface-2 text-foreground"
                   value={form.name}
                   onChange={(e) => updateField("name", e.target.value)}
                 />
               </div>
 
               <div>
-                <Label style={{ color: "#A0A0A0" }}>Company Name</Label>
+                <Label style={{ color: "var(--text-secondary)" }}>Company Name</Label>
                 <Input
-                  className="mt-1.5 h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                  className="mt-1.5 h-10 border-border bg-surface-2 text-foreground"
                   value={form.companyName}
                   onChange={(e) => updateField("companyName", e.target.value)}
                 />
               </div>
 
               <div>
-                <Label style={{ color: "#A0A0A0" }}>Phone *</Label>
+                <Label style={{ color: "var(--text-secondary)" }}>Phone *</Label>
                 <Input
-                  className="mt-1.5 h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                  className="mt-1.5 h-10 border-border bg-surface-2 text-foreground"
                   value={form.phone}
                   onChange={(e) => updateField("phone", e.target.value)}
                 />
               </div>
 
               <div>
-                <Label style={{ color: "#A0A0A0" }}>Email *</Label>
+                <Label style={{ color: "var(--text-secondary)" }}>Email *</Label>
                 <Input
                   type="email"
-                  className="mt-1.5 h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                  className="mt-1.5 h-10 border-border bg-surface-2 text-foreground"
                   value={form.email}
                   onChange={(e) => updateField("email", e.target.value)}
                 />
               </div>
 
               <div>
-                <Label style={{ color: "#A0A0A0" }}>City / Location</Label>
+                <Label style={{ color: "var(--text-secondary)" }}>City / Location</Label>
                 <Input
-                  className="mt-1.5 h-10 border-[#2A2A2A] bg-[#1A1A1A] text-white"
+                  className="mt-1.5 h-10 border-border bg-surface-2 text-foreground"
                   value={form.city}
                   onChange={(e) => updateField("city", e.target.value)}
                 />
@@ -711,23 +711,23 @@ export function GetQuotePage() {
                   onChange={(e) =>
                     updateField("sendWhatsApp", e.target.checked)
                   }
-                  className="size-4 accent-[#E8521A]"
+                  className="size-4 accent-brand"
                 />
-                <span style={{ color: "#A0A0A0" }}>
+                <span style={{ color: "var(--text-secondary)" }}>
                   Send quote on WhatsApp too
                 </span>
               </label>
 
               {status === "unavailable" && (
-                <div className="space-y-3 rounded-xl border p-4" style={{ borderColor: "#2A2A2A", backgroundColor: "#111111" }}>
-                  <p className="text-sm" style={{ color: "#A0A0A0" }}>
+                <div className="space-y-3 rounded-xl border p-4" style={{ borderColor: "var(--border)", backgroundColor: "var(--surface)" }}>
+                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
                     Our online form is temporarily unavailable. Please WhatsApp
                     us directly for a quick response.
                   </p>
                   <Button
                     asChild
                     className="h-11 w-full border-0"
-                    style={{ backgroundColor: "#25D366", color: "#FFF" }}
+                    style={{ backgroundColor: "#25D366", color: "var(--foreground)" }}
                   >
                     <a
                       href={waLink ?? "https://wa.me/919370606017"}
@@ -751,7 +751,7 @@ export function GetQuotePage() {
                 <Button
                   variant="outline"
                   onClick={() => setStep(1)}
-                  className="border-[#2A2A2A] text-white"
+                  className="border-border text-foreground"
                 >
                   <ArrowLeft className="size-4" />
                   Back
@@ -760,7 +760,7 @@ export function GetQuotePage() {
                   onClick={handleSubmit}
                   disabled={status === "loading"}
                   className="border-0 px-6"
-                  style={{ backgroundColor: "#E8521A", color: "#FFF" }}
+                  style={{ backgroundColor: "var(--brand)", color: "var(--brand-foreground)" }}
                 >
                   {status === "loading" ? (
                     <Loader2 className="size-4 animate-spin" />
