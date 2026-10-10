@@ -102,7 +102,7 @@ export const ABOUT_STRENGTHS = [
 
 export const VISION_MISSION = {
   vision:
-    "To boost sales and production of Laser Cutting, Turret Punching, Perforation, Expanded Metal, Wire Mesh, Welded Mesh and Crimped Mesh and ensure customers receive best quality products.",
+    "To boost sales and production of Laser Cutting, Turret Punching, Perforation and Expanded Metal, and ensure customers receive best quality products.",
   mission:
     "To focus on Quality, Timely Delivery & Best of Service to our Customers.",
 } as const;

@@ -14,7 +14,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Metal Manufacturing Insights | Blog | Jai Shree Group",
   description:
-    "Technical guides, product tutorials, and industry insights on perforated sheets, wire mesh, laser cutting and expanded metal from Jai Shree Group.",
+    "Technical guides, product tutorials, and industry insights on perforated sheets, laser cutting, expanded metal and turret punching from Jai Shree Group.",
   alternates: {
     canonical: "/blog",
   },

@@ -98,15 +98,17 @@ function BranchDetailCard({
           <span style={{ color: "#A0A0A0" }}>{branch.email}</span>
         </a>
 
-        <a
-          href={websiteUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 text-base transition-opacity hover:opacity-80"
-        >
-          <ExternalLink className="size-4" style={{ color: "#E8521A" }} />
-          <span style={{ color: "#E8521A" }}>{branch.website}</span>
-        </a>
+        {branch.website && (
+          <a
+            href={websiteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-base transition-opacity hover:opacity-80"
+          >
+            <ExternalLink className="size-4" style={{ color: "#E8521A" }} />
+            <span style={{ color: "#E8521A" }}>{branch.website}</span>
+          </a>
+        )}
       </div>
 
       <Button asChild size="sm" className="mt-4 glow-orange">
@@ -204,7 +206,7 @@ export function GroupPage() {
               {COMPANY.name} operates {COMPANY.manufacturingUnits} specialized
               manufacturing units under one family-owned group. Each unit focuses on
               specific metal fabrication capabilities — from CNC perforation and fiber
-              laser cutting to wire mesh, welded mesh, and filtration products — ensuring
+              laser cutting to expanded metal, welded mesh, and ready-stock perforated sheets — ensuring
               expert production at every step.
             </p>
             <p

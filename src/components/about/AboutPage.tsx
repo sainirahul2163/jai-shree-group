@@ -80,8 +80,8 @@ export function AboutPage() {
               <p className="text-base leading-relaxed" style={{ color: "#A0A0A0" }}>
                 Today, with 6 manufacturing units across Pune and Mumbai, we serve
                 industries from automobile and construction to pharmaceutical and
-                petrochemical — delivering perforated sheets, wire mesh, expanded
-                metal, laser cutting, and more with ISO 9001:2015 certified processes.
+                petrochemical — delivering perforated sheets, laser cutting, expanded
+                metal, turret punching, and more with ISO 9001:2015 certified processes.
               </p>
             </div>
           </motion.div>

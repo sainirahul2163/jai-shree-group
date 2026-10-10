@@ -41,7 +41,6 @@ export const metadata: Metadata = {
     "Expanded Mesh Manufacturers",
     "CNC Turret Perforated Sheet Manufacturing",
     "perforated sheet manufacturers India export",
-    "wire mesh exporters India",
     "expanded metal suppliers India",
     "metal fabrication India",
     "perforated metal sheets India supplier",

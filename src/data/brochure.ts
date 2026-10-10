@@ -22,8 +22,8 @@ export const BROCHURE_COVER = {
 } as const;
 
 export const BROCHURE_INTRO = [
-  "Our Group is mainly engaged in the manufacturing of all types of Laser Cuttings, Perforated Sheets, Turret Punching, Expanded Metal, Welded Mesh, Crimped Mesh, Wire Mesh, Demister Pad etc. We are located at Mumbai and Pune. Mumbai is the financial capital of India and Pune is the hub of Automobile and other Industries. We undertake challenging supplies to Automobile Companies / Industries.",
-  "The Group supplies the products with quality guarantee and is ISO 9001:2015 certified. We are the leading manufacturers & suppliers of Metal Perforated Sheets / Screens, Laser Cutting, Expanded Metal, Crimped Mesh, Welded Mesh, Wire Mesh, Cable Trays, Conveyor Belts, Speaker Grills, Vibrating Screen, Demister Pad, other Architectural Products etc.",
+  "Our Group is mainly engaged in the manufacturing of all types of Laser Cuttings, Perforated Sheets, Turret Punching, Expanded Metal etc. We are located at Mumbai and Pune. Mumbai is the financial capital of India and Pune is the hub of Automobile and other Industries. We undertake challenging supplies to Automobile Companies / Industries.",
+  "The Group supplies the products with quality guarantee and is ISO 9001:2015 certified. We are the leading manufacturers & suppliers of Metal Perforated Sheets / Screens, Laser Cutting, Expanded Metal, Cable Trays, Conveyor Belts, Speaker Grills, Vibrating Screen, other Architectural Products etc.",
   "In addition to the above stated products we also undertake special jobs like Embossed Plates, Embossed - Trays, Dimple / De - Stoners, Huller - Screens, Herringbone Screens, Perforated Test Sieve, Pulverizing Screens in Round, Square, Rectangular, Oblong, Hex & Conical Holes and any type of hole by Turret Punching in Stainless Steel, Carbon Steel, M.S. / G.I., Aluminum, Brass, Copper etc.",
   "Our Research and Development team is actively developing all kind of Special Dies & Tools and Special Machineries as per specific requirement.",
   "All our plants are having very good production capacity as well as maintain all quality standards. Our key goal is to reduce the rejection and it is a pleasure for us that our rejection percentage is very negligible as our operators and supervisors are highly trained and very co-operative with the group.",
@@ -64,7 +64,7 @@ export const BROCHURE_HISTORY_NOTE =
   "It always gives inspiration to the personnel of the Group led by the dedication of Mr. Raichand Jangid and his well trained team, which keeps him and his team busy in developing the Special Machineries and Tools. Ours is a privately owned Company. This independence ensures us to deliver total quality management under the promoters' control. With capacity to hold inventory of raw material, we can deliver our products on scheduled time, thereby ensuring you not to keep any extra stocks. At the same time, we specialize and offer tailor made custom solution as per customer specifications.";
 
 export const BROCHURE_VISION =
-  "The Vision of Jai Shree Group is to boost its sales and production of products such as Laser Cutting, Turret Punching, Perforation, Expanded Metal, Wire Mesh, Welded Mesh and Crimped Mesh and to ensure that our customers be provided best Quality of Products to their satisfaction.";
+  "The Vision of Jai Shree Group is to boost its sales and production of products such as Laser Cutting, Turret Punching, Perforation and Expanded Metal, and to ensure that our customers be provided best Quality of Products to their satisfaction.";
 
 export const BROCHURE_MISSION =
   "The Mission of Jai Shree Group is to focus on Quality, Timely Delivery & Best of Service to our Customers.";

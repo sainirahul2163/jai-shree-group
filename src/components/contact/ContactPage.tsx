@@ -34,8 +34,9 @@ import {
 } from "@/lib/validations";
 
 const WORKING_HOURS = [
-  { days: "Mon – Wed, Fri – Sun", hours: "9:00 AM – 6:00 PM", closed: false },
-  { days: "Thursday", hours: "Closed (Holiday)", closed: true },
+  { days: "Working hours", hours: "9:00 AM – 6:00 PM", closed: false },
+  { days: "Pune units (Talawade)", hours: "Closed Thursday", closed: true },
+  { days: "Mumbai units (Masjid Bunder, Bhayander, Palghar)", hours: "Closed Sunday", closed: true },
 ] as const;
 const SUBMIT_TIMEOUT_MS = 10_000;
 
@@ -237,6 +238,7 @@ export function ContactPage() {
                       {b.area}, {b.city}
                     </p>
                     <p>{b.address}</p>
+                    <p>Weekly holiday: {b.weeklyOff}</p>
                     <a
                       href={`tel:${b.phone.replace(/\s/g, "")}`}
                       className="block transition-opacity hover:opacity-80"
