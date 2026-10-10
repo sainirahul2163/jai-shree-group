@@ -47,10 +47,13 @@ Status: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 
 | Requirement | Status |
 | --- | --- |
-| Correct the cleanup branch `claude/pensive-feynman-t9pehu` (unit products, welded mesh at Shree Weld Mesh) and merge | ⏳ waiting for go-ahead |
-| New phones on the live site: Jai Shree Metal Perforators +91 93733 24492; Jai Shree Industries and Jai Shree Perforator +91 89089 21111 | ⏳ |
-| Weekly holidays on the contact page (Thursday Pune, Sunday Mumbai) | ⏳ |
-| Merge `main` into `multi-site` | ⏳ |
+| Correct the cleanup branch `claude/pensive-feynman-t9pehu` (unit products, welded mesh at Shree Weld Mesh) and merge | ✅ merged to `main` and pushed (`2f4daec`) — ⛔ **not live**: Vercel is not deploying from GitHub pushes (see Current status) |
+| New phones on the live site: Jai Shree Metal Perforators +91 93733 24492; Jai Shree Industries and Jai Shree Perforator +91 89089 21111 | ⛔ on `main`, waiting for a Vercel deploy |
+| Weekly holidays on the contact page (Thursday Pune, Sunday Mumbai) | ⛔ on `main`, waiting for a Vercel deploy |
+| Hide website links to units without a working site (4 units pointed at a dead or wrong domain) | ⛔ on `main`, waiting for a Vercel deploy |
+| Fix the location map (CARTO tiles needed an API key) | ⛔ on `main`, waiting for a Vercel deploy |
+| Get Vercel deploying again (reconnect GitHub or deploy from the account that owns jaishreegroup.com) | ⛔ needs the owner of the Vercel project |
+| Merge `main` into `multi-site` | ✅ `d65a458`, build passes |
 
 ### Phase 0 — Platform (weeks 1–2)
 
@@ -88,10 +91,10 @@ Unit logos, working hours, contact names, unit photos, client names, case studie
 
 ## 4. Current status
 
-**Where we are (2026-10-10):** planning finished and approved by the client. Docs aligned. `public/` cleaned. All of it committed on `multi-site` (not pushed). Building has not started.
+**Where we are (2026-10-10):** planning finished and approved. Step 0 fixes are on `main` (`2f4daec`) and merged into `multi-site`, **but not live**: the Vercel project for jaishreegroup.com is not deploying GitHub pushes (live site is missing the 2026-08-24 commit too) and it belongs to a Vercel account not logged in here. `multi-site` is committed locally, not pushed.
 
 **Next:**
-1. Step 0 live-site fixes (needs go-ahead: merging to `main` deploys to production).
+1. Owner of the Vercel project deploys `main` (Redeploy in the dashboard, or reconnect Git, or `vercel --prod` logged in as that account), then check the live site.
 2. Phase 0.1 baseline screenshots.
 
 **Open points:**
@@ -105,6 +108,10 @@ Newest first. One row per change. "Files" lists what changed (folder-relative).
 
 | Date | Change | Files | Why |
 | --- | --- | --- | --- |
+| 2026-10-10 | Merged `main` (with Step 0) into `multi-site` (`d65a458`); build passes. Not pushed | `multi-site` branch | Keep the build branch on the latest live code |
+| 2026-10-10 | Committed Step 0 (`2f4daec`, author = GitHub no-reply email), fast-forwarded `main`, build passed, pushed to GitHub. **Not deployed**: no Vercel status on the commit; GitHub's last deployment record is 2026-08-02; live `/brochure/icons` (added 2026-08-24) is 404. Local Vercel CLI is logged in to TrackHive, which has no Jai Shree project | `jai-shree-group` `main` | User approved commit and push live |
+| 2026-10-10 | Fixed the location map (home page and Our Group page): CARTO's dark map tiles now require an API key and showed "API KEY REQUIRED". Switched to OpenStreetMap tiles (no key, credit shown) darkened with a CSS filter; Leaflet CSS now bundled instead of loaded from unpkg; "Our Locations" label no longer hidden behind the map; Mumbai pin text no longer says "filtration sectors". Checked in the browser: all tiles load, no console errors. Not committed (on `step-0-live-fixes`) | `jai-shree-group`: `src/components/shared/IndiaMap.tsx` | User reported the map was not working |
+| 2026-10-10 | Step 0 changes made in the production folder on branch `step-0-live-fixes` (from the cleanup branch): new phones for 3 units; weekly holiday per unit (`weeklyOff`) and per-region hours on the contact page; unit product lists set to the client's ticks (`BRANCH_PRODUCTS`); Our Group copy now names welded mesh and ready stock instead of "filtration products"; website links hidden for Shree Weld Mesh, Jai Shree Filtration, Jai Shree Industries, Jai Shree Perforator (pointed at a dead or wrong domain). Typecheck and build pass; no new lint issues (12 old lint errors in untouched files). Not committed | `jai-shree-group`: `src/lib/constants.ts`, `src/data/branches.ts`, `src/components/contact/ContactPage.tsx`, `src/components/group/GroupPage.tsx`, `src/components/home/GroupSection.tsx` | Step 0, approved by the user |
 | 2026-10-10 | First commit on `multi-site`: all docs, both logs, Cursor rules, `.env.example`, client files, `public/` cleanup. Not pushed | whole folder | User approved the commit |
 | 2026-10-10 | Created `CURSOR-LOG.md` (Cursor's task diary with an entry template) and Cursor rule `05-cursor-log.mdc` that makes Cursor fill it in after every task | `CURSOR-LOG.md`, `.cursor/rules/05-cursor-log.mdc`, `AGENTS.md`, `PROJECT-LOG.md` | So "what is done and what is left" can be answered by reading the logs |
 | 2026-10-10 | Created this project log; added the "log every change" rule to AGENTS.md and Cursor rules | `PROJECT-LOG.md`, `AGENTS.md`, `.cursor/rules/00-project.mdc`, `docs/README.md` | One place for goal, requirements, status and history |
