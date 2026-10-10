@@ -1,3 +1,5 @@
+import type { SiteKey } from "@/sites/types";
+
 export type LeadStatus =
   | "new"
   | "contacted"
@@ -15,6 +17,7 @@ export type FollowUpType = "whatsapp" | "call" | "email" | "meeting";
 
 export interface Lead {
   id: string;
+  site: SiteKey;
   name: string;
   phone: string;
   email: string | null;
@@ -48,6 +51,7 @@ export interface FollowUp {
 
 export interface BlogPost {
   id: string;
+  site: SiteKey;
   title: string;
   slug: string;
   content: string;
@@ -65,6 +69,7 @@ export interface BlogPost {
 
 export interface GalleryItem {
   id: string;
+  site: SiteKey;
   image_url: string;
   title: string;
   description: string | null;
@@ -76,6 +81,7 @@ export interface GalleryItem {
 
 export interface Testimonial {
   id: string;
+  site: SiteKey;
   client_name: string;
   company_name: string | null;
   industry: string | null;
@@ -88,6 +94,7 @@ export interface Testimonial {
 
 export interface PageView {
   id: string;
+  site: SiteKey;
   page: string;
   product: string | null;
   city: string | null;
@@ -96,6 +103,7 @@ export interface PageView {
 }
 
 type LeadInsert = {
+  site?: SiteKey;
   name: string;
   phone: string;
   source: LeadSource;
@@ -139,6 +147,7 @@ export type Database = {
       blog_posts: {
         Row: BlogPost;
         Insert: {
+          site?: SiteKey;
           title: string;
           slug: string;
           content?: string;
@@ -157,6 +166,7 @@ export type Database = {
       gallery_items: {
         Row: GalleryItem;
         Insert: {
+          site?: SiteKey;
           image_url: string;
           title: string;
           description?: string | null;
@@ -170,6 +180,7 @@ export type Database = {
       testimonials: {
         Row: Testimonial;
         Insert: {
+          site?: SiteKey;
           client_name: string;
           company_name?: string | null;
           industry?: string | null;
@@ -184,6 +195,7 @@ export type Database = {
       page_views: {
         Row: PageView;
         Insert: {
+          site?: SiteKey;
           page: string;
           product?: string | null;
           city?: string | null;

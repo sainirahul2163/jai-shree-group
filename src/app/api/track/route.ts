@@ -1,8 +1,13 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
+import { siteFromRequest, unknownSiteResponse } from "@/lib/site-from-request";
+
 export async function POST(request: Request) {
   try {
+    const site = await siteFromRequest();
+    if (!site) return unknownSiteResponse();
+
     if (
       !process.env.NEXT_PUBLIC_SUPABASE_URL ||
       !process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -18,6 +23,7 @@ export async function POST(request: Request) {
     );
 
     const { error } = await supabase.from("page_views").insert({
+      site: site.key,
       page: page ?? "/",
       product: product ?? null,
       city: city ?? null,
@@ -25,12 +31,12 @@ export async function POST(request: Request) {
     });
 
     if (error) {
-      console.error("Page view insert error:", error);
+      console.error("Page view insert error:", error.message);
     }
 
     return NextResponse.json({ success: true });
   } catch (err) {
-    console.error("Track API error:", err);
+    console.error("Track API error:", err instanceof Error ? err.message : err);
     return NextResponse.json({ success: false });
   }
 }

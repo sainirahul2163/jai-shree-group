@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 export default async function Clients({ params }: SiteParams) {
   const site = await siteFromParams(params);
-  const testimonials = await getPublishedTestimonials();
+  const testimonials = await getPublishedTestimonials(site.key);
 
   return (
     <>

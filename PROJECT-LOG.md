@@ -18,6 +18,7 @@ No fixed dates. We work as fast as possible, **phase by phase, task by task**: a
 
 | # | Site | Unit location | What it shows | Domain |
 | --- | --- | --- | --- | --- |
+| 2026-10-11 | 0.7 Data and leads (Cursor). APIs take the site only from the proxy's `x-site` header (unknown/unconfigured → 400; body `site` ignored) and save it on every lead and page view. Lead email goes to `LEAD_EMAIL_OVERRIDE` → (group) `CONTACT_EMAIL` → `RESEND_TO` → `config.leadEmail`, with the site name, site key, page and escaped values. A customer auto-reply carries the reference (first 8 characters of the lead id); it is shown on the contact and quote success screens. Request bodies are no longer logged. Public gallery, blog, clients queries filter by site; seed posts are group-only. Admin has a `?site=` filter, site badges and site pickers. `schema.sql` matches the migration. Checked: build, tsc, lint unchanged (18), spoof and unit-host tests, read-back on jai-shree-dev, test rows deleted, quick visual check. Not checked: admin while logged in, real email delivery | `src/lib/{leads,site-from-request,email}.ts`, `src/app/api/`, `src/lib/supabase/`, `src/types/database.ts`, `src/sites/names.ts`, `src/components/admin/`, `src/app/admin/(panel)/`, `src/app/[site]/`, contact and quote components, `.env.example`, `docs/06-codebase-map.md`, `docs/05-build-plan.md` | Phase 0 task 0.7 |
 | 2026-10-11 | **Live database security fix** (user approved): applied the 2026-08-02 admin-access hardening to the live project. Seeded `admin_users` with the only live auth user (the admin account); added `is_admin()`; the six "Admin full access" policies (leads, follow_ups, blog_posts, gallery_items, testimonials, page_views) now require `is_admin()` instead of any logged-in user. Public policies unchanged; no rows changed (leads 2, blog 4, gallery 70, testimonials 3, page views 969 before and after). Checked with the public key: 69 published gallery items, 4 posts, 3 testimonials readable; leads and `admin_users` not readable. Live `/`, `/gallery`, `/contact`, `/blog` 200. Production `ADMIN_EMAILS` still to be confirmed by the user | live Supabase (policies, `admin_users`, `is_admin()`) | Any Supabase account could read and change all leads |
 | 2026-10-11 | Multi-site migration written (Claude) and applied to `jai-shree-dev`: `site` column (default `'group'`, check on the 7 keys) on leads, blog_posts, gallery_items, testimonials, page_views; `(site, created_at)` indexes on leads and page_views; blog slugs unique per site. Re-ran it: idempotent. Not yet on the live project | `src/lib/supabase/migrations/2026-10-11-multi-site.sql`, jai-shree-dev | Task 0.7 needs the column; live goes with the Phase 0 merge |
 | 2026-10-11 | Reviewed Cursor's 0.6 (Claude): one commit `20040fe` with code and logs; build ✅; lint unchanged (18 problems); 40 pages' title/meta/canonical/hreflang identical to the baseline; Cursor's before/after snapshots identical incl. JSON-LD (sitemap differs only in `lastmod`); robots identical; `/group/sitemap.xml` 404; admin pages noindex. Architecture doc updated: the sitemap is a route handler (Next's `sitemap.ts` cannot see `[site]`) | `docs/04-architecture.md`, `docs/decisions.md` | Verify before 0.7 |
@@ -68,8 +69,8 @@ Status: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 | Colour tokens replace ~1,400 hard-coded colours | ✅ |
 | Pages move under `src/app/[site]/`; domain-based routing | ✅ |
 | Per-site SEO: metadata, sitemap, robots, structured data | ✅ |
-| `site` column on leads/blog/gallery/testimonials/page views; leads emailed to each unit; admin site filter | ⏳ |
-| Customer auto-reply with reference number | ⏳ |
+| `site` column on leads/blog/gallery/testimonials/page views; leads emailed to each unit; admin site filter | 🔄 column, saving and lead email done (dev database); admin filter built but not yet checked logged in |
+| Customer auto-reply with reference number | ✅ reference on screen; email checked with a stubbed send (no Resend key locally) |
 | Privacy and terms pages; Google Analytics 4 | ⏳ |
 | Main site looks identical to baseline; merge to `main` | ⏳ |
 
@@ -94,7 +95,7 @@ Unit logos, working hours, contact names, unit photos, client names, case studie
 
 ## 4. Current status
 
-**Where we are (2026-10-11):** Phase 0 tasks 0.1–0.6 done and verified. Task 0.7 (data and leads) is with Cursor. The multi-site migration is applied and tested on `jai-shree-dev`. The live database's admin-access hardening is applied (user approved).
+**Where we are (2026-10-11):** Phase 0 tasks 0.1–0.6 done and verified. Task 0.7 (data and leads) is done by Cursor and waiting for Claude's check; the admin site filter still needs a logged-in check. The multi-site migration is applied and tested on `jai-shree-dev`. The live database's admin-access hardening is applied (user approved).
 
 **Authorised by the user (2026-10-11):** run Phase 0 → Phases 1–3 (all six unit sites) as far as possible; SQL on jai-shree-dev freely; tested additive migrations on the live project when going live; merge to `main` when a phase passes its checks; Google Analytics skipped for now; admin-access hardening on the live project (applied).
 

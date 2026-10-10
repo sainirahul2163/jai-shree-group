@@ -45,6 +45,7 @@ export function ContactPage() {
     "idle" | "loading" | "success" | "error" | "unavailable"
   >("idle");
   const [waLink, setWaLink] = useState<string | null>(null);
+  const [reference, setReference] = useState<string | null>(null);
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
@@ -61,6 +62,7 @@ export function ContactPage() {
   async function onSubmit(values: ContactFormValues) {
     setStatus("loading");
     setWaLink(null);
+    setReference(null);
 
     const fallbackWa = whatsappUrl(
       COMPANY.whatsapp,
@@ -86,6 +88,7 @@ export function ContactPage() {
       }
       if (!res.ok) throw new Error(data.error ?? "Failed");
       setWaLink(data.whatsappUrl ?? fallbackWa);
+      setReference(typeof data.reference === "string" ? data.reference : null);
       setStatus("success");
       form.reset();
     } catch {
@@ -281,6 +284,14 @@ export function ContactPage() {
                 <p className="mt-2 text-base" style={{ color: "var(--text-secondary)" }}>
                   We&apos;ll get back to you within 24 hours.
                 </p>
+                {reference && (
+                  <p className="mt-2 text-base" style={{ color: "var(--text-secondary)" }}>
+                    Your reference:{" "}
+                    <span className="font-semibold" style={{ color: "var(--foreground)" }}>
+                      {reference}
+                    </span>
+                  </p>
+                )}
                 {waLink && (
                   <Button
                     asChild
@@ -297,6 +308,7 @@ export function ContactPage() {
                   onClick={() => {
                     setStatus("idle");
                     setWaLink(null);
+                    setReference(null);
                   }}
                   style={{ backgroundColor: "var(--brand)", color: "var(--brand-foreground)" }}
                 >

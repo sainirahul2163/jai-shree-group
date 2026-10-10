@@ -3,12 +3,17 @@
 -- Run this in Supabase SQL Editor (Dashboard → SQL → New query)
 -- ============================================================
 
+-- Every lead, page view and piece of content belongs to one site (site key,
+-- default 'group'). Existing databases get these columns from
+-- migrations/2026-10-11-multi-site.sql; this file is for fresh installs.
+
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- LEADS TABLE
 CREATE TABLE IF NOT EXISTS leads (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  site TEXT NOT NULL DEFAULT 'group',
   name TEXT NOT NULL,
   phone TEXT NOT NULL,
   email TEXT,
@@ -28,7 +33,11 @@ CREATE TABLE IF NOT EXISTS leads (
   status TEXT NOT NULL DEFAULT 'new',
   notes TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  CONSTRAINT leads_site_check CHECK (site IN (
+    'group', 'shree-perforators', 'jai-shree-metal-perforators', 'jai-shree-industries',
+    'jai-shree-perforator', 'jai-shree-filtration', 'shree-weld-mesh'
+  ))
 );
 
 -- FOLLOW UPS TABLE
@@ -44,8 +53,9 @@ CREATE TABLE IF NOT EXISTS follow_ups (
 -- BLOG POSTS TABLE
 CREATE TABLE IF NOT EXISTS blog_posts (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  site TEXT NOT NULL DEFAULT 'group',
   title TEXT NOT NULL,
-  slug TEXT UNIQUE NOT NULL,
+  slug TEXT NOT NULL,
   content TEXT NOT NULL DEFAULT '',
   excerpt TEXT NOT NULL DEFAULT '',
   category TEXT NOT NULL DEFAULT 'General',
@@ -56,24 +66,34 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   published_at TIMESTAMPTZ,
   author TEXT DEFAULT 'Jai Shree Group',
   created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  CONSTRAINT blog_posts_site_check CHECK (site IN (
+    'group', 'shree-perforators', 'jai-shree-metal-perforators', 'jai-shree-industries',
+    'jai-shree-perforator', 'jai-shree-filtration', 'shree-weld-mesh'
+  ))
 );
 
 -- GALLERY ITEMS TABLE
 CREATE TABLE IF NOT EXISTS gallery_items (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  site TEXT NOT NULL DEFAULT 'group',
   image_url TEXT NOT NULL,
   title TEXT NOT NULL,
   description TEXT,
   product_category TEXT NOT NULL DEFAULT 'General',
   is_published BOOLEAN DEFAULT TRUE,
   sort_order INTEGER DEFAULT 0,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  CONSTRAINT gallery_items_site_check CHECK (site IN (
+    'group', 'shree-perforators', 'jai-shree-metal-perforators', 'jai-shree-industries',
+    'jai-shree-perforator', 'jai-shree-filtration', 'shree-weld-mesh'
+  ))
 );
 
 -- TESTIMONIALS TABLE
 CREATE TABLE IF NOT EXISTS testimonials (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  site TEXT NOT NULL DEFAULT 'group',
   client_name TEXT NOT NULL,
   company_name TEXT,
   industry TEXT,
@@ -81,18 +101,32 @@ CREATE TABLE IF NOT EXISTS testimonials (
   rating INTEGER DEFAULT 5 CHECK (rating >= 1 AND rating <= 5),
   is_featured BOOLEAN DEFAULT FALSE,
   is_published BOOLEAN DEFAULT TRUE,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  CONSTRAINT testimonials_site_check CHECK (site IN (
+    'group', 'shree-perforators', 'jai-shree-metal-perforators', 'jai-shree-industries',
+    'jai-shree-perforator', 'jai-shree-filtration', 'shree-weld-mesh'
+  ))
 );
 
 -- PAGE VIEWS TABLE
 CREATE TABLE IF NOT EXISTS page_views (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  site TEXT NOT NULL DEFAULT 'group',
   page TEXT NOT NULL,
   product TEXT,
   city TEXT,
   referrer TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  CONSTRAINT page_views_site_check CHECK (site IN (
+    'group', 'shree-perforators', 'jai-shree-metal-perforators', 'jai-shree-industries',
+    'jai-shree-perforator', 'jai-shree-filtration', 'shree-weld-mesh'
+  ))
 );
+
+-- PER-SITE INDEXES (blog slugs are unique per site, not across the table)
+CREATE INDEX IF NOT EXISTS leads_site_created_at_idx ON leads (site, created_at DESC);
+CREATE INDEX IF NOT EXISTS page_views_site_created_at_idx ON page_views (site, created_at DESC);
+CREATE UNIQUE INDEX IF NOT EXISTS blog_posts_site_slug ON blog_posts (site, slug);
 
 -- UPDATED AT TRIGGER
 CREATE OR REPLACE FUNCTION update_updated_at()
@@ -179,7 +213,7 @@ INSERT INTO blog_posts (title, slug, excerpt, category, is_published, published_
 ('Expanded Metal vs Perforated Sheet: Which to Choose?', 'expanded-metal-vs-perforated-sheet', 'Compare expanded metal and perforated sheets across strength, weight, cost, flow, and aesthetics — and learn which material suits your application.', 'Product Guide', true, NOW()),
 ('Perforated Sheet Specification Guide', 'wire-mesh-specification-guide', 'Complete guide to perforated sheet specifications — hole shapes, pitch types, materials, thickness, finishes, and standard sizes from Jai Shree Group.', 'Technical Guide', true, NOW()),
 ('Laser Cutting vs Turret Punching: Cost Comparison', 'laser-cutting-vs-turret-punching', 'When to use laser cutting vs turret punching? A detailed cost and capability comparison for industrial buyers in Pune and Mumbai.', 'Cost Guide', true, NOW())
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (site, slug) DO NOTHING;
 
 -- SEED TESTIMONIALS
 INSERT INTO testimonials (client_name, company_name, industry, message, rating, is_featured, is_published) VALUES

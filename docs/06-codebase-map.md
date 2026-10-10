@@ -26,7 +26,13 @@ Public (since task 0.5 every public page lives under `src/app/[site]/`; the prox
 
 Admin (protected by `src/proxy.ts` — renamed from `middleware.ts` in task 0.2 — + `ADMIN_EMAILS` allow-list): `/admin/login`, `/admin/dashboard`, `/admin/leads`, `/admin/leads/[id]`, `/admin/blog`, `/admin/blog/new`, `/admin/blog/[id]`, `/admin/gallery`, `/admin/testimonials`, `/admin/settings`.
 
-API: `/api/quote`, `/api/contact` (save lead + Resend email), `/api/track` (page views), `/api/health`.
+API: `/api/quote`, `/api/contact` (save lead + Resend email), `/api/track` (page views), `/api/health`. Since task 0.7 the first three take the site from the `x-site` header (`siteFromRequest` in `src/lib/site-from-request.ts`; unknown or unconfigured key → 400; any `site` in the body is ignored) and save `site` on every row. Lead APIs return `reference` (first 8 characters of the lead id, upper case), shown in the success state of the contact form and the quote wizard. They log only lead ids and errors.
+
+Leads and email (task 0.7, `src/lib/leads.ts`): notification to `LEAD_EMAIL_OVERRIDE` if set (every site), else for `group` `CONTACT_EMAIL` → `RESEND_TO` → `config.leadEmail`, else `config.leadEmail`. With `RESEND_API_KEY` set, the customer also gets a confirmation from `RESEND_FROM` (reference, what they asked for, the site's phone, WhatsApp, email and weekly holiday). Email failures are logged and never fail the request; without the key nothing is sent.
+
+Data per site (task 0.7): `leads`, `blog_posts`, `gallery_items`, `testimonials` and `page_views` have `site` (default `'group'`, check on the 7 keys); blog slugs are unique per `(site, slug)`. Migration: `src/lib/supabase/migrations/2026-10-11-multi-site.sql`; fresh installs: `schema.sql`. Public reads in `src/lib/supabase/queries.ts` (gallery, blog list, post by slug, blog slugs, testimonials) take the site key and filter on `site`. The seed posts in `src/data/blog-posts.ts` are group-only (blog list fallback, post fallback, `generateStaticParams`, sitemap).
+
+Admin site filter (task 0.7): leads, blog, gallery and testimonials lists take `?site=<key>` (no value = all sites) via `SiteFilter` (`components/admin/SiteFilter.tsx`, which also exports `SiteSelect` for create forms); rows show a `SiteBadge`. Creating a blog post, gallery photo or testimonial picks the site (default `group`). Dashboard counts are totals across all sites. Readable names for all 7 keys: `src/sites/names.ts`.
 
 Route tree (task 0.5):
 
@@ -50,7 +56,7 @@ SEO (task 0.6): pages and JSON-LD build absolute URLs from the active site's `or
 
 | Path | What |
 | --- | --- |
-| `src/sites/` | Site config (task 0.3): `types.ts`, `domains.ts` (host → key, no imports), `keys.ts` (`SITE_KEYS`, `isSiteKey`; used by the proxy), `group.ts` (group values), `index.ts` (`getSite`, `findSite`, `ALL_SITES`, `isSiteKey`; also loaded by the proxy for `config.pages`), `params.ts` (`siteFromParams`, `SiteParams`), `theme-vars.ts` (theme → `:root` CSS). Unit site files are not created yet |
+| `src/sites/` | Site config (task 0.3): `types.ts`, `domains.ts` (host → key, no imports), `keys.ts` (`SITE_KEYS`, `isSiteKey`; used by the proxy), `group.ts` (group values), `index.ts` (`getSite`, `findSite`, `ALL_SITES`, `isSiteKey`; also loaded by the proxy for `config.pages`), `params.ts` (`siteFromParams`, `SiteParams`), `theme-vars.ts` (theme → `:root` CSS), `names.ts` (`SITE_NAMES` and `SITE_OPTIONS` for all 7 keys, `siteName`, `parseSiteFilter`; used by the admin panel). Unit site files are not created yet |
 | `src/lib/seo.ts` | `siteMetadata` (site-wide metadata), `siteUrl` (absolute URL on the site's origin), `isPreview` |
 | `src/components/seo/` | JSON-LD components (all take `site`); `schema-parts.ts` holds the shared address, geo and phone parts |
 | `src/lib/constants.ts` | Re-exports `SITE_URL`, `COMPANY`, `NAV_LINKS`, `FOOTER`, `SEO` from `src/sites/group.ts`. Still defines `BRANCHES`, `PRODUCTS`, `MATERIALS`, `INDUSTRIES`, `HOME_SECTIONS`, `DESIGN_TOKENS`, `GALLERY_CATEGORIES` |
@@ -59,7 +65,9 @@ SEO (task 0.6): pages and JSON-LD build absolute URLs from the active site's `or
 | `src/components/layout/SiteChrome.tsx` | Navbar, main, Footer, WhatsApp button, page tracker (server component; used by `[site]/(chrome)/layout.tsx` and `[site]/not-found.tsx`) |
 | `src/components/status/` | 404, error and loading views shared by the root and `[site]` route files |
 | `src/lib/supabase/` | Clients (server, browser, anon, route), queries, server actions, `schema.sql`, `migrations/` |
-| `src/lib/email.ts` | Resend HTML templates; the orange header uses `group.theme.brand` |
+| `src/lib/email.ts` | Resend HTML templates; every template takes the active `SiteConfig` (header colours `theme.brand` / `theme.brandForeground`, name, footer origin, phone, email) and escapes every value. Lead notifications (`buildContactEmailHtml`, `buildQuoteEmailHtml`) show the site key and the page; `buildCustomerReplyEmail` is the customer confirmation. Also `whatsappUrl` (used by client components, so no env reads here) |
+| `src/lib/leads.ts` | Server-only lead helpers: `leadEmailRecipient`, `leadReference`, `sendLeadEmails` (notification + auto-reply, never throws), `serviceUnavailableResponse` (503 with the site's WhatsApp and phone) |
+| `src/lib/site-from-request.ts` | `siteFromRequest` (the `x-site` header → `SiteConfig`) and `unknownSiteResponse` (400) for API routes |
 | `src/lib/admin.ts` | `ADMIN_EMAILS` allow-list check |
 | `src/app/globals.css` | Tailwind v4 theme. Token classes point at CSS variables. Group brand defaults are in `src/sites/theme.css` |
 | `public/` | Only files the code uses (cleaned 2026-10-10): product images (`products/<slug>.webp`, loaded by slug), 3 gallery photos, `og-image.jpg`, the brochure PDF and its images (`brochure/img/`), brochure fonts (`fonts/canva/`). The logo is **not** a file: it is the client's official artwork drawn inline in `components/layout/Logo.tsx`; browser icons are `src/app/icon.svg`, `icon.png`, `apple-icon.png` |
@@ -70,7 +78,7 @@ SEO (task 0.6): pages and JSON-LD build absolute URLs from the active site's `or
 - **Colours:** public pages use theme tokens (`bg-brand`, `text-brand-text`, `var(--brand)`, and the rest of the table in `04-architecture.md` → Theming). `#E8521A` and `#FF6B35` remain only in `src/sites/` (the group defaults), `brochure/` and `admin/`. The logo flame in `Logo.tsx` stays `#E84512`. WhatsApp stays `#25D366`.
 - **Brand name:** "Jai Shree" appears in 62 files (copy, metadata, schema, emails).
 - **Static metadata:** site-wide metadata now comes from the config (task 0.6), but each page still exports the group's titles, descriptions and keywords as page copy (unit copy comes in Phase 1+).
-- **Origin:** `group.origin` = `NEXT_PUBLIC_SITE_URL` or `https://www.jaishreegroup.com` (confirmed by the client; older docs saying `.in` are wrong). Pages, sitemap, robots and JSON-LD use the active site's `origin`. `src/lib/email.ts` and the lead APIs still use `COMPANY` (task 0.7).
+- **Origin:** `group.origin` = `NEXT_PUBLIC_SITE_URL` or `https://www.jaishreegroup.com` (confirmed by the client; older docs saying `.in` are wrong). Pages, sitemap, robots and JSON-LD use the active site's `origin`. Since task 0.7, `src/lib/email.ts` and the lead APIs use the active site's config too.
 - **Proxy:** renamed to `src/proxy.ts` (task 0.2, 2026-10-11).
 - **3D and canvas:** `ProductViewer3D`, `DimpleSheet3D` and `MagneticHexBackground` read `--brand` at runtime with `getComputedStyle`.
 
@@ -82,7 +90,8 @@ SEO (task 0.6): pages and JSON-LD build absolute URLs from the active site's `or
 | `paper-industry` and `agriculture` in `INDUSTRIES` with no detail pages | `constants.ts`, `data/industries.ts` |
 | `/clients` not in nav or footer | `constants.ts` `NAV_LINKS` |
 | Calculator results have no quote link | `components/calculator/` |
-| API routes log request bodies (possible personal data in Vercel logs) | `app/api/*` |
+| ~~API routes log request bodies~~ — fixed in task 0.7: only lead ids and errors are logged | `app/api/*` |
+| `revalidatePath("/gallery")`, `("/blog")`, `("/clients")` in admin actions name the visible URL. Since task 0.5 the pages live at `/<site>/…`, and the Next docs (`revalidatePath` → "Using revalidatePath with rewrites") say the destination path is needed, so these calls probably no longer refresh the public pages; they still refresh within the hourly `revalidate`. Not tested | `src/lib/supabase/actions.ts` |
 | No privacy policy or terms pages | — |
 | No Google Analytics (only the Supabase page-view tracker) | — |
 | White-on-orange buttons are 3.7:1 contrast | Group theme (see `03-sites.md`) |

@@ -23,7 +23,9 @@ export const metadata: Metadata = {
 
 export default async function BlogIndexPage({ params }: SiteParams) {
   const site = await siteFromParams(params);
-  const dbPosts = await getPublishedBlogPosts();
+  const dbPosts = await getPublishedBlogPosts(site.key);
+  // The seed posts in src/data/blog-posts.ts belong to the group site only.
+  const seedPosts = site.key === "group" ? BLOG_POSTS : [];
   const posts =
     dbPosts.length > 0
       ? dbPosts.map((p) => ({
@@ -34,7 +36,7 @@ export default async function BlogIndexPage({ params }: SiteParams) {
           date: p.published_at ?? p.created_at,
           cover_image_url: p.cover_image_url,
         }))
-      : BLOG_POSTS.map((p) => ({
+      : seedPosts.map((p) => ({
           slug: p.slug,
           title: p.title,
           excerpt: p.excerpt,

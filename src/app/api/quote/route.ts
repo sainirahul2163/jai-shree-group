@@ -1,69 +1,62 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 
-import { whatsappUrl } from "@/lib/email";
-import { COMPANY } from "@/lib/constants";
+import { buildQuoteEmailHtml, productNames, whatsappUrl } from "@/lib/email";
+import {
+  leadReference,
+  sendLeadEmails,
+  serviceUnavailableResponse,
+  str,
+} from "@/lib/leads";
+import { siteFromRequest, unknownSiteResponse } from "@/lib/site-from-request";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 
 export async function POST(request: Request) {
   try {
-    if (!isSupabaseConfigured()) {
-      return NextResponse.json(
-        {
-          error: "Service temporarily unavailable.",
-          message: "Please contact us directly via WhatsApp or phone.",
-          whatsapp: "https://wa.me/919370606017",
-          phone: "+91 9370606017",
-        },
-        { status: 503 }
-      );
+    const site = await siteFromRequest();
+    if (!site) return unknownSiteResponse();
+
+    if (!isSupabaseConfigured() || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      return serviceUnavailableResponse(site);
     }
 
-    const body = await request.json();
-    console.log("Quote form received:", body);
-
-    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      return NextResponse.json(
-        {
-          error: "Service temporarily unavailable.",
-          message: "Please contact us directly via WhatsApp or phone.",
-          whatsapp: "https://wa.me/919370606017",
-          phone: "+91 9370606017",
-        },
-        { status: 503 }
-      );
-    }
+    const raw: unknown = await request.json();
+    const body = (raw && typeof raw === "object" ? raw : {}) as Record<
+      string,
+      unknown
+    >;
 
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY
     );
 
-    const {
-      name,
-      phone,
-      email,
-      companyName,
-      city,
-      products,
-      material,
-      thickness,
-      quantity,
-      quantityUnit,
-      deadline,
-      additionalRequirements,
-      customComponentNote,
-      sendWhatsApp,
-    } = body;
+    const name = str(body.name);
+    const phone = str(body.phone);
+    const email = str(body.email);
+    const companyName = str(body.companyName);
+    const city = str(body.city);
+    const material = str(body.material);
+    const thickness = str(body.thickness);
+    const quantity = str(body.quantity);
+    const quantityUnit = str(body.quantityUnit);
+    const deadline = str(body.deadline);
+    const additionalRequirements = str(body.additionalRequirements);
+    const customComponentNote = str(body.customComponentNote);
+    const sendWhatsApp = body.sendWhatsApp === true;
 
-    const productsSelected = Array.isArray(products) ? products : [];
+    const productsSelected = Array.isArray(body.products)
+      ? body.products.map(str).filter(Boolean)
+      : [];
     const quantityLabel =
       quantity && quantityUnit ? `${quantity} ${quantityUnit}` : quantity || null;
+    const sourcePage =
+      request.headers.get("referer")?.split("?")[0] ?? "/get-quote";
 
     const { data, error } = await supabase
       .from("leads")
       .insert({
+        site: site.key,
         name: name || "Unknown",
         phone: phone || "Unknown",
         email: email || null,
@@ -86,70 +79,72 @@ export async function POST(request: Request) {
           custom_component_note: customComponentNote || null,
         },
         source: "quote_form",
-        source_page:
-          request.headers.get("referer")?.split("?")[0] ?? "/get-quote",
+        source_page: sourcePage,
         status: "new",
       })
-      .select();
+      .select("id")
+      .single();
 
-    if (error) {
-      console.error("Supabase insert error:", error);
+    if (error || !data) {
+      console.error("Supabase insert error:", error?.message);
       return NextResponse.json(
-        { success: false, error: error.message },
+        { success: false, error: error?.message ?? "Insert failed" },
         { status: 500 }
       );
     }
 
-    console.log("Lead saved:", data);
+    const leadId: string = data.id;
+    console.info("Lead saved:", leadId, site.key);
 
-    try {
-      if (process.env.RESEND_API_KEY) {
-        const resend = new Resend(process.env.RESEND_API_KEY);
-        await resend.emails.send({
-          from:
-            process.env.RESEND_FROM ??
-            "Jai Shree Group Website <onboarding@resend.dev>",
-          to:
-            process.env.CONTACT_EMAIL ??
-            process.env.RESEND_TO ??
-            COMPANY.email,
-          replyTo: email || undefined,
-          subject: `Quote Request from ${name}`,
-          html: `
-            <h2>New Quote Request</h2>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Phone:</strong> ${phone}</p>
-            <p><strong>Email:</strong> ${email || "Not provided"}</p>
-            <p><strong>Company:</strong> ${companyName || "Not provided"}</p>
-            <p><strong>City:</strong> ${city || "Not provided"}</p>
-            <p><strong>Products:</strong> ${productsSelected.join(", ") || "Not specified"}</p>
-            <p><strong>Material:</strong> ${material || "Not specified"}</p>
-            <p><strong>Thickness:</strong> ${thickness || "Not specified"}</p>
-            <p><strong>Quantity:</strong> ${quantityLabel || "Not specified"}</p>
-            <p><strong>Deadline:</strong> ${deadline || "Not specified"}</p>
-            <p><strong>Additional requirements:</strong> ${additionalRequirements || "None"}</p>
-            <p><strong>Custom component note:</strong> ${customComponentNote || "None"}</p>
-            <p><strong>Lead ID:</strong> ${data?.[0]?.id ?? "N/A"}</p>
-          `,
-        });
-      }
-    } catch (emailErr) {
-      console.error("Email failed (non-critical):", emailErr);
-    }
+    await sendLeadEmails({
+      site,
+      leadId,
+      subject: `${site.name}: quote request from ${name || "Unknown"}`,
+      html: buildQuoteEmailHtml(
+        { site, page: sourcePage, leadId },
+        {
+          products: productsSelected,
+          material,
+          thickness,
+          quantity: quantityLabel ?? "",
+          deadline,
+          additionalRequirements,
+          customComponentNote,
+          name,
+          companyName,
+          phone,
+          email,
+          city,
+          sendWhatsApp,
+        }
+      ),
+      customer: { name: name || "Customer", email },
+      reply: {
+        kind: "quote",
+        details: [
+          ["Products", productNames(productsSelected).join(", ")],
+          ["Material", material],
+          ["Thickness", thickness],
+          ["Quantity", quantityLabel ?? ""],
+          ["Deadline", deadline.charAt(0).toUpperCase() + deadline.slice(1)],
+          ["Additional requirements", additionalRequirements],
+          ["Custom component note", customComponentNote],
+        ],
+      },
+    });
 
-    const waNumber =
-      process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? COMPANY.whatsapp;
     const waMessage = `Hi, I need a quote for: ${productsSelected.join(", ")}. Material: ${material}, Thickness: ${thickness}. Contact: ${name}, ${phone}`;
 
     return NextResponse.json({
       success: true,
-      leadId: data?.[0]?.id,
+      leadId,
+      reference: leadReference(leadId),
       whatsappUrl: sendWhatsApp
-        ? whatsappUrl(waNumber, waMessage)
+        ? whatsappUrl(site.contact.whatsapp, waMessage)
         : undefined,
     });
   } catch (err) {
-    console.error("API route error:", err);
+    console.error("API route error:", err instanceof Error ? err.message : err);
     return NextResponse.json(
       { success: false, error: "Server error" },
       { status: 500 }

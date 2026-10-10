@@ -80,14 +80,16 @@ function sitemapEntries(site: SiteConfig, now: Date): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const blogPages: MetadataRoute.Sitemap = pages.has("/blog")
-    ? BLOG_POSTS.map((post) => ({
-        url: siteUrl(site, `/blog/${post.slug}`),
-        lastModified: now,
-        changeFrequency: "monthly",
-        priority: 0.6,
-      }))
-    : [];
+  // The seed posts (BLOG_POSTS) belong to the group site only.
+  const blogPages: MetadataRoute.Sitemap =
+    pages.has("/blog") && site.key === "group"
+      ? BLOG_POSTS.map((post) => ({
+          url: siteUrl(site, `/blog/${post.slug}`),
+          lastModified: now,
+          changeFrequency: "monthly",
+          priority: 0.6,
+        }))
+      : [];
 
   return [
     ...staticPages,

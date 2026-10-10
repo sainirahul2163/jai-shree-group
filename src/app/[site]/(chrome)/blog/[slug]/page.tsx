@@ -14,14 +14,22 @@ import {
   getAllBlogSlugs,
   getBlogPostBySlug,
 } from "@/lib/supabase/queries";
+import { findSite } from "@/sites";
 import { siteFromParams } from "@/sites/params";
+import type { SiteConfig } from "@/sites/types";
 
 type PageProps = {
   params: Promise<{ site: string; slug: string }>;
 };
 
-function resolvePost(slug: string, dbPost: Awaited<ReturnType<typeof getBlogPostBySlug>>) {
-  const staticPost = getStaticBlogPost(slug);
+function resolvePost(
+  site: SiteConfig,
+  slug: string,
+  dbPost: Awaited<ReturnType<typeof getBlogPostBySlug>>
+) {
+  // The seed posts in src/data/blog-posts.ts belong to the group site only.
+  const staticPost =
+    site.key === "group" ? getStaticBlogPost(slug) : undefined;
   if (!dbPost && !staticPost) return null;
 
   const title = dbPost?.title ?? staticPost!.title;
@@ -33,7 +41,7 @@ function resolvePost(slug: string, dbPost: Awaited<ReturnType<typeof getBlogPost
   const metaTitle =
     dbPost?.meta_title?.trim() ||
     staticPost?.meta_title ||
-    `${title} | Jai Shree Group Blog`;
+    `${title} | ${site.name} Blog`;
   const metaDescription =
     dbPost?.meta_description?.trim() ||
     staticPost?.meta_description ||
@@ -52,9 +60,16 @@ function resolvePost(slug: string, dbPost: Awaited<ReturnType<typeof getBlogPost
   };
 }
 
-export async function generateStaticParams() {
-  const dbSlugs = await getAllBlogSlugs();
-  const constantSlugs = BLOG_POSTS.map((p) => p.slug);
+export async function generateStaticParams({
+  params,
+}: {
+  params: { site: string };
+}) {
+  const site = findSite(params.site);
+  if (!site) return [];
+  const dbSlugs = await getAllBlogSlugs(site.key);
+  const constantSlugs =
+    site.key === "group" ? BLOG_POSTS.map((p) => p.slug) : [];
   const slugs = [...new Set([...dbSlugs, ...constantSlugs])];
   return slugs.map((slug) => ({ slug }));
 }
@@ -64,8 +79,8 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const site = await siteFromParams(params);
-  const dbPost = await getBlogPostBySlug(slug);
-  const post = resolvePost(slug, dbPost);
+  const dbPost = await getBlogPostBySlug(site.key, slug);
+  const post = resolvePost(site, slug, dbPost);
   if (!post) return {};
 
   return {
@@ -86,8 +101,8 @@ export async function generateMetadata({
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
   const site = await siteFromParams(params);
-  const dbPost = await getBlogPostBySlug(slug);
-  const post = resolvePost(slug, dbPost);
+  const dbPost = await getBlogPostBySlug(site.key, slug);
+  const post = resolvePost(site, slug, dbPost);
 
   if (!post) {
     notFound();

@@ -58,10 +58,10 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 - [x] JSON-LD (`components/seo/*`) reads the site config.
 
 0.7 **Data and leads**
-- [ ] Supabase migration: `site` column and per-site blog slug index (`04-architecture.md` → Data).
-- [ ] APIs save `site` and email `config.leadEmail`; `LEAD_EMAIL_OVERRIDE` works.
-- [ ] Customer auto-reply with reference number.
-- [ ] Admin site filter on leads, blog, gallery, testimonials.
+- [x] Supabase migration: `site` column and per-site blog slug index (`04-architecture.md` → Data).
+- [x] APIs save `site` and email `config.leadEmail`; `LEAD_EMAIL_OVERRIDE` works. (Recipient order checked in code with a stubbed Resend call; no real email sent: no Resend key in this folder.)
+- [x] Customer auto-reply with reference number. (Reference shown in the contact and quote success states; auto-reply checked with a stubbed Resend call, not delivered.)
+- [ ] Admin site filter on leads, blog, gallery, testimonials. (Built, type-checked and in the build; not yet opened while logged in as admin.)
 
 0.8 **Shared upgrades**
 - [ ] Privacy policy and terms page templates (content per site from config; follow India's Digital Personal Data Protection Act 2023 — get the wording reviewed).

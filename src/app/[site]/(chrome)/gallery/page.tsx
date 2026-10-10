@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 export default async function Gallery({ params }: SiteParams) {
   const site = await siteFromParams(params);
-  const items = await getPublishedGalleryItems();
+  const items = await getPublishedGalleryItems(site.key);
 
   return (
     <>

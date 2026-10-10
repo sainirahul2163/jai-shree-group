@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { LeadsTable } from "@/components/admin/LeadsTable";
 import { createServerClient } from "@/lib/supabase/server";
+import { parseSiteFilter } from "@/sites/names";
 import type { LeadStatus } from "@/types/database";
 
 export const metadata = {
@@ -11,6 +12,7 @@ export const metadata = {
 type SearchParams = Promise<{
   q?: string;
   status?: string;
+  site?: string;
   page?: string;
 }>;
 
@@ -22,6 +24,7 @@ export default async function AdminLeadsPage({
   const params = await searchParams;
   const query = params.q ?? "";
   const status = params.status ?? "all";
+  const site = parseSiteFilter(params.site);
   const page = Number(params.page ?? "1");
   const perPage = 20;
   const offset = (page - 1) * perPage;
@@ -33,6 +36,9 @@ export default async function AdminLeadsPage({
     .order("created_at", { ascending: false })
     .range(offset, offset + perPage - 1);
 
+  if (site) {
+    dbQuery = dbQuery.eq("site", site);
+  }
   if (status !== "all") {
     dbQuery = dbQuery.eq("status", status as LeadStatus);
   }
@@ -58,6 +64,7 @@ export default async function AdminLeadsPage({
         leads={leads ?? []}
         query={query}
         status={status}
+        site={site}
         page={page}
         totalPages={totalPages}
       />

@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Check, ExternalLink, Search, Trash2, Upload, X } from "lucide-react";
 
+import { SiteBadge } from "@/components/admin/SiteBadge";
+import { SiteFilter, SiteSelect } from "@/components/admin/SiteFilter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -26,6 +28,7 @@ import {
 } from "@/lib/supabase/actions";
 import { createClient } from "@/lib/supabase/client";
 import { GALLERY_CATEGORIES } from "@/lib/constants";
+import type { SiteKey } from "@/sites/types";
 import type { GalleryItem } from "@/types/database";
 
 const DEFAULT_CATEGORY = GALLERY_CATEGORIES[0].slug;
@@ -46,7 +49,13 @@ type Status =
   | { kind: "ok"; message: string }
   | { kind: "error"; message: string };
 
-export function GalleryAdminClient({ items }: { items: GalleryItem[] }) {
+export function GalleryAdminClient({
+  items,
+  site,
+}: {
+  items: GalleryItem[];
+  site: SiteKey | null;
+}) {
   const [drafts, setDrafts] = useState<Record<string, Draft>>({});
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [search, setSearch] = useState("");
@@ -57,6 +66,7 @@ export function GalleryAdminClient({ items }: { items: GalleryItem[] }) {
 
   // Upload form
   const [showUpload, setShowUpload] = useState(false);
+  const [uploadSite, setUploadSite] = useState<SiteKey>("group");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState<string>(DEFAULT_CATEGORY);
@@ -177,6 +187,7 @@ export function GalleryAdminClient({ items }: { items: GalleryItem[] }) {
 
     run(`Uploaded “${title}”`, async () => {
       await saveGalleryItem({
+        site: uploadSite,
         image_url: urlData.publicUrl,
         title,
         description,
@@ -236,6 +247,7 @@ export function GalleryAdminClient({ items }: { items: GalleryItem[] }) {
           </p>
         </div>
         <div className="flex gap-2">
+          <SiteFilter value={site} />
           <Button
             variant="outline"
             className="border-[#2A2A2A]"
@@ -306,6 +318,14 @@ export function GalleryAdminClient({ items }: { items: GalleryItem[] }) {
                 onChange={(e) => setTitle(e.target.value)}
                 className="mt-1.5 border-[#2A2A2A] bg-[#0A0A0A]"
                 required
+              />
+            </div>
+            <div>
+              <Label>Site</Label>
+              <SiteSelect
+                value={uploadSite}
+                onChange={setUploadSite}
+                className="mt-1.5 border-[#2A2A2A] bg-[#0A0A0A]"
               />
             </div>
             <div>
@@ -517,6 +537,7 @@ export function GalleryAdminClient({ items }: { items: GalleryItem[] }) {
                 </div>
 
                 <div className="space-y-3 p-4">
+                  <SiteBadge site={item.site} />
                   <div>
                     <Label className="text-xs">Title</Label>
                     <Input

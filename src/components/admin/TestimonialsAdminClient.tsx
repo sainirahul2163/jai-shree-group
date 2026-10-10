@@ -3,6 +3,8 @@
 import { useState, useTransition } from "react";
 import { Star } from "lucide-react";
 
+import { SiteBadge } from "@/components/admin/SiteBadge";
+import { SiteFilter, SiteSelect } from "@/components/admin/SiteFilter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,13 +14,17 @@ import {
   saveTestimonial,
   updateTestimonial,
 } from "@/lib/supabase/actions";
+import type { SiteKey } from "@/sites/types";
 import type { Testimonial } from "@/types/database";
 
 export function TestimonialsAdminClient({
   testimonials,
+  site,
 }: {
   testimonials: Testimonial[];
+  site: SiteKey | null;
 }) {
+  const [newSite, setNewSite] = useState<SiteKey>("group");
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
   const [industry, setIndustry] = useState("");
@@ -30,6 +36,7 @@ export function TestimonialsAdminClient({
     e.preventDefault();
     startTransition(async () => {
       await saveTestimonial({
+        site: newSite,
         client_name: name,
         company_name: company,
         industry,
@@ -48,7 +55,10 @@ export function TestimonialsAdminClient({
 
   return (
     <div className="space-y-8">
-      <h2 className="text-2xl font-black">Testimonials</h2>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h2 className="text-2xl font-black">Testimonials</h2>
+        <SiteFilter value={site} />
+      </div>
 
       <form
         onSubmit={handleAdd}
@@ -57,6 +67,14 @@ export function TestimonialsAdminClient({
       >
         <h3 className="mb-4 font-bold">Add New Testimonial</h3>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div>
+            <Label>Site</Label>
+            <SiteSelect
+              value={newSite}
+              onChange={setNewSite}
+              className="mt-1.5 border-[#2A2A2A] bg-[#0A0A0A]"
+            />
+          </div>
           <div>
             <Label>Client Name</Label>
             <Input
@@ -118,7 +136,10 @@ export function TestimonialsAdminClient({
           >
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="font-bold">{t.client_name}</p>
+                <div className="flex items-center gap-2">
+                  <p className="font-bold">{t.client_name}</p>
+                  <SiteBadge site={t.site} />
+                </div>
                 <p className="text-sm" style={{ color: "#A0A0A0" }}>
                   {t.company_name} · {t.industry}
                 </p>

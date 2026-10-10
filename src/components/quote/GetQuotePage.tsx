@@ -98,6 +98,7 @@ export function GetQuotePage() {
     "idle" | "loading" | "success" | "error" | "unavailable"
   >("idle");
   const [waLink, setWaLink] = useState<string | undefined>();
+  const [reference, setReference] = useState<string | null>(null);
   const [stepError, setStepError] = useState<string | null>(null);
   const [precisionHintVisible, setPrecisionHintVisible] = useState(false);
   const [incompatMessage, setIncompatMessage] = useState<string | null>(null);
@@ -219,6 +220,7 @@ export function GetQuotePage() {
       }
       if (!res.ok) throw new Error(data.error);
       setWaLink(data.whatsappUrl);
+      setReference(typeof data.reference === "string" ? data.reference : null);
       setStatus("success");
     } catch {
       setStatus("error");
@@ -247,6 +249,14 @@ export function GetQuotePage() {
           <p className="mt-3 text-lg" style={{ color: "var(--text-secondary)" }}>
             We&apos;ll send your quote within 24 hours.
           </p>
+          {reference && (
+            <p className="mt-2 text-base" style={{ color: "var(--text-secondary)" }}>
+              Your reference:{" "}
+              <span className="font-semibold" style={{ color: "var(--foreground)" }}>
+                {reference}
+              </span>
+            </p>
+          )}
           {waLink && (
             <Button
               asChild
