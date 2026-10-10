@@ -41,10 +41,10 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 - [x] `group.origin` = `https://www.jaishreegroup.com` (confirmed by the client).
 
 0.4 **Theme tokens**
-- [ ] Add the CSS variables and `@theme inline` mapping to `globals.css` (`04-architecture.md` → Theming). Default values = today's group colours.
-- [ ] Replace hard-coded colours with token classes, one folder per commit: `layout/`, `shared/`, `home/`, `products/`, `industries/`, `calculator/`, `quote/`, `contact/`, `gallery/`, `group/`, `about/`, `clients/`, `certifications/`, `blog/`, `location/`, `landing/`, then `src/app/` pages.
-- [ ] Skip `brochure/` and `admin/` (out of scope).
-- [ ] Three.js and canvas components read `--brand` at runtime.
+- [x] Add the CSS variables and `@theme inline` mapping to `globals.css` (`04-architecture.md` → Theming). Default values = today's group colours.
+- [x] Replace hard-coded colours with token classes, one folder per commit: `layout/`, `shared/`, `home/`, `products/`, `industries/`, `calculator/`, `quote/`, `contact/`, `gallery/`, `group/`, `about/`, `clients/`, `certifications/`, `blog/`, `location/`, `landing/`, then `src/app/` pages.
+- [x] Skip `brochure/` and `admin/` (out of scope).
+- [x] Three.js and canvas components read `--brand` at runtime.
 
 0.5 **Route move**
 - [ ] Move public routes into `src/app/[site]/`. Keep `admin/` and `api/` at the root.

@@ -4,6 +4,7 @@ Newest first. Add a row whenever scope, a site, or a rule changes. "Assumption" 
 
 | Date | Decision | Why | Status |
 | --- | --- | --- | --- |
+| 2026-10-11 | Logo flame stays `#E84512` (the client's artwork). It is not remapped to `brand-hover`. Group brand hex defaults live in `src/sites/theme.css` so the rest of `src/` can use tokens | Mapping `#E84512` → `#FF6B35` would change the logo. The acceptance grep allows `#E8521A` / `#FF6B35` only under `src/sites/`, brochure and admin | Decided |
 | 2026-10-10 | `public/` keeps only files the code uses (92 → 38 files, 30 MB → 14 MB). Removed: 20 unused logo files (the site uses the client's logo inline in `Logo.tsx`), Next.js starter SVGs, the 2022 brochure PDF, 30 brochure photos not on any page, one unused gallery photo, a stale README | Keep the folder clean for building; deleted files stay in git history (commit `d379076`) | Done |
 | 2026-10-10 | No more client questions before building; missing data uses fallbacks in `08-content-checklist.md` | Agency decision | Decided |
 | 2026-10-07 | Client approved the questionnaire (Kanishq Jangid). Final unit focus: Bhayander = expanded metal + CNC and mechanical punching; Palghar = mechanical punching only; Masjid Bunder = godown, ready stock only; Shree Weld Mesh = welded mesh only | Client answers (`client/answers-2026-10-07.md`) | Decided — replaces the 2026-10-05 mapping assumption |

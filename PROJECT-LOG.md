@@ -62,7 +62,7 @@ Status: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 | Baseline screenshots of every main-site page | ✅ 80 screenshots + heads + SEO files; guide `docs/research/baseline.md` |
 | `middleware.ts` → `proxy.ts` | ✅ |
 | Site config per site (`src/sites/`) | ✅ group only; six unit configs not created yet |
-| Colour tokens replace ~1,400 hard-coded colours | ⏳ |
+| Colour tokens replace ~1,400 hard-coded colours | ✅ |
 | Pages move under `src/app/[site]/`; domain-based routing | ⏳ |
 | Per-site SEO: metadata, sitemap, robots, structured data | ⏳ |
 | `site` column on leads/blog/gallery/testimonials/page views; leads emailed to each unit; admin site filter | ⏳ |
@@ -91,10 +91,10 @@ Unit logos, working hours, contact names, unit photos, client names, case studie
 
 ## 4. Current status
 
-**Where we are (2026-10-11):** Step 0 is live on jaishreegroup.com (deploy `5035e14`). Phase 0 tasks 0.1 (baseline), 0.2 (`proxy.ts`) and 0.3 (group site config in `src/sites/`) are done on `multi-site`. The six unit site configs are not created yet. Not pushed.
+**Where we are (2026-10-11):** Step 0 is live on jaishreegroup.com (deploy `5035e14`). Phase 0 tasks 0.1 (baseline), 0.2 (`proxy.ts`), 0.3 (group site config) and 0.4 (theme tokens) are done on `multi-site`. The six unit site configs are not created yet. Not pushed.
 
 **Next:**
-1. Phase 0.4 theme tokens.
+1. Phase 0.5 route move.
 
 **Open points:**
 - Welded mesh: the agency said on 2026-10-02 it was discontinued; the client's approved answers say Shree Weld Mesh makes it. We follow the client.
@@ -107,6 +107,7 @@ Newest first. One row per change. "Files" lists what changed (folder-relative).
 
 | Date | Change | Files | Why |
 | --- | --- | --- | --- |
+| 2026-10-11 | 0.4 Theme tokens. Public colours now use CSS variables (`bg-brand`, `text-brand-text`, `var(--brand)`, and the rest of the mapping). Defaults still match today's group colours. Brand hex lives in `src/sites/theme.css` and `src/sites/group.ts`. Brochure, admin, the logo flame (`#E84512`) and WhatsApp green are unchanged. Canvas components read `--brand` at runtime. Quick check of `/`, `/contact` and `/products/perforated-sheets` on a production build looks the same | `src/app/globals.css`, `src/sites/theme.css`, `src/components/` (except brochure and admin), `src/app/` public pages, `src/lib/email.ts`, `src/lib/constants.ts` | Phase 0 task 0.4 |
 | 2026-10-11 | Full 80-page screenshot compare now runs only once, at the Phase 0 acceptance before merging to `main`; all tasks before that use the quick 3-page check | `docs/05-build-plan.md` | User: the full compare per task is too slow |
 | 2026-10-11 | Reviewed Cursor's 0.3 (Claude): commit `e94663f` holds code and logs together; `src/sites/` matches the architecture doc; screenshot compare clean (47/80 at 0.00%, rest ≤ 0.16% in animated areas, no height changes). Fixed the 8 lint errors from the 0.1 screenshot scripts by ignoring `scripts/baseline/` in ESLint. Build plan: full 80-page screenshot compare only after 0.4, 0.5, 0.6 and before merging; quick 3-page check otherwise | `eslint.config.mjs`, `docs/05-build-plan.md` | Keep checks fast without losing safety |
 | 2026-10-11 | 0.3 Group site config: `src/sites/` types, domain map (no imports; unit domains except "New domain"; apex and www), and `group.ts` with today's COMPANY, nav, footer, SEO and globals.css colours. `constants.ts` re-exports those values. No component or page edits. Screenshot compare vs baseline: no height changes; non-zero pages are animation, map tiles or 3D canvas | `src/sites/`, `src/lib/constants.ts`, `docs/06-codebase-map.md`, `.gitignore` | Phase 0 task 0.3 |

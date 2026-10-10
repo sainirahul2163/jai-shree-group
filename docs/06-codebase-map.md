@@ -40,20 +40,20 @@ Also: `src/app/sitemap.ts`, `src/app/robots.ts`, `layout.tsx` (fonts, static met
 | `src/components/<feature>/` | One folder per page area: home (11), landing (14), products (6), admin (11), brochure (7), shared (6), layout (4), seo (4), ui (12 shadcn), and one each for about, calculator, quote, contact, gallery, group, industries, location, clients, certifications, blog |
 | `src/components/layout/SiteChrome.tsx` | Shows Navbar/Footer/WhatsApp/tracker except on `/admin`, `/landing`, `/brochure` |
 | `src/lib/supabase/` | Clients (server, browser, anon, route), queries, server actions, `schema.sql`, `migrations/` |
-| `src/lib/email.ts` | Resend HTML templates (orange header hard-coded) |
+| `src/lib/email.ts` | Resend HTML templates; the orange header uses `group.theme.brand` |
 | `src/lib/admin.ts` | `ADMIN_EMAILS` allow-list check |
-| `src/app/globals.css` | Tailwind v4 theme — fixed hex values today |
+| `src/app/globals.css` | Tailwind v4 theme. Token classes point at CSS variables. Group brand defaults are in `src/sites/theme.css` |
 | `public/` | Only files the code uses (cleaned 2026-10-10): product images (`products/<slug>.webp`, loaded by slug), 3 gallery photos, `og-image.jpg`, the brochure PDF and its images (`brochure/img/`), brochure fonts (`fonts/canva/`). The logo is **not** a file: it is the client's official artwork drawn inline in `components/layout/Logo.tsx`; browser icons are `src/app/icon.svg`, `icon.png`, `apple-icon.png` |
 | `scripts/` | Blog seeding, gallery image restyle pipeline (Python) |
 
 ## Hard-coded hotspots (what Phase 0 must change)
 
-- **Colours:** about 1,400 hex values in `src/`, with `#E8521A` alone appearing 348 times. Brand orange appears in 63 files; most are in `components/landing` (12 files), `components/home` (10), `components/admin` (7) and `components/products` (6). Mapping to tokens: `04-architecture.md` → Theming.
+- **Colours:** public pages use theme tokens (`bg-brand`, `text-brand-text`, `var(--brand)`, and the rest of the table in `04-architecture.md` → Theming). `#E8521A` and `#FF6B35` remain only in `src/sites/` (the group defaults), `brochure/` and `admin/`. The logo flame in `Logo.tsx` stays `#E84512`. WhatsApp stays `#25D366`.
 - **Brand name:** "Jai Shree" appears in 62 files (copy, metadata, schema, emails).
 - **Static metadata:** `src/app/layout.tsx` and each page export fixed `metadata` objects with the group's titles and keywords.
 - **Origin:** `SITE_URL` defaults to `https://www.jaishreegroup.com`, which the client confirmed is correct (older docs saying `.in` are wrong). Move it into the `group` site config.
 - **Proxy:** renamed to `src/proxy.ts` (task 0.2, 2026-10-11).
-- **3D and canvas:** `ProductViewer3D`, `DimpleSheet3D`, `MagneticHexBackground` set colours in JavaScript.
+- **3D and canvas:** `ProductViewer3D`, `DimpleSheet3D` and `MagneticHexBackground` read `--brand` at runtime with `getComputedStyle`.
 
 ## Known issues carried over
 

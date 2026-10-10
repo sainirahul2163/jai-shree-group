@@ -33,6 +33,22 @@ Cursor's own work diary for the Jai Shree Group multi-site build. **Cursor write
 
 ## Entries
 
+### 2026-10-11 — 0.4 Theme tokens
+
+- **Status:** ✅ done
+- **What I did:**
+  - Added the theme CSS variables and `@theme inline` mapping. Defaults are today's group colours.
+  - Replaced hard-coded colours with tokens, one folder per commit. Orange fills use `brand`, orange words and icons use `brand-text`, white text on an orange fill uses `brand-foreground`. `rgba(232,82,26,x)` became `color-mix` or a Tailwind opacity modifier.
+  - `ProductViewer3D`, `DimpleSheet3D` and `MagneticHexBackground` read `--brand` at runtime.
+  - Left brochure, admin, WhatsApp green (`#25D366`) and the logo flame (`#E84512`) alone.
+  - Moved the brand hex defaults into `src/sites/theme.css` so the acceptance grep stays clean. Email and `DESIGN_TOKENS` take the colour from `group.theme`.
+- **Files changed:** `src/app/globals.css`, `src/sites/theme.css`, public component folders, public `src/app` pages, `src/lib/email.ts`, `src/lib/constants.ts`, `docs/05-build-plan.md`, `docs/06-codebase-map.md`, `docs/decisions.md`, `PROJECT-LOG.md`, `CURSOR-LOG.md`
+- **Checks:** lint not run (this task asked for build, not lint) · build ✅ after every folder · screenshots: quick check only, no full compare. Production build on port 3000. `/` still shows the locked hero (white PERFORATED SHEET / MANUFACTURERS, orange SINCE 1970, orange hex grid, orange quote buttons with white text). `/contact` still shows orange phone and mail icons, the white WhatsApp line, and an orange Send Enquiry button. `/products/perforated-sheets` still shows the orange breadcrumb and orange quote button; the 3D canvas is present (850×440) and the FAQ opens. Computed `--brand` is `#e8521a`, quote and submit buttons are `rgb(232, 82, 26)` with white text, WhatsApp buttons are `rgb(37, 211, 102)`. Grep `#e8521a|#ff6b35` matches only `src/sites/`, brochure and admin.
+- **Commit:** folder commits, then this log commit. "0.4 Theme tokens: globals.css"; "0.4 Theme tokens: components/layout"; "0.4 Theme tokens: components/shared"; "0.4 Theme tokens: components/home"; "0.4 Theme tokens: components/products"; "0.4 Theme tokens: components/industries"; "0.4 Theme tokens: components/calculator"; "0.4 Theme tokens: components/quote"; "0.4 Theme tokens: components/contact"; "0.4 Theme tokens: components/gallery"; "0.4 Theme tokens: components/group"; "0.4 Theme tokens: components/about"; "0.4 Theme tokens: components/clients"; "0.4 Theme tokens: components/certifications"; "0.4 Theme tokens: components/blog"; "0.4 Theme tokens: components/location"; "0.4 Theme tokens: components/landing"; "0.4 Theme tokens: src/app"; "0.4 Theme tokens: src/lib". The landing commit was made after `src/lib` (it had been left uncommitted); the list above is the folder order. This entry is part of the final "0.4" log commit — no hash needed.
+- **Left to do in this task:** nothing
+- **Next task:** 0.5 Route move
+- **Questions / assumptions:** The logo flame stays `#E84512` so the client's artwork does not shift to `#FF6B35`. The hex-grid background image still has the orange baked into the SVG data URI (`%23E8521A`); CSS variables do not apply inside that image, and the grep does not match the encoded form. A one-off colour script was used and not committed.
+
 ### 2026-10-11 — 0.3 Site config
 
 - **Status:** ✅ done
