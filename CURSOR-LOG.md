@@ -33,4 +33,16 @@ Cursor's own work diary for the Jai Shree Group multi-site build. **Cursor write
 
 ## Entries
 
-_No entries yet. Building starts at Step 0 / Phase 0 in `docs/05-build-plan.md`._
+### 2026-10-11 — 0.2 Proxy rename
+
+- **Status:** ✅ done
+- **What I did:**
+  - Renamed `src/middleware.ts` to `src/proxy.ts` and the exported function from `middleware` to `proxy`, following the Next.js 16 proxy file convention. The admin gate logic and the `/admin/:path*` matcher are unchanged.
+- **Files changed:** `src/proxy.ts` (renamed from `src/middleware.ts`)
+- **Checks:** lint ❌ exit 1, but only the 12 existing errors (plus 6 warnings) in untouched files; nothing in `src/proxy.ts` · build ✅ · screenshots match baseline n.a. · other: logged out, `HEAD http://127.0.0.1:3000/admin/dashboard` returned 307 `location: /admin/login`; `/admin/login` returned 200. The dev log for the login request shows `proxy.ts` running.
+- **Commit:** `85f9286` "0.2 Rename middleware.ts to proxy.ts for Next.js 16"
+- **Left to do in this task:** nothing
+- **Next task:** 0.1 Baseline screenshots are still open (another session). After that, 0.3 Site config.
+- **Questions / assumptions:** `docs/06-codebase-map.md` still says the admin gate lives in `src/middleware.ts`. Left it, because this task said to change nothing else. `PROJECT-LOG.md` and `docs/05-build-plan.md` already had uncommitted "no fixed dates" edits; those are not in `85f9286`.
+
+

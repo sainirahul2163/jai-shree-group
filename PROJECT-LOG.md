@@ -12,7 +12,7 @@ The one file to check first. It holds **the goal, what is required, where we are
 
 Build **seven websites from one Next.js app**: the main Jai Shree Group site (jaishreegroup.com) plus one specialist site for each of the group's six manufacturing units. Each unit site shows only what that unit does, sends enquiries straight to that unit, and helps it get found on Google. Everything is managed from one admin panel. The live main site must keep working, unchanged, throughout.
 
-Target: all seven live in about 10 weeks from the start of Phase 0.
+No fixed dates. We work as fast as possible, **phase by phase, task by task**: a task starts only when the one before it passes its checks (user, 2026-10-11).
 
 ## 2. The seven sites (approved by the client, 2026-10-07)
 
@@ -60,7 +60,7 @@ Status: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 | Requirement | Status |
 | --- | --- |
 | Baseline screenshots of every main-site page | ⏳ |
-| `middleware.ts` → `proxy.ts` | ⏳ |
+| `middleware.ts` → `proxy.ts` | ✅ |
 | Site config per site (`src/sites/`) | ⏳ |
 | Colour tokens replace ~1,400 hard-coded colours | ⏳ |
 | Pages move under `src/app/[site]/`; domain-based routing | ⏳ |
@@ -91,10 +91,10 @@ Unit logos, working hours, contact names, unit photos, client names, case studie
 
 ## 4. Current status
 
-**Where we are (2026-10-11):** Step 0 is live on jaishreegroup.com (deploy `5035e14`, checked: new phones, holidays, unit products, no links to dead domains, map loads OpenStreetMap tiles). Vercel deploys automatically again on every push to `main`. `multi-site` has the Step 0 code merged; committed locally, not pushed. Building (Phase 0) has not started.
+**Where we are (2026-10-11):** Step 0 is live on jaishreegroup.com (deploy `5035e14`, checked: new phones, holidays, unit products, no links to dead domains, map loads OpenStreetMap tiles). Vercel deploys automatically again on every push to `main`. Phase 0 task 0.2 is done on `multi-site` (`85f9286`, not pushed): `src/middleware.ts` is now `src/proxy.ts`. Task 0.1 baseline screenshots are still in progress.
 
 **Next:**
-1. Phase 0.1 baseline screenshots of the live main site.
+1. Finish Phase 0.1 baseline screenshots, then Phase 0.3 site config.
 
 **Open points:**
 - Welded mesh: the agency said on 2026-10-02 it was discontinued; the client's approved answers say Shree Weld Mesh makes it. We follow the client.
@@ -107,6 +107,7 @@ Newest first. One row per change. "Files" lists what changed (folder-relative).
 
 | Date | Change | Files | Why |
 | --- | --- | --- | --- |
+| 2026-10-11 | Renamed `src/middleware.ts` to `src/proxy.ts` and the export to `proxy` (Next.js 16). Admin gate unchanged: logged-out `/admin/dashboard` returns 307 to `/admin/login`. Commit `85f9286`, not pushed | `src/proxy.ts` | Phase 0 task 0.2 |
 | 2026-10-11 | Step 0 is live. User reconnected Vercel to GitHub; pushed an empty commit `5035e14` to trigger the deploy; Vercel status success. Checked the live site: new phones, Sunday/Thursday holidays, Welded Mesh and Ready Stock on Our Group, no jaishreefiltration.com links, no old phones, map loads 9/9 OpenStreetMap tiles. The 2026-08-23/24 commits (hex hero background, brochure Industries pages) also went live with it. Only remaining "wire mesh" text is the 1970 history line (allowed) | `jai-shree-group` `main` | User asked to redeploy after reconnecting |
 | 2026-10-10 | Merged `main` (with Step 0) into `multi-site` (`d65a458`); build passes. Not pushed | `multi-site` branch | Keep the build branch on the latest live code |
 | 2026-10-10 | Committed Step 0 (`2f4daec`, author = GitHub no-reply email), fast-forwarded `main`, build passed, pushed to GitHub. **Not deployed**: no Vercel status on the commit; GitHub's last deployment record is 2026-08-02; live `/brochure/icons` (added 2026-08-24) is 404. Local Vercel CLI is logged in to TrackHive, which has no Jai Shree project | `jai-shree-group` `main` | User approved commit and push live |

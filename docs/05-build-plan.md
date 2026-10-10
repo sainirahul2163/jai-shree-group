@@ -2,7 +2,7 @@
 
 Work top to bottom. Tick boxes as you go and commit after each numbered task, so any step can be rolled back. A phase is done only when its acceptance checks pass.
 
-Estimated timeline: about 10 weeks — Phase 0 weeks 1–2, Phase 1 week 3, Phase 2 week 4, Phase 3 weeks 5–8, Phase 4 weeks 9–10. We do not wait for client content: gaps launch with the fallbacks in `08-content-checklist.md`.
+No fixed dates (user, 2026-10-11): we go as fast as possible, but strictly **phase by phase, task by task, in this file's order**. A task starts only when the previous one has passed its acceptance check and is logged. We do not wait for client content: gaps launch with the fallbacks in `08-content-checklist.md`.
 
 ## How we work (Cursor or Claude Code)
 
@@ -32,7 +32,7 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 - [ ] Save the current `sitemap.xml` and `robots.txt` output and the HTML `<head>` of `/`, `/products/perforated-sheets` and `/contact`.
 
 0.2 **Proxy rename**
-- [ ] Rename `src/middleware.ts` → `src/proxy.ts`, export `proxy`. Admin gate behaves exactly as before.
+- [x] Rename `src/middleware.ts` → `src/proxy.ts`, export `proxy`. Admin gate behaves exactly as before.
 
 0.3 **Site config**
 - [ ] Create `src/sites/` (`types.ts`, `domains.ts`, `index.ts`, `group.ts`) per `04-architecture.md`.
