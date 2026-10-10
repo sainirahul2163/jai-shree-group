@@ -57,7 +57,7 @@ export function GalleryLightbox({
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
       <DialogContent
         className="w-[calc(100%-2rem)] max-w-5xl border p-0 sm:max-w-5xl"
-        style={{ backgroundColor: "#0A0A0A", borderColor: "#2A2A2A" }}
+        style={{ backgroundColor: "var(--background)", borderColor: "var(--border)" }}
       >
         <DialogTitle className="sr-only">{item.title}</DialogTitle>
         <DialogDescription className="sr-only">
@@ -85,7 +85,7 @@ export function GalleryLightbox({
                 onClick={() => step(-1)}
                 aria-label="Previous photo"
                 className="absolute left-2 top-1/2 flex size-10 -translate-y-1/2 items-center justify-center rounded-full transition-opacity hover:opacity-80"
-                style={{ backgroundColor: "rgba(0,0,0,0.6)", color: "#FFFFFF" }}
+                style={{ backgroundColor: "rgba(0,0,0,0.6)", color: "var(--foreground)" }}
               >
                 <ChevronLeft className="size-5" />
               </button>
@@ -93,7 +93,7 @@ export function GalleryLightbox({
                 onClick={() => step(1)}
                 aria-label="Next photo"
                 className="absolute right-2 top-1/2 flex size-10 -translate-y-1/2 items-center justify-center rounded-full transition-opacity hover:opacity-80"
-                style={{ backgroundColor: "rgba(0,0,0,0.6)", color: "#FFFFFF" }}
+                style={{ backgroundColor: "rgba(0,0,0,0.6)", color: "var(--foreground)" }}
               >
                 <ChevronRight className="size-5" />
               </button>
@@ -103,14 +103,14 @@ export function GalleryLightbox({
 
         <div
           className="flex flex-wrap items-start justify-between gap-3 border-t px-5 py-4"
-          style={{ borderColor: "#2A2A2A" }}
+          style={{ borderColor: "var(--border)" }}
         >
           <div className="min-w-0">
-            <p className="font-semibold" style={{ color: "#FFFFFF" }}>
+            <p className="font-semibold" style={{ color: "var(--foreground)" }}>
               {item.title}
             </p>
             {item.description && (
-              <p className="mt-1 text-sm" style={{ color: "#A0A0A0" }}>
+              <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
                 {item.description}
               </p>
             )}
@@ -118,7 +118,7 @@ export function GalleryLightbox({
           {multiple && (
             <span
               className="shrink-0 text-xs tabular-nums"
-              style={{ color: "#666666" }}
+              style={{ color: "var(--text-muted)" }}
             >
               {(index ?? 0) + 1} / {items.length}
             </span>

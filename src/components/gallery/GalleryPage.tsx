@@ -34,19 +34,19 @@ function isWide(imageUrl: string) {
 function GalleryEmptyState() {
   return (
     <div className="col-span-full flex flex-col items-center justify-center py-24 text-center">
-      <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-[#2A2A2A] bg-[#1A1A1A]">
-        <Camera className="h-7 w-7 text-[#E8521A]" />
+      <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-border bg-surface-2">
+        <Camera className="h-7 w-7 text-brand-text" />
       </div>
-      <h3 className="mb-2 text-xl font-semibold text-white">
+      <h3 className="mb-2 text-xl font-semibold text-foreground">
         Product Photography Coming Soon
       </h3>
-      <p className="mb-8 max-w-sm text-sm text-[#A0A0A0]">
+      <p className="mb-8 max-w-sm text-sm text-text-secondary">
         We&apos;re documenting our manufacturing processes and product range.
         Check back soon for high-quality imagery.
       </p>
       <Link
         href="/products"
-        className="rounded-lg bg-[#E8521A] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#FF6B35]"
+        className="rounded-lg bg-brand px-6 py-3 font-semibold text-brand-foreground transition-colors hover:bg-brand-hover"
       >
         Explore Our Products →
       </Link>
@@ -76,7 +76,7 @@ export function GalleryPage({ items = [] }: GalleryPageProps) {
         subtitle="Explore our range of perforated sheets, laser cutting, expanded metal, and custom metal components."
       />
 
-      <section className="section-padding" style={{ backgroundColor: "#111111" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
         <div className="mx-auto max-w-7xl">
           <section className="mb-16">
             <div className="mb-6 flex items-center gap-3">
@@ -85,10 +85,10 @@ export function GalleryPage({ items = [] }: GalleryPageProps) {
                 3D Interactive Preview
               </span>
             </div>
-            <h2 className="mb-2 text-2xl font-black text-white">
+            <h2 className="mb-2 text-2xl font-black text-foreground">
               Dimple / Embossed Sheet
             </h2>
-            <p className="mb-6 max-w-lg text-sm text-[#666]">
+            <p className="mb-6 max-w-lg text-sm text-text-muted">
               Real-time 3D render of our embossed dimple sheet. Move your mouse
               to rotate and see the metallic reflections.
             </p>
@@ -108,8 +108,8 @@ export function GalleryPage({ items = [] }: GalleryPageProps) {
                 <TabsTrigger
                   key={filter.id}
                   value={filter.id}
-                  className="rounded-full border px-4 py-2 data-[state=active]:border-[#E8521A] data-[state=active]:bg-[rgba(232,82,26,0.15)] data-[state=active]:text-[#E8521A]"
-                  style={{ borderColor: "#2A2A2A", color: "#A0A0A0" }}
+                  className="rounded-full border px-4 py-2 data-[state=active]:border-brand data-[state=active]:bg-[color-mix(in_oklab,var(--brand)_15%,transparent)] data-[state=active]:text-brand-text"
+                  style={{ borderColor: "var(--border)", color: "var(--text-secondary)" }}
                 >
                   {filter.label}
                 </TabsTrigger>
@@ -132,8 +132,8 @@ export function GalleryPage({ items = [] }: GalleryPageProps) {
                             isWide(item.image_url) ? "sm:col-span-2" : ""
                           }`}
                           style={{
-                            backgroundColor: "#0A0A0A",
-                            borderColor: "#2A2A2A",
+                            backgroundColor: "var(--background)",
+                            borderColor: "var(--border)",
                           }}
                         >
                           <button
@@ -163,21 +163,21 @@ export function GalleryPage({ items = [] }: GalleryPageProps) {
                             >
                               <Expand
                                 className="size-6"
-                                style={{ color: "#FFFFFF" }}
+                                style={{ color: "var(--foreground)" }}
                               />
                             </span>
                           </button>
                           <div className="p-4">
                             <p
                               className="text-sm font-semibold"
-                              style={{ color: "#FFFFFF" }}
+                              style={{ color: "var(--foreground)" }}
                             >
                               {item.title}
                             </p>
                             {item.description && (
                               <p
                                 className="mt-1 text-xs"
-                                style={{ color: "#A0A0A0" }}
+                                style={{ color: "var(--text-secondary)" }}
                               >
                                 {item.description}
                               </p>
