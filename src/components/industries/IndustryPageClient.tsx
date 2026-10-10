@@ -30,7 +30,7 @@ export function IndustryPageClient({ industry }: IndustryPageClientProps) {
         subtitle={industry.headline}
       />
 
-      <section className="section-padding" style={{ backgroundColor: "#111111" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
         <div className="mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -39,15 +39,15 @@ export function IndustryPageClient({ industry }: IndustryPageClientProps) {
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <p className="text-base leading-relaxed" style={{ color: "#A0A0A0" }}>
+            <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
               {industry.description}
             </p>
             {industry.clients && (
               <p
                 className="mt-4 text-base leading-relaxed"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: "var(--foreground)" }}
               >
-                <span style={{ color: "#E8521A" }}>Key clients: </span>
+                <span style={{ color: "var(--brand-text)" }}>Key clients: </span>
                 {industry.clients}
               </p>
             )}
@@ -62,7 +62,7 @@ export function IndustryPageClient({ industry }: IndustryPageClientProps) {
           >
             <h2
               className="mb-6 text-2xl font-black"
-              style={{ color: "#FFFFFF" }}
+              style={{ color: "var(--foreground)" }}
             >
               Applications
             </h2>
@@ -72,15 +72,15 @@ export function IndustryPageClient({ industry }: IndustryPageClientProps) {
                   key={app}
                   className="flex items-start gap-3 rounded-lg border p-4"
                   style={{
-                    backgroundColor: "#0A0A0A",
-                    borderColor: "#2A2A2A",
+                    backgroundColor: "var(--background)",
+                    borderColor: "var(--border)",
                   }}
                 >
                   <Check
                     className="mt-0.5 size-5 shrink-0"
-                    style={{ color: "#E8521A" }}
+                    style={{ color: "var(--brand-text)" }}
                   />
-                  <span className="text-base" style={{ color: "#A0A0A0" }}>
+                  <span className="text-base" style={{ color: "var(--text-secondary)" }}>
                     {app}
                   </span>
                 </li>
@@ -90,11 +90,11 @@ export function IndustryPageClient({ industry }: IndustryPageClientProps) {
         </div>
       </section>
 
-      <section className="section-padding" style={{ backgroundColor: "#0A0A0A" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--background)" }}>
         <div className="mx-auto max-w-7xl">
           <h2
             className="mb-8 text-2xl font-black"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             Related Products
           </h2>
@@ -114,31 +114,31 @@ export function IndustryPageClient({ industry }: IndustryPageClientProps) {
                 >
                   <Link
                     href={`/products/${product.slug}`}
-                    className="group flex h-full flex-col rounded-xl border p-6 transition-all duration-300 hover:border-[#E8521A]"
+                    className="group flex h-full flex-col rounded-xl border p-6 transition-all duration-300 hover:border-brand"
                     style={{
-                      backgroundColor: "#111111",
-                      borderColor: "#2A2A2A",
+                      backgroundColor: "var(--surface)",
+                      borderColor: "var(--border)",
                     }}
                   >
                     <Icon
                       className="mb-4 size-10"
-                      style={{ color: "#E8521A" }}
+                      style={{ color: "var(--brand-text)" }}
                     />
                     <h3
                       className="text-lg font-bold"
-                      style={{ color: "#FFFFFF" }}
+                      style={{ color: "var(--foreground)" }}
                     >
                       {product.name}
                     </h3>
                     <p
                       className="mt-2 flex-1 text-base leading-relaxed"
-                      style={{ color: "#A0A0A0" }}
+                      style={{ color: "var(--text-secondary)" }}
                     >
                       {product.tagline}
                     </p>
                     <span
                       className="mt-4 inline-flex items-center text-sm font-semibold"
-                      style={{ color: "#E8521A" }}
+                      style={{ color: "var(--brand-text)" }}
                     >
                       View Product
                       <ArrowRight className="ml-1 size-4 transition-transform group-hover:translate-x-1" />
@@ -151,15 +151,15 @@ export function IndustryPageClient({ industry }: IndustryPageClientProps) {
         </div>
       </section>
 
-      <section className="section-padding" style={{ backgroundColor: "#111111" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
         <div className="mx-auto max-w-3xl text-center">
           <h2
             className="text-2xl font-black sm:text-3xl"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             Get Quote for {industry.name} Application
           </h2>
-          <p className="mt-4 text-base" style={{ color: "#A0A0A0" }}>
+          <p className="mt-4 text-base" style={{ color: "var(--text-secondary)" }}>
             Share your specifications and our team will provide a customized
             quote within 24 hours.
           </p>
