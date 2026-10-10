@@ -8,7 +8,7 @@ No fixed dates (user, 2026-10-11): we go as fast as possible, but strictly **pha
 
 - **One numbered task per chat.** Start each chat with: "Read AGENTS.md and docs/05-build-plan.md. Do task <number> only. Check it against its acceptance line, then stop."
 - **Small commits.** Commit after each task with a message that names the task ("0.4 Tokenise colours in components/home").
-- **Check before ticking.** Run `npm run lint` and `npm run build`. Screenshot check: the **full** 80-page compare (`docs/research/baseline.md`, ~10 minutes) only at the end of 0.4, 0.5, 0.6 and before merging Phase 0; for other tasks a **quick check** is enough — open `/`, `/contact` and `/products/perforated-sheets` on a production build and confirm they look right.
+- **Check before ticking.** Run `npm run lint` and `npm run build`. Screenshot check (user, 2026-10-11): the **full** 80-page compare (`docs/research/baseline.md`) runs **once**, at the Phase 0 acceptance before merging to `main`. Every task before that gets the **quick check** only: open `/`, `/contact` and `/products/perforated-sheets` on a production build and confirm they look right.
 - **Log it.** After each task, add a row to the Change log in `PROJECT-LOG.md` and update the requirement's status there.
 - **Keep docs true.** If a task changes structure, update `06-codebase-map.md`; if it changes a decision, add a row to `decisions.md`.
 - **Review gate.** At the end of each phase, run a code review (Claude Code `/code-review`) before merging to `main`.
