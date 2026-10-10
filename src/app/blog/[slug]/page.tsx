@@ -106,7 +106,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       />
       <section
         className="section-padding pt-28 md:pt-32"
-        style={{ backgroundColor: "#0A0A0A" }}
+        style={{ backgroundColor: "var(--background)" }}
       >
         <div className="mx-auto max-w-3xl">
           {post.coverUrl && (
@@ -121,19 +121,19 @@ export default async function BlogPostPage({ params }: PageProps) {
           )}
           <span
             className="text-xs font-semibold uppercase tracking-wider"
-            style={{ color: "#E8521A" }}
+            style={{ color: "var(--brand-text)" }}
           >
             {post.category}
           </span>
           <h1
             className="mt-4 text-3xl font-black sm:text-4xl"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             {post.title}
           </h1>
           <time
             className="mt-4 block text-sm"
-            style={{ color: "#666666" }}
+            style={{ color: "var(--text-muted)" }}
             dateTime={post.date}
           >
             {new Date(post.date).toLocaleDateString("en-IN", {
@@ -149,21 +149,21 @@ export default async function BlogPostPage({ params }: PageProps) {
             <>
               <p
                 className="mt-8 text-lg leading-relaxed"
-                style={{ color: "#A0A0A0" }}
+                style={{ color: "var(--text-secondary)" }}
               >
                 {post.excerpt}
               </p>
               <div
                 className="mt-12 rounded-xl border p-8 text-center"
                 style={{
-                  backgroundColor: "#111111",
-                  borderColor: "#2A2A2A",
+                  backgroundColor: "var(--surface)",
+                  borderColor: "var(--border)",
                 }}
               >
-                <p className="text-xl font-bold" style={{ color: "#FFFFFF" }}>
+                <p className="text-xl font-bold" style={{ color: "var(--foreground)" }}>
                   Coming Soon
                 </p>
-                <p className="mt-3 text-base" style={{ color: "#A0A0A0" }}>
+                <p className="mt-3 text-base" style={{ color: "var(--text-secondary)" }}>
                   Full article content is being prepared.
                 </p>
                 <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
@@ -173,7 +173,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                   <Button
                     asChild
                     variant="outline"
-                    className="border-[#2A2A2A] bg-transparent"
+                    className="border-border bg-transparent"
                   >
                     <Link href="/calculator">Open Area Calculator</Link>
                   </Button>
@@ -186,7 +186,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             asChild
             variant="link"
             className="mt-8 px-0"
-            style={{ color: "#E8521A" }}
+            style={{ color: "var(--brand-text)" }}
           >
             <Link href="/blog">← Back to Blog</Link>
           </Button>

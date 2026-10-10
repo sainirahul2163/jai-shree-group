@@ -54,16 +54,16 @@ export default async function BlogIndexPage() {
         title="Metal Manufacturing Insights"
         subtitle="Technical guides, product tutorials, and industry insights"
       />
-      <section className="section-padding" style={{ backgroundColor: "#111111" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-2">
           {posts.map((post) => (
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group flex flex-col overflow-hidden rounded-xl border transition-all hover:border-[#E8521A]"
+              className="group flex flex-col overflow-hidden rounded-xl border transition-all hover:border-brand"
               style={{
-                backgroundColor: "#0A0A0A",
-                borderColor: "#2A2A2A",
+                backgroundColor: "var(--background)",
+                borderColor: "var(--border)",
               }}
             >
               {post.cover_image_url && (
@@ -79,25 +79,25 @@ export default async function BlogIndexPage() {
               <div className="flex flex-col p-8">
                 <span
                   className="text-xs font-semibold uppercase tracking-wider"
-                  style={{ color: "#E8521A" }}
+                  style={{ color: "var(--brand-text)" }}
                 >
                   {post.category}
                 </span>
                 <h2
-                  className="mt-3 text-xl font-bold group-hover:text-[#E8521A]"
-                  style={{ color: "#FFFFFF" }}
+                  className="mt-3 text-xl font-bold group-hover:text-brand-text"
+                  style={{ color: "var(--foreground)" }}
                 >
                   {post.title}
                 </h2>
                 <p
                   className="mt-3 flex-1 text-base leading-relaxed"
-                  style={{ color: "#A0A0A0" }}
+                  style={{ color: "var(--text-secondary)" }}
                 >
                   {post.excerpt}
                 </p>
                 <time
                   className="mt-4 text-sm"
-                  style={{ color: "#666666" }}
+                  style={{ color: "var(--text-muted)" }}
                   dateTime={post.date}
                 >
                   {new Date(post.date).toLocaleDateString("en-IN", {

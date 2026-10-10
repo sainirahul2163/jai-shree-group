@@ -103,7 +103,7 @@ export default function RootLayout({
     >
       <body
         className="flex min-h-screen flex-col"
-        style={{ backgroundColor: "#0A0A0A", color: "#FFFFFF" }}
+        style={{ backgroundColor: "var(--background)", color: "var(--foreground)" }}
       >
         <GlobalSchema />
         <SiteChrome>{children}</SiteChrome>

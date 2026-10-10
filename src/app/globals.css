@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "../sites/theme.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -78,10 +79,7 @@
   --surface: #111111;
   --surface-2: #1a1a1a;
   --border: #2a2a2a;
-  --brand: #e8521a;
-  --brand-hover: #ff6b35;
   --brand-foreground: #ffffff;
-  --brand-text: #e8521a;
   --brand-glow: color-mix(in oklab, var(--brand) 30%, transparent);
   --text-secondary: #a0a0a0;
   --text-muted: #666666;
@@ -113,15 +111,15 @@
   }
 
   html {
-    background-color: #0a0a0a;
-    color: #ffffff;
+    background-color: var(--background);
+    color: var(--foreground);
     font-size: 17px;
     @apply scroll-smooth font-sans;
   }
 
   body {
-    background-color: #0a0a0a;
-    color: #ffffff;
+    background-color: var(--background);
+    color: var(--foreground);
     min-height: 100vh;
     line-height: 1.75;
     @apply antialiased;
@@ -134,7 +132,7 @@
   h5,
   h6 {
     font-family: var(--font-display);
-    color: #ffffff;
+    color: var(--foreground);
     @apply font-black tracking-tight;
   }
 }
@@ -142,34 +140,34 @@
 @layer utilities {
   .glow-orange {
     box-shadow:
-      0 0 20px rgba(232, 82, 26, 0.3),
-      0 0 40px rgba(232, 82, 26, 0.15);
+      0 0 20px color-mix(in oklab, var(--brand) 30%, transparent),
+      0 0 40px color-mix(in oklab, var(--brand) 15%, transparent);
   }
 
   .glow-orange-hover:hover {
     box-shadow:
-      0 0 24px rgba(232, 82, 26, 0.3),
-      0 0 48px rgba(232, 82, 26, 0.25);
+      0 0 24px color-mix(in oklab, var(--brand) 30%, transparent),
+      0 0 48px color-mix(in oklab, var(--brand) 25%, transparent);
   }
 
   .metallic-text {
-    background: linear-gradient(135deg, #ffffff 0%, #c0c0c0 100%);
+    background: linear-gradient(135deg, var(--foreground) 0%, var(--metallic) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
   .orange-gradient {
-    background: linear-gradient(135deg, #e8521a 0%, #ff6b35 100%);
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-hover) 100%);
   }
 
   .orange-gradient-text {
-    color: #e8521a;
+    color: var(--brand-text);
   }
 
   .surface-card {
-    background-color: #1a1a1a;
-    border: 1px solid #2a2a2a;
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
     @apply rounded-xl;
   }
 
@@ -194,7 +192,7 @@
   .nav-link-underline::after {
     content: "";
     @apply absolute bottom-0 left-0 h-0.5 w-0 transition-all duration-300 ease-out;
-    background-color: #e8521a;
+    background-color: var(--brand);
   }
 
   .nav-link-underline:hover::after {
@@ -250,12 +248,12 @@
   /* Outline type fills with white on row hover — fashion-house feel */
   .landing-marquee-text {
     color: transparent;
-    -webkit-text-stroke: 1px #2a2a2a;
+    -webkit-text-stroke: 1px var(--border);
     transition: color 0.4s ease;
   }
 
   .landing-marquee-row:hover .landing-marquee-text {
-    color: #fafafa;
+    color: var(--foreground);
   }
 
   @keyframes landing-marquee-left {
