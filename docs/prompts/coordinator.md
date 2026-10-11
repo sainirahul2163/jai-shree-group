@@ -54,6 +54,23 @@ For each task in `docs/05-build-plan.md`, in order:
 - Known follow-up for the first **light-theme** site: hard-coded neutral greys remain (`ProductShowcase` `#0F0F0F`, `LandingLocations` `#141414`, map popup `#CCCCCC`, `ProductViewer3D` shades, `email.ts`). Fix them when building Jai Shree Industries (first light site).
 - The 13-hour `caffeinate` started 2026-10-11 ~02:00 keeps the Mac awake; the lid must stay open.
 
+### Vercel build failures (solved 2026-10-11 — read this if a deploy fails again)
+
+- **Symptom we had:** every Vercel preview of `multi-site` failed from task 0.6 on (`Command "npm run build" exited with 1`), while `npm run build`, a clean worktree, and even local `vercel build` all passed.
+- **Cause:** route handlers lived in folders named `src/app/[site]/sitemap.xml/` and `robots.txt/`. Next treats those names as metadata routes, and **Vercel's build adapter** (`next/dist/build/adapter/build-complete.js`, runs only on Vercel) failed with `Invariant: failed to find source route /[site]/sitemap.xml for prerender /[site]/sitemap.xml`.
+- **Fix (commit `db93fbc`):** folders renamed to `[site]/site-sitemap/` and `[site]/site-robots/`; `src/proxy.ts` rewrites `/sitemap.xml` and `/robots.txt` to them. Output byte-identical. **Never name a route folder after a metadata file** (`sitemap.xml`, `robots.txt`, `manifest.json`, `icon`, `opengraph-image`, …).
+- **How to read a failed Vercel build next time:**
+  1. `gh api repos/sainirahul2163/jai-shree-group/commits/<sha>/status --jq '.statuses[] | .description, .target_url'` → gives the deployment id and log link.
+  2. The Vercel MCP and the local `vercel` CLI are on other accounts (403). Read the log through **Claude in Chrome** (the user's Chrome is logged in to Vercel): open the deployment, Build Logs → click the error-count filter → click the copy-log button, then `pbpaste` in Bash. Or ask the user to paste the red lines.
+  3. Lines like `Blog post fetch error … column … does not exist` are **warnings**, not the cause; look for `> Build error occurred` near the end.
+  4. A local pass does not prove a Vercel pass. After pushing, always check the commit status above before calling a task verified.
+- **Previews use the LIVE database** (Vercel's preview env vars point at the live Supabase project). Until a migration is applied to live, previews show missing data (empty blog/gallery/testimonials) — expected, not a bug.
+- **Previews are protected by Vercel Authentication:** `curl` gets a 302/401. View them through Claude in Chrome.
+
+### Cursor usage
+
+- Cursor's **Opus** quota is used up until **2026-11-04**. Until then use `claude-sonnet-5-thinking-high` for hard tasks and `composer-2.5` for simple ones (`~/.local/bin/agent --list-models` shows all). If Cursor hits a limit again, log it and do the task yourself.
+
 ## 5. Never
 
 - Invent specs, stock lists, machines, client names, certifications or numbers (use `docs/08-content-checklist.md` fallbacks).
