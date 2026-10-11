@@ -18,6 +18,7 @@ No fixed dates. We work as fast as possible, **phase by phase, task by task**: a
 
 | # | Site | Unit location | What it shows | Domain |
 | --- | --- | --- | --- | --- |
+| 2026-10-11 | Cursor 1.2 run stopped at once: "You've hit your usage limit … continue with Sonnet … resets 11/4/2026". Nothing changed. Claude builds 1.2 itself (user's rule) | — | Cursor quota |
 | 2026-10-11 | **Phase 0 + 1.1 live on jaishreegroup.com** (Claude). Preview of `eafe6d0` checked in Chrome against the migrated live DB (gallery 69 photos, 4 blog posts, testimonials, sitemap 39 URLs at the production origin, preview robots disallow + noindex). Merged `multi-site` into `main` (`751cd5c`, author = GitHub no-reply), local build against live DB passed, pushed; Vercel production deploy succeeded. Live checks: `/`, `/contact`, a product page, `/gallery` (69 photos), `/blog`, `/group` (map 18/18 tiles, 2 markers), `/privacy`, `/terms`, `/admin/login`, `/api/health` 200; `/does-not-exist` and `/group/about` 404; `/products/wire-mesh` 308; robots identical to before; sitemap = before + `/privacy`, `/terms`; canonical `https://www.jaishreegroup.com`, `index, follow`; contact shows all current unit phones and Thursday/Sunday holidays; new page views saved with `site='group'`. `main` merged back into `multi-site` (fast-forward) | `main`, `multi-site` | Phase 0 go-live |
 | 2026-10-11 | **Multi-site migration applied to the LIVE project** (Claude; same file as on jai-shree-dev, `2026-10-11-multi-site.sql`): `site` column (not null, default `'group'`, check on the 7 keys) on leads, blog_posts, gallery_items, testimonials, page_views; `(site, created_at)` indexes; blog slugs unique per site. Row counts unchanged (leads 2, blog 4, gallery 70, testimonials 3, page views 971); every existing row has `site='group'`; no rows changed. The current live code keeps working (new rows default to `'group'`) | live Supabase | Phase 0 go-live |
 | 2026-10-11 | 1.1 screenshot compare finished (Claude): 80 shots vs `after-phase-0`, no height changes, all ≤ 0.10% (landing animation, hero, 3D/map areas). Group site visually unchanged; 1.1 ticked (unit-site render test moves to 1.2) | `docs/research/after-1.1/` (git-ignored), `docs/05-build-plan.md` | Close 1.1 |
@@ -118,7 +119,7 @@ Unit logos, working hours, contact names, unit photos, client names, case studie
 - Create the Supabase login for the second admin email.
 - Optional: turn on "Leaked password protection" in the live Supabase Auth settings.
 
-**Loop notes:** Cursor's Opus quota is used up until 2026-11-04; use `claude-sonnet-5-thinking-high` (hard) and `composer-2.5` (simple). Vercel previews build again since `db93fbc` (route folders must not be named after metadata files). Previews use the live database.
+**Loop notes:** Cursor's Opus **and Sonnet** quotas are used up until 2026-11-04 (Sonnet hit at 10:38); Claude does the tasks itself until then (only `composer-2.5` may still run, for simple tasks). Vercel previews build again since `db93fbc` (route folders must not be named after metadata files). Previews use the live database.
 
 **Open points:**
 - Welded mesh: the agency said on 2026-10-02 it was discontinued; the client's approved answers say Shree Weld Mesh makes it. We follow the client.
