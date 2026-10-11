@@ -18,7 +18,7 @@ If a doc and the code disagree, the code is the truth for *how things work today
 | [08-content-checklist.md](08-content-checklist.md) | Content and assets each site needs, and who provides them | Before starting a site |
 | [decisions.md](decisions.md) | Dated log of decisions and assumptions | When unsure why something is the way it is |
 | [client/answers-2026-10-07.md](client/answers-2026-10-07.md) | The client's approved answers: unit focus, products per unit, names, contacts, holidays | Final word on business facts |
-| [client/](client/) | Proposal PDF, questionnaire, and the client's filled-in answers (.docx) | Reference |
+| [client/](client/) | Proposal PDF, questionnaire, the client's filled-in answers (.docx), and the client presentation `Jai-Shree-Group-Seven-Websites-Vision.pdf` (source in `client/vision/`, re-render with `node docs/client/vision/render.cjs`) | Reference |
 | [research/legacy-sites.md](research/legacy-sites.md) | What we found on the group's existing unit websites | Before migrating sites 1 and 2 |
 | [prompts/coordinator.md](prompts/coordinator.md) | How Claude runs the Cursor build loop: authorisations, loop steps, checks, go-live procedure, lessons learned | Start of every coordinator session |
 | [prompts/](prompts/) | One Cursor prompt per task (`task-<n>.md`) | When starting a task |

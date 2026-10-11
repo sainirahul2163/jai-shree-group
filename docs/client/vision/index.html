@@ -1,0 +1,1522 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jai Shree Group — One Group, Seven Websites</title>
+<style>
+@font-face { font-family: Inter; font-weight: 400; src: url(../../../public/fonts/canva/inter-400.woff2); }
+@font-face { font-family: Inter; font-weight: 500; src: url(../../../public/fonts/canva/inter-500.woff2); }
+@font-face { font-family: Inter; font-weight: 600; src: url(../../../public/fonts/canva/inter-600.woff2); }
+@font-face { font-family: Inter; font-weight: 700; src: url(../../../public/fonts/canva/inter-700.woff2); }
+@font-face { font-family: Inter; font-weight: 800; src: url(../../../public/fonts/canva/inter-800.woff2); }
+@font-face { font-family: Mono; font-weight: 400; src: url(../../../public/fonts/canva/robotomono-400.woff2); }
+@font-face { font-family: Mono; font-weight: 700; src: url(../../../public/fonts/canva/robotomono-700.woff2); }
+
+@page { size: 1280px 720px; margin: 0; }
+:root {
+  --brand: #E8521A; --brand-2: #FF6B35; --ink: #16130F; --sub: #5E5852; --muted: #8C857E;
+  --line: #E7E1DA; --paper: #FAF8F5; --tint: #FDF1EA; --dark: #0A0A0A; --dark-2: #141414; --dark-3: #1E1E1E;
+  --ok: #1F8A5B; --no: #C2412D;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #555; }
+body { font-family: Inter, Helvetica, Arial, sans-serif; color: var(--ink); font-size: 15px; line-height: 1.45; -webkit-print-color-adjust: exact; print-color-adjust: exact; counter-reset: pg; }
+.page { width: 1280px; height: 720px; position: relative; overflow: hidden; background: var(--paper); padding: 54px 72px 70px; page-break-after: always; break-after: page; counter-increment: pg; display: flex; flex-direction: column; }
+.page.dark { background: var(--dark); color: #F3EDE7; }
+.mono { font-family: Mono, ui-monospace, monospace; }
+
+/* running footer */
+.foot { position: absolute; left: 72px; right: 72px; bottom: 26px; display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; color: var(--muted); letter-spacing: .02em; }
+.foot img { height: 22px; }
+.foot .pn::after { content: counter(pg, decimal-leading-zero); font-family: Mono; color: var(--ink); font-weight: 700; }
+.dark .foot .pn::after { color: #F3EDE7; }
+.foot .mid { position: absolute; left: 50%; transform: translateX(-50%); }
+
+/* type */
+.kicker { font-size: 12.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--brand); display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.kicker::before { content: ""; width: 26px; height: 3px; background: var(--brand); border-radius: 2px; }
+h1 { font-size: 42px; line-height: 1.06; font-weight: 800; letter-spacing: -.025em; max-width: 980px; }
+h1 em, h2 em { font-style: normal; color: var(--brand); }
+h2 { font-size: 22px; line-height: 1.2; font-weight: 800; letter-spacing: -.015em; }
+h3 { font-size: 16.5px; font-weight: 700; letter-spacing: -.01em; line-height: 1.25; }
+.lead { font-size: 18px; color: var(--sub); max-width: 900px; margin-top: 12px; line-height: 1.45; }
+.dark .lead { color: #B9B0A8; }
+p.small, .small { font-size: 13.5px; color: var(--sub); }
+.dark .small { color: #A39A92; }
+b, strong { font-weight: 700; }
+
+.row { display: flex; gap: 22px; }
+.col { flex: 1; min-width: 0; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.mt8 { margin-top: 8px; } .mt12 { margin-top: 12px; } .mt16 { margin-top: 16px; } .mt20 { margin-top: 20px; } .mt24 { margin-top: 24px; } .mt28 { margin-top: 28px; } .mt32 { margin-top: 32px; }
+.grow { flex: 1; }
+
+.card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; }
+.dark .card { background: var(--dark-2); border-color: #2A2A2A; }
+.card .ic { width: 42px; height: 42px; border-radius: 11px; background: var(--tint); color: var(--brand); display: grid; place-items: center; margin-bottom: 12px; }
+.dark .card .ic { background: rgba(232,82,26,.14); }
+.ic svg { width: 22px; height: 22px; }
+.card p { font-size: 13.8px; color: var(--sub); margin-top: 6px; }
+.dark .card p { color: #A39A92; }
+
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; padding: 4px 10px; border-radius: 99px; background: var(--tint); color: var(--brand); white-space: nowrap; }
+.chip.ok { background: #E3F3EA; color: var(--ok); }
+.chip.wip { background: #FFF2D6; color: #9A6400; }
+.chip.next { background: #ECEAF7; color: #4B44A0; }
+.chip.dk { background: rgba(255,255,255,.08); color: #E8DFD6; }
+.tag { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+ul.dots { list-style: none; }
+ul.dots li { position: relative; padding-left: 18px; margin-top: 7px; font-size: 14.2px; }
+ul.dots li::before { content: ""; position: absolute; left: 0; top: 7px; width: 7px; height: 7px; border-radius: 2px; background: var(--brand); }
+ul.checks { list-style: none; }
+ul.checks li { position: relative; padding-left: 26px; margin-top: 8px; font-size: 14.2px; }
+ul.checks li::before { content: ""; position: absolute; left: 0; top: 2px; width: 17px; height: 17px; border-radius: 50%; background: var(--ok) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/11px no-repeat; }
+
+.quote { border-left: 4px solid var(--brand); padding: 6px 0 6px 18px; font-size: 19px; font-weight: 600; line-height: 1.35; letter-spacing: -.01em; }
+.note { font-size: 12px; color: var(--muted); }
+
+/* tables */
+table.t { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13.6px; }
+table.t th { text-align: left; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700; padding: 0 14px 10px 0; border-bottom: 2px solid var(--ink); }
+table.t td { padding: 10px 14px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.t td:first-child { font-weight: 700; }
+
+/* icons */
+.i { width: 1em; height: 1em; display: inline-block; vertical-align: -.14em; }
+svg.sym { position: absolute; width: 0; height: 0; }
+
+/* cover */
+.cover { padding: 0; flex-direction: row; }
+.cover .left { width: 640px; padding: 60px 64px; display: flex; flex-direction: column; position: relative; z-index: 2; }
+.cover .right { position: absolute; right: 0; top: 0; bottom: 0; width: 760px; background: url(img/cover-hero.jpg) center/cover; }
+.cover .right::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #0A0A0A 0%, rgba(10,10,10,.82) 24%, rgba(10,10,10,.15) 70%, rgba(10,10,10,.35) 100%); }
+.cover h1 { font-size: 66px; line-height: .98; letter-spacing: -.035em; margin-top: auto; }
+.cover .sub { font-size: 20px; color: #C9BFB6; margin-top: 22px; max-width: 520px; line-height: 1.4; }
+.cover .meta { margin-top: 36px; display: flex; gap: 30px; font-size: 13px; color: #9C938B; }
+.cover .meta b { display: block; color: #F3EDE7; font-size: 14px; margin-top: 3px; font-weight: 600; }
+.cover .dots7 { position: absolute; right: 64px; bottom: 54px; z-index: 3; display: flex; gap: 10px; align-items: center; color: #F3EDE7; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+.cover .dots7 span { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,255,255,.4); }
+
+/* section divider */
+.divider { justify-content: center; }
+.divider .num { font-family: Mono; font-size: 160px; font-weight: 700; color: var(--brand); line-height: .9; letter-spacing: -.04em; opacity: .95; }
+.divider h1 { font-size: 64px; margin-top: 18px; letter-spacing: -.035em; line-height: 1; }
+.divider .lead { font-size: 21px; margin-top: 20px; max-width: 760px; }
+.divider .bgimg { position: absolute; right: 0; top: 0; bottom: 0; width: 470px; background-size: cover; background-position: center; opacity: .55; }
+.divider .bgimg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #0A0A0A, rgba(10,10,10,0) 60%); }
+
+/* contents */
+.toc { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; margin-top: 30px; }
+.toc .it { display: flex; gap: 18px; align-items: baseline; padding: 15px 0; border-bottom: 1px solid var(--line); }
+.toc .n { font-family: Mono; font-weight: 700; color: var(--brand); font-size: 15px; width: 30px; }
+.toc .tt { font-size: 19px; font-weight: 700; letter-spacing: -.01em; }
+.toc .ds { font-size: 13.5px; color: var(--sub); margin-top: 2px; }
+
+/* timeline */
+.tl { position: relative; margin-top: 40px; display: grid; grid-template-columns: repeat(8, 1fr); gap: 0; }
+.tl::before { content: ""; position: absolute; left: 0; right: 0; top: 58px; height: 2px; background: linear-gradient(90deg, #3A3A3A, var(--brand)); }
+.tl .y { font-family: Mono; font-weight: 700; font-size: 24px; color: #F3EDE7; letter-spacing: -.02em; }
+.tl .d { width: 14px; height: 14px; border-radius: 50%; background: var(--dark); border: 3px solid var(--brand); margin: 16px 0 18px; position: relative; z-index: 1; }
+.tl .x { font-size: 13.3px; color: #B9B0A8; padding-right: 16px; line-height: 1.4; }
+.tl .x b { color: #F3EDE7; display: block; margin-bottom: 3px; font-size: 14px; }
+.tl .now .y { color: var(--brand); }
+.tl .now .d { background: var(--brand); box-shadow: 0 0 0 6px rgba(232,82,26,.22); }
+
+/* browser mock */
+.browser { border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: #fff; box-shadow: 0 18px 40px -22px rgba(0,0,0,.35); }
+.browser .bar { height: 30px; background: #EFEBE6; display: flex; align-items: center; gap: 6px; padding: 0 12px; }
+.browser .bar i { width: 9px; height: 9px; border-radius: 50%; background: #D3CBC2; display: block; }
+.browser .url { margin-left: 10px; flex: 1; height: 19px; border-radius: 6px; background: #fff; font-size: 11px; color: var(--sub); display: flex; align-items: center; padding: 0 9px; font-family: Mono; }
+
+/* unit pages */
+.unit { padding: 0; flex-direction: row; }
+.unit .side { width: 430px; padding: 46px 40px 40px; display: flex; flex-direction: column; color: var(--uf); background: var(--ubg); position: relative; }
+.unit .side .no { font-family: Mono; font-weight: 700; font-size: 13px; letter-spacing: .14em; color: var(--ut); }
+.unit .side h1 { font-size: 36px; margin-top: 10px; color: var(--uf); }
+.unit .side .tagl { margin-top: 8px; font-size: 15.5px; font-weight: 600; color: var(--ut); }
+.unit .side .dom { margin-top: 14px; display: inline-flex; align-self: flex-start; gap: 8px; align-items: center; font-family: Mono; font-size: 12.5px; padding: 6px 12px; border-radius: 8px; background: var(--usurf); border: 1px solid var(--uline); color: var(--uf); }
+.unit .side .photo { margin-top: 18px; flex: 1; border-radius: 14px; background-size: cover; background-position: center; border: 1px solid var(--uline); min-height: 150px; }
+.unit .side .facts { margin-top: 16px; font-size: 12.8px; color: var(--usub); display: grid; grid-template-columns: auto 1fr; gap: 5px 12px; }
+.unit .side .facts b { color: var(--uf); font-weight: 600; }
+.unit .side .sw { display: flex; gap: 6px; margin-top: 14px; align-items: center; font-size: 11px; color: var(--usub); }
+.unit .side .sw span { width: 22px; height: 22px; border-radius: 6px; border: 1px solid var(--uline); }
+.unit .main { flex: 1; padding: 46px 52px 58px 46px; display: flex; flex-direction: column; }
+.unit .main .q { font-size: 23px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
+.unit .main .q span { color: var(--ubrandtext); }
+.unit .main .tag { margin-bottom: 6px; }
+.ublock { margin-top: 18px; }
+.ublock p { font-size: 14px; color: var(--sub); margin-top: 4px; }
+.prodlist { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.prodlist span { font-size: 12.5px; font-weight: 600; padding: 4px 10px; border-radius: 7px; background: #F1EDE8; color: var(--ink); }
+.prodlist span.focus { background: var(--ubrand); color: var(--ubf); }
+.toolbox { margin-top: 18px; display: flex; gap: 18px; border: 1px solid var(--line); border-radius: 16px; padding: 18px; background: #fff; }
+.toolbox .tool { width: 300px; flex: none; border-radius: 12px; background: var(--ubg); color: var(--uf); padding: 14px 16px; border: 1px solid var(--uline); font-size: 12px; }
+.toolbox .tool .tt { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--ut); }
+.toolbox .tool .fld { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed var(--uline); color: var(--usub); }
+.toolbox .tool .fld b { color: var(--uf); font-family: Mono; font-weight: 700; }
+.toolbox .tool .res { margin-top: 8px; display: flex; justify-content: space-between; align-items: baseline; }
+.toolbox .tool .res b { font-family: Mono; font-size: 22px; color: var(--ut); }
+.toolbox .tool .btn { margin-top: 10px; display: block; text-align: center; padding: 7px; border-radius: 8px; background: var(--ubrand); color: var(--ubf); font-weight: 700; font-size: 12px; }
+.toolbox .story { flex: 1; font-size: 13.8px; color: var(--sub); }
+.toolbox .story h3 { color: var(--ink); margin-bottom: 6px; }
+.toolbox .story ol { padding-left: 18px; margin-top: 6px; }
+.toolbox .story ol li { margin-top: 4px; }
+.searches { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.searches span { font-size: 12.3px; padding: 4px 10px 4px 8px; border: 1px solid var(--line); border-radius: 99px; background: #fff; color: var(--ink); display: inline-flex; align-items: center; gap: 6px; }
+.searches span svg { width: 12px; height: 12px; color: var(--muted); }
+
+.sister { margin-top: auto; padding-top: 12px; row-gap: 6px; border-top: 1px solid var(--line); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.sister .lbl { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+.sister span.s { font-size: 11.8px; padding: 4px 9px; border-radius: 8px; background: #fff; border: 1px solid var(--line); }
+.sister span.s b { color: var(--ink); }
+.sister span.s i { font-style: normal; color: var(--muted); }
+
+/* seven sites grid */
+.sites7 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 26px; }
+.s7 { border-radius: 14px; padding: 16px 16px 14px; background: var(--ubg); color: var(--uf); border: 1px solid var(--uline); display: flex; flex-direction: column; min-height: 196px; }
+.s7 .top { display: flex; justify-content: space-between; align-items: center; }
+.s7 .n { font-family: Mono; font-size: 12px; font-weight: 700; color: var(--ut); }
+.s7 .b { width: 34px; height: 6px; border-radius: 3px; background: var(--ubrand); }
+.s7 h3 { margin-top: 12px; color: var(--uf); font-size: 17px; }
+.s7 .loc { font-size: 12px; color: var(--usub); margin-top: 3px; }
+.s7 .f { font-size: 13px; margin-top: 10px; color: var(--uf); line-height: 1.35; flex: 1; }
+.s7 .d { font-family: Mono; font-size: 11px; color: var(--usub); margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--uline); }
+
+/* theme vars per unit */
+.th-group { --ubg: #0A0A0A; --usurf: #141414; --uline: #2A2A2A; --uf: #FFFFFF; --usub: #A0A0A0; --ubrand: #E8521A; --ubf: #fff; --ut: #FF6B35; --ubrandtext: #E8521A; }
+.th-sp { --ubg: #0B0F14; --usurf: #121821; --uline: #263142; --uf: #F5F7FA; --usub: #9AA6B8; --ubrand: #1F6FEB; --ubf: #fff; --ut: #5A96FF; --ubrandtext: #1F6FEB; }
+.th-jsmp { --ubg: #0A0A0A; --usurf: #121212; --uline: #2C2C2C; --uf: #FFFFFF; --usub: #A3A3A3; --ubrand: #FFC400; --ubf: #0A0A0A; --ut: #FFC400; --ubrandtext: #A87F00; }
+.th-jsi { --ubg: #F3F4F6; --usurf: #FFFFFF; --uline: #D1D5DB; --uf: #111827; --usub: #4B5563; --ubrand: #D7263D; --ubf: #fff; --ut: #C21F35; --ubrandtext: #C21F35; }
+.th-jsp { --ubg: #F6F3EE; --usurf: #FFFFFF; --uline: #D9D0C2; --uf: #1C1A17; --usub: #5E574D; --ubrand: #8A5A2E; --ubf: #fff; --ut: #8A5A2E; --ubrandtext: #8A5A2E; }
+.th-jsf { --ubg: #F4EFE4; --usurf: #FFFDF8; --uline: #D8CDB6; --uf: #1E2A24; --usub: #55625A; --ubrand: #1F5D45; --ubf: #fff; --ut: #1F5D45; --ubrandtext: #1F5D45; }
+.th-swm { --ubg: #0E1A2B; --usurf: #14243A; --uline: #2A3F5C; --uf: #F2F5F9; --usub: #A9B6C8; --ubrand: #C9D3E0; --ubf: #0E1A2B; --ut: #C9D3E0; --ubrandtext: #3D5A80; }
+
+/* flow */
+.flow { display: flex; align-items: stretch; gap: 0; margin-top: 30px; }
+.flow .st { flex: 1; position: relative; padding: 0 10px; }
+.flow .st .bub { width: 58px; height: 58px; border-radius: 16px; background: #fff; border: 1px solid var(--line); display: grid; place-items: center; color: var(--brand); position: relative; z-index: 2; box-shadow: 0 10px 24px -16px rgba(0,0,0,.4); }
+.flow .st .bub svg { width: 26px; height: 26px; }
+.flow .st:not(:last-child)::after { content: ""; position: absolute; top: 29px; left: 76px; right: -4px; height: 2px; background: repeating-linear-gradient(90deg, var(--brand) 0 6px, transparent 6px 11px); }
+.flow .st .k { font-family: Mono; font-size: 11.5px; font-weight: 700; color: var(--brand); margin-top: 14px; }
+.flow .st h3 { margin-top: 4px; font-size: 15.5px; }
+.flow .st p { font-size: 12.8px; color: var(--sub); margin-top: 5px; line-height: 1.4; }
+
+/* compare table */
+table.cmp { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 24px; font-size: 14px; }
+table.cmp th { font-size: 13px; text-align: left; padding: 12px 14px; vertical-align: bottom; }
+table.cmp th .tag { display: block; margin-bottom: 4px; }
+table.cmp td { padding: 11px 14px; border-top: 1px solid var(--line); vertical-align: middle; }
+table.cmp td:first-child { font-weight: 600; width: 330px; }
+table.cmp .ours { background: var(--tint); }
+table.cmp th.ours { border-radius: 14px 14px 0 0; }
+table.cmp tr:last-child td.ours { border-radius: 0 0 14px 14px; }
+.cy, .cn, .cm { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; }
+.cy::before, .cn::before, .cm::before { content: ""; width: 18px; height: 18px; border-radius: 50%; flex: none; background-position: center; background-repeat: no-repeat; background-size: 11px; }
+.cy::before { background-color: var(--ok); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E"); }
+.cn::before { background-color: var(--no); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.4' stroke-linecap='round'%3E%3Cpath d='M7 7l10 10M17 7L7 17'/%3E%3C/svg%3E"); }
+.cm::before { background-color: #D49A1F; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.4' stroke-linecap='round'%3E%3Cpath d='M6 12h12'/%3E%3C/svg%3E"); }
+
+/* challenge table */
+.chal { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; margin-top: 22px; }
+.ch { display: grid; grid-template-columns: 38px 1fr; gap: 0 14px; padding: 13px 16px; background: #fff; border: 1px solid var(--line); border-radius: 14px; }
+.ch .ic { width: 38px; height: 38px; border-radius: 10px; background: var(--tint); color: var(--brand); display: grid; place-items: center; grid-row: span 2; }
+.ch .ic svg { width: 20px; height: 20px; }
+.ch .pr { font-size: 14.5px; font-weight: 700; letter-spacing: -.01em; }
+.ch .so { font-size: 13px; color: var(--sub); margin-top: 3px; line-height: 1.4; }
+.ch .so b { color: var(--ok); font-weight: 700; }
+
+/* admin mock */
+.admin { border-radius: 14px; overflow: hidden; border: 1px solid #2A2A2A; background: #0E0E0E; color: #EDE6DF; display: flex; box-shadow: 0 24px 50px -28px rgba(0,0,0,.6); }
+.admin .nav { width: 150px; background: #121212; border-right: 1px solid #222; padding: 16px 12px; font-size: 12.5px; }
+.admin .nav div { padding: 7px 10px; border-radius: 8px; color: #9C938B; margin-bottom: 2px; display: flex; gap: 8px; align-items: center; }
+.admin .nav div.on { background: rgba(232,82,26,.14); color: #FF8A5C; font-weight: 600; }
+.admin .nav svg { width: 14px; height: 14px; }
+.admin .body { flex: 1; padding: 16px 18px; }
+.admin .hd { display: flex; justify-content: space-between; align-items: center; }
+.admin .hd h3 { font-size: 16px; color: #fff; }
+.admin .sel { font-size: 12px; padding: 6px 12px; border-radius: 8px; border: 1px solid #333; background: #171717; display: flex; gap: 8px; align-items: center; }
+.admin table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 12.3px; }
+.admin th { text-align: left; color: #7A726B; font-weight: 600; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; padding: 6px 8px; border-bottom: 1px solid #262626; }
+.admin td { padding: 9px 8px; border-bottom: 1px solid #1E1E1E; color: #D9D1C9; }
+.admin .bdg { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: 99px; }
+.admin .st { font-size: 10.5px; padding: 3px 8px; border-radius: 99px; background: #1F2A22; color: #6FD39A; font-weight: 600; }
+.admin .st.new { background: #2E2412; color: #F0B44C; }
+
+/* roadmap */
+.road { position: relative; margin-top: 30px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+.road::before { content: ""; position: absolute; left: 10px; right: 10px; top: 13px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--ok) 0 30%, var(--brand) 30% 46%, #DCD5CD 46%); }
+.road .ph .pin { width: 30px; height: 30px; border-radius: 50%; background: #DCD5CD; border: 4px solid var(--paper); position: relative; z-index: 1; display: grid; place-items: center; color: #fff; }
+.road .ph.done .pin { background: var(--ok); }
+.road .ph.now .pin { background: var(--brand); box-shadow: 0 0 0 6px rgba(232,82,26,.18); }
+.road .ph .pin svg { width: 14px; height: 14px; }
+.road .ph .box { margin-top: 14px; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 14px 12px; min-height: 290px; }
+.road .ph.now .box { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(232,82,26,.12); }
+.road .ph .k { font-family: Mono; font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.road .ph h3 { font-size: 15.5px; margin-top: 4px; }
+.road .ph ul { list-style: none; margin-top: 8px; }
+.road .ph li { font-size: 12.4px; color: var(--sub); padding: 4px 0; border-top: 1px dashed var(--line); line-height: 1.35; }
+.road .ph .chip { margin-top: 10px; }
+
+/* horizons */
+.hz { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 28px; }
+.hz .h { border-radius: 18px; padding: 22px; background: var(--dark-2); border: 1px solid #262626; position: relative; overflow: hidden; }
+.hz .h .lvl { font-family: Mono; font-size: 12px; font-weight: 700; color: var(--brand); letter-spacing: .1em; }
+.hz .h h2 { margin-top: 6px; color: #fff; }
+.hz .h .when { font-size: 12.5px; color: #8E857D; margin-top: 2px; }
+.hz .h ul { list-style: none; margin-top: 14px; }
+.hz .h li { font-size: 13.6px; color: #CFC6BE; padding: 7px 0 7px 22px; border-top: 1px solid #242424; position: relative; line-height: 1.38; }
+.hz .h li::before { content: "→"; position: absolute; left: 0; color: var(--brand); font-weight: 700; }
+.hz .h .bar { position: absolute; left: 0; bottom: 0; height: 5px; background: var(--brand); }
+
+/* metrics */
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 22px; }
+.kpi { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+.kpi .lbl { font-size: 12.5px; font-weight: 700; color: var(--ink); display: flex; gap: 8px; align-items: center; }
+.kpi .lbl svg { width: 17px; height: 17px; color: var(--brand); }
+.kpi .why { font-size: 12.5px; color: var(--sub); margin-top: 4px; min-height: 36px; }
+.kpi svg.spark { width: 100%; height: 46px; margin-top: 8px; }
+
+/* misc */
+.big-num { font-family: Mono; font-weight: 700; font-size: 46px; letter-spacing: -.03em; color: var(--brand); line-height: 1; }
+.stat { padding: 18px 20px; border-radius: 14px; background: #fff; border: 1px solid var(--line); }
+.stat .l { font-size: 13px; color: var(--sub); margin-top: 6px; }
+.dark .stat { background: var(--dark-2); border-color: #262626; }
+.dark .stat .l { color: #A39A92; }
+.hr { height: 1px; background: var(--line); margin: 18px 0; }
+.analogy { display: flex; gap: 18px; align-items: center; background: var(--tint); border-radius: 16px; padding: 16px 20px; }
+.analogy .ic { width: 46px; height: 46px; border-radius: 12px; background: var(--brand); color: #fff; display: grid; place-items: center; flex: none; }
+.analogy .ic svg { width: 24px; height: 24px; }
+.analogy p { font-size: 14.5px; color: var(--ink); line-height: 1.45; }
+.ex { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #fff; background: var(--ink); padding: 3px 8px; border-radius: 5px; }
+</style>
+</head>
+<body>
+
+<!-- ============ ICONS ============ -->
+<svg class="sym" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1.5 2.5h5L16 13h5"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M16 4.8a3.3 3.3 0 010 6.4M18 14.8c2 .6 3.2 2.3 3.5 5.2"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M6 16v-4M11 16V8M16 16v-6M21 16V5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.6-3.3 8-8 9-4.7-1-8-4.4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4.5 4.5 0 006.4 0l3-3a4.5 4.5 0 00-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 00-6.4 0l-3 3a4.5 4.5 0 006.4 6.4l1-1"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></symbol>
+  <symbol id="i-tool" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5a4 4 0 005 5L13 18l-3 3-4-4 3-3 6.5-6.5a4 4 0 01-1-1z"/><path d="M14.7 6.3a4 4 0 014.7-3.2l-2.4 2.4.5 2 2 .5 2.4-2.4a4 4 0 01-3.2 4.7"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 006 6L16 13l5 2v4a2 2 0 01-2 2A17 17 0 013 5a2 2 0 012-2z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19l1.4-4A8 8 0 1112 20a8 8 0 01-3.7-.9z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0112 2.5a7 7 0 017 7C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 00-14.7-4.3L3 9"/><path d="M3 4v5h5"/><path d="M4 13a8 8 0 0014.7 4.3L21 15"/><path d="M21 20v-5h-5"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 018 0v3"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3"/></symbol>
+  <symbol id="i-broken" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15l-1.5 1.5a3.5 3.5 0 01-5-5L6 8"/><path d="M15 9l1.5-1.5a3.5 3.5 0 015 5L18 16"/><path d="M8 3l1 3M3 8l3 1M16 21l-1-3M21 16l-3-1"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5l9 4.5 9-4.5M12 12v9"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l2-2.5h6L17 7h3a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V8a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4c3-1.5 5.5-1 6-1 0 .5.5 3-1 6l-6 6-5-5z"/><path d="M8 10l-4 .5L2.5 13l5 1M14 16l-.5 4L11 21.5l-1-5"/><circle cx="15.5" cy="8.5" r="1.5"/></symbol>
+  <symbol id="i-cog" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 00-1 1v16a1 1 0 001 1h12a1 1 0 001-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></symbol>
+  </defs>
+</svg>
+
+<!-- ============ 1. COVER ============ -->
+<section class="page dark cover">
+  <div class="right"></div>
+  <div class="left">
+    <img src="img/logo-light.svg" alt="Jai Shree Group" style="height:54px; align-self:flex-start">
+    <div class="kicker" style="margin-top:auto">Digital growth plan · 2026</div>
+    <h1 style="margin-top:0">One group.<br>Seven websites.<br><em>Every buyer finds the right unit.</em></h1>
+    <p class="sub">Why we are giving each of your six manufacturing units its own specialist website, how it works, and where it takes the group over the next three years.</p>
+    <div class="meta">
+      <div>Prepared for<b>Jai Shree Group · Kanishq Jangid</b></div>
+      <div>Prepared by<b>Viralbizz</b></div>
+      <div>Date<b>October 2026</b></div>
+    </div>
+  </div>
+  <div class="dots7">
+    <span style="background:#E8521A;border-color:#E8521A"></span><span style="background:#1F6FEB;border-color:#1F6FEB"></span><span style="background:#FFC400;border-color:#FFC400"></span><span style="background:#D7263D;border-color:#D7263D"></span><span style="background:#8A5A2E;border-color:#8A5A2E"></span><span style="background:#1F5D45;border-color:#1F5D45"></span><span style="background:#C9D3E0;border-color:#C9D3E0"></span>
+    &nbsp;7 sites · 1 engine
+  </div>
+</section>
+
+<!-- ============ 2. IN ONE MINUTE ============ -->
+<section class="page">
+  <div class="kicker">The plan in one minute</div>
+  <h1>Today one website speaks for six factories. <em>Tomorrow each factory speaks for itself</em> — and they all stay one family.</h1>
+  <div class="grid3 mt32">
+    <div class="card">
+      <div class="ic"><svg><use href="#i-target"/></svg></div>
+      <h3>What we are building</h3>
+      <p>Six specialist websites, one for each unit, plus the main Jai Shree Group site. Each unit site shows only what that unit makes and sends enquiries straight to that unit.</p>
+    </div>
+    <div class="card">
+      <div class="ic"><svg><use href="#i-search"/></svg></div>
+      <h3>Why</h3>
+      <p>Buyers search for one product in one city: “laser cutting job work Pune”, “expanded metal Mumbai”. A specialist site answers that search far better than one page on a general site.</p>
+    </div>
+    <div class="card">
+      <div class="ic"><svg><use href="#i-layers"/></svg></div>
+      <h3>How</h3>
+      <p>All seven sites run on <b>one engine</b> with <b>one admin panel</b>. Each looks different to the buyer; behind the scenes it is one system, so a fix or a new feature reaches every site at once.</p>
+    </div>
+  </div>
+  <div class="row mt24" style="gap:16px">
+    <div class="stat col"><div class="big-num">7</div><div class="l">websites: the group site + 6 unit sites</div></div>
+    <div class="stat col"><div class="big-num">1</div><div class="l">engine, admin panel and database for all of them</div></div>
+    <div class="stat col"><div class="big-num">6</div><div class="l">free buyer tools — one per unit — that bring buyers back</div></div>
+    <div class="stat col"><div class="big-num" style="color:var(--ok)">✓</div><div class="l">Foundation already built and live on jaishreegroup.com</div></div>
+  </div>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 3. CONTENTS ============ -->
+<section class="page">
+  <div class="kicker">What's inside</div>
+  <h1>Contents</h1>
+  <div class="toc">
+    <div class="it"><span class="cn">01</span><div><div class="tt">Where we stand</div><div class="ds">Our story, the six units, and the problems buyers face today</div></div></div>
+    <div class="it"><span class="cn">05</span><div><div class="tt">Benefits and why this approach</div><div class="ds">What the group, each unit and each buyer gains</div></div></div>
+    <div class="it"><span class="cn">02</span><div><div class="tt">The idea</div><div class="ds">One group, seven websites, one engine</div></div></div>
+    <div class="it"><span class="cn">06</span><div><div class="tt">Challenges and how we overcome them</div><div class="ds">Risks we have planned for, and protecting what already works</div></div></div>
+    <div class="it"><span class="cn">03</span><div><div class="tt">Meet the six unit sites</div><div class="ds">One page per unit: buyers, products, tool and a real-life example</div></div></div>
+    <div class="it"><span class="cn">07</span><div><div class="tt">Progress and roadmap</div><div class="ds">What is done, what is next, step by step</div></div></div>
+    <div class="it"><span class="cn">04</span><div><div class="tt">How it works</div><div class="ds">One engine, the journey of an enquiry, one admin panel</div></div></div>
+    <div class="it"><span class="cn">08</span><div><div class="tt">Long-term vision</div><div class="ds">Three horizons, how we measure success, what helps us go further</div></div></div>
+  </div>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 4. DIVIDER 01 ============ -->
+<section class="page dark divider">
+  <div class="bgimg" style="background-image:url(img/factory.jpg)"></div>
+  <div class="num">01</div>
+  <h1>Where we stand</h1>
+  <p class="lead">Fifty-six years of manufacturing, six working units, one website. Let us look at what buyers see today.</p>
+  <div class="foot"><img src="img/logo-light.svg" alt=""><span class="pn"></span></div>
+</section>
+
+<!-- ============ 5. STORY ============ -->
+<section class="page dark">
+  <div class="kicker">Our story</div>
+  <h1>From one wire-mesh business in Delhi to <em>six units across Pune and Mumbai</em></h1>
+  <div class="tl">
+    <div><div class="y">1970</div><div class="d"></div><div class="x"><b>The beginning</b>Mr. Tejaram Jangid starts a wire mesh business in Delhi.</div></div>
+    <div><div class="y">1980</div><div class="d"></div><div class="x"><b>New products</b>Perforated sheets and expanded metal join the range.</div></div>
+    <div><div class="y">Mumbai</div><div class="d"></div><div class="x"><b>Mumbai plant</b>Set up by Mr. Inder Jangid and Mr. Shyam Jangid.</div></div>
+    <div><div class="y">1997</div><div class="d"></div><div class="x"><b>Talawade, Pune</b>Started by Mr. Raichand Jangid.</div></div>
+    <div><div class="y">2006</div><div class="d"></div><div class="x"><b>High-tech plant</b>A modern plant comes up.</div></div>
+    <div><div class="y">2013</div><div class="d"></div><div class="x"><b>Full CNC</b>Complete CNC upgrade.</div></div>
+    <div><div class="y">2015</div><div class="d"></div><div class="x"><b>Fiber laser</b>Laser cutting added.</div></div>
+    <div class="now"><div class="y">2026</div><div class="d"></div><div class="x"><b>Going digital</b>Every unit gets its own home on the internet.</div></div>
+  </div>
+  <div class="row mt32" style="gap:16px">
+    <div class="stat col"><div class="big-num">6</div><div class="l">active manufacturing units</div></div>
+    <div class="stat col"><div class="big-num">ISO</div><div class="l">9001:2015 certified (Bureau Veritas)</div></div>
+    <div class="stat col"><div class="big-num">0</div><div class="l">debt — privately owned</div></div>
+    <div class="stat col"><div class="big-num" style="font-size:34px;padding-top:8px">Global</div><div class="l">delivery to buyers in India and abroad</div></div>
+  </div>
+  <div class="foot"><img src="img/logo-light.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 6. SIX UNITS MAP ============ -->
+<section class="page">
+  <div class="kicker">The six units today</div>
+  <h1>Six units, two regions, <em>each with its own strength</em></h1>
+  <div class="row mt20" style="gap:30px; flex:1">
+    <div style="width:520px; flex:none; position:relative">
+      <svg viewBox="0 0 520 470" width="520" height="470" style="display:block">
+        <defs>
+          <linearGradient id="sea" x1="0" x2="1"><stop offset="0" stop-color="#E4EEF3"/><stop offset="1" stop-color="#F3F6F7"/></linearGradient>
+        </defs>
+        <rect x="0" y="0" width="520" height="470" rx="18" fill="#fff" stroke="#E7E1DA"/>
+        <!-- sea -->
+        <path d="M0 18 Q0 0 18 0 L120 0 C110 60 132 100 118 150 C104 200 138 240 124 300 C112 350 132 410 120 470 L18 470 Q0 470 0 452Z" fill="url(#sea)"/>
+        <text x="30" y="250" font-size="12" fill="#8FA6B2" font-family="Inter" font-weight="600" letter-spacing="2" transform="rotate(-90 30 250)">ARABIAN SEA</text>
+        <!-- route lines -->
+        <path d="M150 230 C260 260 330 300 400 330" stroke="#E8521A" stroke-width="2" stroke-dasharray="5 6" fill="none" opacity=".55"/>
+        <path d="M150 80 L150 230" stroke="#C9C1B8" stroke-width="2" stroke-dasharray="3 6" fill="none"/>
+        <!-- Palghar -->
+        <circle cx="150" cy="80" r="9" fill="#8A5A2E"/><circle cx="150" cy="80" r="17" fill="#8A5A2E" opacity=".15"/>
+        <text x="172" y="76" font-family="Inter" font-size="15" font-weight="700" fill="#16130F">Palghar</text>
+        <text x="172" y="94" font-family="Inter" font-size="12" fill="#5E5852">Jai Shree Perforator</text>
+        <!-- Bhayander -->
+        <circle cx="152" cy="160" r="9" fill="#D7263D"/><circle cx="152" cy="160" r="17" fill="#D7263D" opacity=".15"/>
+        <text x="174" y="156" font-family="Inter" font-size="15" font-weight="700" fill="#16130F">Bhayander</text>
+        <text x="174" y="174" font-family="Inter" font-size="12" fill="#5E5852">Jai Shree Industries</text>
+        <!-- Masjid Bunder -->
+        <circle cx="150" cy="230" r="9" fill="#1F5D45"/><circle cx="150" cy="230" r="17" fill="#1F5D45" opacity=".15"/>
+        <text x="172" y="226" font-family="Inter" font-size="15" font-weight="700" fill="#16130F">Masjid Bunder</text>
+        <text x="172" y="244" font-family="Inter" font-size="12" fill="#5E5852">Jai Shree Filtration (godown)</text>
+        <!-- Mumbai region label -->
+        <rect x="134" y="270" width="120" height="24" rx="12" fill="#FDF1EA"/>
+        <text x="194" y="286" text-anchor="middle" font-family="Inter" font-size="11.5" font-weight="700" fill="#E8521A" letter-spacing="1">MUMBAI REGION</text>
+        <!-- Pune -->
+        <circle cx="400" cy="330" r="12" fill="#E8521A"/><circle cx="400" cy="330" r="24" fill="#E8521A" opacity=".14"/>
+        <text x="400" y="375" text-anchor="middle" font-family="Inter" font-size="15" font-weight="700" fill="#16130F">Talawade, Pune</text>
+        <text x="400" y="394" text-anchor="middle" font-family="Inter" font-size="12" fill="#5E5852">Shree Perforators · Gat No. 94</text>
+        <text x="400" y="411" text-anchor="middle" font-family="Inter" font-size="12" fill="#5E5852">Jai Shree Metal Perforators · Gat No. 93</text>
+        <text x="400" y="428" text-anchor="middle" font-family="Inter" font-size="12" fill="#5E5852">Shree Weld Mesh · Gat No. 93</text>
+        <rect x="350" y="276" width="100" height="24" rx="12" fill="#FDF1EA"/>
+        <text x="400" y="292" text-anchor="middle" font-family="Inter" font-size="11.5" font-weight="700" fill="#E8521A" letter-spacing="1">PUNE · HQ</text>
+        <text x="500" y="455" text-anchor="end" font-family="Inter" font-size="10" fill="#A39A92">Schematic, not to scale</text>
+      </svg>
+    </div>
+    <div class="col">
+      <table class="t">
+        <thead><tr><th>Unit</th><th>What it does</th><th>Holiday</th></tr></thead>
+        <tbody>
+          <tr><td>Shree Perforators<div class="small" style="font-weight:400">Talawade, Pune</div></td><td>Perforated sheets and hole patterns, expanded metal, turret punching, leveling, custom parts</td><td>Thu</td></tr>
+          <tr><td>Jai Shree Metal Perforators<div class="small" style="font-weight:400">Talawade, Pune</div></td><td>Laser cutting and CNC punching job work</td><td>Thu</td></tr>
+          <tr><td>Shree Weld Mesh<div class="small" style="font-weight:400">Talawade, Pune</div></td><td>Welded mesh only</td><td>Thu</td></tr>
+          <tr><td>Jai Shree Industries<div class="small" style="font-weight:400">Bhayander, Mumbai</div></td><td>Expanded metal, CNC and mechanical punching</td><td>Sun</td></tr>
+          <tr><td>Jai Shree Perforator<div class="small" style="font-weight:400">Palghar</div></td><td>Mechanical-punched perforated sheets</td><td>Sun</td></tr>
+          <tr><td>Jai Shree Filtration<div class="small" style="font-weight:400">Masjid Bunder, Mumbai</div></td><td>Godown — ready-stock perforated sheets</td><td>Sun</td></tr>
+        </tbody>
+      </table>
+      <p class="note mt12">Unit focus approved by the client on 7 October 2026.</p>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 7. THE CHALLENGE TODAY ============ -->
+<section class="page">
+  <div class="kicker">The challenge today</div>
+  <h1>Strong factories, <em>weak shop windows</em></h1>
+  <p class="lead">The units make excellent products, but online most of them are hard to find, out of date, or not there at all.</p>
+  <div class="row mt24" style="gap:26px; flex:1">
+    <div class="col">
+      <div class="grid2" style="gap:14px">
+        <div class="card" style="padding:16px 18px">
+          <div class="ic"><svg><use href="#i-broken"/></svg></div>
+          <h3>Four unit domains don't open</h3>
+          <p>metalperforation.co.in, weldedmeshindia.com, jaishreefiltration.com and wiremeshindia.net show “site can't be reached”.</p>
+        </div>
+        <div class="card" style="padding:16px 18px">
+          <div class="ic"><svg><use href="#i-clock"/></svg></div>
+          <h3>Two old sites are out of date</h3>
+          <p>shreeperforators.com and metalperforatedsheets.com, built by another vendor, still offer products we no longer make.</p>
+        </div>
+        <div class="card" style="padding:16px 18px">
+          <div class="ic"><svg><use href="#i-search"/></svg></div>
+          <h3>One site can't rank for everything</h3>
+          <p>A single page cannot be the best answer for perforated sheets, laser cutting, expanded metal and welded mesh in Pune and Mumbai all at once.</p>
+        </div>
+        <div class="card" style="padding:16px 18px">
+          <div class="ic"><svg><use href="#i-inbox"/></svg></div>
+          <h3>Enquiries land in one inbox</h3>
+          <p>A laser job for Talawade and a stock request for Masjid Bunder arrive in the same place and get forwarded by hand. Every hand-off costs time.</p>
+        </div>
+      </div>
+    </div>
+    <div style="width:380px; flex:none">
+      <div class="browser">
+        <div class="bar"><i></i><i></i><i></i><div class="url">weldedmeshindia.com</div></div>
+        <div style="padding:34px 26px 30px; text-align:center">
+          <svg width="54" height="54" style="color:#B8AFA6"><use href="#i-broken"/></svg>
+          <div style="font-size:19px; font-weight:700; margin-top:10px">This site can't be reached</div>
+          <div class="small mt8">weldedmeshindia.com's server address could not be found.</div>
+          <div class="mono" style="font-size:11px; color:#A39A92; margin-top:12px">DNS_PROBE_FINISHED_NXDOMAIN</div>
+        </div>
+      </div>
+      <div class="quote mt20" style="font-size:16px">A buyer who lands here doesn't call. They click the next result — usually a competitor.</div>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 8. HOW BUYERS BUY — EXAMPLE ============ -->
+<section class="page">
+  <div class="kicker">A real-life example</div>
+  <h1>Monday, 10 a.m. A buyer needs <em>200 laser-cut brackets by Friday</em></h1>
+  <p class="lead">A purchase manager at an auto-parts supplier in Chakan opens Google and types <b class="mono" style="color:var(--ink);font-size:16px">laser cutting job work Pune</b>.</p>
+  <div class="row mt24" style="gap:22px; flex:1">
+    <div class="col card" style="border-color:#F0D3CC; background:#FFF8F6">
+      <div class="row" style="align-items:center; gap:10px"><span class="chip" style="background:#FBE1DB;color:var(--no)">TODAY</span><h3>What happens now</h3></div>
+      <div class="flow" style="flex-direction:column; margin-top:14px; gap:12px">
+        <div class="row" style="gap:12px;align-items:flex-start"><span class="mono" style="color:var(--no);font-weight:700">1</span><p class="small" style="color:var(--ink)">Google shows specialist laser-cutting websites first. A general group page sits lower.</p></div>
+        <div class="row" style="gap:12px;align-items:flex-start"><span class="mono" style="color:var(--no);font-weight:700">2</span><p class="small" style="color:var(--ink)">If they find an old Talawade unit site, it still lists wire mesh and demister pads — products the group stopped making. Trust drops.</p></div>
+        <div class="row" style="gap:12px;align-items:flex-start"><span class="mono" style="color:var(--no);font-weight:700">3</span><p class="small" style="color:var(--ink)">No simple way to send the drawing. They email the group address; it is forwarded to the right unit later.</p></div>
+        <div class="row" style="gap:12px;align-items:flex-start"><span class="mono" style="color:var(--no);font-weight:700">4</span><p class="small" style="color:var(--ink)">By the time someone calls back, a competitor has already quoted.</p></div>
+      </div>
+    </div>
+    <div style="width:40px; display:grid; place-items:center; color:var(--brand)"><svg width="34" height="34"><use href="#i-arrow"/></svg></div>
+    <div class="col card" style="border-color:#CBE6D7; background:#F6FBF8">
+      <div class="row" style="align-items:center; gap:10px"><span class="chip ok">TOMORROW</span><h3>What happens with the new sites</h3></div>
+      <div class="flow" style="flex-direction:column; margin-top:14px; gap:12px">
+        <div class="row" style="gap:12px;align-items:flex-start"><span class="mono" style="color:var(--ok);font-weight:700">1</span><p class="small" style="color:var(--ink)">They find <b>Jai Shree Metal Perforators</b> — a site built only for laser cutting and CNC punching job work in Pune.</p></div>
+        <div class="row" style="gap:12px;align-items:flex-start"><span class="mono" style="color:var(--ok);font-weight:700">2</span><p class="small" style="color:var(--ink)">Clear capabilities (fiber laser up to 14 mm), photos of the work, the group's 1970 heritage and ISO certificate.</p></div>
+        <div class="row" style="gap:12px;align-items:flex-start"><span class="mono" style="color:var(--ok);font-weight:700">3</span><p class="small" style="color:var(--ink)">They upload the DXF drawing, pick material, thickness and quantity, and press send — in two minutes.</p></div>
+        <div class="row" style="gap:12px;align-items:flex-start"><span class="mono" style="color:var(--ok);font-weight:700">4</span><p class="small" style="color:var(--ink)">The enquiry reaches the Talawade laser unit directly. The buyer gets an instant reply with a reference number.</p></div>
+      </div>
+    </div>
+  </div>
+  <p class="note mt12">Illustrative example of a typical buyer; not a specific customer.</p>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 9. DIVIDER 02 ============ -->
+<section class="page dark divider">
+  <div class="bgimg" style="background-image:url(img/perforated-collage.jpg)"></div>
+  <div class="num">02</div>
+  <h1>The idea</h1>
+  <p class="lead">One group. Seven websites. One engine underneath.</p>
+  <div class="foot"><img src="img/logo-light.svg" alt=""><span class="pn"></span></div>
+</section>
+
+<!-- ============ 10. HUB DIAGRAM ============ -->
+<section class="page">
+  <div class="kicker">The big idea</div>
+  <h1>Seven shop windows, <em>one factory behind them</em></h1>
+  <div class="row mt12" style="gap:28px; flex:1; align-items:center">
+    <div style="width:640px; flex:none">
+      <svg viewBox="0 0 640 470" width="640" height="470" font-family="Inter">
+        <!-- engine base -->
+        <rect x="70" y="408" width="500" height="54" rx="14" fill="#16130F"/>
+        <text x="320" y="431" text-anchor="middle" fill="#fff" font-size="15" font-weight="800">ONE ENGINE</text>
+        <text x="320" y="450" text-anchor="middle" fill="#B9B0A8" font-size="12">one codebase · one admin panel · one database · one hosting account</text>
+        <!-- spokes -->
+        <g stroke="#D9D1C8" stroke-width="2" stroke-dasharray="4 6">
+          <line x1="320" y1="205" x2="320" y2="60"/>
+          <line x1="320" y1="205" x2="500" y2="110"/>
+          <line x1="320" y1="205" x2="520" y2="290"/>
+          <line x1="320" y1="205" x2="120" y2="290"/>
+          <line x1="320" y1="205" x2="140" y2="110"/>
+          <line x1="320" y1="205" x2="320" y2="345"/>
+        </g>
+        <!-- vertical pillars to engine -->
+        <g stroke="#E8521A" stroke-width="2" opacity=".35"><line x1="120" y1="320" x2="120" y2="408"/><line x1="520" y1="320" x2="520" y2="408"/><line x1="320" y1="375" x2="320" y2="408"/></g>
+        <!-- center -->
+        <circle cx="320" cy="205" r="74" fill="#0A0A0A"/>
+        <circle cx="320" cy="205" r="82" fill="none" stroke="#E8521A" stroke-width="2" stroke-dasharray="3 5"/>
+        <text x="320" y="196" text-anchor="middle" fill="#fff" font-size="16" font-weight="800">Jai Shree</text>
+        <text x="320" y="215" text-anchor="middle" fill="#fff" font-size="16" font-weight="800">Group</text>
+        <text x="320" y="236" text-anchor="middle" fill="#FF6B35" font-size="10.5" font-family="Mono">jaishreegroup.com</text>
+        <!-- nodes -->
+        <g>
+          <rect x="230" y="22" width="180" height="62" rx="14" fill="#0B0F14"/><rect x="230" y="22" width="6" height="62" rx="3" fill="#1F6FEB"/>
+          <text x="248" y="47" fill="#F5F7FA" font-size="13.5" font-weight="700">Shree Perforators</text>
+          <text x="248" y="66" fill="#9AA6B8" font-size="11">Perforated sheets · Pune</text>
+        </g>
+        <g>
+          <rect x="416" y="80" width="222" height="62" rx="14" fill="#0A0A0A"/><rect x="416" y="80" width="6" height="62" rx="3" fill="#FFC400"/>
+          <text x="434" y="105" fill="#fff" font-size="13.5" font-weight="700">Jai Shree Metal Perforators</text>
+          <text x="434" y="124" fill="#A3A3A3" font-size="11">Laser + CNC job work · Pune</text>
+        </g>
+        <g>
+          <rect x="430" y="262" width="200" height="62" rx="14" fill="#F3F4F6" stroke="#D1D5DB"/><rect x="430" y="262" width="6" height="62" rx="3" fill="#D7263D"/>
+          <text x="448" y="287" fill="#111827" font-size="13.5" font-weight="700">Jai Shree Industries</text>
+          <text x="448" y="306" fill="#4B5563" font-size="11">Expanded metal · Mumbai</text>
+        </g>
+        <g>
+          <rect x="230" y="318" width="180" height="62" rx="14" fill="#F4EFE4" stroke="#D8CDB6"/><rect x="230" y="318" width="6" height="62" rx="3" fill="#1F5D45"/>
+          <text x="248" y="343" fill="#1E2A24" font-size="13.5" font-weight="700">Jai Shree Filtration</text>
+          <text x="248" y="362" fill="#55625A" font-size="11">Ready stock · Masjid Bunder</text>
+        </g>
+        <g>
+          <rect x="10" y="262" width="200" height="62" rx="14" fill="#F6F3EE" stroke="#D9D0C2"/><rect x="10" y="262" width="6" height="62" rx="3" fill="#8A5A2E"/>
+          <text x="28" y="287" fill="#1C1A17" font-size="13.5" font-weight="700">Jai Shree Perforator</text>
+          <text x="28" y="306" fill="#5E574D" font-size="11">Mechanical punching · Palghar</text>
+        </g>
+        <g>
+          <rect x="10" y="80" width="200" height="62" rx="14" fill="#0E1A2B"/><rect x="10" y="80" width="6" height="62" rx="3" fill="#C9D3E0"/>
+          <text x="28" y="105" fill="#F2F5F9" font-size="13.5" font-weight="700">Shree Weld Mesh</text>
+          <text x="28" y="124" fill="#A9B6C8" font-size="11">Welded mesh · Pune</text>
+        </g>
+      </svg>
+    </div>
+    <div class="col">
+      <h2>What the buyer sees</h2>
+      <p class="small mt8" style="font-size:14.5px">Seven different websites, each with its own name, colours, products, phone number and a free tool built for its buyers. Every unit site carries the mark <b>“A Jai Shree Group company”</b>.</p>
+      <div class="hr"></div>
+      <h2>What we run</h2>
+      <p class="small mt8" style="font-size:14.5px">One system. One login to manage every site's enquiries, photos and blog. One place to fix a bug or add a feature — and all seven sites get it the same day.</p>
+      <div class="analogy mt20">
+        <div class="ic"><svg><use href="#i-cog"/></svg></div>
+        <p><b>Think of a CNC turret punch.</b> One machine, many tools. Change the tool and you get a different hole — without buying a new machine. We build one engine and give each unit its own “tool”.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 11. SEVEN SITES ============ -->
+<section class="page">
+  <div class="kicker">The seven sites</div>
+  <h1>Each site has <em>its own focus, buyers and look</em></h1>
+  <div class="sites7">
+    <div class="s7 th-group"><div class="top"><span class="cn">00 · MAIN</span><span class="b"></span></div><h3>Jai Shree Group</h3><div class="loc">All units</div><div class="f">The group story, all six main products, and a link to every unit.</div><div class="d">jaishreegroup.com · live</div></div>
+    <div class="s7 th-sp"><div class="top"><span class="cn">01</span><span class="b"></span></div><h3>Shree Perforators</h3><div class="loc">Talawade, Pune</div><div class="f">CNC perforated sheets and custom hole patterns, plus expanded metal.</div><div class="d">shreeperforators.com</div></div>
+    <div class="s7 th-jsmp"><div class="top"><span class="cn">02</span><span class="b"></span></div><h3>Jai Shree Metal Perforators</h3><div class="loc">Talawade, Pune</div><div class="f">Laser cutting and CNC punching job work.</div><div class="d">metalperforatedsheets.com</div></div>
+    <div class="s7 th-jsi"><div class="top"><span class="cn">03</span><span class="b"></span></div><h3>Jai Shree Industries</h3><div class="loc">Bhayander, Mumbai</div><div class="f">Expanded metal, plus CNC and mechanical punching.</div><div class="d">new domain</div></div>
+    <div class="s7 th-jsp"><div class="top"><span class="cn">04</span><span class="b"></span></div><h3>Jai Shree Perforator</h3><div class="loc">Palghar</div><div class="f">Mechanical-punched perforated sheets, in bulk.</div><div class="d">metalperforation.co.in</div></div>
+    <div class="s7 th-jsf"><div class="top"><span class="cn">05</span><span class="b"></span></div><h3>Jai Shree Filtration</h3><div class="loc">Masjid Bunder, Mumbai</div><div class="f">“Perforated sheets available in minutes” — ready stock from the godown.</div><div class="d">jaishreefiltration.com</div></div>
+    <div class="s7 th-swm"><div class="top"><span class="cn">06</span><span class="b"></span></div><h3>Shree Weld Mesh</h3><div class="loc">Talawade, Pune</div><div class="f">“Manufacturing in welded mesh” — welded mesh only.</div><div class="d">weldedmeshindia.com</div></div>
+    <div class="s7" style="background:var(--tint); border-color:#F3D3C4; color:var(--ink)"><div class="top"><span class="n" style="color:var(--brand)">THE RULE</span></div><h3 style="color:var(--ink)">Each site sells only what its unit makes</h3><div class="f" style="color:var(--sub)">For anything else it points to the sister unit: “Need laser cutting? Our Talawade unit does it.”</div></div>
+  </div>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 12. DIVIDER 03 ============ -->
+<section class="page dark divider">
+  <div class="bgimg" style="background-image:url(img/laser.jpg)"></div>
+  <div class="num">03</div>
+  <h1>Meet the six<br>unit sites</h1>
+  <p class="lead">One page per unit: who it serves, what it sells, the free tool that brings buyers back, and a real-life example.</p>
+  <div class="foot"><img src="img/logo-light.svg" alt=""><span class="pn"></span></div>
+</section>
+
+<!-- ============ 13. UNIT 1 — SHREE PERFORATORS ============ -->
+<section class="page unit th-sp">
+  <div class="side">
+    <div class="no">SITE 01 · PUNE</div>
+    <h1>Shree Perforators</h1>
+    <div class="tagl">Precision perforation, any hole pattern</div>
+    <div class="dom"><svg class="i"><use href="#i-globe"/></svg>shreeperforators.com</div>
+    <div class="photo" style="background-image:url(img/perforated-round-blank.jpg)"></div>
+    <div class="facts">
+      <span>Unit</span><b>Talawade, Pune · Gat No. 94</b>
+      <span>Phone</span><b>+91 93706 06017</b>
+      <span>Holiday</span><b>Thursday</b>
+      <span>Old site</span><b>22 pages + 57 images mapped</b>
+    </div>
+    <div class="sw">Site colours <span style="background:#0B0F14"></span><span style="background:#121821"></span><span style="background:#1F6FEB"></span><span style="background:#F5F7FA"></span></div>
+  </div>
+  <div class="main">
+    <div class="tag">The buyer's question</div>
+    <div class="q">“Can you make <span>this exact pattern</span>?”</div>
+    <div class="row ublock" style="gap:26px">
+      <div class="col">
+        <div class="tag">Who buys</div>
+        <p>OEMs, fabricators, filter and equipment makers.</p>
+        <div class="tag mt12">What it sells</div>
+        <div class="prodlist"><span class="focus">Perforated sheets</span><span>Expanded metal</span><span>Turret punching</span><span>Sheet leveling</span><span>Custom parts &amp; screens</span></div>
+      </div>
+      <div class="col">
+        <div class="tag">Searches we target</div>
+        <div class="searches"><span><svg><use href="#i-search"/></svg>perforated sheet manufacturers Pune</span><span><svg><use href="#i-search"/></svg>perforated sheet hole patterns</span><span><svg><use href="#i-search"/></svg>SS perforated sheet supplier</span></div>
+      </div>
+    </div>
+    <div class="toolbox">
+      <div class="tool">
+        <div class="tt">Free tool · Pattern library</div>
+        <svg viewBox="0 0 268 70" width="268" height="70" style="margin:8px 0 4px; display:block">
+          <rect width="268" height="70" rx="8" fill="#121821"/>
+          <g fill="#0B0F14" stroke="#5A96FF" stroke-width="1.2">
+            <circle cx="14" cy="12" r="5"/><circle cx="34" cy="12" r="5"/><circle cx="54" cy="12" r="5"/><circle cx="74" cy="12" r="5"/><circle cx="94" cy="12" r="5"/><circle cx="114" cy="12" r="5"/><circle cx="134" cy="12" r="5"/><circle cx="154" cy="12" r="5"/><circle cx="174" cy="12" r="5"/><circle cx="194" cy="12" r="5"/><circle cx="214" cy="12" r="5"/><circle cx="234" cy="12" r="5"/><circle cx="254" cy="12" r="5"/>
+            <circle cx="24" cy="29.3" r="5"/><circle cx="44" cy="29.3" r="5"/><circle cx="64" cy="29.3" r="5"/><circle cx="84" cy="29.3" r="5"/><circle cx="104" cy="29.3" r="5"/><circle cx="124" cy="29.3" r="5"/><circle cx="144" cy="29.3" r="5"/><circle cx="164" cy="29.3" r="5"/><circle cx="184" cy="29.3" r="5"/><circle cx="204" cy="29.3" r="5"/><circle cx="224" cy="29.3" r="5"/><circle cx="244" cy="29.3" r="5"/>
+            <circle cx="14" cy="46.6" r="5"/><circle cx="34" cy="46.6" r="5"/><circle cx="54" cy="46.6" r="5"/><circle cx="74" cy="46.6" r="5"/><circle cx="94" cy="46.6" r="5"/><circle cx="114" cy="46.6" r="5"/><circle cx="134" cy="46.6" r="5"/><circle cx="154" cy="46.6" r="5"/><circle cx="174" cy="46.6" r="5"/><circle cx="194" cy="46.6" r="5"/><circle cx="214" cy="46.6" r="5"/><circle cx="234" cy="46.6" r="5"/><circle cx="254" cy="46.6" r="5"/>
+            <circle cx="24" cy="63.9" r="5"/><circle cx="44" cy="63.9" r="5"/><circle cx="64" cy="63.9" r="5"/><circle cx="84" cy="63.9" r="5"/><circle cx="104" cy="63.9" r="5"/><circle cx="124" cy="63.9" r="5"/><circle cx="144" cy="63.9" r="5"/><circle cx="164" cy="63.9" r="5"/><circle cx="184" cy="63.9" r="5"/><circle cx="204" cy="63.9" r="5"/><circle cx="224" cy="63.9" r="5"/><circle cx="244" cy="63.9" r="5"/>
+          </g>
+        </svg>
+        <div class="fld"><span>Hole</span><b>Round Ø 3 mm</b></div>
+        <div class="fld"><span>Pitch · layout</span><b>5 mm · 60° staggered</b></div>
+        <div class="res"><span>Open area</span><b>32.6%</b></div>
+        <span class="btn">Request this pattern →</span>
+      </div>
+      <div class="story">
+        <span class="ex">Example</span>
+        <h3 class="mt8">A filter maker in Bhosari needs a new screen</h3>
+        <ol>
+          <li>Opens the pattern library, tries hole sizes and pitches.</li>
+          <li>Sees the open area and a live picture of the sheet change as they type.</li>
+          <li>Clicks <b>Request this pattern</b> — the quote form arrives filled in.</li>
+        </ol>
+        <p class="mt8">The unit gets an exact spec, not a vague phone call. Fewer back-and-forth calls, faster quotes.</p>
+      </div>
+    </div>
+    <div class="sister"><span class="lbl">Sister units</span><span class="s"><i>Laser cutting?</i> → <b>Jai Shree Metal Perforators</b></span><span class="s"><i>Welded mesh?</i> → <b>Shree Weld Mesh</b></span><span class="s"><i>Sheets from stock today?</i> → <b>Jai Shree Filtration</b></span></div>
+  </div>
+  <div class="foot" style="left:470px"><span></span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 14. UNIT 2 — JSMP ============ -->
+<section class="page unit th-jsmp">
+  <div class="side">
+    <div class="no">SITE 02 · PUNE</div>
+    <h1>Jai Shree Metal Perforators</h1>
+    <div class="tagl">Laser cutting and CNC punching job work</div>
+    <div class="dom"><svg class="i"><use href="#i-globe"/></svg>metalperforatedsheets.com</div>
+    <div class="photo" style="background-image:url(img/laser.jpg)"></div>
+    <div class="facts">
+      <span>Unit</span><b>Talawade, Pune · Gat No. 93</b>
+      <span>Phone</span><b>+91 93733 24492</b>
+      <span>Holiday</span><b>Thursday</b>
+      <span>Old site</span><b>16 pages mapped</b>
+    </div>
+    <div class="sw">Site colours <span style="background:#0A0A0A"></span><span style="background:#1B1B1B"></span><span style="background:#FFC400"></span><span style="background:#FFFFFF"></span></div>
+  </div>
+  <div class="main">
+    <div class="tag">The buyer's question</div>
+    <div class="q">“Can you <span>cut my drawing</span>, quickly and accurately?”</div>
+    <div class="row ublock" style="gap:26px">
+      <div class="col">
+        <div class="tag">Who buys</div>
+        <p>Engineering firms, automotive Tier-1 and Tier-2 suppliers, fabricators.</p>
+        <div class="tag mt12">What it sells</div>
+        <div class="prodlist"><span class="focus">Laser cutting</span><span class="focus">CNC turret punching</span><span>Perforated sheets</span><span>Sheet leveling</span><span>Custom parts &amp; screens</span></div>
+      </div>
+      <div class="col">
+        <div class="tag">Searches we target</div>
+        <div class="searches"><span><svg><use href="#i-search"/></svg>laser cutting services Pune</span><span><svg><use href="#i-search"/></svg>CNC turret punching job work Pune</span></div>
+        <div class="tag mt12">Capabilities shown</div>
+        <p>Fiber laser cutting up to 14 mm · perforation up to 12 mm</p>
+      </div>
+    </div>
+    <div class="toolbox">
+      <div class="tool">
+        <div class="tt">Free tool · Drawing upload quote</div>
+        <div style="margin:9px 0 6px; border:1.5px dashed #FFC400; border-radius:9px; padding:10px; display:flex; gap:10px; align-items:center">
+          <svg width="26" height="26" style="color:#FFC400"><use href="#i-upload"/></svg>
+          <div><div style="font-weight:700; font-family:Mono">bracket-v2.dxf</div><div style="color:#A3A3A3; font-size:11px">Uploaded · kept private</div></div>
+        </div>
+        <div class="fld"><span>Material</span><b>MS</b></div>
+        <div class="fld"><span>Thickness</span><b>3 mm</b></div>
+        <div class="fld"><span>Quantity</span><b>200</b></div>
+        <span class="btn">Send for quote →</span>
+      </div>
+      <div class="story">
+        <span class="ex">Example</span>
+        <h3 class="mt8">The Chakan buyer from page 8</h3>
+        <ol>
+          <li>Drops the DXF (or DWG / PDF) on the page.</li>
+          <li>Picks material, thickness and quantity.</li>
+          <li>Gets a reference number on screen and by email.</li>
+        </ol>
+        <p class="mt8">The Talawade laser team receives the drawing with every detail they need to quote — no “please send the drawing again”.</p>
+      </div>
+    </div>
+    <div class="sister"><span class="lbl">Sister units</span><span class="s"><i>Expanded metal?</i> → <b>Shree Perforators · Jai Shree Industries</b></span><span class="s"><i>Sheets from stock today?</i> → <b>Jai Shree Filtration</b></span></div>
+  </div>
+  <div class="foot" style="left:470px"><span></span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 15. UNIT 3 — JSI ============ -->
+<section class="page unit th-jsi">
+  <div class="side">
+    <div class="no">SITE 03 · MUMBAI</div>
+    <h1>Jai Shree Industries</h1>
+    <div class="tagl">Expanded metal and punched sheets near Mumbai</div>
+    <div class="dom"><svg class="i"><use href="#i-globe"/></svg>new domain</div>
+    <div class="photo" style="background-image:url(img/em-red-hex.jpg)"></div>
+    <div class="facts">
+      <span>Unit</span><b>Bhayander East, Mumbai</b>
+      <span>Phone</span><b>+91 89089 21111</b>
+      <span>Holiday</span><b>Sunday</b>
+    </div>
+    <div class="sw">Site colours <span style="background:#F3F4F6"></span><span style="background:#FFFFFF"></span><span style="background:#D7263D"></span><span style="background:#111827"></span></div>
+  </div>
+  <div class="main">
+    <div class="tag">The buyer's question</div>
+    <div class="q">“Who makes <span>expanded metal and punched sheets</span> near Mumbai?”</div>
+    <div class="row ublock" style="gap:26px">
+      <div class="col">
+        <div class="tag">Who buys</div>
+        <p>Plant builders, walkway and guard fabricators, OEMs and contractors in the Mumbai region.</p>
+        <div class="tag mt12">What it sells</div>
+        <div class="prodlist"><span class="focus">Expanded metal</span><span class="focus">CNC &amp; mechanical punching</span><span>Perforated sheets</span><span>Sheet leveling</span></div>
+      </div>
+      <div class="col">
+        <div class="tag">Searches we target</div>
+        <div class="searches"><span><svg><use href="#i-search"/></svg>expanded metal manufacturers Mumbai</span><span><svg><use href="#i-search"/></svg>expanded metal supplier Bhayander</span><span><svg><use href="#i-search"/></svg>CNC punching Mumbai</span></div>
+      </div>
+    </div>
+    <div class="toolbox">
+      <div class="tool">
+        <div class="tt">Free tool · Expanded metal selector</div>
+        <svg viewBox="0 0 268 64" width="268" height="64" style="margin:8px 0 4px; display:block">
+          <rect width="268" height="64" rx="8" fill="#fff" stroke="#D1D5DB"/>
+          <g fill="none" stroke="#D7263D" stroke-width="2.4">
+            <path d="M0 16 L22 4 L44 16 L66 4 L88 16 L110 4 L132 16 L154 4 L176 16 L198 4 L220 16 L242 4 L264 16"/>
+            <path d="M0 16 L22 28 L44 16 L66 28 L88 16 L110 28 L132 16 L154 28 L176 16 L198 28 L220 16 L242 28 L264 16"/>
+            <path d="M0 40 L22 28 L44 40 L66 28 L88 40 L110 28 L132 40 L154 28 L176 40 L198 28 L220 40 L242 28 L264 40"/>
+            <path d="M0 40 L22 52 L44 40 L66 52 L88 40 L110 52 L132 40 L154 52 L176 40 L198 52 L220 40 L242 52 L264 40"/>
+            <path d="M0 64 L22 52 L44 64 L66 52 L88 64 L110 52 L132 64 L154 52 L176 64 L198 52 L220 64 L242 52 L264 64"/>
+          </g>
+        </svg>
+        <div class="fld"><span>Pattern</span><b>Diamond</b></div>
+        <div class="fld"><span>Thickness · material</span><b>3 mm · GI</b></div>
+        <div class="fld"><span>Shows</span><b>Open area · kg/m²</b></div>
+        <span class="btn">Ask for this size →</span>
+      </div>
+      <div class="story">
+        <span class="ex">Example</span>
+        <h3 class="mt8">A contractor plans walkways for a plant near Thane</h3>
+        <ol>
+          <li>Chooses diamond, square or hex pattern, strand and thickness.</li>
+          <li>Sees open area and an approximate weight per m² — enough to plan the load and budget.</li>
+          <li>Sends the selection to the Bhayander unit in one click.</li>
+        </ol>
+        <p class="mt8">Patterns up to 6 mm; widths 900 / 1250 / 1500 mm. Results are marked “approximate — confirm with us”.</p>
+      </div>
+    </div>
+    <div class="sister"><span class="lbl">Sister units</span><span class="s"><i>Laser cutting?</i> → <b>Jai Shree Metal Perforators</b></span><span class="s"><i>Custom parts &amp; screens?</i> → <b>Shree Perforators</b></span></div>
+  </div>
+  <div class="foot" style="left:470px"><span></span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 16. UNIT 4 — JSP ============ -->
+<section class="page unit th-jsp">
+  <div class="side">
+    <div class="no">SITE 04 · PALGHAR</div>
+    <h1>Jai Shree Perforator</h1>
+    <div class="tagl">Standard perforated sheets, punched in volume</div>
+    <div class="dom"><svg class="i"><use href="#i-globe"/></svg>metalperforation.co.in</div>
+    <div class="photo" style="background-image:url(img/hex-1.jpg)"></div>
+    <div class="facts">
+      <span>Unit</span><b>Palghar West</b>
+      <span>Phone</span><b>+91 89089 21111</b>
+      <span>Holiday</span><b>Sunday</b>
+    </div>
+    <div class="sw">Site colours <span style="background:#F6F3EE"></span><span style="background:#ECE6DC"></span><span style="background:#8A5A2E"></span><span style="background:#1C1A17"></span></div>
+  </div>
+  <div class="main">
+    <div class="tag">The buyer's question</div>
+    <div class="q">“What is the most economical way to get <span>standard perforated sheets in bulk</span>?”</div>
+    <div class="row ublock" style="gap:26px">
+      <div class="col">
+        <div class="tag">Who buys</div>
+        <p>Fabricators, traders and OEMs ordering standard patterns in quantity; industries around Palghar, Boisar and Tarapur.</p>
+        <div class="tag mt12">What it sells</div>
+        <div class="prodlist"><span class="focus">Mechanical-punched perforated sheets</span><span>Round · square · slot patterns</span></div>
+      </div>
+      <div class="col">
+        <div class="tag">Searches we target</div>
+        <div class="searches"><span><svg><use href="#i-search"/></svg>perforated sheet manufacturers Palghar</span><span><svg><use href="#i-search"/></svg>mechanical punching perforated sheets</span><span><svg><use href="#i-search"/></svg>perforated sheets Boisar Tarapur</span></div>
+      </div>
+    </div>
+    <div class="toolbox">
+      <div class="tool">
+        <div class="tt">Free tool · Bulk order estimator</div>
+        <div class="fld" style="margin-top:8px"><span>Pattern</span><b>Round 5 mm @ 8 mm</b></div>
+        <div class="fld"><span>Material · thickness</span><b>GI · 1 mm</b></div>
+        <div class="fld"><span>Sheets</span><b>500</b></div>
+        <div class="res"><span>Open area</span><b>35.4%</b></div>
+        <div class="res" style="margin-top:2px"><span>Approx. weight</span><b style="font-size:17px">≈ 5.1 kg/m²</b></div>
+        <span class="btn">Request bulk quote →</span>
+      </div>
+      <div class="story">
+        <span class="ex">Example</span>
+        <h3 class="mt8">A trader in Boisar re-orders the same pattern every month</h3>
+        <ol>
+          <li>Picks a standard pattern, material, thickness and number of sheets.</li>
+          <li>Sees open area and approximate weight to plan transport.</li>
+          <li>Sends a bulk quote request straight to Palghar.</li>
+        </ol>
+        <p class="mt8">A short, honest guide explains when mechanical punching is the better buy — and when CNC is, so buyers trust the advice.</p>
+      </div>
+    </div>
+    <div class="sister"><span class="lbl">Sister units</span><span class="s"><i>Custom CNC pattern?</i> → <b>Shree Perforators</b></span><span class="s"><i>Laser cutting?</i> → <b>Jai Shree Metal Perforators</b></span><span class="s"><i>Expanded metal?</i> → <b>Jai Shree Industries</b></span></div>
+  </div>
+  <div class="foot" style="left:470px"><span></span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 17. UNIT 5 — JSF ============ -->
+<section class="page unit th-jsf">
+  <div class="side">
+    <div class="no">SITE 05 · MUMBAI</div>
+    <h1>Jai Shree Filtration</h1>
+    <div class="tagl">“Perforated sheets available in minutes”</div>
+    <div class="dom"><svg class="i"><use href="#i-globe"/></svg>jaishreefiltration.com</div>
+    <div class="photo" style="background-image:url(img/perforated-collage.jpg)"></div>
+    <div class="facts">
+      <span>Godown</span><b>Khadak Street, Masjid Bunder</b>
+      <span>Phone</span><b>+91 93202 04151</b>
+      <span>Holiday</span><b>Sunday</b>
+    </div>
+    <div class="sw">Site colours <span style="background:#F4EFE4"></span><span style="background:#E9E1D0"></span><span style="background:#1F5D45"></span><span style="background:#1E2A24"></span></div>
+  </div>
+  <div class="main">
+    <div class="tag">The buyer's question</div>
+    <div class="q">“Who has <span>perforated sheets in stock today</span>?”</div>
+    <div class="row ublock" style="gap:26px">
+      <div class="col">
+        <div class="tag">Who buys</div>
+        <p>Fabricators, contractors and traders in Mumbai who need sheets today, not next week.</p>
+        <div class="tag mt12">What it sells</div>
+        <div class="prodlist"><span class="focus">Ready-stock perforated sheets</span><span>Pick up or quick dispatch</span></div>
+      </div>
+      <div class="col">
+        <div class="tag">Searches we target</div>
+        <div class="searches"><span><svg><use href="#i-search"/></svg>perforated sheets ready stock Mumbai</span><span><svg><use href="#i-search"/></svg>perforated sheet dealer Masjid Bunder</span><span><svg><use href="#i-search"/></svg>perforated sheets in stock</span></div>
+      </div>
+    </div>
+    <div class="toolbox">
+      <div class="tool">
+        <div class="tt">Free tool · Stock check</div>
+        <div class="fld" style="margin-top:8px"><span>Material · thickness</span><b>SS · 1 mm</b></div>
+        <div class="fld"><span>Hole size</span><b>3 mm</b></div>
+        <div class="fld"><span>Quantity</span><b>10 sheets</b></div>
+        <span class="btn">Check stock now →</span>
+        <span class="btn" style="background:#25D366; color:#fff; margin-top:6px">WhatsApp the godown</span>
+      </div>
+      <div class="story">
+        <span class="ex">Example</span>
+        <h3 class="mt8">A fabricator's guard job is due tomorrow</h3>
+        <ol>
+          <li>Searches “perforated sheets ready stock Mumbai” and lands here.</li>
+          <li>Sends material, thickness, hole size and quantity — or taps WhatsApp.</li>
+          <li>The godown replies; the buyer collects from Masjid Bunder.</li>
+        </ol>
+        <p class="mt8">Behind the form: a <b>stock board</b> the team updates from the admin panel. It appears on the site as soon as the first items are added.</p>
+      </div>
+    </div>
+    <div class="sister"><span class="lbl">Sister units</span><span class="s"><i>Custom size or pattern?</i> → <b>the group's manufacturing units</b></span><span class="s"><i>Standard sheets in bulk?</i> → <b>Jai Shree Perforator</b></span></div>
+  </div>
+  <div class="foot" style="left:470px"><span></span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 18. UNIT 6 — SWM ============ -->
+<section class="page unit th-swm">
+  <div class="side">
+    <div class="no">SITE 06 · PUNE</div>
+    <h1>Shree Weld Mesh</h1>
+    <div class="tagl">“Manufacturing in welded mesh”</div>
+    <div class="dom"><svg class="i"><use href="#i-globe"/></svg>weldedmeshindia.com</div>
+    <div class="photo" style="background-image:url(img/welded-machine.jpg)"></div>
+    <div class="facts">
+      <span>Unit</span><b>Talawade, Pune · Gat No. 93</b>
+      <span>Phone</span><b>+91 90494 56019</b>
+      <span>Holiday</span><b>Thursday</b>
+    </div>
+    <div class="sw">Site colours <span style="background:#0E1A2B"></span><span style="background:#1B2E48"></span><span style="background:#C9D3E0"></span><span style="background:#F2F5F9"></span></div>
+  </div>
+  <div class="main">
+    <div class="tag">The buyer's question</div>
+    <div class="q">“Who makes <span>welded mesh near Pune</span> — and how much will my order weigh?”</div>
+    <div class="row ublock" style="gap:26px">
+      <div class="col">
+        <div class="tag">Who buys</div>
+        <p>Construction, fencing, industrial guarding, poultry and agriculture, fabricators.</p>
+        <div class="tag mt12">What it sells</div>
+        <div class="prodlist"><span class="focus">Welded mesh — only</span></div>
+      </div>
+      <div class="col">
+        <div class="tag">Searches we target</div>
+        <div class="searches"><span><svg><use href="#i-search"/></svg>welded mesh manufacturers Pune</span><span><svg><use href="#i-search"/></svg>welded wire mesh Talawade</span></div>
+      </div>
+    </div>
+    <div class="toolbox">
+      <div class="tool">
+        <div class="tt">Free tool · Weight calculator</div>
+        <svg viewBox="0 0 268 56" width="268" height="56" style="margin:8px 0 4px; display:block">
+          <rect width="268" height="56" rx="8" fill="#14243A"/>
+          <g stroke="#C9D3E0" stroke-width="2"><line x1="0" y1="10" x2="268" y2="10"/><line x1="0" y1="28" x2="268" y2="28"/><line x1="0" y1="46" x2="268" y2="46"/>
+          <line x1="14" y1="0" x2="14" y2="56"/><line x1="32" y1="0" x2="32" y2="56"/><line x1="50" y1="0" x2="50" y2="56"/><line x1="68" y1="0" x2="68" y2="56"/><line x1="86" y1="0" x2="86" y2="56"/><line x1="104" y1="0" x2="104" y2="56"/><line x1="122" y1="0" x2="122" y2="56"/><line x1="140" y1="0" x2="140" y2="56"/><line x1="158" y1="0" x2="158" y2="56"/><line x1="176" y1="0" x2="176" y2="56"/><line x1="194" y1="0" x2="194" y2="56"/><line x1="212" y1="0" x2="212" y2="56"/><line x1="230" y1="0" x2="230" y2="56"/><line x1="248" y1="0" x2="248" y2="56"/></g>
+        </svg>
+        <div class="fld"><span>Wire diameter</span><b>3 mm</b></div>
+        <div class="fld"><span>Opening</span><b>50 × 50 mm</b></div>
+        <div class="res"><span>Approx. weight</span><b>≈ 2.2 kg/m²</b></div>
+        <span class="btn">Tell us your requirement →</span>
+      </div>
+      <div class="story">
+        <span class="ex">Example</span>
+        <h3 class="mt8">A fencing contractor quotes a 500 m² boundary</h3>
+        <ol>
+          <li>Enters wire size and opening.</li>
+          <li>Sees about 2.2 kg per m² — roughly 1.1 tonnes for the job.</li>
+          <li>Sends the requirement straight to Shree Weld Mesh.</li>
+        </ol>
+        <p class="mt8">The contractor can now plan transport and budget before calling. Results are clearly marked “approximate”.</p>
+      </div>
+    </div>
+    <div class="sister"><span class="lbl">Sister units</span><span class="s"><i>Perforated sheets?</i> → <b>Shree Perforators</b></span><span class="s"><i>Laser cutting?</i> → <b>Jai Shree Metal Perforators</b></span><span class="s"><i>Expanded metal?</i> → <b>Jai Shree Industries</b></span></div>
+  </div>
+  <div class="foot" style="left:470px"><span></span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 19. FOUR PERFORATED SITES ============ -->
+<section class="page">
+  <div class="kicker">Four sites sell perforated sheets</div>
+  <h1>Same product, <em>four different buyers</em> — so four sites help, not compete</h1>
+  <p class="lead">Each site answers a different question with its own words. No paragraph is ever copied between sites — Google rewards that, and buyers find the unit that suits them.</p>
+  <div class="row mt24" style="gap:28px; flex:1">
+    <div style="width:520px; flex:none">
+      <svg viewBox="0 0 520 380" width="520" height="380" font-family="Inter">
+        <rect x="60" y="10" width="450" height="320" rx="14" fill="#fff" stroke="#E7E1DA"/>
+        <line x1="285" y1="20" x2="285" y2="320" stroke="#E7E1DA" stroke-width="2"/>
+        <line x1="70" y1="170" x2="500" y2="170" stroke="#E7E1DA" stroke-width="2"/>
+        <text x="60" y="352" font-size="12" fill="#8C857E" font-weight="600">MADE TO ORDER</text>
+        <text x="510" y="352" text-anchor="end" font-size="12" fill="#8C857E" font-weight="600">READY TODAY</text>
+        <text x="40" y="20" font-size="12" fill="#8C857E" font-weight="600" transform="rotate(-90 40 20)" text-anchor="end">CUSTOM · PRECISION</text>
+        <text x="40" y="330" font-size="12" fill="#8C857E" font-weight="600" transform="rotate(-90 40 330)">STANDARD · VOLUME</text>
+        <!-- SP -->
+        <circle cx="140" cy="70" r="40" fill="#1F6FEB" opacity=".12"/><circle cx="140" cy="70" r="9" fill="#1F6FEB"/>
+        <text x="158" y="66" font-size="14" font-weight="700" fill="#16130F">Shree Perforators</text>
+        <text x="158" y="83" font-size="11.5" fill="#5E5852">CNC, any pattern · Pune</text>
+        <!-- JSI -->
+        <circle cx="180" cy="200" r="40" fill="#D7263D" opacity=".12"/><circle cx="180" cy="200" r="9" fill="#D7263D"/>
+        <text x="198" y="196" font-size="14" font-weight="700" fill="#16130F">Jai Shree Industries</text>
+        <text x="198" y="213" font-size="11.5" fill="#5E5852">CNC + mechanical · Mumbai</text>
+        <!-- JSP -->
+        <circle cx="150" cy="280" r="40" fill="#8A5A2E" opacity=".12"/><circle cx="150" cy="280" r="9" fill="#8A5A2E"/>
+        <text x="168" y="276" font-size="14" font-weight="700" fill="#16130F">Jai Shree Perforator</text>
+        <text x="168" y="293" font-size="11.5" fill="#5E5852">Mechanical, bulk · Palghar</text>
+        <!-- JSF -->
+        <circle cx="430" cy="260" r="40" fill="#1F5D45" opacity=".12"/><circle cx="430" cy="260" r="9" fill="#1F5D45"/>
+        <text x="430" y="236" text-anchor="middle" font-size="14" font-weight="700" fill="#16130F">Jai Shree Filtration</text>
+        <text x="430" y="298" text-anchor="middle" font-size="11.5" fill="#5E5852">Ready stock · Masjid Bunder</text>
+      </svg>
+    </div>
+    <div class="col">
+      <table class="t">
+        <thead><tr><th>Site</th><th>The buyer's question it answers</th></tr></thead>
+        <tbody>
+          <tr><td style="color:#1F6FEB">Shree Perforators</td><td>“Can you make this exact pattern?”</td></tr>
+          <tr><td style="color:#C21F35">Jai Shree Industries</td><td>“Who makes expanded metal and punched sheets near Mumbai?”</td></tr>
+          <tr><td style="color:#8A5A2E">Jai Shree Perforator</td><td>“What is the cheapest way to get standard sheets in bulk?”</td></tr>
+          <tr><td style="color:#1F5D45">Jai Shree Filtration</td><td>“Who has perforated sheets in stock today?”</td></tr>
+        </tbody>
+      </table>
+      <div class="analogy mt20">
+        <div class="ic"><svg><use href="#i-users"/></svg></div>
+        <p><b>Like four counters in one market.</b> One sells made-to-measure, one sells wholesale, one sells off the shelf. Same family, different customers — and more customers in total.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 20. DIVIDER 04 ============ -->
+<section class="page dark divider">
+  <div class="bgimg" style="background-image:url(img/perforated-fine-blank.jpg)"></div>
+  <div class="num">04</div>
+  <h1>How it works</h1>
+  <p class="lead">No jargon: what happens when a buyer types an address, sends an enquiry, and how your team manages it all.</p>
+  <div class="foot"><img src="img/logo-light.svg" alt=""><span class="pn"></span></div>
+</section>
+
+<!-- ============ 21. ONE ENGINE ============ -->
+<section class="page">
+  <div class="kicker">One engine, seven faces</div>
+  <h1>The engine reads the address and <em>dresses the site for that unit</em></h1>
+  <div class="mt24">
+    <svg viewBox="0 0 1136 270" width="1136" height="270" font-family="Inter">
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#E8521A"/></marker></defs>
+      <!-- visitors -->
+      <g font-size="12.5">
+        <rect x="0" y="18" width="250" height="44" rx="10" fill="#fff" stroke="#E7E1DA"/><text x="16" y="45" font-family="Mono" fill="#16130F">shreeperforators.com</text>
+        <rect x="0" y="78" width="250" height="44" rx="10" fill="#fff" stroke="#E7E1DA"/><text x="16" y="105" font-family="Mono" fill="#16130F">jaishreefiltration.com</text>
+        <rect x="0" y="138" width="250" height="44" rx="10" fill="#fff" stroke="#E7E1DA"/><text x="16" y="165" font-family="Mono" fill="#16130F">weldedmeshindia.com</text>
+        <rect x="0" y="198" width="250" height="44" rx="10" fill="#fff" stroke="#E7E1DA" stroke-dasharray="4 4"/><text x="16" y="225" fill="#8C857E">… and four more addresses</text>
+      </g>
+      <text x="0" y="266" font-size="11" font-weight="700" fill="#8C857E" letter-spacing="1.5">1 · BUYER TYPES AN ADDRESS</text>
+      <g stroke="#E8521A" stroke-width="2" fill="none" marker-end="url(#ar)"><path d="M252 40 C320 40 330 120 392 128"/><path d="M252 100 C320 100 330 128 392 130"/><path d="M252 160 C320 160 330 134 392 132"/><path d="M252 220 C320 220 330 140 392 136"/></g>
+      <!-- engine -->
+      <rect x="398" y="50" width="300" height="168" rx="18" fill="#16130F"/>
+      <text x="548" y="88" text-anchor="middle" fill="#FF6B35" font-size="11" font-weight="700" letter-spacing="2">THE ENGINE</text>
+      <text x="548" y="116" text-anchor="middle" fill="#fff" font-size="17" font-weight="800">“Which unit is this?”</text>
+      <g font-size="12.5" fill="#CFC6BE">
+        <text x="430" y="146">→ picks that unit's colours and logo</text>
+        <text x="430" y="168">→ shows only that unit's products</text>
+        <text x="430" y="190">→ uses that unit's phone, email, holiday</text>
+      </g>
+      <text x="548" y="266" text-anchor="middle" font-size="11" font-weight="700" fill="#8C857E" letter-spacing="1.5">2 · ONE SYSTEM DECIDES</text>
+      <g stroke="#E8521A" stroke-width="2" fill="none" marker-end="url(#ar)"><path d="M700 134 L770 134"/></g>
+      <!-- result: 3 mini sites -->
+      <g>
+        <rect x="780" y="14" width="356" height="70" rx="12" fill="#0B0F14"/><rect x="796" y="30" width="60" height="8" rx="4" fill="#1F6FEB"/><text x="796" y="62" fill="#F5F7FA" font-size="14" font-weight="700">Shree Perforators</text><text x="1120" y="62" text-anchor="end" fill="#9AA6B8" font-size="11.5">Pattern library</text>
+        <rect x="780" y="98" width="356" height="70" rx="12" fill="#F4EFE4" stroke="#D8CDB6"/><rect x="796" y="114" width="60" height="8" rx="4" fill="#1F5D45"/><text x="796" y="146" fill="#1E2A24" font-size="14" font-weight="700">Jai Shree Filtration</text><text x="1120" y="146" text-anchor="end" fill="#55625A" font-size="11.5">Stock check</text>
+        <rect x="780" y="182" width="356" height="70" rx="12" fill="#0E1A2B"/><rect x="796" y="198" width="60" height="8" rx="4" fill="#C9D3E0"/><text x="796" y="230" fill="#F2F5F9" font-size="14" font-weight="700">Shree Weld Mesh</text><text x="1120" y="230" text-anchor="end" fill="#A9B6C8" font-size="11.5">Weight calculator</text>
+      </g>
+      <text x="780" y="266" font-size="11" font-weight="700" fill="#8C857E" letter-spacing="1.5">3 · BUYER SEES “THEIR” SITE</text>
+    </svg>
+  </div>
+  <div class="grid3 mt24" style="gap:16px">
+    <div class="card" style="padding:16px 18px"><div class="row" style="gap:12px;align-items:center"><div class="ic" style="margin:0"><svg><use href="#i-refresh"/></svg></div><h3>Fix once, fixed everywhere</h3></div><p>A security update or a better quote form goes live on all seven sites on the same day.</p></div>
+    <div class="card" style="padding:16px 18px"><div class="row" style="gap:12px;align-items:center"><div class="ic" style="margin:0"><svg><use href="#i-rocket"/></svg></div><h3>New unit? Days, not months</h3></div><p>Adding a site means adding its settings and its own words — the engine is already built.</p></div>
+    <div class="card" style="padding:16px 18px"><div class="row" style="gap:12px;align-items:center"><div class="ic" style="margin:0"><svg><use href="#i-shield"/></svg></div><h3>Sites stay separate</h3></div><p>Each site has its own address, Google listing and sitemap. One site's pages never show on another's address.</p></div>
+  </div>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 22. ENQUIRY JOURNEY ============ -->
+<section class="page">
+  <div class="kicker">The journey of an enquiry</div>
+  <h1>From a Google search to <em>the right unit's phone</em> — automatically</h1>
+  <div class="flow mt32">
+    <div class="st"><div class="bub"><svg><use href="#i-search"/></svg></div><div class="k">01</div><h3>Search</h3><p>Buyer searches for a product in their city.</p></div>
+    <div class="st"><div class="bub"><svg><use href="#i-globe"/></svg></div><div class="k">02</div><h3>Lands on the unit site</h3><p>Sees only that unit's products, photos and contacts.</p></div>
+    <div class="st"><div class="bub"><svg><use href="#i-tool"/></svg></div><div class="k">03</div><h3>Uses the free tool</h3><p>Pattern, drawing, stock or weight — answers in seconds.</p></div>
+    <div class="st"><div class="bub"><svg><use href="#i-upload"/></svg></div><div class="k">04</div><h3>Sends the enquiry</h3><p>Form, WhatsApp or call — details already filled in.</p></div>
+    <div class="st"><div class="bub"><svg><use href="#i-mail"/></svg></div><div class="k">05</div><h3>Right unit is told</h3><p>Saved with the site's name and emailed to that unit.</p></div>
+    <div class="st"><div class="bub" style="background:var(--brand);color:#fff;border-color:var(--brand)"><svg><use href="#i-check"/></svg></div><div class="k">06</div><h3>Buyer gets a reply</h3><p>Instant email with a reference number and the unit's contacts.</p></div>
+  </div>
+  <div class="row mt32" style="gap:22px">
+    <div class="col card" style="background:#16130F; border-color:#16130F; color:#F3EDE7">
+      <div class="tag" style="color:#FF8A5C">Sample auto-reply the buyer receives</div>
+      <div style="margin-top:12px; font-size:14px; line-height:1.55">
+        <div style="color:#A39A92; font-size:12.5px">From: Jai Shree Metal Perforators · Subject: We received your enquiry</div>
+        <div class="mt8">Thank you for your enquiry. Your reference is <b class="mono" style="color:#FFC400">#7F3A9C21</b>.</div>
+        <div>Our Talawade team will contact you. For anything urgent: <b>+91 93733 24492</b>.</div>
+      </div>
+    </div>
+    <div class="col">
+      <h2>Why this matters</h2>
+      <ul class="dots mt8">
+        <li><b>No forwarding:</b> the unit that makes the product hears first.</li>
+        <li><b>Buyer feels looked after</b> the moment they press send.</li>
+        <li><b>Nothing is lost:</b> every enquiry is stored with its site, page and date.</li>
+        <li><b>Reference numbers</b> make follow-up calls quick: “Ref 7F3A9C21”.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 23. ADMIN PANEL ============ -->
+<section class="page">
+  <div class="kicker">One admin panel</div>
+  <h1>Every enquiry from every site, <em>in one place</em></h1>
+  <div class="row mt24" style="gap:28px; flex:1">
+    <div style="width:720px; flex:none">
+      <div class="admin">
+        <div class="nav">
+          <div style="color:#fff;font-weight:800;font-size:13px;margin-bottom:10px">Jai Shree Admin</div>
+          <div class="on"><svg><use href="#i-inbox"/></svg>Leads</div>
+          <div><svg><use href="#i-file"/></svg>Blog</div>
+          <div><svg><use href="#i-camera"/></svg>Gallery</div>
+          <div><svg><use href="#i-star"/></svg>Testimonials</div>
+          <div><svg><use href="#i-box"/></svg>Stock board</div>
+          <div><svg><use href="#i-chart"/></svg>Reports</div>
+        </div>
+        <div class="body">
+          <div class="hd"><h3>Leads</h3><div class="sel">Site: <b style="color:#fff">All sites</b> ▾</div></div>
+          <table>
+            <thead><tr><th>Ref</th><th>Site</th><th>Request</th><th>From</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">7F3A9C21</td><td><span class="bdg" style="background:#FFC400;color:#0A0A0A">Metal Perforators</span></td><td>Laser cutting · DXF · 200 pcs</td><td>Chakan</td><td><span class="st new">New</span></td></tr>
+              <tr><td class="mono">B21E04D7</td><td><span class="bdg" style="background:#1F5D45;color:#fff">Filtration</span></td><td>Stock check · SS 1 mm</td><td>Mumbai</td><td><span class="st">Replied</span></td></tr>
+              <tr><td class="mono">5C90AA13</td><td><span class="bdg" style="background:#D7263D;color:#fff">Industries</span></td><td>Expanded metal · diamond</td><td>Thane</td><td><span class="st new">New</span></td></tr>
+              <tr><td class="mono">E4417B02</td><td><span class="bdg" style="background:#1F6FEB;color:#fff">Shree Perforators</span></td><td>Pattern · Ø 3 mm @ 5 mm</td><td>Bhosari</td><td><span class="st">Quoted</span></td></tr>
+              <tr><td class="mono">0D6F31E8</td><td><span class="bdg" style="background:#C9D3E0;color:#0E1A2B">Weld Mesh</span></td><td>Welded mesh · 500 m²</td><td>Pune</td><td><span class="st">Replied</span></td></tr>
+              <tr><td class="mono">91B7C5F0</td><td><span class="bdg" style="background:#E8521A;color:#fff">Group</span></td><td>General enquiry</td><td>Export</td><td><span class="st new">New</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="note mt8">Illustration — sample rows, not real enquiries.</p>
+    </div>
+    <div class="col">
+      <ul class="checks">
+        <li><b>Filter by site</b> — see only Palghar's enquiries, or all of them.</li>
+        <li><b>Site badge</b> on every enquiry shows where it came from.</li>
+        <li><b>Blog, gallery and testimonials</b> per site, from the same login.</li>
+        <li><b>Stock board</b> for the Masjid Bunder godown — update it from a phone.</li>
+        <li><b>Secure:</b> only approved admin accounts can see enquiries.</li>
+      </ul>
+      <div class="analogy mt24">
+        <div class="ic"><svg><use href="#i-inbox"/></svg></div>
+        <p><b>Like one reception desk for six factories.</b> Every call is logged with which factory it is for — and handed over instantly.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 24. DIVIDER 05 ============ -->
+<section class="page dark divider">
+  <div class="bgimg" style="background-image:url(img/em-brass.jpg)"></div>
+  <div class="num">05</div>
+  <h1>Benefits and<br>why this approach</h1>
+  <p class="lead">What changes for the group, for each unit and for every buyer — and why one engine beats the alternatives.</p>
+  <div class="foot"><img src="img/logo-light.svg" alt=""><span class="pn"></span></div>
+</section>
+
+<!-- ============ 25. BENEFITS ============ -->
+<section class="page dark">
+  <div class="kicker">Benefits</div>
+  <h1>Everyone wins: <em>the group, each unit, every buyer</em></h1>
+  <div class="grid3 mt28" style="gap:18px">
+    <div class="card">
+      <div class="ic"><svg><use href="#i-flag"/></svg></div>
+      <h2 style="color:#fff">For the group</h2>
+      <ul class="dots mt12" style="color:#D9D1C9">
+        <li>Found on Google for many more products and cities</li>
+        <li>A modern, consistent image — no dead domains, no outdated products</li>
+        <li>One system to run: lower cost than seven separate websites</li>
+        <li>Clear numbers each month: enquiries per unit, per product</li>
+        <li>Every site points back to jaishreegroup.com and the 1970 heritage</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="ic"><svg><use href="#i-grid"/></svg></div>
+      <h2 style="color:#fff">For each unit</h2>
+      <ul class="dots mt12" style="color:#D9D1C9">
+        <li>Its own name, look and address on the internet</li>
+        <li>Enquiries arrive directly — no waiting for a forward</li>
+        <li>Better enquiries: drawing, material, thickness, quantity already filled</li>
+        <li>Its own weekly holiday and phone shown correctly</li>
+        <li>Its own photos and Google Business Profile</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="ic"><svg><use href="#i-users"/></svg></div>
+      <h2 style="color:#fff">For buyers</h2>
+      <ul class="dots mt12" style="color:#D9D1C9">
+        <li>Land on a site that does exactly what they searched for</li>
+        <li>A free tool that answers their question in seconds</li>
+        <li>WhatsApp, call or form — whichever they prefer</li>
+        <li>Instant confirmation with a reference number</li>
+        <li>Pointed to the sister unit when they need something else</li>
+      </ul>
+    </div>
+  </div>
+  <div class="row mt28" style="gap:18px; align-items:stretch">
+    <div class="quote col" style="color:#F3EDE7; font-size:22px; align-self:center">The result: more of the right enquiries, reaching the right unit, faster — under one trusted group name.</div>
+    <div class="stat" style="width:250px"><div class="big-num">1 → 7</div><div class="l">doors into the group for buyers on Google</div></div>
+    <div class="stat" style="width:250px"><div class="big-num">0</div><div class="l">enquiries forwarded by hand</div></div>
+  </div>
+  <div class="foot"><img src="img/logo-light.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 26. WHY THIS APPROACH ============ -->
+<section class="page">
+  <div class="kicker">Why this approach</div>
+  <h1>Three ways to do it. <em>Only one gets all the benefits.</em></h1>
+  <table class="cmp">
+    <thead><tr>
+      <th></th>
+      <th><span class="tag">Option A</span>Keep one website</th>
+      <th><span class="tag">Option B</span>Six separate websites, built separately</th>
+      <th class="ours"><span class="tag" style="color:var(--brand)">Our plan</span>Seven sites on one engine</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>Each unit found on Google for its own product and city</td><td><span class="cn">Weak</span></td><td><span class="cy">Yes</span></td><td class="ours"><span class="cy">Yes</span></td></tr>
+      <tr><td>Enquiry reaches the right unit directly</td><td><span class="cn">No, forwarded</span></td><td><span class="cy">Yes</span></td><td class="ours"><span class="cy">Yes</span></td></tr>
+      <tr><td>One login to manage everything</td><td><span class="cy">Yes</span></td><td><span class="cn">Six logins</span></td><td class="ours"><span class="cy">Yes</span></td></tr>
+      <tr><td>A fix or new feature reaches all sites at once</td><td><span class="cy">Only one site</span></td><td><span class="cn">Six times the work</span></td><td class="ours"><span class="cy">Yes</span></td></tr>
+      <tr><td>Running cost (hosting, updates, security)</td><td><span class="cy">Low</span></td><td><span class="cn">Six times</span></td><td class="ours"><span class="cy">Close to one site</span></td></tr>
+      <tr><td>Consistent quality and group brand</td><td><span class="cy">Yes</span></td><td><span class="cm">Drifts apart</span></td><td class="ours"><span class="cy">Yes</span></td></tr>
+      <tr><td>Old Google rankings of the two live unit sites kept</td><td><span class="cn">Lost</span></td><td><span class="cm">Depends</span></td><td class="ours"><span class="cy">Yes, page by page</span></td></tr>
+    </tbody>
+  </table>
+  <p class="note mt16">Option B is what the group had before: two sites from another vendor and four domains that stopped working.</p>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 27. DIVIDER 06 ============ -->
+<section class="page dark divider">
+  <div class="bgimg" style="background-image:url(img/em-black.jpg)"></div>
+  <div class="num">06</div>
+  <h1>Challenges and how<br>we overcome them</h1>
+  <p class="lead">Every plan has risks. Here is each one we have found, and what we have already put in place.</p>
+  <div class="foot"><img src="img/logo-light.svg" alt=""><span class="pn"></span></div>
+</section>
+
+<!-- ============ 28. CHALLENGES ============ -->
+<section class="page">
+  <div class="kicker">Challenges → solutions</div>
+  <h1>What could go wrong, and <em>what we do about it</em></h1>
+  <div class="chal">
+    <div class="ch"><div class="ic"><svg><use href="#i-copy"/></svg></div><div class="pr">Google may see similar sites as copies</div><div class="so"><b>→</b> Every site gets its own words, its own angle and its own searches. Shared design, never shared paragraphs.</div></div>
+    <div class="ch"><div class="ic"><svg><use href="#i-link"/></svg></div><div class="pr">Two live unit sites could lose their Google rankings</div><div class="so"><b>→</b> Every old page is mapped to its new page and forwarded permanently (38 pages + 57 images already mapped).</div></div>
+    <div class="ch"><div class="ic"><svg><use href="#i-shield"/></svg></div><div class="pr">Building could break the live main site</div><div class="so"><b>→</b> Work happens on a separate copy. Before going live we compared 80 screenshots of 40 pages — no unintended change.</div></div>
+    <div class="ch"><div class="ic"><svg><use href="#i-camera"/></svg></div><div class="pr">Missing content: unit photos, logos, stock list</div><div class="so"><b>→</b> We launch with safe fallbacks (group mark + unit name, product photos). We never invent specs, stock or clients.</div></div>
+    <div class="ch"><div class="ic"><svg><use href="#i-mail"/></svg></div><div class="pr">Enquiries going to the wrong person</div><div class="so"><b>→</b> Each site carries its unit's phone and email. Every enquiry is tagged with its site and routed automatically.</div></div>
+    <div class="ch"><div class="ic"><svg><use href="#i-users"/></svg></div><div class="pr">Buyers confused about who is who</div><div class="so"><b>→</b> Every unit site says “A Jai Shree Group company”; the group's Our Group page links to all six.</div></div>
+    <div class="ch"><div class="ic"><svg><use href="#i-lock"/></svg></div><div class="pr">Enquiry data in the wrong hands</div><div class="so"><b>→</b> Admin access is locked to approved accounts; uploaded drawings will be kept in private storage. Privacy and terms pages follow India's DPDP Act 2023.</div></div>
+    <div class="ch"><div class="ic"><svg><use href="#i-cog"/></svg></div><div class="pr">Seven sites = seven times the upkeep?</div><div class="so"><b>→</b> No: one engine. One update, one security patch, one hosting bill for all seven.</div></div>
+  </div>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 29. PROTECTING RANKINGS ============ -->
+<section class="page">
+  <div class="kicker">Protecting what already works</div>
+  <h1>Old pages get a <em>forwarding address</em></h1>
+  <p class="lead">shreeperforators.com and metalperforatedsheets.com have been on Google for years. When the new sites go live, every old page sends its visitors — and its Google credit — to the matching new page.</p>
+  <div class="row mt28" style="gap:24px; align-items:center">
+    <div class="col">
+      <svg viewBox="0 0 640 230" width="640" height="230" font-family="Inter">
+        <defs><marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1F8A5B"/></marker></defs>
+        <g font-size="12" font-family="Mono">
+          <rect x="0" y="0" width="270" height="40" rx="9" fill="#fff" stroke="#E7E1DA"/><text x="14" y="25" fill="#5E5852">/perforated-sheets.html</text>
+          <rect x="0" y="62" width="270" height="40" rx="9" fill="#fff" stroke="#E7E1DA"/><text x="14" y="87" fill="#5E5852">/expanded-metal-perforated-…</text>
+          <rect x="0" y="124" width="270" height="40" rx="9" fill="#fff" stroke="#E7E1DA"/><text x="14" y="149" fill="#5E5852">/contact.html</text>
+          <rect x="0" y="186" width="270" height="40" rx="9" fill="#fff" stroke="#E7E1DA"/><text x="14" y="211" fill="#5E5852">/wire-mesh.html</text>
+          <rect x="370" y="0" width="270" height="40" rx="9" fill="#F6FBF8" stroke="#CBE6D7"/><text x="384" y="25" fill="#16130F">/products/perforated-sheets</text>
+          <rect x="370" y="62" width="270" height="40" rx="9" fill="#F6FBF8" stroke="#CBE6D7"/><text x="384" y="87" fill="#16130F">/products/expanded-metal</text>
+          <rect x="370" y="124" width="270" height="40" rx="9" fill="#F6FBF8" stroke="#CBE6D7"/><text x="384" y="149" fill="#16130F">/contact</text>
+          <rect x="370" y="186" width="270" height="40" rx="9" fill="#F6FBF8" stroke="#CBE6D7"/><text x="384" y="211" fill="#16130F">/products</text>
+        </g>
+        <g stroke="#1F8A5B" stroke-width="2" marker-end="url(#ar2)"><line x1="274" y1="20" x2="364" y2="20"/><line x1="274" y1="82" x2="364" y2="82"/><line x1="274" y1="144" x2="364" y2="144"/><line x1="274" y1="206" x2="364" y2="206"/></g>
+        <g font-size="10.5" font-weight="700" fill="#1F8A5B" font-family="Inter"><text x="319" y="14" text-anchor="middle">301</text><text x="319" y="76" text-anchor="middle">301</text><text x="319" y="138" text-anchor="middle">301</text><text x="319" y="200" text-anchor="middle">301</text></g>
+      </svg>
+      <p class="note mt8">Pages for products the group no longer makes (like wire mesh) forward to the products page — never to a page offering them.</p>
+    </div>
+    <div style="width:340px; flex:none">
+      <div class="stat"><div class="big-num">22 + 57</div><div class="l">pages and images on shreeperforators.com, each mapped to a new page</div></div>
+      <div class="stat mt12"><div class="big-num">16</div><div class="l">pages on metalperforatedsheets.com, each mapped to a new page</div></div>
+      <div class="analogy mt12" style="padding:14px 16px">
+        <div class="ic" style="width:40px;height:40px"><svg><use href="#i-pin"/></svg></div>
+        <p style="font-size:13.5px"><b>Like moving office</b> and leaving a forwarding address with the post office — no letter gets lost.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 30. DIVIDER 07 ============ -->
+<section class="page dark divider">
+  <div class="bgimg" style="background-image:url(img/expanded-2.jpg)"></div>
+  <div class="num">07</div>
+  <h1>Progress<br>and roadmap</h1>
+  <p class="lead">The foundation is built and already live. Now we add the unit sites, one at a time, each checked before it goes live.</p>
+  <div class="foot"><img src="img/logo-light.svg" alt=""><span class="pn"></span></div>
+</section>
+
+<!-- ============ 31. PROGRESS ============ -->
+<section class="page">
+  <div class="kicker">What is already done</div>
+  <h1>The hard part — the engine — <em>is built and live</em></h1>
+  <div class="row mt24" style="gap:22px">
+    <div class="col card">
+      <div class="row" style="justify-content:space-between;align-items:center"><h3>Step 0 · Live-site fixes</h3><span class="chip ok">LIVE</span></div>
+      <ul class="checks mt8">
+        <li>New phone numbers for three units</li>
+        <li>Weekly holidays on the contact page (Thu Pune · Sun Mumbai)</li>
+        <li>Location map fixed</li>
+        <li>Links to dead unit domains hidden</li>
+        <li>Discontinued products removed from the copy</li>
+      </ul>
+    </div>
+    <div class="col card">
+      <div class="row" style="justify-content:space-between;align-items:center"><h3>Phase 0 · The engine</h3><span class="chip ok">LIVE</span></div>
+      <ul class="checks mt8">
+        <li>One app that picks the site by its address</li>
+        <li>Colour system so each site gets its own look</li>
+        <li>Per-site Google setup: titles, sitemap, business data</li>
+        <li>Every enquiry tagged with its site, emailed to its unit</li>
+        <li>Instant reply with a reference number</li>
+        <li>Privacy and terms pages · admin access secured</li>
+      </ul>
+    </div>
+    <div class="col card" style="border-color:var(--brand)">
+      <div class="row" style="justify-content:space-between;align-items:center"><h3>Phase 1 · First unit site</h3><span class="chip wip">IN PROGRESS</span></div>
+      <ul class="checks mt8">
+        <li>Old shreeperforators.com crawled; forwarding map drafted</li>
+        <li>All pages and sections now read the active site</li>
+      </ul>
+      <ul class="dots mt8" style="color:var(--sub)">
+        <li>Next: Shree Perforators site with its own copy</li>
+        <li>Then: pattern library tool</li>
+        <li>Then: forwarding live and launch checks</li>
+      </ul>
+    </div>
+  </div>
+  <div class="mt24">
+    <div class="row" style="justify-content:space-between; font-size:13px; font-weight:600"><span>Overall build</span><span class="mono" style="color:var(--sub)">foundation done · 6 sites to go</span></div>
+    <div style="height:12px; border-radius:6px; background:#E9E3DC; margin-top:8px; overflow:hidden; display:flex">
+      <div style="width:34%; background:var(--ok)"></div><div style="width:6%; background:var(--brand)"></div>
+    </div>
+    <div class="row" style="justify-content:space-between; font-size:11.5px; color:var(--muted); margin-top:6px"><span>Step 0</span><span>Phase 0</span><span>Phase 1</span><span>Phase 2</span><span>Phase 3</span><span>Phase 4</span></div>
+  </div>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 32. ROADMAP ============ -->
+<section class="page">
+  <div class="kicker">Roadmap</div>
+  <h1>Step by step: <em>each site goes live only after it passes its checks</em></h1>
+  <div class="road">
+    <div class="ph done"><div class="pin"><svg><use href="#i-check"/></svg></div><div class="box"><div class="k">STEP 0</div><h3>Fix the live site</h3><ul><li>Correct phones and holidays</li><li>Remove outdated products</li><li>Fix the map</li></ul><span class="chip ok">Done</span></div></div>
+    <div class="ph done"><div class="pin"><svg><use href="#i-check"/></svg></div><div class="box"><div class="k">PHASE 0</div><h3>Build the engine</h3><ul><li>One app, many addresses</li><li>Per-site look and Google setup</li><li>Enquiries per unit</li><li>Main site unchanged</li></ul><span class="chip ok">Done · live</span></div></div>
+    <div class="ph now"><div class="pin"></div><div class="box"><div class="k">PHASE 1 · PILOT</div><h3>Shree Perforators</h3><ul><li>Site and copy</li><li>Pattern library</li><li>Old pages forwarded</li><li>Launch checks</li></ul><span class="chip wip">Now</span></div></div>
+    <div class="ph"><div class="pin"></div><div class="box"><div class="k">PHASE 2</div><h3>Jai Shree Metal Perforators</h3><ul><li>Site and copy</li><li>Drawing upload quote</li><li>Old pages forwarded</li><li>Machine list (when shared)</li></ul><span class="chip next">Next</span></div></div>
+    <div class="ph"><div class="pin"></div><div class="box"><div class="k">PHASE 3</div><h3>Four more sites</h3><ul><li>Jai Shree Industries — selector</li><li>Jai Shree Perforator — bulk estimator</li><li>Jai Shree Filtration — stock check</li><li>Shree Weld Mesh — weight calculator</li></ul><span class="chip next">About one a week</span></div></div>
+    <div class="ph"><div class="pin"></div><div class="box"><div class="k">PHASE 4</div><h3>Go live and grow</h3><ul><li>Google Search Console per site</li><li>Google Business Profile per unit</li><li>Our Group page links all six</li><li>Monthly report per site</li></ul><span class="chip next">After launch</span></div></div>
+  </div>
+  <p class="note mt16">Why the two old sites go first: they already rank on Google, so protecting and upgrading them brings results fastest.</p>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 33. DIVIDER 08 ============ -->
+<section class="page dark divider">
+  <div class="bgimg" style="background-image:url(img/welded-1.jpg)"></div>
+  <div class="num">08</div>
+  <h1>The long-term<br>vision</h1>
+  <p class="lead">Where this takes Jai Shree Group over the next three years.</p>
+  <div class="foot"><img src="img/logo-light.svg" alt=""><span class="pn"></span></div>
+</section>
+
+<!-- ============ 34. VISION ============ -->
+<section class="page dark">
+  <div class="kicker">Vision</div>
+  <h1 style="max-width:1100px">When a buyer anywhere searches for a metal sheet product we make, <em>a Jai Shree unit is the first name they find.</em></h1>
+  <div class="hz">
+    <div class="h"><div class="lvl">HORIZON 1</div><h2>Launch</h2><div class="when">Now → all six sites live</div>
+      <ul><li>Six unit sites, one by one, each with its free tool</li><li>Old pages forwarded, rankings kept</li><li>Every enquiry routed to its unit</li><li>Google Business Profile per unit</li></ul><div class="bar" style="width:33%"></div></div>
+    <div class="h"><div class="lvl">HORIZON 2</div><h2>Grow</h2><div class="when">First year after launch</div>
+      <ul><li>A blog per site on its own product topics</li><li>Real unit photos, machine list, stock board filled</li><li>Monthly report: which site, which product, which city</li><li>Tune pages to the searches that actually bring buyers</li></ul><div class="bar" style="width:66%"></div></div>
+    <div class="h"><div class="lvl">HORIZON 3</div><h2>Lead</h2><div class="when">Years two and three</div>
+      <ul><li>Each unit a known name for its product in its region</li><li>Decisions on capacity and stock guided by enquiry data</li><li>More buyer tools and export pages on the same engine</li><li>A new unit or product line gets a site in days</li></ul><div class="bar" style="width:100%"></div></div>
+  </div>
+  <div class="foot"><img src="img/logo-light.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 35. MEASURE ============ -->
+<section class="page">
+  <div class="kicker">How we measure success</div>
+  <h1>A monthly report for each site — <em>numbers, not opinions</em></h1>
+  <div class="kpis">
+    <div class="kpi"><div class="lbl"><svg><use href="#i-inbox"/></svg>Enquiries</div><div class="why">How many buyers contacted each unit, by product.</div><svg class="spark" viewBox="0 0 300 46" preserveAspectRatio="none"><path d="M0 40 L40 36 L80 38 L120 30 L160 26 L200 22 L240 16 L300 8" fill="none" stroke="#E8521A" stroke-width="2.5"/></svg></div>
+    <div class="kpi"><div class="lbl"><svg><use href="#i-check"/></svg>Enquiries won</div><div class="why">How many turned into orders — the number that pays.</div><svg class="spark" viewBox="0 0 300 46" preserveAspectRatio="none"><path d="M0 42 L50 40 L100 34 L150 33 L200 26 L250 22 L300 14" fill="none" stroke="#1F8A5B" stroke-width="2.5"/></svg></div>
+    <div class="kpi"><div class="lbl"><svg><use href="#i-clock"/></svg>Time to first reply</div><div class="why">How fast each unit answers. Faster replies win more jobs.</div><svg class="spark" viewBox="0 0 300 46" preserveAspectRatio="none"><path d="M0 8 L50 12 L100 14 L150 22 L200 26 L250 32 L300 36" fill="none" stroke="#E8521A" stroke-width="2.5"/></svg></div>
+    <div class="kpi"><div class="lbl"><svg><use href="#i-search"/></svg>Search clicks</div><div class="why">How many people reached each site from Google.</div><svg class="spark" viewBox="0 0 300 46" preserveAspectRatio="none"><path d="M0 40 L50 38 L100 32 L150 28 L200 20 L250 16 L300 10" fill="none" stroke="#E8521A" stroke-width="2.5"/></svg></div>
+    <div class="kpi"><div class="lbl"><svg><use href="#i-target"/></svg>Target-search positions</div><div class="why">Where each site appears for its key searches.</div><svg class="spark" viewBox="0 0 300 46" preserveAspectRatio="none"><path d="M0 36 L60 32 L120 30 L180 22 L240 16 L300 12" fill="none" stroke="#E8521A" stroke-width="2.5"/></svg></div>
+    <div class="kpi"><div class="lbl"><svg><use href="#i-tool"/></svg>Tool use</div><div class="why">How many buyers used each free tool — and then asked for a quote.</div><svg class="spark" viewBox="0 0 300 46" preserveAspectRatio="none"><path d="M0 40 L50 36 L100 34 L150 24 L200 22 L250 14 L300 10" fill="none" stroke="#E8521A" stroke-width="2.5"/></svg></div>
+  </div>
+  <p class="note mt12">Trend lines are illustrations of the report layout, not forecasts. Real numbers start the month each site goes live.</p>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 36. WHAT HELPS ============ -->
+<section class="page">
+  <div class="kicker">What helps us go further</div>
+  <h1>We launch without waiting. <em>These make each site even stronger.</em></h1>
+  <p class="lead">Nothing here blocks the build. Whenever the units can share them, we add them — most can be uploaded straight from the admin panel.</p>
+  <table class="t mt24">
+    <thead><tr><th style="width:290px">Item</th><th style="width:290px">Which sites</th><th>Until then, we show</th></tr></thead>
+    <tbody>
+      <tr><td>Photos of each unit and its machines</td><td>All six</td><td>Photos of that unit's products only</td></tr>
+      <tr><td>Unit logos</td><td>All six</td><td>Group flame mark + unit name + “A Jai Shree Group company”</td></tr>
+      <tr><td>Working hours</td><td>All six</td><td>Weekly holiday + “Call or WhatsApp for timings”</td></tr>
+      <tr><td>Ready-stock list</td><td>Jai Shree Filtration</td><td>“Check stock now” form and WhatsApp; stock board appears once filled</td></tr>
+      <tr><td>Machine list</td><td>Jai Shree Metal Perforators</td><td>Known capabilities: laser up to 14 mm, perforation up to 12 mm</td></tr>
+      <tr><td>Welded mesh range</td><td>Shree Weld Mesh</td><td>General description; “tell us your requirement”</td></tr>
+      <tr><td>Standard sizes and pattern lists</td><td>Jai Shree Industries · Jai Shree Perforator</td><td>Known specs and common patterns, marked as examples</td></tr>
+      <tr><td>Client names and case studies</td><td>All six</td><td>Industries we serve (no client names until approved)</td></tr>
+    </tbody>
+  </table>
+  <div class="foot"><img src="img/logo-navbar.svg" alt=""><span class="mid">One Group · Seven Websites</span><span class="pn"></span></div>
+</section>
+
+<!-- ============ 37. CLOSING ============ -->
+<section class="page dark divider" style="justify-content:center">
+  <div class="bgimg" style="background-image:url(img/cover-hero.jpg); width:560px; opacity:.6"></div>
+  <img src="img/logo-light.svg" alt="Jai Shree Group" style="height:62px; align-self:flex-start">
+  <h1 style="margin-top:40px; font-size:58px">Accept Challenges.<br>Develop. <em>Achieve.</em></h1>
+  <p class="lead" style="max-width:640px">Since 1970 the group has grown by taking on new challenges. Seven websites on one engine is the next one — and the foundation is already live.</p>
+  <div class="row mt32" style="gap:40px; font-size:14px; color:#B9B0A8">
+    <div><div class="tag" style="color:#8C857E">Client</div><div style="color:#fff; font-weight:600; margin-top:4px">Jai Shree Group · Kanishq Jangid</div></div>
+    <div><div class="tag" style="color:#8C857E">Agency</div><div style="color:#fff; font-weight:600; margin-top:4px">Viralbizz · Rahul, Subhash</div></div>
+    <div><div class="tag" style="color:#8C857E">Main site</div><div style="color:#fff; font-weight:600; margin-top:4px" class="mono">jaishreegroup.com</div></div>
+  </div>
+  <div class="foot"><span></span><span class="mid" style="color:#8C857E">Thank you</span><span class="pn"></span></div>
+</section>
+
+</body>
+</html>
