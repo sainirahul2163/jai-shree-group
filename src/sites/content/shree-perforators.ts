@@ -49,6 +49,11 @@ export const shreePerforatorsContent: SiteContent = {
       description:
         "Photos of perforated sheets, expanded metal, punched and leveled sheets and custom screens from Shree Perforators, Talawade, Pune.",
     },
+    patternLibrary: {
+      title: "Perforation Pattern Library and Open Area Calculator",
+      description:
+        "Pick a hole shape, layout, size and pitch, see the open area and a scale drawing of the pattern, then send it to Shree Perforators for a quote.",
+    },
     export: {
       title: "Perforated Sheets for Export",
       description:
@@ -296,6 +301,24 @@ export const shreePerforatorsContent: SiteContent = {
         ],
       },
     ],
+  },
+
+  patternLibrary: {
+    hero: {
+      label: "PATTERN LIBRARY",
+      title: "Build Your Hole Pattern",
+      subtitle:
+        "Choose a hole shape and layout, set the size and pitch, and see the open area and a drawing of the sheet before you ask for a quote.",
+    },
+    intro:
+      "Round, square, hexagonal and slotted holes in the layouts we punch most. The result goes straight into your quote request.",
+    resultLabel: "Open area",
+    note: "Open area is calculated from the hole size and pitch. Treat it as approximate; we confirm it with the drawing.",
+    overlapWarning: "These sizes make the holes touch or overlap. Increase the pitch or reduce the hole size.",
+    emptyText: "Enter a hole size and pitch to see the pattern.",
+    drawingCaption: "Drawing to scale for the sizes entered; a small part of the sheet is shown.",
+    requestLabel: "Request This Pattern",
+    previewLabel: "3D view of a perforated sheet (for illustration)",
   },
 
   products: {

@@ -173,6 +173,20 @@ export interface AboutPageContent {
   mission?: string;
 }
 
+/** Pattern library tool (Shree Perforators). */
+export interface PatternLibraryContent {
+  hero: PageHeroContent;
+  intro: string;
+  resultLabel: string;
+  /** "Approximate" note next to the result. */
+  note: string;
+  overlapWarning: string;
+  emptyText: string;
+  drawingCaption: string;
+  requestLabel: string;
+  previewLabel: string;
+}
+
 /** Export page (manufacturing units only). */
 export interface ExportContent {
   hero: PageHeroContent;
@@ -246,6 +260,7 @@ export interface SiteContent {
     clients?: PageMeta;
     blog?: PageMeta;
     export?: PageMeta;
+    patternLibrary?: PageMeta;
   };
   home: HomeContent;
   about: AboutPageContent;
@@ -258,6 +273,8 @@ export interface SiteContent {
   galleryHero: PageHeroContent;
   /** Only sites with "/export" in `pages`. */
   export?: ExportContent;
+  /** Only sites with "/pattern-library" in `pages`. */
+  patternLibrary?: PatternLibraryContent;
   /** Overrides of the shared product copy in `src/data/products.ts`. */
   products?: Partial<Record<ProductSlug, ProductCopy>>;
   /** Overrides of the shared industry copy in `src/data/industries.ts`. */

@@ -90,7 +90,7 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 - [x] Home, Products, Industries, Gallery, About (unit first, then "Part of Jai Shree Group"), Export, Contact (Thursday holiday), Get quote, Privacy, Terms.
 
 1.3 **Pattern library tool**
-- [ ] Hole shape, size, pitch and layout → open area % (shared formulas), live 2D pattern, 3D preview; "Request this pattern" pre-fills the quote form.
+- [x] Hole shape, size, pitch and layout → open area % (shared formulas), live 2D pattern, 3D preview; "Request this pattern" pre-fills the quote form.
 
 1.4 **Legacy redirects and launch checklist**
 - [ ] Legacy redirect map (old URL → new URL, 301) in `next.config.ts` with a `host` condition.

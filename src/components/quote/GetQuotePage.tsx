@@ -97,6 +97,24 @@ export function GetQuotePage({ content }: { content: QuoteContent }) {
     products.find((p) => p.slug === slug)?.name ?? slug;
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<QuoteFormValues>(initialForm);
+
+  // A pattern sent from the pattern library (?pattern=…) pre-fills the request.
+  // Read from the browser URL so the page stays static (no useSearchParams).
+  useEffect(() => {
+    const pattern = new URLSearchParams(window.location.search).get("pattern");
+    if (!pattern) return;
+    const offersPerforated = products.some((p) => p.slug === "perforated-sheets");
+    // Runs once after load: the static page cannot know the query string at render.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setForm((prev) => ({
+      ...prev,
+      products:
+        offersPerforated && !prev.products.includes("perforated-sheets")
+          ? [...prev.products, "perforated-sheets"]
+          : prev.products,
+      additionalRequirements: prev.additionalRequirements || `Pattern: ${pattern.slice(0, 500)}`,
+    }));
+  }, [products]);
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error" | "unavailable"
   >("idle");

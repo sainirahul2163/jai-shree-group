@@ -23,6 +23,7 @@ export const shreePerforators: SiteConfig = {
     description:
       "CNC perforated sheets in custom hole patterns, with expanded metal, turret punching and leveling, from our unit in Talawade, Pune.",
     quickLinks: [
+      { label: "Pattern Library", href: "/pattern-library" },
       { label: "About", href: "/about" },
       { label: "Industries", href: "/industries" },
       { label: "Gallery", href: "/gallery" },
@@ -80,6 +81,7 @@ export const shreePerforators: SiteConfig = {
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Products", href: "/products" },
+    { label: "Pattern Library", href: "/pattern-library" },
     { label: "Industries", href: "/industries" },
     { label: "Gallery", href: "/gallery" },
     { label: "Export", href: "/export" },
@@ -90,6 +92,7 @@ export const shreePerforators: SiteConfig = {
     "/",
     "/about",
     "/products",
+    "/pattern-library",
     "/industries",
     "/gallery",
     "/export",

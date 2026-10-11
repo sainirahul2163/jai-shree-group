@@ -33,6 +33,16 @@ Cursor's own work diary for the Jai Shree Group multi-site build. **Cursor write
 
 ## Entries
 
+### 2026-10-11 — 1.3 Pattern library tool (done by Claude; Cursor quota used up)
+
+- **Status:** ✅ done
+- **What I did:** `/pattern-library` on Shree Perforators (`src/components/tools/PatternLibrary.tsx`, page `[site]/(chrome)/pattern-library/`, copy in `content.patternLibrary`, nav + footer link, in `pages` and the sitemap). Hole shape (round, square, hex, slot with round or square ends) → layout (`getAvailableArrangements`) → sizes in mm → open area from the shared formulas (`src/lib/open-area.ts`), input warnings, an overlap warning when the result reaches 100%, a scale SVG drawing of the pattern in the site's brand colour, and the 3D sheet viewer labelled "for illustration". "Request This Pattern" opens `/get-quote?pattern=…`; the quote wizard reads it after load (keeps the page static), selects Perforated Sheets when the site offers it and writes "Pattern: …" into the requirements. Open area is labelled approximate.
+- **Checks:** tsc ✅ · build ✅ · lint unchanged (18) · `/pattern-library` 200 on the unit, 404 on the group · results checked by hand: round 60° 5/8 → 35.4%, hex 6/9 → 44.4%, round-end slot 3×15 at 6/20 → 35.9%, square-end 37.5%, square 5 at 8×8 → 39.1%; D ≥ pitch → warning and no result · headless Chrome: quote page pre-fills the pattern text and pre-selects Perforated Sheets · group SEO snapshot (44 routes) identical · screenshots at 1440 and 390 reviewed.
+- **Commit:** "1.3 Pattern library …" (this entry is part of that commit)
+- **Left to do in this task:** nothing
+- **Next task:** 1.4 Legacy redirects and launch checklist
+- **Questions / assumptions:** The 3D viewer shows a generic perforated sheet (it is not parameterised), so it is captioned as an illustration.
+
 ### 2026-10-11 — 1.2 Shree Perforators site (done by Claude; Cursor's Sonnet quota was used up)
 
 - **Status:** ✅ done (pattern library = 1.3, legacy redirects + launch checklist = 1.4)
