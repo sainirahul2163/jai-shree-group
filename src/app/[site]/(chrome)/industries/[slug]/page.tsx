@@ -6,7 +6,8 @@ import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { siteUrl } from "@/lib/seo";
 import { findSite } from "@/sites";
 import { siteIndustryDetail, siteIndustryProducts } from "@/sites/catalog";
-import { siteFromParams } from "@/sites/params";
+import { getContent } from "@/sites/content";
+import { siteForPage } from "@/sites/params";
 
 type PageProps = {
   params: Promise<{ site: string; slug: string }>;
@@ -29,7 +30,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/industries");
   const industry = siteIndustryDetail(site, slug);
   if (!industry) return {};
 
@@ -44,7 +45,7 @@ export async function generateMetadata({
 
 export default async function IndustryPage({ params }: PageProps) {
   const { slug } = await params;
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/industries");
   const industry = siteIndustryDetail(site, slug);
 
   if (!industry) {
@@ -64,6 +65,7 @@ export default async function IndustryPage({ params }: PageProps) {
       <IndustryPageClient
         industry={industry}
         relatedProducts={siteIndustryProducts(site, industry)}
+        banner={getContent(site.key).ctaBanner}
       />
     </>
   );

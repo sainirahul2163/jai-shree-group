@@ -303,15 +303,22 @@ const PATTERNS = [
 
 const SPRING = { type: "spring", stiffness: 100, damping: 30 } as const;
 
-export function PerforationPatterns() {
+const DEFAULT_METALS = ["SS", "MS", "GI", "Aluminum", "Copper", "Brass", "Titanium"];
+
+/** `metals`: the "Available in" chips; defaults to the group's list. */
+export function PerforationPatterns({
+  metals = DEFAULT_METALS,
+}: {
+  metals?: string[];
+} = {}) {
   const [selected, setSelected] = useState(PATTERNS[0]);
 
   return (
     <section className="border-t border-surface-2 py-16">
       <div className="mb-10">
         <div className="mb-4 flex items-center gap-3">
-          <span className="h-px w-6 bg-orange-500/40" />
-          <span className="text-xs font-medium tracking-[0.25em] text-orange-500 uppercase">
+          <span className="h-px w-6 bg-[color-mix(in_oklab,var(--label-accent)_40%,transparent)]" />
+          <span className="text-xs font-medium tracking-[0.25em] text-[var(--label-accent)] uppercase">
             Hole Patterns
           </span>
         </div>
@@ -402,7 +409,7 @@ export function PerforationPatterns() {
                   Available in
                 </p>
                 <div className="flex flex-wrap gap-1.5">
-                  {["SS", "MS", "GI", "Aluminum", "Copper", "Brass", "Titanium"].map(
+                  {metals.map(
                     (m) => (
                       <span
                         key={m}

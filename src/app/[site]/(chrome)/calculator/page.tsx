@@ -5,15 +5,15 @@ import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { CALCULATOR_FAQS } from "@/data/calculator-faqs";
 import { contentMetadata } from "@/lib/seo";
 import { getContent } from "@/sites/content";
-import { siteFromParams, type SiteParams } from "@/sites/params";
+import { siteForPage, type SiteParams } from "@/sites/params";
 
 export async function generateMetadata({ params }: SiteParams): Promise<Metadata> {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/calculator");
   return contentMetadata(getContent(site.key).meta.calculator!, "/calculator");
 }
 
 export default async function CalculatorPage({ params }: SiteParams) {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/calculator");
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

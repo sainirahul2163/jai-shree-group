@@ -86,8 +86,8 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 - [x] Group SEO output identical; full screenshot compare clean.
 
 1.2 **Shree Perforators site**
-- [ ] `src/sites/shree-perforators.ts` (theme from `03-sites.md`, contact, products, industries, pages, nav, SEO) + `content/shree-perforators.ts` with unique copy (`07-seo-rules.md`); fallbacks from `08-content-checklist.md`.
-- [ ] Home, Products, Industries, Gallery, About (unit first, then "Part of Jai Shree Group"), Export, Contact (Thursday holiday), Get quote, Privacy, Terms.
+- [x] `src/sites/shree-perforators.ts` (theme from `03-sites.md`, contact, products, industries, pages, nav, SEO) + `content/shree-perforators.ts` with unique copy (`07-seo-rules.md`); fallbacks from `08-content-checklist.md`.
+- [x] Home, Products, Industries, Gallery, About (unit first, then "Part of Jai Shree Group"), Export, Contact (Thursday holiday), Get quote, Privacy, Terms.
 
 1.3 **Pattern library tool**
 - [ ] Hole shape, size, pitch and layout → open area % (shared formulas), live 2D pattern, 3D preview; "Request this pattern" pre-fills the quote form.

@@ -27,7 +27,7 @@ export function ProductQuoteForm({
   productName,
   compact = false,
 }: ProductQuoteFormProps) {
-  const { contact } = useSite();
+  const { contact, replyPromise } = useSite();
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error" | "unavailable"
   >("idle");
@@ -87,7 +87,9 @@ export function ProductQuoteForm({
           Enquiry sent successfully!
         </p>
         <p className="mt-2 text-base" style={{ color: "var(--text-secondary)" }}>
-          We&apos;ll respond within 24 hours.
+          {replyPromise
+            ? `We'll respond ${replyPromise}.`
+            : "We'll get back to you shortly."}
         </p>
         <Button
           type="button"

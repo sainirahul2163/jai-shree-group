@@ -51,7 +51,7 @@ const MODEL_SPECS: Record<ProductModel, Spec> = {
   sheet: {
     label: "3D Preview — Perforated Sheet",
     title: "Perforated Sheet",
-    specs: ["Material: Carbon / Stainless Steel", "Pattern: Round, 60° Staggered", "Process: CNC Perforation"],
+    specs: ["Material: Stainless Steel", "Pattern: Round, 60° Staggered", "Process: CNC Perforation"],
   },
   coil: {
     label: "3D Preview — Perforated Coil Stock",

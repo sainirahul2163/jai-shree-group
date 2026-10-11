@@ -6,7 +6,7 @@ import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { siteUrl } from "@/lib/seo";
 import { findSite } from "@/sites";
 import { siteProductDetail, siteRelatedProducts } from "@/sites/catalog";
-import { siteFromParams } from "@/sites/params";
+import { siteForPage } from "@/sites/params";
 
 type PageProps = {
   params: Promise<{ site: string; slug: string }>;
@@ -26,7 +26,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/products");
   const product = siteProductDetail(site, slug);
 
   if (!product) {
@@ -50,7 +50,7 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/products");
   const product = siteProductDetail(site, slug);
 
   if (!product) {

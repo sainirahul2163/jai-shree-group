@@ -162,8 +162,21 @@ export interface AboutPageContent {
     paragraphs: { text: string; emphasis?: boolean }[];
     cta?: SiteLink;
   };
-  vision: string;
-  mission: string;
+  /** Unit sites: "Part of Jai Shree Group" block after the story. */
+  parent?: {
+    label: string;
+    heading: string;
+    paragraphs: string[];
+    link: SiteLink;
+  };
+  vision?: string;
+  mission?: string;
+}
+
+/** Export page (manufacturing units only). */
+export interface ExportContent {
+  hero: PageHeroContent;
+  sections: { heading: string; paragraphs: string[] }[];
 }
 
 export interface ContactContent {
@@ -196,6 +209,8 @@ export type ProductCopy = Partial<
     | "faqs"
     | "metaTitle"
     | "metaDescription"
+    | "materials"
+    | "specifications"
   >
 > & { card?: Partial<Pick<ProductCard, "name" | "description">> };
 
@@ -209,6 +224,7 @@ export type IndustryCopy = Partial<
     | "applications"
     | "metaTitle"
     | "metaDescription"
+    | "clients"
   >
 > & {
   /** Short line on the home industry cards. */
@@ -229,6 +245,7 @@ export interface SiteContent {
     certifications?: PageMeta;
     clients?: PageMeta;
     blog?: PageMeta;
+    export?: PageMeta;
   };
   home: HomeContent;
   about: AboutPageContent;
@@ -236,6 +253,11 @@ export interface SiteContent {
   industriesIndex: { hero: PageHeroContent };
   contact: ContactContent;
   quote: QuoteContent;
+  /** Closing banner on the about and industry pages. */
+  ctaBanner: { title: string; text: string };
+  galleryHero: PageHeroContent;
+  /** Only sites with "/export" in `pages`. */
+  export?: ExportContent;
   /** Overrides of the shared product copy in `src/data/products.ts`. */
   products?: Partial<Record<ProductSlug, ProductCopy>>;
   /** Overrides of the shared industry copy in `src/data/industries.ts`. */

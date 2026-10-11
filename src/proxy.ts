@@ -121,9 +121,18 @@ function sitePath(key: SiteKey, pathname: string): string {
   if (pathname === "/") return "";
   const siteFile = SITE_FILES.get(pathname);
   if (siteFile) return siteFile;
-  const first = `/${pathname.split("/")[1]}`;
-  const pages = findSite(key)?.pages ?? [];
-  return pages.includes(first) ? pathname : `${NO_PAGE}${pathname}`;
+  const [, firstSegment, slug] = pathname.split("/");
+  const site = findSite(key);
+  if (!site?.pages.includes(`/${firstSegment}`)) return `${NO_PAGE}${pathname}`;
+  // A product or industry the site does not list 404s too, so a unit site never
+  // serves the group's other products or industries.
+  if (slug && firstSegment === "products" && !(site.products as string[]).includes(slug)) {
+    return `${NO_PAGE}${pathname}`;
+  }
+  if (slug && firstSegment === "industries" && !site.industries.includes(slug)) {
+    return `${NO_PAGE}${pathname}`;
+  }
+  return pathname;
 }
 
 export async function proxy(req: NextRequest) {

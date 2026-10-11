@@ -13,7 +13,7 @@ import { LandingStats } from "@/components/landing/LandingStats";
 import { LandingStory } from "@/components/landing/LandingStory";
 import { LandingTestimonials } from "@/components/landing/LandingTestimonials";
 import { ScrollProgress } from "@/components/landing/ScrollProgress";
-import { siteFromParams, type SiteParams } from "@/sites/params";
+import { siteForPage, type SiteParams } from "@/sites/params";
 
 const TITLE = "Jai Shree Group — Accept Challenges, Develop, Achieve | Since 1970";
 const DESCRIPTION =
@@ -22,7 +22,7 @@ const DESCRIPTION =
 export async function generateMetadata({
   params,
 }: SiteParams): Promise<Metadata> {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/landing");
 
   return {
     title: TITLE,

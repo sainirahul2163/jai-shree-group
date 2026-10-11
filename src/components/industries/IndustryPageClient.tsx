@@ -9,18 +9,22 @@ import { PageHero } from "@/components/shared/PageHero";
 import { Button } from "@/components/ui/button";
 import type { IndustryDetail } from "@/data/industries";
 import type { ProductDetail } from "@/data/products";
+import { useSite } from "@/sites/SiteProvider";
 import { getProductIcon } from "@/lib/icons";
 
 type IndustryPageClientProps = {
   industry: IndustryDetail;
   /** The industry's products that this site offers (`siteIndustryProducts`). */
   relatedProducts: ProductDetail[];
+  banner: { title: string; text: string };
 };
 
 export function IndustryPageClient({
   industry,
   relatedProducts,
+  banner,
 }: IndustryPageClientProps) {
+  const { replyPromise } = useSite();
   return (
     <>
       <PageHero
@@ -156,8 +160,9 @@ export function IndustryPageClient({
             Get Quote for {industry.name} Application
           </h2>
           <p className="mt-4 text-base" style={{ color: "var(--text-secondary)" }}>
-            Share your specifications and our team will provide a customized
-            quote within 24 hours.
+            {replyPromise
+              ? `Share your specifications and our team will provide a customized quote ${replyPromise}.`
+              : "Share your specifications and we will prepare a quote for your application."}
           </p>
           <Button asChild size="lg" className="mt-8 glow-orange">
             <Link href={`/get-quote?industry=${industry.slug}`}>
@@ -168,7 +173,7 @@ export function IndustryPageClient({
         </div>
       </section>
 
-      <CtaBanner />
+      <CtaBanner title={banner.title} text={banner.text} />
     </>
   );
 }

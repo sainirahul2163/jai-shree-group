@@ -5,15 +5,15 @@ import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { ContactPageSchema } from "@/components/seo/ContactPageSchema";
 import { contentMetadata } from "@/lib/seo";
 import { getContent } from "@/sites/content";
-import { siteFromParams, type SiteParams } from "@/sites/params";
+import { siteForPage, type SiteParams } from "@/sites/params";
 
 export async function generateMetadata({ params }: SiteParams): Promise<Metadata> {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/contact");
   return contentMetadata(getContent(site.key).meta.contact, "/contact");
 }
 
 export default async function Contact({ params }: SiteParams) {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/contact");
 
   return (
     <>

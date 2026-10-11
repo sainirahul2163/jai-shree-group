@@ -15,7 +15,7 @@ import {
   getBlogPostBySlug,
 } from "@/lib/supabase/queries";
 import { findSite } from "@/sites";
-import { siteFromParams } from "@/sites/params";
+import { siteForPage } from "@/sites/params";
 import type { SiteConfig } from "@/sites/types";
 
 type PageProps = {
@@ -67,6 +67,10 @@ export async function generateStaticParams({
 }) {
   const site = findSite(params.site);
   if (!site) return [];
+  // Next prerenders a child segment only if every parent param yields at
+  // least one path, so a site without a blog returns one placeholder (it
+  // renders as a 404 via siteForPage). Without it, no site's posts are prerendered.
+  if (!site.pages.includes("/blog")) return [{ slug: "no-blog" }];
   const dbSlugs = await getAllBlogSlugs(site.key);
   const constantSlugs =
     site.key === "group" ? BLOG_POSTS.map((p) => p.slug) : [];
@@ -78,7 +82,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/blog");
   const dbPost = await getBlogPostBySlug(site.key, slug);
   const post = resolvePost(site, slug, dbPost);
   if (!post) return {};
@@ -100,7 +104,7 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/blog");
   const dbPost = await getBlogPostBySlug(site.key, slug);
   const post = resolvePost(site, slug, dbPost);
 

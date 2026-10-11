@@ -57,7 +57,8 @@ Every unit site shows "A Jai Shree Group company" and links once to jaishreegrou
 - **Signature tool: pattern library.** Choose hole shape, size, pitch and layout; see open area % (reuse the 10 formulas in `OpenAreaCalculator`), a live 2D pattern (`PerforationPatterns`) and a 3D preview (`ProductViewer3D`). "Request this pattern" pre-fills the quote form.
 - **Search targets to start with:** perforated sheet manufacturers Pune, perforated sheet hole patterns, SS perforated sheet supplier.
 - **Contact:** +91 93706 06017 · shreeperforator@gmail.com · weekly holiday Thursday.
-- **Theme (dark):** background `#0B0F14`, surface `#121821`, surface-2 `#1A2230`, border `#263142`, text `#F5F7FA`, secondary `#9AA6B8`, brand `#1F6FEB`, brand-hover `#3B82F6`, brand-foreground `#FFFFFF`, brand-text `#5A96FF`. Font: Geist.
+- **Theme (dark):** background `#0B0F14`, surface `#121821`, surface-2 `#1A2230`, border `#263142`, text `#F5F7FA`, secondary `#9AA6B8`, muted `#7E8A9D` (5.5:1 on background, 4.6:1 on surface-2; added 2026-10-11), brand `#1F6FEB`, brand-hover `#3B82F6`, brand-foreground `#FFFFFF`, brand-text `#5A96FF`. Font: Geist.
+- **Built (task 1.2, 2026-10-11):** `src/sites/shree-perforators.ts` + `src/sites/content/shree-perforators.ts`. Preview locally at `http://shree-perforators.localhost:3000`.
 - **Legacy:** live old site. Map every old URL before switching DNS.
 
 ### 2. Jai Shree Metal Perforators — `jai-shree-metal-perforators`

@@ -8,19 +8,19 @@ import { BLOG_POSTS } from "@/lib/constants";
 import { getPublishedBlogPosts } from "@/lib/supabase/queries";
 import { contentMetadata } from "@/lib/seo";
 import { getContent } from "@/sites/content";
-import { siteFromParams, type SiteParams } from "@/sites/params";
+import { siteForPage, type SiteParams } from "@/sites/params";
 
 /** Posts are managed in Supabase — refresh the static page hourly so newly
  *  published posts appear without a redeploy. */
 export const revalidate = 3600;
 
 export async function generateMetadata({ params }: SiteParams): Promise<Metadata> {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/blog");
   return contentMetadata(getContent(site.key).meta.blog!, "/blog");
 }
 
 export default async function BlogIndexPage({ params }: SiteParams) {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/blog");
   const dbPosts = await getPublishedBlogPosts(site.key);
   // The seed posts in src/data/blog-posts.ts belong to the group site only.
   const seedPosts = site.key === "group" ? BLOG_POSTS : [];

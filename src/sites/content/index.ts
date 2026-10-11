@@ -1,9 +1,11 @@
 import { groupContent } from "@/sites/content/group";
+import { shreePerforatorsContent } from "@/sites/content/shree-perforators";
 import type { SiteContent } from "@/sites/content/types";
 import type { SiteKey } from "@/sites/types";
 
 const CONTENT: Partial<Record<SiteKey, SiteContent>> = {
   group: groupContent,
+  "shree-perforators": shreePerforatorsContent,
 };
 
 /** Long-form copy for a configured site. Every site in `ALL_SITES` needs a module. */

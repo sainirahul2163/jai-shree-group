@@ -142,6 +142,7 @@ export const group: SiteConfig = {
     hours: "9:00 AM – 6:00 PM",
   },
   tagline: COMPANY.tagline,
+  replyPromise: "within 24 hours",
   jurisdiction: "Pune",
   leadEmail: COMPANY.email,
   products: [
@@ -177,6 +178,8 @@ export const group: SiteConfig = {
     brandHover: "#ff6b35",
     brandForeground: "#ffffff",
     brandText: "#e8521a",
+    // The group's section labels have always used Tailwind's orange-500.
+    labelAccent: "var(--color-orange-500)",
     fontHeading: "geist",
     fontBody: "geist",
   },

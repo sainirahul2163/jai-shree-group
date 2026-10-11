@@ -33,6 +33,21 @@ Cursor's own work diary for the Jai Shree Group multi-site build. **Cursor write
 
 ## Entries
 
+### 2026-10-11 — 1.2 Shree Perforators site (done by Claude; Cursor's Sonnet quota was used up)
+
+- **Status:** ✅ done (pattern library = 1.3, legacy redirects + launch checklist = 1.4)
+- **What I did:**
+  - `src/sites/shree-perforators.ts`: full config (origin www.shreeperforators.com, flame-and-name logo, own footer, contact + Thursday holiday, no hours/brochure/ISO badge, 5 products, 6 industries, theme from docs/03 with muted `#7E8A9D` for AA, nav, home sections without video/group, pages incl. `/export`, SEO + schema). Registered in `src/sites/index.ts`.
+  - `src/sites/content/shree-perforators.ts`: all copy written for this site (home, about with a "Part of Jai Shree Group" block, products index, 5 product overrides incl. materials/specs from docs/02, 6 industry overrides without client names, contact, quote, export, gallery hero, CTA banner, meta for every page). Only facts from docs/02; sister-unit sentence for laser cutting.
+  - Shared changes (group unchanged): `ProductCopy` may override `materials`/`specifications`, `IndustryCopy` `clients`; About page `parent` block and optional vision/mission; `CtaBanner` text prop + `content.ctaBanner`; `content.galleryHero`; gallery hides the 3D dimple preview and limits filters on unit sites and falls back to the site's product photos when it has no gallery items; new `/export` page; `SiteConfig.replyPromise` (group "within 24 hours"; units none) used by the product quote form and industry pages; `--label-accent` for small labels (group keeps orange-500) and brand-coloured showcase strokes; showcase drops "+ Laser" on sites without laser; pattern chips take `metals`.
+  - Routing: `siteForPage(params, path)` on every page (404 for pages a site does not list, also at build); placeholder blog slug for sites without a blog so the group's posts stay prerendered; proxy 404s product/industry slugs a site does not list (real 404 with chrome; group `/products/nope` is now a real 404 instead of a soft 404).
+  - Fixed on every site: 3D viewer caption "Carbon / Stainless Steel" → "Stainless Steel" (client rule).
+- **Checks:** tsc ✅ · build ✅ · lint unchanged (18 problems) · group SEO snapshot of 44 routes (titles, meta, canonical, hreflang, all JSON-LD, sitemap, robots) identical before/after · group pixel check of 7 pages × 2 widths ≤ 0.05% except mobile product page 0.47% (intended caption fix + rotating 3D) · unit site: 21 pages 200, laser-cutting/petrochemical/group-only pages 404 with chrome; canonicals, og:url, sitemap (21 URLs) and robots at www.shreeperforators.com; JSON-LD ManufacturingBusiness with parentOrganization Jai Shree Group and its 5 products; no wire/crimped/demister/welded/carbon steel/Pan India/client names; "laser" only in the sister-unit lines; duplicate-copy check vs 27 group pages: only 2 shared UI lines (form privacy note, 3D hint); contrast text 17.9, secondary 7.8, muted 5.5, button 4.6, brand-text 6.6; full-page screenshots at 1440 and 390 reviewed; test lead with spoofed `x-site: group` saved as `site = 'shree-perforators'` (deleted).
+- **Commit:** "1.2 Shree Perforators site …" (this entry is part of that commit)
+- **Left to do in this task:** nothing. Note: `PerforationPatterns` still lacks the `patterns`/`onSelect`/`selectedId` props asked for in 1.1 — add them in 1.3.
+- **Next task:** 1.3 Pattern library tool
+- **Questions / assumptions:** Industry applications on the unit site are generic uses of perforated sheet for each sector (no client claims). Home timeline uses group milestones, labelled as the group's. The "6 metals" stat counts SS, MS, GI, aluminium, copper, brass (docs/02).
+
 ### 2026-10-11 — 1.1 Site-aware components (started by Cursor, finished by Claude)
 
 - **Status:** 🔄 code done and checked; the full screenshot compare (`docs/research/after-1.1` vs `after-phase-0`) was still running when the session's usage limit hit. Re-run it before ticking 1.1.

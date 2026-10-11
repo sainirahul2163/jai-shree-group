@@ -15,3 +15,18 @@ export async function siteFromParams(
   if (!site) notFound();
   return site;
 }
+
+/**
+ * The active site, for a page under a top-level path ("/blog", "/calculator").
+ * Every configured site is prerendered for every page, so a page the site does
+ * not list in `config.pages` must 404 here too (the proxy already 404s it at
+ * request time).
+ */
+export async function siteForPage(
+  params: Promise<{ site: string }>,
+  path: string
+): Promise<SiteConfig> {
+  const site = await siteFromParams(params);
+  if (!site.pages.includes(path)) notFound();
+  return site;
+}

@@ -18,6 +18,7 @@ No fixed dates. We work as fast as possible, **phase by phase, task by task**: a
 
 | # | Site | Unit location | What it shows | Domain |
 | --- | --- | --- | --- | --- |
+| 2026-10-11 | 1.2 Shree Perforators site built (Claude; Cursor quota used up): config, own copy, export page, unit about/gallery/contact, real 404s for pages and products the unit does not offer. Group site SEO identical and pixel-identical except an intentional fix: the 3D viewer caption no longer says "Carbon" steel (client rule). Preview locally at `shree-perforators.localhost:3000`; DNS not switched (needs 1.4 redirects + launch checklist) | `src/sites/`, `src/components/`, `src/app/[site]/`, `src/proxy.ts`, docs | Phase 1 task 1.2 |
 | 2026-10-11 | Cursor 1.2 run stopped at once: "You've hit your usage limit … continue with Sonnet … resets 11/4/2026". Nothing changed. Claude builds 1.2 itself (user's rule) | — | Cursor quota |
 | 2026-10-11 | **Phase 0 + 1.1 live on jaishreegroup.com** (Claude). Preview of `eafe6d0` checked in Chrome against the migrated live DB (gallery 69 photos, 4 blog posts, testimonials, sitemap 39 URLs at the production origin, preview robots disallow + noindex). Merged `multi-site` into `main` (`751cd5c`, author = GitHub no-reply), local build against live DB passed, pushed; Vercel production deploy succeeded. Live checks: `/`, `/contact`, a product page, `/gallery` (69 photos), `/blog`, `/group` (map 18/18 tiles, 2 markers), `/privacy`, `/terms`, `/admin/login`, `/api/health` 200; `/does-not-exist` and `/group/about` 404; `/products/wire-mesh` 308; robots identical to before; sitemap = before + `/privacy`, `/terms`; canonical `https://www.jaishreegroup.com`, `index, follow`; contact shows all current unit phones and Thursday/Sunday holidays; new page views saved with `site='group'`. `main` merged back into `multi-site` (fast-forward) | `main`, `multi-site` | Phase 0 go-live |
 | 2026-10-11 | **Multi-site migration applied to the LIVE project** (Claude; same file as on jai-shree-dev, `2026-10-11-multi-site.sql`): `site` column (not null, default `'group'`, check on the 7 keys) on leads, blog_posts, gallery_items, testimonials, page_views; `(site, created_at)` indexes; blog slugs unique per site. Row counts unchanged (leads 2, blog 4, gallery 70, testimonials 3, page views 971); every existing row has `site='group'`; no rows changed. The current live code keeps working (new rows default to `'group'`) | live Supabase | Phase 0 go-live |
@@ -89,7 +90,7 @@ Status: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 
 | Requirement | Status |
 | --- | --- |
-| Site 1 Shree Perforators: pattern library, old-URL redirects (week 3) | ⏳ |
+| Site 1 Shree Perforators: pattern library, old-URL redirects (week 3) | 🔄 site built (1.2); pattern library (1.3) and redirects + launch checklist (1.4) to do |
 | Site 2 Jai Shree Metal Perforators: drawing upload quote, old-URL redirects (week 4) | ⏳ |
 | Site 3 Jai Shree Industries: expanded metal selector (weeks 5–8) | ⏳ |
 | Site 4 Jai Shree Perforator: bulk order estimator | ⏳ |
@@ -106,12 +107,12 @@ Unit logos, working hours, contact names, unit photos, client names, case studie
 
 ## 4. Current status
 
-**Where we are (2026-10-11):** **Phase 0 and task 1.1 are live** on jaishreegroup.com (merge `751cd5c`). The live database has the multi-site migration and the admin-access hardening. Next: Phase 1 task 1.2 (Shree Perforators site).
+**Where we are (2026-10-11):** **Phase 0 and task 1.1 are live** on jaishreegroup.com (merge `751cd5c`). The live database has the multi-site migration and the admin-access hardening. Phase 1: task 1.2 (Shree Perforators site) done; next 1.3 pattern library.
 
 **Authorised by the user (2026-10-11):** run Phase 0 → Phases 1–3 (all six unit sites) as far as possible; SQL on jai-shree-dev freely; tested additive migrations on the live project when going live; merge to `main` when a phase passes its checks; Google Analytics skipped for now; admin-access hardening on the live project (applied).
 
 **Next:**
-1. 1.2 Shree Perforators site (Cursor `claude-sonnet-5-thinking-high`), then 1.3 pattern library, 1.4 legacy redirects + launch checklist; merge Phase 1 to `main` when it passes.
+1. 1.3 pattern library, 1.4 legacy redirects + launch checklist; merge Phase 1 to `main` when it passes.
 2. Phases 2 and 3 (the other unit sites).
 
 **Waiting on the user (not blocking):**

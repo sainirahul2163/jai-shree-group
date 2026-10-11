@@ -18,12 +18,8 @@ const DimpleSheet3D = dynamic(
 import { PageHero } from "@/components/shared/PageHero";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GALLERY_CATEGORIES } from "@/lib/constants";
+import type { PageHeroContent } from "@/sites/content/types";
 import type { GalleryItem } from "@/types/database";
-
-const FILTERS = [
-  { id: "all", label: "All" },
-  ...GALLERY_CATEGORIES.map((c) => ({ id: c.slug, label: c.label })),
-];
 
 // Panoramic shots are uploaded with a "-wide" suffix and given a 2:1 crop, so
 // they take two grid cells instead of being squashed into a square.
@@ -56,9 +52,26 @@ function GalleryEmptyState() {
 
 type GalleryPageProps = {
   items?: GalleryItem[];
+  hero: PageHeroContent;
+  /** The 3D dimple-sheet preview (group site). */
+  showDimplePreview: boolean;
+  /** Category tabs to offer; the group shows them all. */
+  categories: string[];
 };
 
-export function GalleryPage({ items = [] }: GalleryPageProps) {
+export function GalleryPage({
+  items = [],
+  hero,
+  showDimplePreview,
+  categories,
+}: GalleryPageProps) {
+  const FILTERS = [
+    { id: "all", label: "All" },
+    ...GALLERY_CATEGORIES.filter((c) => categories.includes(c.slug)).map((c) => ({
+      id: c.slug,
+      label: c.label,
+    })),
+  ];
   const [activeFilter, setActiveFilter] = useState("all");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const hasDbItems = items.length > 0;
@@ -71,17 +84,19 @@ export function GalleryPage({ items = [] }: GalleryPageProps) {
   return (
     <>
       <PageHero
-        label="GALLERY"
-        title="Product Gallery"
-        subtitle="Explore our range of perforated sheets, laser cutting, expanded metal, and custom metal components."
+        label={hero.label}
+        title={hero.title}
+        subtitle={hero.subtitle}
+        badges={hero.badges?.map((text) => ({ text }))}
       />
 
       <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
         <div className="mx-auto max-w-7xl">
+          {showDimplePreview && (
           <section className="mb-16">
             <div className="mb-6 flex items-center gap-3">
-              <span className="h-px w-6 bg-orange-500/40" />
-              <span className="text-xs font-medium uppercase tracking-[0.25em] text-orange-500">
+              <span className="h-px w-6 bg-[color-mix(in_oklab,var(--label-accent)_40%,transparent)]" />
+              <span className="text-xs font-medium uppercase tracking-[0.25em] text-[var(--label-accent)]">
                 3D Interactive Preview
               </span>
             </div>
@@ -97,6 +112,7 @@ export function GalleryPage({ items = [] }: GalleryPageProps) {
               Photography from our manufacturing units below
             </p>
           </section>
+          )}
 
           <Tabs
             value={activeFilter}

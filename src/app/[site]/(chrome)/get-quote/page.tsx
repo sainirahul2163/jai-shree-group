@@ -4,15 +4,15 @@ import { GetQuotePage } from "@/components/quote/GetQuotePage";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { contentMetadata } from "@/lib/seo";
 import { getContent } from "@/sites/content";
-import { siteFromParams, type SiteParams } from "@/sites/params";
+import { siteForPage, type SiteParams } from "@/sites/params";
 
 export async function generateMetadata({ params }: SiteParams): Promise<Metadata> {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/get-quote");
   return contentMetadata(getContent(site.key).meta.getQuote, "/get-quote");
 }
 
 export default async function GetQuote({ params }: SiteParams) {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/get-quote");
 
   return (
     <>

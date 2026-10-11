@@ -287,4 +287,16 @@ export const groupContent: SiteContent = {
     heading: "Get a Free Quote",
     successText: "We'll send your quote within 24 hours.",
   },
+
+  ctaBanner: {
+    title: "Ready to work with us?",
+    text: "Share your requirements and our team will respond within 24 hours.",
+  },
+
+  galleryHero: {
+    label: "GALLERY",
+    title: "Product Gallery",
+    subtitle:
+      "Explore our range of perforated sheets, laser cutting, expanded metal, and custom metal components.",
+  },
 };

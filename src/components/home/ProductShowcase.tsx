@@ -9,6 +9,11 @@ import { useSiteProducts } from "@/sites/SiteProvider";
 
 const INTERVAL = 3500;
 
+/** The site's brand colour at the given opacity (srgb mix = the old rgba value). */
+function brandStroke(opacity: number): string {
+  return `color-mix(in srgb, var(--brand) ${Math.round(opacity * 100)}%, transparent)`;
+}
+
 const ALL_SHOWCASE_PRODUCTS = [
   {
     name: "Perforated Sheets",
@@ -245,7 +250,7 @@ function MixedPattern() {
                 cy={s.y}
                 r="7"
                 fill="none"
-                stroke={`rgba(232,82,26,${op})`}
+                style={{ stroke: brandStroke(op) }}
                 strokeWidth="0.8"
               />
             );
@@ -259,7 +264,7 @@ function MixedPattern() {
                 width="12"
                 height="12"
                 fill="none"
-                stroke={`rgba(232,82,26,${op})`}
+                style={{ stroke: brandStroke(op) }}
                 strokeWidth="0.8"
               />
             );
@@ -269,7 +274,7 @@ function MixedPattern() {
               key={i}
               points={`${s.x},${s.y - 8} ${s.x + 7},${s.y - 4} ${s.x + 7},${s.y + 4} ${s.x},${s.y + 8} ${s.x - 7},${s.y + 4} ${s.x - 7},${s.y - 4}`}
               fill="none"
-              stroke={`rgba(232,82,26,${op})`}
+              style={{ stroke: brandStroke(op) }}
               strokeWidth="0.8"
             />
           );
@@ -383,16 +388,31 @@ const PATTERN_MAP: Record<string, React.FC> = {
   custom: CustomPattern,
 };
 
+type ShowcaseEntry = Omit<(typeof ALL_SHOWCASE_PRODUCTS)[number], "specs"> & {
+  specs: readonly { label: string; value: string }[];
+};
+
 export function ProductShowcase() {
   // Only the products the active site offers, in its order.
   const siteProducts = useSiteProducts();
-  const SHOWCASE_PRODUCTS = useMemo(
-    () =>
-      siteProducts.flatMap(
-        (card) => ALL_SHOWCASE_PRODUCTS.find((item) => item.slug === card.slug) ?? []
-      ),
-    [siteProducts]
-  );
+  const SHOWCASE_PRODUCTS = useMemo(() => {
+    // A site without laser cutting must not mention it (e.g. "CNC + Laser + Dies").
+    const hasLaser = siteProducts.some((card) => card.slug === "laser-cutting");
+    return siteProducts.flatMap((card): ShowcaseEntry[] => {
+      const item = ALL_SHOWCASE_PRODUCTS.find((entry) => entry.slug === card.slug);
+      if (!item) return [];
+      if (hasLaser) return [item];
+      return [
+        {
+          ...item,
+          specs: item.specs.map((spec) => ({
+            ...spec,
+            value: spec.value.replace(/ \+ Laser/g, ""),
+          })),
+        },
+      ];
+    });
+  }, [siteProducts]);
   const total = SHOWCASE_PRODUCTS.length;
 
   const [current, setCurrent] = useState(0);

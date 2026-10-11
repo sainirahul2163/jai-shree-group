@@ -31,8 +31,14 @@ const STRENGTH_ICONS = {
   Heart,
 } as const;
 
-export function AboutPage({ content }: { content: AboutPageContent }) {
-  const { hero, story, numbers, strengths, quality } = content;
+export function AboutPage({
+  content,
+  banner,
+}: {
+  content: AboutPageContent;
+  banner: { title: string; text: string };
+}) {
+  const { hero, story, numbers, strengths, quality, parent } = content;
 
   return (
     <>
@@ -162,6 +168,53 @@ export function AboutPage({ content }: { content: AboutPageContent }) {
           )}
         </div>
       </section>
+
+      {/* Part of Jai Shree Group (unit sites) */}
+      {parent && (
+        <section className="section-padding" style={{ backgroundColor: "var(--background)" }}>
+          <div className="mx-auto max-w-7xl">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="max-w-3xl"
+            >
+              <p
+                className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
+                style={{ color: "var(--brand-text)" }}
+              >
+                {parent.label}
+              </p>
+              <h2
+                className="text-3xl font-black tracking-tight sm:text-4xl"
+                style={{ color: "var(--foreground)" }}
+              >
+                {parent.heading}
+              </h2>
+              <div className="mt-6 space-y-4">
+                {parent.paragraphs.map((text) => (
+                  <p
+                    key={text.slice(0, 24)}
+                    className="text-base leading-relaxed"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    {text}
+                  </p>
+                ))}
+              </div>
+              <a
+                href={parent.link.href}
+                className="mt-6 inline-flex items-center gap-2 text-base font-semibold transition-opacity hover:opacity-80"
+                style={{ color: "var(--brand-text)" }}
+              >
+                {parent.link.label}
+                <ArrowRight className="size-4" />
+              </a>
+            </motion.div>
+          </div>
+        </section>
+      )}
 
       {/* By the Numbers */}
       <section className="section-padding" style={{ backgroundColor: "var(--background)" }}>
@@ -382,6 +435,7 @@ export function AboutPage({ content }: { content: AboutPageContent }) {
       )}
 
       {/* Vision & Mission */}
+      {content.vision && content.mission && (
       <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -437,7 +491,9 @@ export function AboutPage({ content }: { content: AboutPageContent }) {
         </div>
       </section>
 
-      <CtaBanner />
+      )}
+
+      <CtaBanner title={banner.title} text={banner.text} />
     </>
   );
 }

@@ -13,11 +13,11 @@ import { contentMetadata } from "@/lib/seo";
 import { siteIndustryCards } from "@/sites/catalog";
 import { getContent } from "@/sites/content";
 import type { SiteContent } from "@/sites/content/types";
-import { siteFromParams, type SiteParams } from "@/sites/params";
+import { siteForPage, type SiteParams } from "@/sites/params";
 import type { HomeSectionKey, SiteConfig } from "@/sites/types";
 
 export async function generateMetadata({ params }: SiteParams): Promise<Metadata> {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/");
   return contentMetadata(getContent(site.key).meta.home, "/");
 }
 
@@ -57,7 +57,7 @@ function renderSection(
 }
 
 export default async function Home({ params }: SiteParams) {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/");
   const { home } = getContent(site.key);
 
   return (

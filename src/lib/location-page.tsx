@@ -5,13 +5,13 @@ import { LocationPageClient } from "@/components/location/LocationPageClient";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { getLocationPage } from "@/data/locations";
 import { siteUrl } from "@/lib/seo";
-import { siteFromParams, type SiteParams } from "@/sites/params";
+import { siteForPage, type SiteParams } from "@/sites/params";
 
 export async function locationMetadata(
   path: string,
   params: SiteParams["params"]
 ): Promise<Metadata> {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, `/${path.split("/")[0]}`);
   const data = getLocationPage(path);
   if (!data) return {};
 
@@ -28,7 +28,7 @@ export async function renderLocationPage(
   path: string,
   params: SiteParams["params"]
 ) {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, `/${path.split("/")[0]}`);
   const data = getLocationPage(path);
   if (!data) {
     notFound();

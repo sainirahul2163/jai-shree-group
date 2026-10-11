@@ -19,6 +19,7 @@ export function themeCss(theme: ThemeTokens): string {
     "--brand-hover": theme.brandHover,
     "--brand-foreground": theme.brandForeground,
     "--brand-text": theme.brandText,
+    "--label-accent": theme.labelAccent ?? theme.brandText,
     "--card": theme.surface,
     "--card-foreground": theme.foreground,
     "--popover": theme.surface,

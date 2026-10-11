@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 
 type CtaBannerProps = {
   title?: string;
+  text?: string;
   primaryLabel?: string;
   primaryHref?: string;
   secondaryLabel?: string;
@@ -16,6 +17,7 @@ type CtaBannerProps = {
 
 export function CtaBanner({
   title = "Ready to work with us?",
+  text = "Share your requirements and our team will respond within 24 hours.",
   primaryLabel = "Get a Quote",
   primaryHref = "/get-quote",
   secondaryLabel = "Contact Us",
@@ -41,7 +43,7 @@ export function CtaBanner({
           {title}
         </h2>
         <p className="mt-3 text-base" style={{ color: "var(--text-secondary)" }}>
-          Share your requirements and our team will respond within 24 hours.
+          {text}
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Button asChild size="lg" className="glow-orange">

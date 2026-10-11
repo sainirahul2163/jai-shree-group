@@ -57,6 +57,8 @@ export interface ThemeTokens {
   brandHover: string;
   brandForeground: string;
   brandText: string;
+  /** Small section labels ("3D INTERACTIVE PREVIEW"). Default: brandText. */
+  labelAccent?: string;
   fontHeading: FontKey;
   fontBody: FontKey;
 }
@@ -115,6 +117,8 @@ export interface SiteConfig {
     hours?: string;
   };
   tagline?: string;
+  /** Reply time the business has promised, e.g. "within 24 hours"; leave out when not stated. */
+  replyPromise?: string;
   /**
    * City whose courts hear disputes under the site's terms of use. Default
    * "Pune"; Mumbai-region units set "Mumbai".

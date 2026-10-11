@@ -5,15 +5,15 @@ import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { contentMetadata } from "@/lib/seo";
 import { siteIndustryCards } from "@/sites/catalog";
 import { getContent } from "@/sites/content";
-import { siteFromParams, type SiteParams } from "@/sites/params";
+import { siteForPage, type SiteParams } from "@/sites/params";
 
 export async function generateMetadata({ params }: SiteParams): Promise<Metadata> {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/industries");
   return contentMetadata(getContent(site.key).meta.industries, "/industries");
 }
 
 export default async function IndustriesPage({ params }: SiteParams) {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/industries");
 
   return (
     <>

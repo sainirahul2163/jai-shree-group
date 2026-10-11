@@ -4,15 +4,15 @@ import { AboutPage } from "@/components/about/AboutPage";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { contentMetadata } from "@/lib/seo";
 import { getContent } from "@/sites/content";
-import { siteFromParams, type SiteParams } from "@/sites/params";
+import { siteForPage, type SiteParams } from "@/sites/params";
 
 export async function generateMetadata({ params }: SiteParams): Promise<Metadata> {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/about");
   return contentMetadata(getContent(site.key).meta.about, "/about");
 }
 
 export default async function About({ params }: SiteParams) {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/about");
 
   return (
     <>
@@ -23,7 +23,10 @@ export default async function About({ params }: SiteParams) {
           { name: "About", path: "/about" },
         ]}
       />
-      <AboutPage content={getContent(site.key).about} />
+      <AboutPage
+        content={getContent(site.key).about}
+        banner={getContent(site.key).ctaBanner}
+      />
     </>
   );
 }

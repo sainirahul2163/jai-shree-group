@@ -63,6 +63,12 @@ type ProductPageClientProps = {
   relatedProducts: ProductDetail[];
 };
 
+/** "Stainless Steel" → "SS", "MS (Mild Steel)" → "MS", others unchanged. */
+function shortMetal(name: string): string {
+  if (name === "Stainless Steel") return "SS";
+  return name.replace(/\s*\(.*\)$/, "");
+}
+
 export function ProductPageClient({
   product,
   relatedProducts,
@@ -243,8 +249,8 @@ export function ProductPageClient({
             {MODEL_BY_SLUG[product.slug] && (
               <div className="my-10">
                 <div className="mb-4 flex items-center gap-3">
-                  <span className="h-px w-6 bg-orange-500/40" />
-                  <span className="text-xs font-medium uppercase tracking-[0.25em] text-orange-500">
+                  <span className="h-px w-6 bg-[color-mix(in_oklab,var(--label-accent)_40%,transparent)]" />
+                  <span className="text-xs font-medium uppercase tracking-[0.25em] text-[var(--label-accent)]">
                     Interactive 3D Preview
                   </span>
                 </div>
@@ -427,7 +433,9 @@ export function ProductPageClient({
           style={{ backgroundColor: "var(--background)" }}
         >
           <div className="mx-auto max-w-7xl">
-            <PerforationPatterns />
+            <PerforationPatterns
+              metals={site.unitSlug ? product.materials.map(shortMetal) : undefined}
+            />
           </div>
         </section>
       )}

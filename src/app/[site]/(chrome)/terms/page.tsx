@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 import { TermsOfUse } from "@/components/legal/TermsOfUse";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { pageMetadata, siteHost } from "@/lib/seo";
-import { siteFromParams, type SiteParams } from "@/sites/params";
+import { siteForPage, type SiteParams } from "@/sites/params";
 
 export async function generateMetadata({
   params,
 }: SiteParams): Promise<Metadata> {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/terms");
   return pageMetadata(site, {
     path: "/terms",
     title: `Terms of Use | ${site.name}`,
@@ -17,7 +17,7 @@ export async function generateMetadata({
 }
 
 export default async function Terms({ params }: SiteParams) {
-  const site = await siteFromParams(params);
+  const site = await siteForPage(params, "/terms");
 
   return (
     <>

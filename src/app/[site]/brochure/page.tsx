@@ -6,6 +6,7 @@ import { BrochureBody } from "@/components/brochure/BrochureBody";
 import { PrintButton } from "./PrintButton";
 
 import "./brochure.css";
+import { siteForPage, type SiteParams } from "@/sites/params";
 
 /**
  * Inter and Roboto Mono, as *static* weight files.
@@ -50,7 +51,9 @@ export const metadata: Metadata = {
  * place so the product set matches the website. Industries We Serve closes the
  * content, drawn from the same data as the website’s industry pages.
  */
-export default function BrochurePage() {
+export default async function BrochurePage({ params }: SiteParams) {
+  // Group-only print document; other sites 404.
+  await siteForPage(params, "/brochure");
   return (
     <div className={`bx ${sans.variable} ${mono.variable}`}>
       <PrintButton />
