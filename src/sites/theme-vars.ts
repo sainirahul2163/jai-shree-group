@@ -1,4 +1,10 @@
-import type { ThemeTokens } from "@/sites/types";
+import type { FontKey, ThemeTokens } from "@/sites/types";
+
+/** Font stacks for non-default heading fonts (loaded in src/app/layout.tsx). */
+const FONT_STACKS: Partial<Record<FontKey, string>> = {
+  "barlow-condensed":
+    "var(--font-barlow-condensed), var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif",
+};
 
 /**
  * CSS for a site's theme: the token variables plus the shadcn aliases that
@@ -21,6 +27,8 @@ export function themeCss(theme: ThemeTokens): string {
     "--brand-text": theme.brandText,
     "--label-accent": theme.labelAccent ?? theme.brandText,
     "--whatsapp-text": theme.whatsappText ?? "#0A0A0A",
+    "--hex-glow": theme.hexGlow ?? theme.brandHover,
+    "--hex-strength": String(theme.hexStrength ?? 1),
     "--card": theme.surface,
     "--card-foreground": theme.foreground,
     "--popover": theme.surface,
@@ -33,6 +41,12 @@ export function themeCss(theme: ThemeTokens): string {
     "--accent-foreground": theme.foreground,
     "--input": theme.border,
   };
+  // Heading font: only sites that do not use Geist override it (the group's CSS stays as is).
+  const headingFont = FONT_STACKS[theme.fontHeading];
+  if (headingFont) {
+    vars["--font-display"] = headingFont;
+    vars["--font-heading"] = headingFont;
+  }
   const body = Object.entries(vars)
     .map(([name, value]) => `${name}:${value}`)
     .join(";");

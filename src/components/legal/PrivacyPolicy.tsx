@@ -54,6 +54,16 @@ export function PrivacyPolicy({ site }: { site: SiteConfig }) {
           thickness, quantity, when you need it and any message you write. We
           note the page you sent the form from and the date and time.
         </p>
+        {site.tool === "drawing-upload" && (
+          <p>
+            <strong style={{ color: "var(--foreground)" }}>
+              When you upload a drawing.
+            </strong>{" "}
+            The drawing files you attach (DXF, DWG or PDF) are stored in a
+            private file store that only our authorised staff can open, and are
+            used only to prepare your quotation and carry out your order.
+          </p>
+        )}
         <p>
           <strong style={{ color: "var(--foreground)" }}>
             When you browse the website.

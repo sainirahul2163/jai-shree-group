@@ -42,7 +42,7 @@ export function Logo({ className = "", size = "md" }: LogoProps) {
           <FlameMark />
         </svg>
         <span
-          className="font-heading text-lg font-black uppercase leading-none tracking-tight md:text-xl"
+          className="font-display text-lg font-black uppercase leading-none tracking-tight md:text-xl"
           style={{ color: "var(--foreground)" }}
         >
           {name}

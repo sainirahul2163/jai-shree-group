@@ -20,7 +20,7 @@ export const shreePerforatorsContent: SiteContent = {
         "CNC perforated sheets made to your hole pattern in Talawade, Pune. SS, MS, GI, aluminium, copper and brass up to 12 mm thick. Expanded metal and turret punching too.",
     },
     about: {
-      title: "About Shree Perforators, Talawade",
+      title: "About Our Perforation Unit in Talawade",
       description:
         "Shree Perforators is the perforation unit of Jai Shree Group in Talawade, Pune: CNC perforated sheets, custom hole patterns, expanded metal and sheet leveling.",
     },
@@ -35,7 +35,7 @@ export const shreePerforatorsContent: SiteContent = {
         "Perforated and expanded metal from Shree Perforators goes into automotive parts, food and pharma equipment, sugar mills, buildings and interiors.",
     },
     contact: {
-      title: "Contact Shree Perforators, Talawade, Pune",
+      title: "Contact the Talawade Perforation Unit, Pune",
       description:
         "Call +91 93706 06017 or email shreeperforator@gmail.com. Gat No. 94, Talawade, Pune 411062. Closed on Thursdays.",
     },
@@ -267,6 +267,8 @@ export const shreePerforatorsContent: SiteContent = {
     heading: "Request a Quote from Shree Perforators",
     successText: "Thank you. We will review your requirement and reply with a quotation.",
   },
+
+  industryQuoteText: "Describe the hole pattern your application needs and we will quote for the sheets.",
 
   ctaBanner: {
     title: "Need a pattern punched?",

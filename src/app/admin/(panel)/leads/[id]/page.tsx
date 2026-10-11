@@ -6,7 +6,11 @@ import { LeadDetailClient } from "@/components/admin/LeadDetailClient";
 import { SiteBadge } from "@/components/admin/SiteBadge";
 import { StatusBadge } from "@/components/admin/StatusBadge";
 import { Button } from "@/components/ui/button";
+import { createClient as createServiceClient } from "@supabase/supabase-js";
+
+import { DRAWINGS_BUCKET, type DrawingRef } from "@/lib/drawings";
 import { toWhatsAppNumber } from "@/lib/phone";
+import { isCurrentUserAdmin } from "@/lib/supabase/actions";
 import { createServerClient } from "@/lib/supabase/server";
 import type { FollowUp, Lead } from "@/types/database";
 
@@ -40,6 +44,7 @@ export default async function AdminLeadDetailPage({
   if (!lead) notFound();
 
   const waPhone = toWhatsAppNumber(lead.phone);
+  const drawings = await signedDrawingLinks(lead);
 
   return (
     <div className="space-y-6">
@@ -90,6 +95,31 @@ export default async function AdminLeadDetailPage({
               </div>
             ))}
           </dl>
+          {drawings.length > 0 && (
+            <div>
+              <p className="text-sm" style={{ color: "#666666" }}>
+                Drawings (links open for 1 hour)
+              </p>
+              <ul className="mt-2 space-y-1 text-sm">
+                {drawings.map((drawing) => (
+                  <li key={drawing.path}>
+                    {drawing.url ? (
+                      <a
+                        href={drawing.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#E8521A] underline underline-offset-2"
+                      >
+                        {drawing.name}
+                      </a>
+                    ) : (
+                      <span style={{ color: "#A0A0A0" }}>{drawing.name} (file not found)</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           {lead.message && (
             <div>
               <p className="text-sm" style={{ color: "#666666" }}>
@@ -145,5 +175,32 @@ export default async function AdminLeadDetailPage({
         </div>
       </div>
     </div>
+  );
+}
+
+/**
+ * Short-lived download links for the lead's uploaded drawings (private bucket).
+ * Made with the service role on the server, after the admin check.
+ */
+async function signedDrawingLinks(
+  lead: Lead
+): Promise<(DrawingRef & { url: string | null })[]> {
+  const specs = (lead.specifications ?? {}) as { drawings?: DrawingRef[] };
+  const drawings = Array.isArray(specs.drawings) ? specs.drawings : [];
+  if (!drawings.length || !process.env.SUPABASE_SERVICE_ROLE_KEY) return [];
+  if (!(await isCurrentUserAdmin())) return [];
+
+  const storage = createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  ).storage.from(DRAWINGS_BUCKET);
+
+  return Promise.all(
+    drawings.map(async (drawing) => {
+      const { data } = await storage.createSignedUrl(drawing.path, 3600, {
+        download: drawing.name,
+      });
+      return { ...drawing, url: data?.signedUrl ?? null };
+    })
   );
 }

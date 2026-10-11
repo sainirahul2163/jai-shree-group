@@ -98,9 +98,9 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 
 ## Phase 2 — Jai Shree Metal Perforators
 
-- [ ] Same steps as Phase 1 for metalperforatedsheets.com.
-- [ ] Drawing upload: private `drawings` bucket, file type and size limits (DXF, DWG, PDF; 20 MB), signed URLs in admin.
-- [ ] Machine list page (data from the client).
+- [x] Same steps as Phase 1 for metalperforatedsheets.com (config, own copy, pages, 14 legacy redirects, launch checklist except home-page Lighthouse performance).
+- [x] Drawing upload: private `drawings` bucket, file type and size limits (DXF, DWG, PDF; 20 MB), signed URLs in admin (bucket on jai-shree-dev; live at go-live).
+- [ ] Machine list page (data from the client) — waiting for data; About shows capabilities from known specs.
 
 ## Phase 3 — Sites 3 to 6 (about one a week each)
 

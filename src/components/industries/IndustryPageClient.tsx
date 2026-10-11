@@ -17,12 +17,15 @@ type IndustryPageClientProps = {
   /** The industry's products that this site offers (`siteIndustryProducts`). */
   relatedProducts: ProductDetail[];
   banner: { title: string; text: string };
+  /** The site's own quote line (content.industryQuoteText). */
+  quoteText?: string;
 };
 
 export function IndustryPageClient({
   industry,
   relatedProducts,
   banner,
+  quoteText,
 }: IndustryPageClientProps) {
   const { replyPromise } = useSite();
   return (
@@ -162,7 +165,7 @@ export function IndustryPageClient({
           <p className="mt-4 text-base" style={{ color: "var(--text-secondary)" }}>
             {replyPromise
               ? `Share your specifications and our team will provide a customized quote ${replyPromise}.`
-              : "Share your specifications and we will prepare a quote for your application."}
+              : quoteText}
           </p>
           <Button asChild size="lg" className="mt-8 glow-orange">
             <Link href={`/get-quote?industry=${industry.slug}`}>

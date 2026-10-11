@@ -100,6 +100,8 @@ export function buildQuoteEmailHtml(
     deadline: string;
     additionalRequirements: string;
     customComponentNote: string;
+    /** File names of uploaded drawings (open them in the admin panel). */
+    drawings?: string[];
     name: string;
     companyName: string;
     phone: string;
@@ -117,6 +119,9 @@ export function buildQuoteEmailHtml(
     fieldRow("Deadline", data.deadline),
     fieldRow("Additional Requirements", data.additionalRequirements),
     fieldRow("Custom Component Note", data.customComponentNote),
+    ...(data.drawings?.length
+      ? [fieldRow("Drawings (open the lead in the admin panel)", data.drawings.join(", "))]
+      : []),
     DIVIDER,
     fieldRow("Name", data.name),
     fieldRow("Company", data.companyName),

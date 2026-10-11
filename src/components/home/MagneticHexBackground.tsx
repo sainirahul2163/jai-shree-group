@@ -17,18 +17,34 @@ const MAX_LINE_WIDTH = 1.8;
 const DETECTION_RADIUS = 150;
 const MAX_PUSH = 14;
 const SPRING_DECAY = 0.82;
-const BRIGHT_RGB = { r: 255, g: 138, b: 76 };
+type Rgb = { r: number; g: number; b: number };
 
-function readBrandRgb() {
-  const fallback = { r: 232, g: 82, b: 26 };
+/** A #rrggbb CSS variable from the site's theme, or the fallback. */
+function readVarRgb(name: string, fallback: Rgb): Rgb {
   if (typeof document === "undefined") return fallback;
-  const raw = getComputedStyle(document.documentElement)
-    .getPropertyValue("--brand")
-    .trim();
+  const raw = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   const hex = raw.match(/^#([0-9a-f]{6})$/i);
   if (!hex) return fallback;
   const n = Number.parseInt(hex[1], 16);
   return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+}
+
+function readBrandRgb(): Rgb {
+  return readVarRgb("--brand", { r: 232, g: 82, b: 26 });
+}
+
+/** Colour of cells near the cursor (theme `--hex-glow`). */
+function readGlowRgb(): Rgb {
+  return readVarRgb("--hex-glow", { r: 255, g: 138, b: 76 });
+}
+
+/** Overall strength of the mesh (theme `--hex-strength`, 1 = full). */
+function readStrength(): number {
+  if (typeof document === "undefined") return 1;
+  const value = Number.parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue("--hex-strength")
+  );
+  return Number.isFinite(value) && value > 0 ? value : 1;
 }
 
 // Depth-of-field falloff: the mesh fades out top and bottom so it reads as a
@@ -123,6 +139,7 @@ export function MagneticHexBackground({
     const ctx = off.getContext("2d");
     if (!ctx) return;
     const HEX_RGB = readBrandRgb();
+    const STRENGTH = readStrength();
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.lineWidth = BASE_LINE_WIDTH;
 
@@ -137,7 +154,7 @@ export function MagneticHexBackground({
         traceHex(ctx, c.baseX, c.baseY, HEX_RADIUS * CELL_INSET)
       );
       ctx.strokeStyle = `rgba(${HEX_RGB.r}, ${HEX_RGB.g}, ${HEX_RGB.b}, ${
-        BASE_OPACITY * depth
+        BASE_OPACITY * depth * STRENGTH
       })`;
       ctx.stroke();
     });
@@ -194,6 +211,8 @@ export function MagneticHexBackground({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     const HEX_RGB = readBrandRgb();
+    const BRIGHT_RGB = readGlowRgb();
+    const STRENGTH = readStrength();
 
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
@@ -331,7 +350,7 @@ export function MagneticHexBackground({
           traceHex(ctx, c.currentX, c.currentY, HEX_RADIUS * CELL_INSET)
         );
         ctx.strokeStyle = `rgba(${HEX_RGB.r}, ${HEX_RGB.g}, ${HEX_RGB.b}, ${
-          BASE_OPACITY * depth
+          BASE_OPACITY * depth * STRENGTH
         })`;
         ctx.stroke();
       });
@@ -341,7 +360,8 @@ export function MagneticHexBackground({
         const p = cell.proximity;
         const opacity =
           (BASE_OPACITY + p * (MAX_OPACITY - BASE_OPACITY)) *
-          Math.max(cell.depth, 0.35);
+          Math.max(cell.depth, 0.35) *
+          STRENGTH;
         const r = Math.round(HEX_RGB.r + p * (BRIGHT_RGB.r - HEX_RGB.r));
         const g = Math.round(HEX_RGB.g + p * (BRIGHT_RGB.g - HEX_RGB.g));
         const b = Math.round(HEX_RGB.b + p * (BRIGHT_RGB.b - HEX_RGB.b));

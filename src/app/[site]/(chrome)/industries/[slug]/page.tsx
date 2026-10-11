@@ -66,6 +66,7 @@ export default async function IndustryPage({ params }: PageProps) {
         industry={industry}
         relatedProducts={siteIndustryProducts(site, industry)}
         banner={getContent(site.key).ctaBanner}
+        quoteText={getContent(site.key).industryQuoteText}
       />
     </>
   );

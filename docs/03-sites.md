@@ -68,7 +68,8 @@ Every unit site shows "A Jai Shree Group company" and links once to jaishreegrou
 - **Signature tool: drawing upload quote.** Upload DXF, DWG or PDF to a private Supabase bucket, choose material, thickness and quantity. Machine list page only when the client sends machine data. Until then, show capabilities from known specs (laser up to 14 mm, perforation up to 12 mm).
 - **Search targets:** laser cutting services Pune, CNC turret punching job work Pune.
 - **Contact:** +91 93733 24492 · jsmppune@gmail.com · weekly holiday Thursday.
-- **Theme (dark):** background `#0A0A0A`, surface `#121212`, surface-2 `#1B1B1B`, border `#2C2C2C`, text `#FFFFFF`, secondary `#A3A3A3`, brand `#FFC400`, brand-hover `#FFD54D`, brand-foreground `#0A0A0A`, brand-text `#FFC400`. Fonts: Barlow Condensed (headings), Geist (body).
+- **Theme (dark):** background `#0A0A0A`, surface `#121212`, surface-2 `#1B1B1B`, border `#2C2C2C`, text `#FFFFFF`, secondary `#A3A3A3`, brand `#FFC400`, brand-hover `#FFD54D`, brand-foreground `#0A0A0A`, brand-text `#FFC400`, muted `#8A8A8A` (5.0:1 on surface-2). Fonts: Barlow Condensed (headings), Geist (body). Hero mesh strength 0.45.
+- **Built (Phase 2, 2026-10-11):** `src/sites/jai-shree-metal-perforators.ts` + content; preview at `http://jai-shree-metal-perforators.localhost:3000`.
 - **Legacy:** live old site with its own open-area calculator page. Map every old URL.
 
 ### 3. Jai Shree Industries — `jai-shree-industries`

@@ -33,6 +33,18 @@ Cursor's own work diary for the Jai Shree Group multi-site build. **Cursor write
 
 ## Entries
 
+### 2026-10-11 — Phase 2 Jai Shree Metal Perforators (done by Claude; Cursor quota used up)
+
+- **Status:** ✅ built and checked on `multi-site` (not merged to `main`; DNS is the agency's step)
+- **What I did:**
+  - `src/sites/jai-shree-metal-perforators.ts` + `src/sites/content/jai-shree-metal-perforators.ts`: origin www.metalperforatedsheets.com, black + safety yellow theme from docs/03 (muted `#8A8A8A`, AA), Barlow Condensed headings (loaded once in the root layout, `preload: false`, switched on through `--font-display` only for sites that ask for it), 5 products (laser cutting and turret punching first; no expanded metal, with a sister-unit line), 6 industries without client names, own copy for every page, export page, unit about.
+  - **Drawing upload quote** (`/drawing-quote`): `src/lib/drawings.ts`, `POST /api/drawings/sign` (only sites whose tool is `drawing-upload`; DXF/DWG/PDF, ≤ 5 files, ≤ 20 MB; one-time signed upload URLs), browser uploads straight to the PRIVATE bucket `drawings`, `/api/quote` keeps only drawing paths of the requesting site (`specifications.drawings`, source `drawing_upload`), email lists the file names, admin lead page shows 1-hour signed download links. Migration `2026-10-11-drawings-bucket.sql` applied to jai-shree-dev (private, 20 MB, no storage policies). Privacy policy mentions uploads on sites with this tool.
+  - `src/sites/legacy-redirects.ts`: 14 old metalperforatedsheets.com URLs → new pages on that host only (old open-area calculator → `/drawing-quote`, mechanical punching and expanded metal → `/products`, welded mesh → group Our Group page).
+  - Shared: hero hex mesh strength and hover colour come from the theme (`--hex-strength`, `--hex-glow`; group unchanged, yellow site softened to 0.45 for readability); industry pages' quote line per site (`content.industryQuoteText`); unit About/Contact titles no longer repeat the site name.
+- **Checks:** build ✅ · lint unchanged (18) · group SEO snapshot (44 routes, incl. JSON-LD, sitemap, robots) identical to the 1.4 build · group pixels ≤ 0.05% on 7 pages × 2 widths · site 2: all its pages 200, expanded metal / pattern library / sugar industry / group-only pages 404; canonicals at www.metalperforatedsheets.com; no discontinued products, carbon steel, Pan India or client names; "expanded" only in the sister-unit line; duplicate check vs group and Shree Perforators: only UI lines and one spec line shared · Lighthouse mobile (local): home 80/96/100/100 (perf/a11y/best/SEO), products 88/100/100/100, contact 83/100/100/100, drawing-quote 87/100/100/100 · upload tests on jai-shree-dev: group cannot sign (404), .exe and > 20 MB rejected, upload ok, token cannot be reused, public URL / anonymous download / anonymous list all denied, foreign path dropped from the lead, signed admin link downloads with the original name; real form in headless Chrome sent a drawing and showed the reference. All test leads and files deleted.
+- **Left to do:** apply `2026-10-11-drawings-bucket.sql` to the live project before Phase 2 goes live; machine list page waits for client data (capabilities shown from known specs); home-page Lighthouse performance (shared hero fade-in, see PROJECT-LOG).
+- **Next:** user cross-checks manually; work continues in Cursor (Phase 3: sites 3–6).
+
 ### 2026-10-11 — 1.4 Legacy redirects and launch checklist, Shree Perforators (done by Claude)
 
 - **Status:** ✅ redirects done; launch checklist all pass except Lighthouse performance on the home page (see below). DNS switch is the agency's step.

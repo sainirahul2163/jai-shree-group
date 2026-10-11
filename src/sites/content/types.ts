@@ -187,6 +187,13 @@ export interface PatternLibraryContent {
   previewLabel: string;
 }
 
+/** Drawing-upload quote tool (Jai Shree Metal Perforators). */
+export interface DrawingQuoteContent {
+  hero: PageHeroContent;
+  intro: string;
+  successText: string;
+}
+
 /** Export page (manufacturing units only). */
 export interface ExportContent {
   hero: PageHeroContent;
@@ -261,6 +268,7 @@ export interface SiteContent {
     blog?: PageMeta;
     export?: PageMeta;
     patternLibrary?: PageMeta;
+    drawingQuote?: PageMeta;
   };
   home: HomeContent;
   about: AboutPageContent;
@@ -268,6 +276,8 @@ export interface SiteContent {
   industriesIndex: { hero: PageHeroContent };
   contact: ContactContent;
   quote: QuoteContent;
+  /** Line under "Get Quote for … Application" on industry pages (sites without a reply promise). */
+  industryQuoteText?: string;
   /** Closing banner on the about and industry pages. */
   ctaBanner: { title: string; text: string };
   galleryHero: PageHeroContent;
@@ -275,6 +285,8 @@ export interface SiteContent {
   export?: ExportContent;
   /** Only sites with "/pattern-library" in `pages`. */
   patternLibrary?: PatternLibraryContent;
+  /** Only sites with "/drawing-quote" in `pages`. */
+  drawingQuote?: DrawingQuoteContent;
   /** Overrides of the shared product copy in `src/data/products.ts`. */
   products?: Partial<Record<ProductSlug, ProductCopy>>;
   /** Overrides of the shared industry copy in `src/data/industries.ts`. */

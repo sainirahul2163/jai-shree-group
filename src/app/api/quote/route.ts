@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
+import { parseDrawingRefs } from "@/lib/drawings";
 import { buildQuoteEmailHtml, productNames, whatsappUrl } from "@/lib/email";
 import {
   leadReference,
@@ -44,6 +45,8 @@ export async function POST(request: Request) {
     const additionalRequirements = str(body.additionalRequirements);
     const customComponentNote = str(body.customComponentNote);
     const sendWhatsApp = body.sendWhatsApp === true;
+    // Drawings uploaded through /api/drawings/sign (only paths of this site).
+    const drawings = site.tool === "drawing-upload" ? parseDrawingRefs(body.drawings, site.key) : [];
 
     const productsSelected = Array.isArray(body.products)
       ? body.products.map(str).filter(Boolean)
@@ -77,8 +80,9 @@ export async function POST(request: Request) {
           quantityUnit,
           deadline,
           custom_component_note: customComponentNote || null,
+          ...(drawings.length ? { drawings } : {}),
         },
-        source: "quote_form",
+        source: drawings.length ? "drawing_upload" : "quote_form",
         source_page: sourcePage,
         status: "new",
       })
@@ -110,6 +114,7 @@ export async function POST(request: Request) {
           deadline,
           additionalRequirements,
           customComponentNote,
+          drawings: drawings.map((drawing) => drawing.name),
           name,
           companyName,
           phone,
@@ -129,6 +134,7 @@ export async function POST(request: Request) {
           ["Deadline", deadline.charAt(0).toUpperCase() + deadline.slice(1)],
           ["Additional requirements", additionalRequirements],
           ["Custom component note", customComponentNote],
+          ["Drawings", drawings.map((drawing) => drawing.name).join(", ")],
         ],
       },
     });

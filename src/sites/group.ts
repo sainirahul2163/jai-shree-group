@@ -182,6 +182,7 @@ export const group: SiteConfig = {
     labelAccent: "var(--color-orange-500)",
     // Unchanged on the live site (white on WhatsApp green is 1.8:1; see PROJECT-LOG).
     whatsappText: "#ffffff",
+    hexGlow: "#ff8a4c",
     fontHeading: "geist",
     fontBody: "geist",
   },

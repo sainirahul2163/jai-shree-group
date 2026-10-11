@@ -18,6 +18,7 @@ No fixed dates. We work as fast as possible, **phase by phase, task by task**: a
 
 | # | Site | Unit location | What it shows | Domain |
 | --- | --- | --- | --- | --- |
+| 2026-10-11 | **Phase 2 Jai Shree Metal Perforators built** (Claude): site config + own copy (yellow/black, Barlow Condensed), drawing-upload quote to a private Supabase bucket (signed upload/download URLs; abuse cases tested), 14 legacy redirects for metalperforatedsheets.com, theme-driven hero mesh. Drawings bucket migration applied to jai-shree-dev only. Group site unchanged (SEO identical, pixels ≤ 0.05%). Not merged to `main` | `src/sites/`, `src/lib/drawings.ts`, `src/app/api/drawings/`, `src/app/[site]/(chrome)/drawing-quote/`, `src/components/tools/DrawingQuoteForm.tsx`, admin lead page, migrations | Phase 2 |
 | 2026-10-11 | 1.4 Shree Perforators: 21 old URLs 301/308 to new pages on shreeperforators.com only (tested both hosts); launch checklist passed except home-page Lighthouse performance (83 locally; shared hero fade-in, live group home is 79). Accessibility fixes in shared components (form labels, footer heading order, unit WhatsApp button text). Phase 1 complete apart from that; not merged to `main` yet (see Waiting on the user) | `src/sites/legacy-redirects.ts`, `next.config.ts`, contact/footer/quote components | Phase 1 task 1.4 |
 | 2026-10-11 | 1.3 Pattern library on Shree Perforators (`/pattern-library`): shape, layout and sizes → open area (shared formulas, checked by hand) and a scale drawing; "Request This Pattern" pre-fills the quote form. Group unchanged. Also: Vercel preview of 1.2 (`a01a44b`) built and checked with `?site=shree-perforators` | `src/components/tools/`, `src/app/[site]/(chrome)/pattern-library/`, `src/sites/`, `GetQuotePage.tsx` | Phase 1 task 1.3 |
 | 2026-10-11 | 1.2 Shree Perforators site built (Claude; Cursor quota used up): config, own copy, export page, unit about/gallery/contact, real 404s for pages and products the unit does not offer. Group site SEO identical and pixel-identical except an intentional fix: the 3D viewer caption no longer says "Carbon" steel (client rule). Preview locally at `shree-perforators.localhost:3000`; DNS not switched (needs 1.4 redirects + launch checklist) | `src/sites/`, `src/components/`, `src/app/[site]/`, `src/proxy.ts`, docs | Phase 1 task 1.2 |
@@ -93,7 +94,7 @@ Status: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 | Requirement | Status |
 | --- | --- |
 | Site 1 Shree Perforators: pattern library, old-URL redirects (week 3) | ✅ built and checked (1.2–1.4); waiting for DNS (agency) and the Phase 1 merge |
-| Site 2 Jai Shree Metal Perforators: drawing upload quote, old-URL redirects (week 4) | ⏳ |
+| Site 2 Jai Shree Metal Perforators: drawing upload quote, old-URL redirects (week 4) | ✅ built and checked on `multi-site`; live needs the drawings-bucket migration, the merge and DNS |
 | Site 3 Jai Shree Industries: expanded metal selector (weeks 5–8) | ⏳ |
 | Site 4 Jai Shree Perforator: bulk order estimator | ⏳ |
 | Site 5 Jai Shree Filtration: stock check + admin stock board | ⏳ |
@@ -109,12 +110,14 @@ Unit logos, working hours, contact names, unit photos, client names, case studie
 
 ## 4. Current status
 
-**Where we are (2026-10-11):** **Phase 0 and task 1.1 are live** on jaishreegroup.com (merge `751cd5c`). The live database has the multi-site migration and the admin-access hardening. Phase 1 (Shree Perforators) built and checked on `multi-site` (1.2–1.4); next Phase 2 (Jai Shree Metal Perforators).
+**Where we are (2026-10-11):** **Phase 0 and task 1.1 are live** on jaishreegroup.com (merge `751cd5c`). The live database has the multi-site migration and the admin-access hardening. Phases 1 and 2 (Shree Perforators, Jai Shree Metal Perforators) built and checked on `multi-site`; paused for the user's manual cross-check (2026-10-11 evening). Work continues in Cursor with Phase 3.
 
 **Authorised by the user (2026-10-11):** run Phase 0 → Phases 1–3 (all six unit sites) as far as possible; SQL on jai-shree-dev freely; tested additive migrations on the live project when going live; merge to `main` when a phase passes its checks; Google Analytics skipped for now; admin-access hardening on the live project (applied).
 
 **Next:**
-1. Phase 2: Jai Shree Metal Perforators (drawing upload quote, legacy redirects).
+1. User cross-checks Phases 1–2 on `multi-site` (`shree-perforators.localhost:3000`, `jai-shree-metal-perforators.localhost:3000`, or a Vercel preview with `?site=<key>`).
+2. Phase 3 in Cursor: Jai Shree Industries (first light theme: fix the leftover hard-coded greys), Jai Shree Perforator, Jai Shree Filtration (stock board + `stock_items`), Shree Weld Mesh (welded mesh calculator; host-scope the `/products/welded-mesh` redirect first).
+3. Before Phase 2 goes live: apply `src/lib/supabase/migrations/2026-10-11-drawings-bucket.sql` to the live project.
 2. Phases 2 and 3 (the other unit sites).
 
 **Waiting on the user (not blocking):**

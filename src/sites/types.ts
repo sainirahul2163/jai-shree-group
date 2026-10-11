@@ -57,6 +57,9 @@ export interface ThemeTokens {
   brandHover: string;
   brandForeground: string;
   brandText: string;
+  /** Hero hex mesh: colour near the cursor (default brandHover) and overall strength (default 1). */
+  hexGlow?: string;
+  hexStrength?: number;
   /** Text on WhatsApp-green buttons. Default: near-black (passes contrast). */
   whatsappText?: string;
   /** Small section labels ("3D INTERACTIVE PREVIEW"). Default: brandText. */

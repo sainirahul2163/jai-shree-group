@@ -1,6 +1,7 @@
 import { domains } from "@/sites/domains";
 import { group } from "@/sites/group";
 import { isSiteKey } from "@/sites/keys";
+import { jaiShreeMetalPerforators } from "@/sites/jai-shree-metal-perforators";
 import { shreePerforators } from "@/sites/shree-perforators";
 import type { SiteConfig, SiteKey } from "@/sites/types";
 
@@ -10,6 +11,7 @@ void (domains satisfies Record<string, SiteKey>);
 const CONFIGURED: Partial<Record<SiteKey, SiteConfig>> = {
   group,
   "shree-perforators": shreePerforators,
+  "jai-shree-metal-perforators": jaiShreeMetalPerforators,
 };
 
 export { isSiteKey };
@@ -27,5 +29,9 @@ export function findSite(key: string): SiteConfig | undefined {
   return isSiteKey(key) ? CONFIGURED[key] : undefined;
 }
 
-/** Configs that exist today; the other five unit sites are not created yet. */
-export const ALL_SITES: readonly SiteConfig[] = [group, shreePerforators];
+/** Configs that exist today; the other four unit sites are not created yet. */
+export const ALL_SITES: readonly SiteConfig[] = [
+  group,
+  shreePerforators,
+  jaiShreeMetalPerforators,
+];
