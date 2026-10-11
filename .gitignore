@@ -53,3 +53,11 @@ Jai-shree-video*.mp4
 
 # python venv for the gallery image pipeline
 scripts/gallery-restyle/venv/
+
+# multi-site baseline screenshots (large, local only)
+/docs/research/baseline/
+/docs/research/after-*/
+!.env.example
+
+# Claude Code local settings (personal permissions)
+/.claude/settings.local.json

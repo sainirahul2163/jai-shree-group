@@ -1,0 +1,33 @@
+You are building the Jai Shree Group multi-site platform on branch `multi-site` in this folder. Claude (another AI) is coordinating you and will verify your work afterwards, so be precise and honest.
+
+FIRST read: PROJECT-LOG.md, AGENTS.md, CURSOR-LOG.md (the 0.5 and 0.6 entries: route tree, proxy, `x-site` header, per-site metadata), docs/05-build-plan.md (task 0.7), docs/04-architecture.md sections "Data (Supabase)", "Leads and email" and "Environment variables", docs/02-business-facts.md, and the migration `src/lib/supabase/migrations/2026-10-11-multi-site.sql` (written and reviewed by Claude — do not change it). Read the Next.js 16 docs you need in node_modules/next/dist/docs/ (route handlers, headers()). This is Next.js 16 — do not rely on memory of older versions.
+
+Tasks 0.1–0.6 are done. Do Phase 0 task 0.7 ONLY: data and leads per site. Only the `group` site config exists today; everything must work for the unit sites from their config alone.
+
+## Database
+
+The migration adds `site text not null default 'group'` (with a check on the 7 site keys) to `leads`, `blog_posts`, `gallery_items`, `testimonials`, `page_views`, indexes, and makes blog slugs unique per site. Claude applies it to the databases; **you never run SQL against any database**. Update `src/lib/supabase/schema.sql` so a fresh install matches (columns, checks, indexes, per-site blog slug), and add `site` to the TypeScript row types.
+
+Note: the migration may not be applied to the dev database (`.env.local`) when you run. Check once with a read (e.g. select `site` from `leads` limit 1 through the service-role client in a throwaway /tmp script). If the column is missing, still finish the code, skip the database checks below, and say so clearly in your log entry. Do not try to apply the migration yourself.
+
+## Requirements
+
+1. **Site of a request.** Add one server helper (e.g. `src/lib/site-from-request.ts`) that reads the `x-site` header set by `src/proxy.ts`, validates it with `findSite`, and returns the `SiteConfig`. Unknown or unconfigured keys → the API answers 400. Never trust a site value from the request body.
+2. **APIs save the site.** `/api/quote`, `/api/contact` and `/api/track` save `site` on every row.
+3. **Lead email goes to the unit.** Recipient order: `LEAD_EMAIL_OVERRIDE` (if set, every site, every environment) → for the `group` site only, today's `CONTACT_EMAIL` → `RESEND_TO` chain (so the live group inbox does not change) → `config.leadEmail`. Subject and header name the site (`config.name`); body shows the site key and the page. The email HTML in `src/lib/email.ts` takes its brand colours and footer contacts from the site's config, not `group`/`COMPANY`. Escape every user value (today's quote email interpolates raw values — fix that by using the `email.ts` builders).
+4. **Customer auto-reply.** When the customer gave an email address and `RESEND_API_KEY` is set, send them a short confirmation from `RESEND_FROM`: thank-you line, reference number = first 8 characters of the lead id in upper case, what they asked for, the site's phone, WhatsApp and email, and its weekly holiday (from config). Plain factual wording; promise nothing the business has not stated (no response-time promises unless today's site copy already makes them — check the contact and quote pages). An auto-reply failure must never fail the request. Return `reference` in the API JSON and show it in the existing success state of the quote wizard and the contact form ("Your reference: ABCD1234"), styled with existing tokens, no other UI change.
+5. **Stop logging personal data.** Remove the `console.log` of request bodies and saved rows in the API routes (log only ids and errors).
+6. **Public reads per site.** Gallery, blog (list, post by slug, static params) and testimonials queries take the site key and filter on `site`. Pages pass their `site` param. Blog slug lookups use `(site, slug)`. The seed posts in `src/data/blog-posts.ts` stay group-only.
+7. **Admin site filter.** Leads list, blog, gallery and testimonials admin pages get a site filter (All + each site in `ALL_SITES`… but list all 7 site keys with readable names, since unit configs arrive later — keep the names in one place in `src/sites/`). The filter lives in the URL (`?site=`), defaults to All. The lead detail page shows a site badge. Creating a blog post, gallery item or testimonial lets the admin pick the site (default `group`). Dashboard counts stay totals (optional per-site breakdown only if trivial). Admin look stays as it is (admin is out of scope for tokens).
+8. **Env docs.** Add `LEAD_EMAIL_OVERRIDE` to `.env.example` with a comment. Do not touch `.env.local`.
+9. Update `docs/06-codebase-map.md` for anything you add or move. Do not edit other docs except the logs below.
+
+## Checks (all required, report each result honestly)
+
+- `npm run build` passes. `npm run lint` shows no new problems (18 problems: 12 old errors, 6 warnings). `npx tsc --noEmit` clean.
+- Production build on port 3000 (not 3100 — Claude uses that). If the dev database has the `site` column: POST a test quote and a test contact to `http://localhost:3000/api/quote` and `/api/contact` (name "TEST 0.7 — delete me"), then read the rows back with a throwaway service-role script in /tmp and confirm `site = 'group'`; also POST to `/api/track` and confirm the page view has `site = 'group'`. Delete only the test rows you created (by id). No email is sent locally (no Resend key) — confirm the code path does not throw without it.
+- `curl -H 'x-site: shree-perforators' …/api/contact` must not change the site (the proxy overwrites the header); a request with `Host: shree-perforators.localhost` gets 400 (no config yet).
+- `/`, `/contact`, `/get-quote`, `/gallery`, `/blog`, `/blog/expanded-metal-vs-perforated-sheet`, `/products/perforated-sheets` return 200 and look exactly as before (quick visual check). `/admin/leads` logged out → 307 `/admin/login`.
+- Do NOT run the full 80-page screenshot compare. Stop every server you started.
+
+Then: write your entry at the top of CURSOR-LOG.md (template in that file), tick 0.7's boxes in docs/05-build-plan.md only for what passed (leave the DB-dependent ones open if you could not test them, and say why), add one row to the Change log in PROJECT-LOG.md (newest first) and update the "`site` column…" and "Customer auto-reply" requirement rows, and commit code + logs together in ONE commit whose message starts with "0.7". Do not commit anything from /tmp. Do not push. If something cannot be done safely, stop, commit nothing broken, and explain in CURSOR-LOG.md under "Questions / assumptions".

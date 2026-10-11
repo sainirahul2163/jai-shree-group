@@ -42,25 +42,25 @@ function IndustryCard({
   return (
     <Link
       href={`/industries/${industry.slug}`}
-      className="group mx-3 flex min-w-[320px] max-w-[320px] flex-col rounded-2xl border border-[#1C1C1C] bg-[#0C0C0C] p-8 transition-colors duration-300 hover:border-[#E8521A]/40"
+      className="group mx-3 flex min-w-[320px] max-w-[320px] flex-col rounded-2xl border border-surface-2 bg-background p-8 transition-colors duration-300 hover:border-brand/40"
     >
-      <Icon className="h-10 w-10 text-[#E8521A]" strokeWidth={1.5} />
-      <h3 className="mt-5 text-xl font-bold text-white">{industry.name}</h3>
+      <Icon className="h-10 w-10 text-brand-text" strokeWidth={1.5} />
+      <h3 className="mt-5 text-xl font-bold text-foreground">{industry.name}</h3>
       <ul className="mt-4 flex flex-col gap-2.5">
         {industry.applications.slice(0, 2).map((app: string) => (
           <li
             key={app}
-            className="flex items-start gap-2.5 text-sm leading-snug text-[#8A8A8A]"
+            className="flex items-start gap-2.5 text-sm leading-snug text-text-secondary"
           >
             <span
               aria-hidden
-              className="mt-1.5 h-1 w-1 shrink-0 bg-[#E8521A]"
+              className="mt-1.5 h-1 w-1 shrink-0 bg-brand"
             />
             {app}
           </li>
         ))}
       </ul>
-      <span className="mt-auto flex items-center gap-1.5 pt-6 text-sm font-medium text-[#E8521A]">
+      <span className="mt-auto flex items-center gap-1.5 pt-6 text-sm font-medium text-brand-text">
         Learn More
         <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
       </span>
@@ -83,7 +83,7 @@ export function LandingIndustries() {
   });
 
   return (
-    <section className="overflow-hidden bg-[#060606] py-32">
+    <section className="overflow-hidden bg-background py-32">
       {/* Header */}
       <div className="mx-auto max-w-7xl px-6">
         <motion.div
@@ -101,8 +101,8 @@ export function LandingIndustries() {
           {...reveal(0.1)}
           className="mt-6 text-center text-5xl font-black tracking-tight md:text-7xl"
         >
-          <span className="text-white">Trusted Across </span>
-          <span className="text-[#3A3A3A]">Every Sector</span>
+          <span className="text-foreground">Trusted Across </span>
+          <span className="text-border-strong">Every Sector</span>
         </motion.h2>
       </div>
 
@@ -127,12 +127,12 @@ export function LandingIndustries() {
       {/* Custom CTA line */}
       <motion.p
         {...reveal(0.3)}
-        className="mt-16 text-center text-sm text-[#3A3A3A]"
+        className="mt-16 text-center text-sm text-border-strong"
       >
         Can&apos;t find your industry? We build custom.{" "}
         <Link
           href="/contact"
-          className="font-medium text-[#E8521A] transition-colors hover:text-[#FF6B35]"
+          className="font-medium text-brand-text transition-colors hover:text-brand-hover"
         >
           Talk to us →
         </Link>

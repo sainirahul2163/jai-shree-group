@@ -24,7 +24,7 @@ function parseInlineLinks(text: string) {
         <a
           key={`${match.index}-${href}`}
           href={href}
-          className="text-[#E8521A] underline-offset-2 hover:underline"
+          className="text-brand-text underline-offset-2 hover:underline"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -34,7 +34,7 @@ function parseInlineLinks(text: string) {
         <Link
           key={`${match.index}-${href}`}
           href={href}
-          className="text-[#E8521A] underline-offset-2 hover:underline"
+          className="text-brand-text underline-offset-2 hover:underline"
         >
           {label}
         </Link>
@@ -129,7 +129,7 @@ export function BlogArticleContent({ content }: BlogArticleContentProps) {
               <h2
                 key={index}
                 className="mb-4 mt-10 text-2xl font-bold first:mt-0"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: "var(--foreground)" }}
               >
                 {block.text}
               </h2>
@@ -139,14 +139,14 @@ export function BlogArticleContent({ content }: BlogArticleContentProps) {
               <h3
                 key={index}
                 className="mb-3 mt-8 text-xl font-semibold"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: "var(--foreground)" }}
               >
                 {block.text}
               </h3>
             );
           case "p":
             return (
-              <p key={index} className="mb-4" style={{ color: "#A0A0A0" }}>
+              <p key={index} className="mb-4" style={{ color: "var(--text-secondary)" }}>
                 {parseInlineLinks(block.text)}
               </p>
             );
@@ -155,15 +155,15 @@ export function BlogArticleContent({ content }: BlogArticleContentProps) {
               <div key={index} className="mb-6 overflow-x-auto">
                 <table
                   className="w-full min-w-[320px] border-collapse text-sm"
-                  style={{ color: "#A0A0A0" }}
+                  style={{ color: "var(--text-secondary)" }}
                 >
                   <thead>
-                    <tr style={{ borderBottom: "1px solid #2A2A2A" }}>
+                    <tr style={{ borderBottom: "1px solid var(--border)" }}>
                       {block.headers.map((header) => (
                         <th
                           key={header}
                           className="px-3 py-2 text-left font-semibold"
-                          style={{ color: "#FFFFFF" }}
+                          style={{ color: "var(--foreground)" }}
                         >
                           {header}
                         </th>
@@ -174,7 +174,7 @@ export function BlogArticleContent({ content }: BlogArticleContentProps) {
                     {block.rows.map((row, rowIndex) => (
                       <tr
                         key={rowIndex}
-                        style={{ borderBottom: "1px solid #1A1A1A" }}
+                        style={{ borderBottom: "1px solid var(--surface-2)" }}
                       >
                         {row.map((cell, cellIndex) => (
                           <td key={cellIndex} className="px-3 py-2">

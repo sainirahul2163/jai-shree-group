@@ -4,17 +4,19 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-import { ABOUT_TIMELINE, HOME_SECTIONS } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
+import type { AboutSectionContent } from "@/sites/content/types";
 
-export function AboutSection() {
-  const { about: section } = HOME_SECTIONS;
-
+export function AboutSection({
+  content: section,
+}: {
+  content: AboutSectionContent;
+}) {
   return (
     <section
       id={section.id}
       className="section-padding relative overflow-hidden"
-      style={{ backgroundColor: "#111111" }}
+      style={{ backgroundColor: "var(--surface)" }}
     >
       <div className="hex-grid-bg pointer-events-none absolute inset-0 opacity-[0.04]" />
 
@@ -28,13 +30,13 @@ export function AboutSection() {
         >
           <p
             className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
-            style={{ color: "#E8521A" }}
+            style={{ color: "var(--brand-text)" }}
           >
             {section.label}
           </p>
           <h2
             className="text-3xl font-black tracking-tight sm:text-4xl"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             {section.heading}
           </h2>
@@ -44,19 +46,11 @@ export function AboutSection() {
               <p
                 key={para.slice(0, 20)}
                 className="text-base leading-relaxed"
-                style={{ color: "#A0A0A0" }}
+                style={{ color: "var(--text-secondary)" }}
               >
                 {para}
               </p>
             ))}
-            <p
-              className="text-base leading-relaxed"
-              style={{ color: "#A0A0A0" }}
-            >
-              Operating as Shree Perforators and Jai Shree Metal Perforators
-              across our 6 manufacturing units in Pune and Mumbai, we bring over
-              50 years of precision to every order.
-            </p>
           </div>
 
           <div className="mt-8 grid grid-cols-2 gap-4">
@@ -69,17 +63,17 @@ export function AboutSection() {
                 transition={{ delay: index * 0.1, duration: 0.4 }}
                 className="rounded-xl border p-4"
                 style={{
-                  backgroundColor: "#0A0A0A",
-                  borderColor: "#2A2A2A",
+                  backgroundColor: "var(--background)",
+                  borderColor: "var(--border)",
                 }}
               >
                 <p
                   className="text-xl font-black sm:text-2xl"
-                  style={{ color: "#E8521A" }}
+                  style={{ color: "var(--brand-text)" }}
                 >
                   {item.value}
                 </p>
-                <p className="mt-1 text-xs" style={{ color: "#A0A0A0" }}>
+                <p className="mt-1 text-xs" style={{ color: "var(--text-secondary)" }}>
                   {item.label}
                 </p>
               </motion.div>
@@ -90,7 +84,7 @@ export function AboutSection() {
             asChild
             size="lg"
             className="mt-8 h-12 border-0 px-6 font-semibold hover:opacity-90"
-            style={{ backgroundColor: "#E8521A", color: "#FFFFFF" }}
+            style={{ backgroundColor: "var(--brand)", color: "var(--brand-foreground)" }}
           >
             <Link href={section.cta.href}>
               {section.cta.label}
@@ -103,10 +97,10 @@ export function AboutSection() {
         <div className="relative pl-8">
           <div
             className="absolute top-2 bottom-2 left-[11px] w-px"
-            style={{ backgroundColor: "#2A2A2A" }}
+            style={{ backgroundColor: "var(--border)" }}
           />
 
-          {ABOUT_TIMELINE.map((milestone, index) => (
+          {section.timeline.map((milestone, index) => (
             <motion.div
               key={milestone.year}
               initial={{ opacity: 0, x: 20 }}
@@ -118,19 +112,19 @@ export function AboutSection() {
               <div
                 className="absolute -left-8 top-1.5 size-[10px] rounded-full"
                 style={{
-                  backgroundColor: "#E8521A",
-                  boxShadow: "0 0 0 4px rgba(232, 82, 26, 0.2), 0 0 12px rgba(232, 82, 26, 0.4)",
+                  backgroundColor: "var(--brand)",
+                  boxShadow: "0 0 0 4px color-mix(in oklab, var(--brand) 20%, transparent), 0 0 12px color-mix(in oklab, var(--brand) 40%, transparent)",
                 }}
               />
               <p
                 className="text-sm font-bold"
-                style={{ color: "#E8521A" }}
+                style={{ color: "var(--brand-text)" }}
               >
                 {milestone.year}
               </p>
               <p
                 className="mt-1 text-sm"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: "var(--foreground)" }}
               >
                 {milestone.description}
               </p>

@@ -42,17 +42,17 @@ function BranchDetailCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.06, duration: 0.5 }}
-      className="rounded-xl border p-6 transition-all duration-300 hover:border-[#E8521A]"
+      className="rounded-xl border p-6 transition-all duration-300 hover:border-brand"
       style={{
-        backgroundColor: "#111111",
-        borderColor: "#2A2A2A",
+        backgroundColor: "var(--surface)",
+        borderColor: "var(--border)",
       }}
     >
       <span
         className="inline-block rounded-full px-3 py-1 text-xs font-semibold"
         style={{
-          backgroundColor: "rgba(232, 82, 26, 0.15)",
-          color: "#E8521A",
+          backgroundColor: "color-mix(in oklab, var(--brand) 15%, transparent)",
+          color: "var(--brand-text)",
         }}
       >
         {branch.area}, {branch.city}
@@ -60,7 +60,7 @@ function BranchDetailCard({
 
       <h3
         className="mt-4 text-xl font-black"
-        style={{ color: "#FFFFFF" }}
+        style={{ color: "var(--foreground)" }}
       >
         {branch.name}
       </h3>
@@ -69,14 +69,14 @@ function BranchDetailCard({
         <div className="flex items-start gap-2">
           <MapPin
             className="mt-0.5 size-4 shrink-0"
-            style={{ color: "#E8521A" }}
+            style={{ color: "var(--brand-text)" }}
           />
           <a
             href={mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="text-base leading-relaxed transition-opacity hover:opacity-80"
-            style={{ color: "#A0A0A0" }}
+            style={{ color: "var(--text-secondary)" }}
           >
             {branch.address}
           </a>
@@ -86,16 +86,16 @@ function BranchDetailCard({
           href={`tel:${branch.phone.replace(/\s/g, "")}`}
           className="flex items-center gap-2 text-base transition-opacity hover:opacity-80"
         >
-          <Phone className="size-4" style={{ color: "#E8521A" }} />
-          <span style={{ color: "#FFFFFF" }}>{branch.phone}</span>
+          <Phone className="size-4" style={{ color: "var(--brand-text)" }} />
+          <span style={{ color: "var(--foreground)" }}>{branch.phone}</span>
         </a>
 
         <a
           href={`mailto:${branch.email}`}
           className="flex items-center gap-2 text-base transition-opacity hover:opacity-80"
         >
-          <Mail className="size-4" style={{ color: "#E8521A" }} />
-          <span style={{ color: "#A0A0A0" }}>{branch.email}</span>
+          <Mail className="size-4" style={{ color: "var(--brand-text)" }} />
+          <span style={{ color: "var(--text-secondary)" }}>{branch.email}</span>
         </a>
 
         {branch.website && (
@@ -105,8 +105,8 @@ function BranchDetailCard({
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-base transition-opacity hover:opacity-80"
           >
-            <ExternalLink className="size-4" style={{ color: "#E8521A" }} />
-            <span style={{ color: "#E8521A" }}>{branch.website}</span>
+            <ExternalLink className="size-4" style={{ color: "var(--brand-text)" }} />
+            <span style={{ color: "var(--brand-text)" }}>{branch.website}</span>
           </a>
         )}
       </div>
@@ -119,10 +119,10 @@ function BranchDetailCard({
       </Button>
 
       {products.length > 0 && (
-        <div className="mt-5 border-t pt-4" style={{ borderColor: "#2A2A2A" }}>
+        <div className="mt-5 border-t pt-4" style={{ borderColor: "var(--border)" }}>
           <p
             className="text-xs font-semibold uppercase tracking-wider"
-            style={{ color: "#666666" }}
+            style={{ color: "var(--text-muted)" }}
           >
             Products Available
           </p>
@@ -132,8 +132,8 @@ function BranchDetailCard({
                 key={product}
                 className="rounded-md px-2 py-1 text-xs"
                 style={{
-                  backgroundColor: "#0A0A0A",
-                  color: "#A0A0A0",
+                  backgroundColor: "var(--background)",
+                  color: "var(--text-secondary)",
                 }}
               >
                 {product}
@@ -157,7 +157,7 @@ function BranchSection({
     <div className="mb-16">
       <h2
         className="mb-8 text-2xl font-black sm:text-3xl"
-        style={{ color: "#FFFFFF" }}
+        style={{ color: "var(--foreground)" }}
       >
         {title}
       </h2>
@@ -193,7 +193,7 @@ export function GroupPage() {
       />
 
       {/* Overview */}
-      <section className="section-padding" style={{ backgroundColor: "#111111" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
         <div className="mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -202,7 +202,7 @@ export function GroupPage() {
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <p className="text-base leading-relaxed" style={{ color: "#A0A0A0" }}>
+            <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
               {COMPANY.name} operates {COMPANY.manufacturingUnits} specialized
               manufacturing units under one family-owned group. Each unit focuses on
               specific metal fabrication capabilities — from CNC perforation and fiber
@@ -211,7 +211,7 @@ export function GroupPage() {
             </p>
             <p
               className="mt-4 text-base leading-relaxed"
-              style={{ color: "#A0A0A0" }}
+              style={{ color: "var(--text-secondary)" }}
             >
               With facilities in Talawade (Pune) and Bhayander,
               Masjid Bunder, and Palghar (Mumbai region), we deliver faster turnaround
@@ -229,17 +229,17 @@ export function GroupPage() {
                 transition={{ delay: index * 0.08, duration: 0.4 }}
                 className="rounded-xl border p-6 text-center"
                 style={{
-                  backgroundColor: "#0A0A0A",
-                  borderColor: "#2A2A2A",
+                  backgroundColor: "var(--background)",
+                  borderColor: "var(--border)",
                 }}
               >
                 <p
                   className="text-2xl font-black sm:text-3xl"
-                  style={{ color: "#E8521A" }}
+                  style={{ color: "var(--brand-text)" }}
                 >
                   {stat.value}
                 </p>
-                <p className="mt-2 text-sm" style={{ color: "#A0A0A0" }}>
+                <p className="mt-2 text-sm" style={{ color: "var(--text-secondary)" }}>
                   {stat.label}
                 </p>
               </motion.div>
@@ -249,7 +249,7 @@ export function GroupPage() {
       </section>
 
       {/* All Branches */}
-      <section className="section-padding" style={{ backgroundColor: "#0A0A0A" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--background)" }}>
         <div className="mx-auto max-w-7xl">
           <BranchSection title="Pune Units" branches={PUNE_BRANCHES} />
           <BranchSection
@@ -260,7 +260,7 @@ export function GroupPage() {
       </section>
 
       {/* India Map */}
-      <section className="section-padding" style={{ backgroundColor: "#111111" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
         <div className="mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -271,11 +271,11 @@ export function GroupPage() {
           >
             <h2
               className="text-2xl font-black sm:text-3xl"
-              style={{ color: "#FFFFFF" }}
+              style={{ color: "var(--foreground)" }}
             >
               Serving Clients Across India
             </h2>
-            <p className="mt-3 text-base" style={{ color: "#A0A0A0" }}>
+            <p className="mt-3 text-base" style={{ color: "var(--text-secondary)" }}>
               {section.mapCaption}
             </p>
           </motion.div>

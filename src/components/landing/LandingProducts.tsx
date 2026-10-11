@@ -78,7 +78,7 @@ function BentoCard({
       whileHover={reduceMotion ? undefined : { scale: 1.005 }}
       transition={SPRING}
       onMouseMove={onMouseMove}
-      className={`group relative overflow-hidden rounded-2xl border border-[#1C1C1C] bg-[#0C0C0C] transition-colors duration-300 hover:border-[#E8521A]/40 ${className}`}
+      className={`group relative overflow-hidden rounded-2xl border border-surface-2 bg-background transition-colors duration-300 hover:border-brand/40 ${className}`}
     >
       {variant === "hero" && (
         <>
@@ -88,13 +88,13 @@ function BentoCard({
             className="absolute inset-0 opacity-50"
             style={{
               backgroundImage:
-                "radial-gradient(circle, #1A1A1A 1px, transparent 1px)",
+                "radial-gradient(circle, var(--surface-2) 1px, transparent 1px)",
               backgroundSize: "24px 24px",
             }}
           />
           <span
             aria-hidden
-            className="pointer-events-none absolute -top-6 right-2 select-none text-[8rem] font-black leading-none text-white/[0.03]"
+            className="pointer-events-none absolute -top-6 right-2 select-none text-[8rem] font-black leading-none text-foreground/[0.03]"
           >
             01
           </span>
@@ -117,26 +117,26 @@ function BentoCard({
       >
         {variant === "hero" && (
           <>
-            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#E8521A]/10">
-              <Icon className="h-6 w-6 text-[#E8521A]" strokeWidth={1.75} />
+            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-brand/10">
+              <Icon className="h-6 w-6 text-brand-text" strokeWidth={1.75} />
             </div>
-            <h3 className="mt-6 text-2xl font-bold text-white">
+            <h3 className="mt-6 text-2xl font-bold text-foreground">
               {product.name}
             </h3>
-            <p className="mt-3 max-w-md leading-relaxed text-[#8A8A8A]">
+            <p className="mt-3 max-w-md leading-relaxed text-text-secondary">
               {product.description}
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
               {heroChips(product).map((chip) => (
                 <span
                   key={chip}
-                  className="rounded-full border border-white/10 px-3 py-1 text-xs text-white/60"
+                  className="rounded-full border border-foreground/10 px-3 py-1 text-xs text-foreground/60"
                 >
                   {chip}
                 </span>
               ))}
             </div>
-            <span className="mt-auto flex items-center gap-1.5 pt-6 text-sm font-medium text-[#E8521A]">
+            <span className="mt-auto flex items-center gap-1.5 pt-6 text-sm font-medium text-brand-text">
               Explore
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
@@ -146,15 +146,15 @@ function BentoCard({
         {variant === "medium" && (
           <>
             <div className="flex items-center gap-4">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#E8521A]/10">
-                <Icon className="h-5 w-5 text-[#E8521A]" strokeWidth={1.75} />
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand/10">
+                <Icon className="h-5 w-5 text-brand-text" strokeWidth={1.75} />
               </div>
-              <h3 className="text-xl font-bold text-white">{product.name}</h3>
+              <h3 className="text-xl font-bold text-foreground">{product.name}</h3>
             </div>
-            <p className="mt-4 text-sm leading-relaxed text-[#8A8A8A]">
+            <p className="mt-4 text-sm leading-relaxed text-text-secondary">
               {product.description}
             </p>
-            <span className="mt-auto flex items-center gap-1.5 pt-4 text-sm font-medium text-[#E8521A] opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <span className="mt-auto flex items-center gap-1.5 pt-4 text-sm font-medium text-brand-text opacity-0 transition-opacity duration-300 group-hover:opacity-100">
               Explore
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
@@ -163,10 +163,10 @@ function BentoCard({
 
         {variant === "small" && (
           <>
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E8521A]/10">
-              <Icon className="h-5 w-5 text-[#E8521A]" strokeWidth={1.75} />
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10">
+              <Icon className="h-5 w-5 text-brand-text" strokeWidth={1.75} />
             </div>
-            <h3 className="mt-4 text-base font-bold leading-snug text-white">
+            <h3 className="mt-4 text-base font-bold leading-snug text-foreground">
               {product.name}
             </h3>
           </>
@@ -191,7 +191,7 @@ export function LandingProducts() {
   });
 
   return (
-    <section className="bg-[#060606] px-6 py-32">
+    <section className="bg-background px-6 py-32">
       <div className="mx-auto max-w-7xl">
         <motion.div {...reveal(0)} className="flex items-center gap-3">
           <span aria-hidden className="h-px w-6 bg-orange-500/40" />
@@ -204,8 +204,8 @@ export function LandingProducts() {
           {...reveal(0.1)}
           className="mt-6 text-5xl font-black tracking-tight md:text-7xl"
         >
-          <span className="block text-white">Six Ways We</span>
-          <span className="block text-[#3A3A3A]">Shape Metal</span>
+          <span className="block text-foreground">Six Ways We</span>
+          <span className="block text-border-strong">Shape Metal</span>
         </motion.h2>
 
         <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-4 md:auto-rows-[11rem]">

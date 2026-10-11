@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 
-import { COMPANY } from "@/lib/constants";
 import { whatsappUrl } from "@/lib/email";
+import { useSite } from "@/sites/SiteProvider";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -19,8 +19,9 @@ function WhatsAppIcon({ className }: { className?: string }) {
 }
 
 export function WhatsAppButton() {
+  const { contact } = useSite();
   const href = whatsappUrl(
-    COMPANY.whatsapp,
+    contact.whatsapp,
     "Hi, I need a quote for metal products."
   );
 
@@ -29,9 +30,9 @@ export function WhatsAppButton() {
       <span
         className="pointer-events-none absolute bottom-full right-0 mb-2 hidden whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-medium opacity-0 transition-opacity group-hover:opacity-100 sm:block"
         style={{
-          backgroundColor: "#111111",
-          color: "#FFFFFF",
-          border: "1px solid #2A2A2A",
+          backgroundColor: "var(--surface)",
+          color: "var(--foreground)",
+          border: "1px solid var(--border)",
         }}
       >
         Chat with us on WhatsApp
@@ -45,7 +46,7 @@ export function WhatsAppButton() {
         className="relative flex size-14 items-center justify-center rounded-full sm:size-16"
         style={{
           backgroundColor: "#25D366",
-          color: "#FFFFFF",
+          color: "var(--foreground)",
           boxShadow: "0 4px 20px rgba(37, 211, 102, 0.4)",
         }}
         whileHover={{ scale: 1.05 }}

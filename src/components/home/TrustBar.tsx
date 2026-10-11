@@ -3,22 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 
-const TRUST_STATS = [
-  { value: 50, suffix: "+", label: "Years of Experience", animate: true },
-  { value: 6, suffix: "", label: "Manufacturing Units", animate: true },
-  {
-    value: null,
-    display: "ISO 9001:2015",
-    label: "Certified",
-    animate: false,
-  },
-  {
-    value: null,
-    display: "Global Delivery",
-    label: "",
-    animate: false,
-  },
-] as const;
+import type { TrustContent } from "@/sites/content/types";
+
 
 function AnimatedNumber({
   value,
@@ -56,7 +42,7 @@ function AnimatedNumber({
   );
 }
 
-export function TrustBar() {
+export function TrustBar({ content }: { content: TrustContent }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -65,10 +51,10 @@ export function TrustBar() {
       ref={ref}
       className="border-y"
       style={{
-        backgroundColor: "#111111",
-        borderColor: "#2A2A2A",
+        backgroundColor: "var(--surface)",
+        borderColor: "var(--border)",
       }}
-      aria-label="Company credentials"
+      aria-label={content.ariaLabel}
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -76,28 +62,28 @@ export function TrustBar() {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="mx-auto grid max-w-7xl grid-cols-2 md:grid-cols-4"
       >
-        {TRUST_STATS.map((stat) => (
+        {content.stats.map((stat) => (
           <div
             key={stat.label}
-            className="flex flex-col items-center justify-center border-[#2A2A2A] px-4 py-8 text-center sm:px-6 sm:py-10 [&:not(:last-child)]:border-r"
+            className="flex flex-col items-center justify-center border-border px-4 py-8 text-center sm:px-6 sm:py-10 [&:not(:last-child)]:border-r"
           >
             <p
               className="text-2xl font-black sm:text-3xl md:text-4xl"
-              style={{ color: "#E8521A" }}
+              style={{ color: "var(--brand-text)" }}
             >
-              {stat.animate && stat.value !== null ? (
+              {"count" in stat ? (
                 <AnimatedNumber
-                  value={stat.value}
-                  suffix={stat.suffix}
+                  value={stat.count}
+                  suffix={stat.suffix ?? ""}
                   inView={inView}
                 />
               ) : (
-                "display" in stat && stat.display
+                stat.display
               )}
             </p>
             <p
               className="mt-2 text-xs font-medium sm:text-sm"
-              style={{ color: "#A0A0A0" }}
+              style={{ color: "var(--text-secondary)" }}
             >
               {stat.label}
             </p>

@@ -17,8 +17,19 @@ const MAX_LINE_WIDTH = 1.8;
 const DETECTION_RADIUS = 150;
 const MAX_PUSH = 14;
 const SPRING_DECAY = 0.82;
-const HEX_RGB = { r: 232, g: 82, b: 26 };
 const BRIGHT_RGB = { r: 255, g: 138, b: 76 };
+
+function readBrandRgb() {
+  const fallback = { r: 232, g: 82, b: 26 };
+  if (typeof document === "undefined") return fallback;
+  const raw = getComputedStyle(document.documentElement)
+    .getPropertyValue("--brand")
+    .trim();
+  const hex = raw.match(/^#([0-9a-f]{6})$/i);
+  if (!hex) return fallback;
+  const n = Number.parseInt(hex[1], 16);
+  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+}
 
 // Depth-of-field falloff: the mesh fades out top and bottom so it reads as a
 // sheet receding out of focus rather than flat wallpaper, and stays clear of
@@ -111,6 +122,7 @@ export function MagneticHexBackground({
     off.height = Math.max(1, Math.floor(height * dpr));
     const ctx = off.getContext("2d");
     if (!ctx) return;
+    const HEX_RGB = readBrandRgb();
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.lineWidth = BASE_LINE_WIDTH;
 
@@ -181,6 +193,7 @@ export function MagneticHexBackground({
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+    const HEX_RGB = readBrandRgb();
 
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"

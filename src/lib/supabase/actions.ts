@@ -2,9 +2,19 @@
 
 import { revalidatePath } from "next/cache";
 
+// Public pages live under /[site]/(chrome)/… (the proxy rewrites each host),
+// so they are revalidated by route pattern for every site.
+
 import { isAdminEmail } from "@/lib/admin";
 import { createServerClient } from "@/lib/supabase/server";
+import { isSiteKey } from "@/sites/keys";
+import type { SiteKey } from "@/sites/types";
 import type { FollowUpType, LeadStatus } from "@/types/database";
+
+function checkedSite(site: string): SiteKey {
+  if (!isSiteKey(site)) throw new Error(`Unknown site "${site}"`);
+  return site;
+}
 
 /**
  * Whether the current session belongs to an allow-listed admin.
@@ -93,7 +103,7 @@ export async function deleteGalleryItem(id: string) {
   const { error } = await supabase.from("gallery_items").delete().eq("id", id);
   if (error) throw new Error(error.message);
   revalidatePath("/admin/gallery");
-  revalidatePath("/gallery");
+  revalidatePath("/[site]/(chrome)/gallery", "page");
 }
 
 export async function toggleGalleryPublished(id: string, isPublished: boolean) {
@@ -104,7 +114,7 @@ export async function toggleGalleryPublished(id: string, isPublished: boolean) {
     .eq("id", id);
   if (error) throw new Error(error.message);
   revalidatePath("/admin/gallery");
-  revalidatePath("/gallery");
+  revalidatePath("/[site]/(chrome)/gallery", "page");
 }
 
 export async function updateGalleryItem(
@@ -122,7 +132,7 @@ export async function updateGalleryItem(
     .eq("id", id);
   if (error) throw new Error(error.message);
   revalidatePath("/admin/gallery");
-  revalidatePath("/gallery");
+  revalidatePath("/[site]/(chrome)/gallery", "page");
 }
 
 export async function bulkUpdateGalleryCategory(
@@ -137,7 +147,7 @@ export async function bulkUpdateGalleryCategory(
     .in("id", ids);
   if (error) throw new Error(error.message);
   revalidatePath("/admin/gallery");
-  revalidatePath("/gallery");
+  revalidatePath("/[site]/(chrome)/gallery", "page");
 }
 
 export async function bulkSetGalleryPublished(
@@ -152,10 +162,11 @@ export async function bulkSetGalleryPublished(
     .in("id", ids);
   if (error) throw new Error(error.message);
   revalidatePath("/admin/gallery");
-  revalidatePath("/gallery");
+  revalidatePath("/[site]/(chrome)/gallery", "page");
 }
 
 export async function saveGalleryItem(data: {
+  site: SiteKey;
   image_url: string;
   title: string;
   description?: string;
@@ -163,6 +174,7 @@ export async function saveGalleryItem(data: {
 }) {
   const supabase = await createServerClient();
   const { error } = await supabase.from("gallery_items").insert({
+    site: checkedSite(data.site),
     image_url: data.image_url,
     title: data.title,
     description: data.description ?? null,
@@ -172,7 +184,7 @@ export async function saveGalleryItem(data: {
   });
   if (error) throw new Error(error.message);
   revalidatePath("/admin/gallery");
-  revalidatePath("/gallery");
+  revalidatePath("/[site]/(chrome)/gallery", "page");
 }
 
 export async function deleteBlogPost(id: string) {
@@ -180,11 +192,13 @@ export async function deleteBlogPost(id: string) {
   const { error } = await supabase.from("blog_posts").delete().eq("id", id);
   if (error) throw new Error(error.message);
   revalidatePath("/admin/blog");
-  revalidatePath("/blog");
+  revalidatePath("/[site]/(chrome)/blog", "page");
+  revalidatePath("/[site]/(chrome)/blog/[slug]", "page");
 }
 
 export async function saveBlogPost(
   data: {
+    site: SiteKey;
     title: string;
     slug: string;
     excerpt: string;
@@ -201,6 +215,7 @@ export async function saveBlogPost(
   const supabase = await createServerClient();
   const payload = {
     ...data,
+    site: checkedSite(data.site),
     meta_title: data.meta_title ?? null,
     meta_description: data.meta_description ?? null,
     cover_image_url: data.cover_image_url ?? null,
@@ -220,10 +235,12 @@ export async function saveBlogPost(
   }
 
   revalidatePath("/admin/blog");
-  revalidatePath("/blog");
+  revalidatePath("/[site]/(chrome)/blog", "page");
+  revalidatePath("/[site]/(chrome)/blog/[slug]", "page");
 }
 
 export async function saveTestimonial(data: {
+  site: SiteKey;
   client_name: string;
   company_name?: string;
   industry?: string;
@@ -234,6 +251,7 @@ export async function saveTestimonial(data: {
 }) {
   const supabase = await createServerClient();
   const { error } = await supabase.from("testimonials").insert({
+    site: checkedSite(data.site),
     client_name: data.client_name,
     company_name: data.company_name ?? null,
     industry: data.industry ?? null,
@@ -244,7 +262,7 @@ export async function saveTestimonial(data: {
   });
   if (error) throw new Error(error.message);
   revalidatePath("/admin/testimonials");
-  revalidatePath("/clients");
+  revalidatePath("/[site]/(chrome)/clients", "page");
 }
 
 export async function updateTestimonial(
@@ -266,7 +284,7 @@ export async function updateTestimonial(
     .eq("id", id);
   if (error) throw new Error(error.message);
   revalidatePath("/admin/testimonials");
-  revalidatePath("/clients");
+  revalidatePath("/[site]/(chrome)/clients", "page");
 }
 
 export async function deleteTestimonial(id: string) {
@@ -274,7 +292,7 @@ export async function deleteTestimonial(id: string) {
   const { error } = await supabase.from("testimonials").delete().eq("id", id);
   if (error) throw new Error(error.message);
   revalidatePath("/admin/testimonials");
-  revalidatePath("/clients");
+  revalidatePath("/[site]/(chrome)/clients", "page");
 }
 
 export async function signOutAdmin() {

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Mail, MessageCircle, Phone } from "lucide-react";
 
 import { LeadDetailClient } from "@/components/admin/LeadDetailClient";
+import { SiteBadge } from "@/components/admin/SiteBadge";
 import { StatusBadge } from "@/components/admin/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { toWhatsAppNumber } from "@/lib/phone";
@@ -48,6 +49,7 @@ export default async function AdminLeadDetailPage({
         </Button>
         <h2 className="text-2xl font-black">{lead.name}</h2>
         <StatusBadge status={lead.status} />
+        <SiteBadge site={lead.site} />
       </div>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">

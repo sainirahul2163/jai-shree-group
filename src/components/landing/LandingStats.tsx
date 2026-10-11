@@ -47,21 +47,21 @@ function CountUp({ target, suffix }: { target: number; suffix?: string }) {
 
 export function LandingStats() {
   return (
-    <section className="border-y border-[#1C1C1C] bg-[#0C0C0C]/50 backdrop-blur">
+    <section className="border-y border-surface-2 bg-background/50 backdrop-blur">
       <div className="mx-auto grid max-w-6xl grid-cols-2 gap-y-12 px-6 py-12 md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr]">
         {STATS.map((stat, i) => (
           <Fragment key={stat.label}>
             {i > 0 && (
               <span
                 aria-hidden
-                className="hidden h-12 w-px self-center bg-[#1C1C1C] md:block"
+                className="hidden h-12 w-px self-center bg-surface-2 md:block"
               />
             )}
             <div className="flex flex-col items-center text-center">
-              <span className="text-4xl font-black text-white md:text-5xl">
+              <span className="text-4xl font-black text-foreground md:text-5xl">
                 <CountUp target={stat.target} suffix={stat.suffix} />
               </span>
-              <span className="mt-2 text-xs uppercase tracking-[0.2em] text-[#8A8A8A]">
+              <span className="mt-2 text-xs uppercase tracking-[0.2em] text-text-secondary">
                 {stat.label}
               </span>
             </div>

@@ -63,11 +63,11 @@ export function ClientsPage({ testimonials = [] }: ClientsPageProps) {
         subtitle="Serving leading manufacturers across automobile, construction, pharmaceutical, and industrial sectors for over 50 years."
       />
 
-      <section className="section-padding" style={{ backgroundColor: "#111111" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
         <div className="mx-auto max-w-7xl">
           <h2
             className="mb-8 text-2xl font-black"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             Industry-wise Clients
           </h2>
@@ -81,28 +81,28 @@ export function ClientsPage({ testimonials = [] }: ClientsPageProps) {
                 transition={{ delay: index * 0.05, duration: 0.4 }}
                 className="flex flex-col items-center justify-center rounded-xl border p-6 text-center"
                 style={{
-                  backgroundColor: "#0A0A0A",
-                  borderColor: "#2A2A2A",
+                  backgroundColor: "var(--background)",
+                  borderColor: "var(--border)",
                 }}
               >
                 <div
                   className="mb-3 flex size-16 items-center justify-center rounded-lg text-lg font-black"
                   style={{
-                    backgroundColor: "#111111",
-                    color: "#666666",
+                    backgroundColor: "var(--surface)",
+                    color: "var(--text-muted)",
                   }}
                 >
                   {client.industry.charAt(0)}
                 </div>
                 <p
                   className="text-xs font-semibold uppercase tracking-wider"
-                  style={{ color: "#E8521A" }}
+                  style={{ color: "var(--brand-text)" }}
                 >
                   {client.industry}
                 </p>
                 <p
                   className="mt-1 text-sm font-medium"
-                  style={{ color: "#A0A0A0" }}
+                  style={{ color: "var(--text-secondary)" }}
                 >
                   {client.name}
                 </p>
@@ -112,11 +112,11 @@ export function ClientsPage({ testimonials = [] }: ClientsPageProps) {
         </div>
       </section>
 
-      <section className="section-padding" style={{ backgroundColor: "#0A0A0A" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--background)" }}>
         <div className="mx-auto max-w-7xl">
           <h2
             className="mb-8 text-2xl font-black"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             What Our Clients Say
           </h2>
@@ -130,33 +130,33 @@ export function ClientsPage({ testimonials = [] }: ClientsPageProps) {
                 transition={{ delay: index * 0.08, duration: 0.5 }}
                 className="rounded-xl border p-6"
                 style={{
-                  backgroundColor: "#111111",
-                  borderColor: "#2A2A2A",
+                  backgroundColor: "var(--surface)",
+                  borderColor: "var(--border)",
                 }}
               >
                 <Quote
                   className="mb-4 size-8"
-                  style={{ color: "#E8521A" }}
+                  style={{ color: "var(--brand-text)" }}
                 />
                 <div className="mb-3 flex gap-0.5">
                   {Array.from({ length: item.rating }).map((_, i) => (
                     <Star
                       key={i}
-                      className="size-4 fill-[#E8521A] text-[#E8521A]"
+                      className="size-4 fill-brand-text text-brand-text"
                     />
                   ))}
                 </div>
                 <p
                   className="text-base leading-relaxed italic"
-                  style={{ color: "#A0A0A0" }}
+                  style={{ color: "var(--text-secondary)" }}
                 >
                   &ldquo;{item.quote}&rdquo;
                 </p>
-                <div className="mt-6 border-t pt-4" style={{ borderColor: "#2A2A2A" }}>
-                  <p className="font-semibold" style={{ color: "#FFFFFF" }}>
+                <div className="mt-6 border-t pt-4" style={{ borderColor: "var(--border)" }}>
+                  <p className="font-semibold" style={{ color: "var(--foreground)" }}>
                     {item.author}
                   </p>
-                  <p className="text-sm" style={{ color: "#666666" }}>
+                  <p className="text-sm" style={{ color: "var(--text-muted)" }}>
                     {item.company}
                   </p>
                 </div>
@@ -166,11 +166,11 @@ export function ClientsPage({ testimonials = [] }: ClientsPageProps) {
         </div>
       </section>
 
-      <section className="section-padding" style={{ backgroundColor: "#111111" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
         <div className="mx-auto max-w-7xl text-center">
           <h2
             className="text-2xl font-black"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             Industries Served
           </h2>
@@ -180,19 +180,19 @@ export function ClientsPage({ testimonials = [] }: ClientsPageProps) {
                 key={industry.slug}
                 className="rounded-full border px-4 py-2 text-sm font-semibold"
                 style={{
-                  borderColor: "#2A2A2A",
-                  color: "#A0A0A0",
-                  backgroundColor: "#0A0A0A",
+                  borderColor: "var(--border)",
+                  color: "var(--text-secondary)",
+                  backgroundColor: "var(--background)",
                 }}
               >
                 {industry.name}
               </span>
             ))}
           </div>
-          <p className="mt-8 text-3xl font-black" style={{ color: "#E8521A" }}>
+          <p className="mt-8 text-3xl font-black" style={{ color: "var(--brand-text)" }}>
             8+ Industries
           </p>
-          <p className="mt-2 text-base" style={{ color: "#A0A0A0" }}>
+          <p className="mt-2 text-base" style={{ color: "var(--text-secondary)" }}>
             Trusted by manufacturers across India since 1970
           </p>
         </div>

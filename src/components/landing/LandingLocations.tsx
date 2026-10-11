@@ -46,7 +46,7 @@ export function LandingLocations() {
   });
 
   return (
-    <section className="border-y border-[#1C1C1C] bg-[#0C0C0C] px-6 py-32">
+    <section className="border-y border-surface-2 bg-background px-6 py-32">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <motion.div
@@ -64,8 +64,8 @@ export function LandingLocations() {
           {...reveal(0.1)}
           className="mt-6 text-center text-5xl font-black tracking-tight md:text-7xl"
         >
-          <span className="text-white">6 Units. 2 Cities. </span>
-          <span className="bg-gradient-to-r from-[#E8521A] via-[#FF6B35] to-[#E8521A] bg-clip-text text-transparent">
+          <span className="text-foreground">6 Units. 2 Cities. </span>
+          <span className="bg-gradient-to-r from-brand via-brand-hover to-brand bg-clip-text text-transparent">
             All of India.
           </span>
         </motion.h2>
@@ -82,23 +82,23 @@ export function LandingLocations() {
                 transition: { ...SPRING, delay: i * 0.1 },
               }}
               viewport={{ once: true, margin: "-10% 0px" }}
-              className="group relative overflow-hidden rounded-3xl border border-[#1C1C1C] bg-[#060606] p-10 transition-colors duration-300 hover:border-[#E8521A]/30"
+              className="group relative overflow-hidden rounded-3xl border border-surface-2 bg-background p-10 transition-colors duration-300 hover:border-brand/30"
             >
               <span
                 aria-hidden
-                className="pointer-events-none absolute -top-4 right-4 select-none text-8xl font-black leading-none text-white/[0.03] transition-colors duration-500 group-hover:text-white/[0.05]"
+                className="pointer-events-none absolute -top-4 right-4 select-none text-8xl font-black leading-none text-foreground/[0.03] transition-colors duration-500 group-hover:text-foreground/[0.05]"
               >
                 {city.ghost}
               </span>
 
               <div className="relative">
                 <div className="flex items-center gap-3">
-                  <span aria-hidden className="h-2 w-2 bg-[#E8521A]" />
-                  <h3 className="text-4xl font-black text-white">
+                  <span aria-hidden className="h-2 w-2 bg-brand" />
+                  <h3 className="text-4xl font-black text-foreground">
                     {city.name}
                   </h3>
                 </div>
-                <p className="mt-2 text-[#8A8A8A]">{city.unitCount}</p>
+                <p className="mt-2 text-text-secondary">{city.unitCount}</p>
 
                 <div className="mt-8">
                   {city.branches.map((branch) => (
@@ -106,10 +106,10 @@ export function LandingLocations() {
                       key={branch.name}
                       className="flex items-center justify-between border-b border-[#141414] py-3"
                     >
-                      <span className="text-sm font-medium text-white/90">
+                      <span className="text-sm font-medium text-foreground/90">
                         {branch.name}
                       </span>
-                      <span className="text-xs text-[#8A8A8A]">
+                      <span className="text-xs text-text-secondary">
                         {branch.area}
                       </span>
                     </div>
@@ -122,7 +122,7 @@ export function LandingLocations() {
 
                 <Link
                   href="/group"
-                  className="mt-6 flex w-fit items-center gap-1.5 text-sm font-medium text-[#E8521A] transition-colors hover:text-[#FF6B35]"
+                  className="mt-6 flex w-fit items-center gap-1.5 text-sm font-medium text-brand-text transition-colors hover:text-brand-hover"
                 >
                   View {city.name} Units
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -134,7 +134,7 @@ export function LandingLocations() {
 
         <motion.p
           {...reveal(0.3)}
-          className="mt-12 text-center text-sm text-[#8A8A8A]"
+          className="mt-12 text-center text-sm text-text-secondary"
         >
           Serving clients across Maharashtra and worldwide
         </motion.p>

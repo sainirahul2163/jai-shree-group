@@ -22,7 +22,7 @@ export function CtaBanner({
   secondaryHref = "/contact",
 }: CtaBannerProps) {
   return (
-    <section className="section-padding" style={{ backgroundColor: "#111111" }}>
+    <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -30,17 +30,17 @@ export function CtaBanner({
         transition={{ duration: 0.5 }}
         className="mx-auto max-w-4xl rounded-2xl border px-8 py-12 text-center"
         style={{
-          backgroundColor: "#0A0A0A",
-          borderColor: "#2A2A2A",
+          backgroundColor: "var(--background)",
+          borderColor: "var(--border)",
         }}
       >
         <h2
           className="text-2xl font-black sm:text-3xl"
-          style={{ color: "#FFFFFF" }}
+          style={{ color: "var(--foreground)" }}
         >
           {title}
         </h2>
-        <p className="mt-3 text-base" style={{ color: "#A0A0A0" }}>
+        <p className="mt-3 text-base" style={{ color: "var(--text-secondary)" }}>
           Share your requirements and our team will respond within 24 hours.
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -54,7 +54,7 @@ export function CtaBanner({
             asChild
             variant="outline"
             size="lg"
-            className="border-[#2A2A2A] bg-transparent hover:bg-[#1A1A1A]"
+            className="border-border bg-transparent hover:bg-surface-2"
           >
             <Link href={secondaryHref}>{secondaryLabel}</Link>
           </Button>

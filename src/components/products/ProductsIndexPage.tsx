@@ -11,15 +11,17 @@ import {
 import { ArrowRight } from "lucide-react";
 
 import { PageHero } from "@/components/shared/PageHero";
-import { PRODUCTS } from "@/lib/constants";
+import type { ProductCard as ProductCardData } from "@/data/products";
 import { getProductIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
+import type { PageHeroContent } from "@/sites/content/types";
+import { useSiteProducts } from "@/sites/SiteProvider";
 
 function ProductCard({
   product,
   index,
 }: {
-  product: (typeof PRODUCTS)[number];
+  product: ProductCardData;
   index: number;
 }) {
   const ref = useRef<HTMLAnchorElement>(null);
@@ -62,24 +64,24 @@ function ProductCard({
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
         className={cn(
           "group relative flex h-full flex-col rounded-xl border p-8 transition-all duration-300",
-          "border-[#2A2A2A] bg-[#111111] hover:-translate-y-1 hover:border-[#E8521A]",
-          "hover:shadow-[0_8px_32px_rgba(232,82,26,0.15)]"
+          "border-border bg-surface hover:-translate-y-1 hover:border-brand",
+          "hover:shadow-[0_8px_32px_color-mix(in oklab, var(--brand) 15%, transparent)]"
         )}
       >
         <div
           className="mb-5 flex size-14 items-center justify-center rounded-full"
-          style={{ backgroundColor: "rgba(232, 82, 26, 0.1)" }}
+          style={{ backgroundColor: "color-mix(in oklab, var(--brand) 10%, transparent)" }}
         >
-          <Icon className="size-7" style={{ color: "#E8521A" }} />
+          <Icon className="size-7" style={{ color: "var(--brand-text)" }} />
         </div>
 
-        <h2 className="text-xl font-black" style={{ color: "#FFFFFF" }}>
+        <h2 className="text-xl font-black" style={{ color: "var(--foreground)" }}>
           {product.name}
         </h2>
 
         <p
           className="mt-3 flex-1 text-base leading-relaxed"
-          style={{ color: "#A0A0A0" }}
+          style={{ color: "var(--text-secondary)" }}
         >
           {product.description}
         </p>
@@ -89,12 +91,12 @@ function ProductCard({
             <div
               key={key}
               className="rounded-lg px-3 py-2"
-              style={{ backgroundColor: "#0A0A0A" }}
+              style={{ backgroundColor: "var(--background)" }}
             >
-              <p className="text-[10px] uppercase tracking-wider" style={{ color: "#666666" }}>
+              <p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>
                 {key.replace(/([A-Z])/g, " $1").trim()}
               </p>
-              <p className="text-sm font-semibold" style={{ color: "#FFFFFF" }}>
+              <p className="text-sm font-semibold" style={{ color: "var(--foreground)" }}>
                 {value}
               </p>
             </div>
@@ -107,8 +109,8 @@ function ProductCard({
               key={material}
               className="rounded-full px-2.5 py-0.5 text-xs font-medium"
               style={{
-                backgroundColor: "#1A1A1A",
-                color: "#A0A0A0",
+                backgroundColor: "var(--surface-2)",
+                color: "var(--text-secondary)",
               }}
             >
               {material}
@@ -118,7 +120,7 @@ function ProductCard({
 
         <span
           className="mt-6 flex items-center gap-1 text-sm font-semibold"
-          style={{ color: "#E8521A" }}
+          style={{ color: "var(--brand-text)" }}
         >
           View Full Specifications
           <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
@@ -128,27 +130,33 @@ function ProductCard({
   );
 }
 
-export function ProductsIndexPage() {
+export function ProductsIndexPage({
+  hero,
+  intro,
+}: {
+  hero: PageHeroContent;
+  intro: string;
+}) {
+  const products = useSiteProducts();
+
   return (
     <>
       <PageHero
-        label="PRODUCTS"
-        title="Metal Manufacturing Products — Pune & Mumbai"
-        subtitle="Six specialized metal fabrication capabilities — from CNC perforation to fiber laser cutting and custom components, serving industries across India."
+        label={hero.label}
+        title={hero.title}
+        subtitle={hero.subtitle}
+        badges={hero.badges?.map((text) => ({ text }))}
       />
-      <section className="section-padding" style={{ backgroundColor: "#111111" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
         <div className="mx-auto max-w-7xl">
           <p
             className="mb-10 max-w-3xl text-base leading-relaxed"
-            style={{ color: "#A0A0A0" }}
+            style={{ color: "var(--text-secondary)" }}
           >
-            Jai Shree Group (Shree Perforators) manufactures precision metal
-            products across 8 facilities in Pune and Mumbai. ISO 9001:2015
-            certified with 50+ years of experience, we supply perforated sheets,
-            expanded metal, laser-cut components, and more across India.
+            {intro}
           </p>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {PRODUCTS.map((product, index) => (
+            {products.map((product, index) => (
               <ProductCard key={product.slug} product={product} index={index} />
             ))}
           </div>

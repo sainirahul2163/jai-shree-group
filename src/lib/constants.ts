@@ -1,32 +1,14 @@
-/**
- * Canonical production origin — the single source of truth for the site URL.
- * Override per-environment with NEXT_PUBLIC_SITE_URL (no trailing slash).
- * Defaults to the live Vercel domain (apex 308-redirects to www, so we use www).
- */
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") ??
-  "https://www.jaishreegroup.com";
+import { PRODUCT_CARDS } from "@/data/products";
+import { group } from "@/sites/group";
 
-export const COMPANY = {
-  name: "Jai Shree Group",
-  tagline: "Accept Challenges – Develop – Achieve",
-  founded: "1970",
-  founder: "Mr. Tejaram Jangid",
-  foundedIn: "Delhi",
-  experience: "50+",
-  iso: "ISO 9001:2015",
-  email: "shreeperforator@gmail.com",
-  phone: "+91 9370606017",
-  whatsapp:
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "919370606017",
-  address:
-    "Gat No. 94, Near Sonawane Wasti, Jyotibanagar, Talawade, Pune - 411062",
-  website: SITE_URL,
-  locations: ["Pune (Talawade)", "Mumbai (Bhayander, Palghar)"],
-  manufacturingUnits: 6,
-} as const;
-
-export const BROCHURE_URL = "/brochure/jai-shree-brochure.pdf";
+export {
+  BROCHURE_URL,
+  COMPANY,
+  FOOTER,
+  NAV_LINKS,
+  SEO,
+  SITE_URL,
+} from "@/sites/group";
 
 export const COMPANY_VIDEO = {
   youtubeId: "",
@@ -119,116 +101,8 @@ export const BRANCHES = [
   },
 ] as const;
 
-export const PRODUCTS = [
-  {
-    name: "Perforated Sheets",
-    slug: "perforated-sheets",
-    description:
-      "CNC & Turret perforation in all metals. Up to 12mm thickness.",
-    icon: "Grid3X3",
-    specs: {
-      maxThickness: "12mm",
-      process: "CNC / Turret",
-    },
-    materials: [
-      "Stainless Steel",
-      "MS (Mild Steel)",
-      "GI (Galvanized Iron)",
-      "Aluminum",
-      "Copper",
-      "Brass",
-    ],
-  },
-  {
-    name: "Laser Cutting",
-    slug: "laser-cutting",
-    description:
-      "Fiber laser cutting for any custom drawing. Up to 14mm thickness.",
-    icon: "Zap",
-    specs: {
-      maxThickness: "14mm",
-      process: "Fiber Laser",
-    },
-    materials: [
-      "Stainless Steel",
-      "MS (Mild Steel)",
-      "Aluminum",
-      "Copper",
-      "Brass",
-      "Titanium",
-    ],
-  },
-  {
-    name: "Expanded Metal",
-    slug: "expanded-metal",
-    description:
-      "Diamond, square & hexagonal patterns. Up to 6mm thick.",
-    icon: "Diamond",
-    specs: {
-      maxThickness: "6mm",
-      widths: "900 / 1250 / 1500mm",
-      patterns: "Diamond / Square / Hex",
-    },
-    materials: [
-      "Stainless Steel",
-      "MS (Mild Steel)",
-      "GI (Galvanized Iron)",
-      "Brass",
-      "Copper",
-      "Aluminum",
-      "Titanium",
-    ],
-  },
-  {
-    name: "Turret Punching",
-    slug: "turret-punching",
-    description:
-      "CNC turret punching. Any hole shape. Combined with laser for cost saving.",
-    icon: "Circle",
-    specs: {
-      process: "CNC Turret",
-      shapes: "Any hole shape",
-    },
-    materials: [
-      "Stainless Steel",
-      "MS (Mild Steel)",
-      "GI (Galvanized Iron)",
-      "Aluminum",
-      "Copper",
-      "Brass",
-    ],
-  },
-  {
-    name: "Precision Sheet Leveling",
-    slug: "precision-sheet-leveling",
-    description:
-      "Specialized bow/warpage control for perforated and laser cut sheets.",
-    icon: "Ruler",
-    specs: {
-      specialization: "Bow / Warpage Control",
-    },
-    materials: ["All Metals"],
-  },
-  {
-    name: "Custom Components",
-    slug: "custom-components",
-    description:
-      "Custom-engineered metal components, special dies, embossed plates, dimple de-stoners, huller screens, herringbone screens and any special job as per drawing.",
-    icon: "Settings2",
-    specs: {
-      process: "Custom Fabrication",
-      drawings: "DXF / DWG / Sample",
-    },
-    materials: [
-      "Stainless Steel",
-      "MS (Mild Steel)",
-      "GI (Galvanized Iron)",
-      "Aluminum",
-      "Brass",
-      "Copper",
-    ],
-  },
-] as const;
+/** Product cards, derived from `src/data/products.ts` (the one product source). */
+export const PRODUCTS = PRODUCT_CARDS;
 
 // Single source of truth for gallery categories: the public filter tabs and the
 // admin category picker both read this, so the two can't drift apart.
@@ -378,47 +252,18 @@ export const SITE_ROUTES = {
   seoCities: DELIVERY_CITIES.map((c) => `/${c.slug}/`),
 } as const;
 
-export const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Industries", href: "/industries" },
-  { label: "Our Group", href: "/group" },
-  { label: "Calculator", href: "/calculator" },
-  { label: "Gallery", href: "/gallery" },
-  { label: "Contact", href: "/contact" },
-] as const;
-
 export { BLOG_POSTS } from "@/data/blog-posts";
 
 export const DESIGN_TOKENS = {
-  background: "#0A0A0A",
-  surface: "#111111",
-  surface2: "#1A1A1A",
-  border: "#2A2A2A",
-  primary: "#E8521A",
-  primaryHover: "#FF6B35",
-  textPrimary: "#FFFFFF",
-  textSecondary: "#A0A0A0",
-  textMuted: "#666666",
-} as const;
-
-export const SEO = {
-  primaryKeywords: [
-    "Perforated Sheet Manufacturer",
-    "Expanded Mesh Manufacturers",
-    "CNC Turret Perforated Sheet Manufacturing",
-    "perforated sheet manufacturers Pune",
-    "perforated sheet manufacturers India export",
-    "expanded metal suppliers India",
-    "metal fabrication India",
-    "perforated metal sheets India supplier",
-  ],
-  schemaTypes: [
-    "LocalBusiness",
-    "Product",
-    "FAQPage",
-    "BreadcrumbList",
-  ] as const,
+  background: group.theme.background,
+  surface: group.theme.surface,
+  surface2: group.theme.surface2,
+  border: group.theme.border,
+  primary: group.theme.brand,
+  primaryHover: group.theme.brandHover,
+  textPrimary: group.theme.foreground,
+  textSecondary: group.theme.textSecondary,
+  textMuted: group.theme.textMuted,
 } as const;
 
 export const HOME_SECTIONS = {
@@ -525,46 +370,3 @@ export const MUMBAI_BRANCHES = BRANCHES.filter(
   (b) => b.city === "Mumbai" || b.city === "Maharashtra"
 );
 
-export const FOOTER = {
-  description:
-    "ISO 9001:2015 certified manufacturer of perforated sheets, laser cutting & expanded metal. Serving India since 1970.",
-  copyright: "© 2026 Jai Shree Group. All rights reserved.",
-  certification: "ISO 9001:2015 Certified | Pune & Mumbai, India",
-  social: [
-    {
-      name: "LinkedIn",
-      href: "https://www.linkedin.com/company/jai-shree-group/",
-      icon: "Linkedin",
-    },
-    {
-      name: "Facebook",
-      href: "https://www.facebook.com/jaishreegroup/",
-      icon: "Facebook",
-    },
-    {
-      name: "Instagram",
-      href: "https://www.instagram.com/jaishreegroup/",
-      icon: "Instagram",
-    },
-  ],
-  quickLinks: [
-    { label: "About", href: "/about" },
-    { label: "Our Group", href: "/group" },
-    { label: "Industries", href: "/industries" },
-    { label: "Calculator", href: "/calculator" },
-    { label: "Gallery", href: "/gallery" },
-    { label: "Certifications", href: "/certifications" },
-    { label: "Contact", href: "/contact" },
-    { label: "Get Quote", href: "/get-quote" },
-  ],
-  headings: {
-    products: "Products",
-    company: "Company",
-    contact: "Contact Us",
-  },
-  buttons: {
-    brochure: "Download Catalogue",
-    whatsapp: "WhatsApp Us",
-  },
-
-} as const;

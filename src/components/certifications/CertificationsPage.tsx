@@ -26,7 +26,7 @@ export function CertificationsPage() {
         badges={[{ text: COMPANY.iso }]}
       />
 
-      <section className="section-padding" style={{ backgroundColor: "#111111" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--surface)" }}>
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
             <motion.div
@@ -36,26 +36,26 @@ export function CertificationsPage() {
               transition={{ duration: 0.6 }}
               className="flex flex-col items-center rounded-2xl border p-12"
               style={{
-                backgroundColor: "#0A0A0A",
-                borderColor: "#2A2A2A",
+                backgroundColor: "var(--background)",
+                borderColor: "var(--border)",
               }}
             >
               <div
                 className="flex size-40 items-center justify-center rounded-xl border-2 border-dashed"
-                style={{ borderColor: "#2A2A2A" }}
+                style={{ borderColor: "var(--border)" }}
               >
                 <div className="text-center">
                   <Award
                     className="mx-auto mb-3 size-12"
-                    style={{ color: "#E8521A" }}
+                    style={{ color: "var(--brand-text)" }}
                   />
                   <p
                     className="text-lg font-black"
-                    style={{ color: "#E8521A" }}
+                    style={{ color: "var(--brand-text)" }}
                   >
                     ISO 9001:2015
                   </p>
-                  <p className="mt-1 text-xs" style={{ color: "#666666" }}>
+                  <p className="mt-1 text-xs" style={{ color: "var(--text-muted)" }}>
                     Certificate Preview
                   </p>
                 </div>
@@ -68,7 +68,7 @@ export function CertificationsPage() {
                   Request via Email
                 </a>
               </Button>
-              <p className="mt-3 text-xs" style={{ color: "#666666" }}>
+              <p className="mt-3 text-xs" style={{ color: "var(--text-muted)" }}>
                 Our ISO 9001:2015 certificate is available on request. Click to
                 email us and we&apos;ll send it within 24 hours.
               </p>
@@ -82,13 +82,13 @@ export function CertificationsPage() {
             >
               <h2
                 className="text-2xl font-black"
-                style={{ color: "#FFFFFF" }}
+                style={{ color: "var(--foreground)" }}
               >
                 About Our Certification
               </h2>
               <p
                 className="mt-4 text-base leading-relaxed"
-                style={{ color: "#A0A0A0" }}
+                style={{ color: "var(--text-secondary)" }}
               >
                 Jai Shree Group is certified under ISO 9001:2015 — the
                 international standard for Quality Management Systems. This
@@ -98,7 +98,7 @@ export function CertificationsPage() {
               </p>
               <p
                 className="mt-4 text-base leading-relaxed"
-                style={{ color: "#A0A0A0" }}
+                style={{ color: "var(--text-secondary)" }}
               >
                 Our quality management system covers the entire production chain
                 — from raw material procurement and in-process inspection to
@@ -109,13 +109,13 @@ export function CertificationsPage() {
         </div>
       </section>
 
-      <section className="section-padding" style={{ backgroundColor: "#0A0A0A" }}>
+      <section className="section-padding" style={{ backgroundColor: "var(--background)" }}>
         <div className="mx-auto max-w-7xl">
           <div className="mb-12 flex items-center gap-3">
-            <Shield className="size-8" style={{ color: "#E8521A" }} />
+            <Shield className="size-8" style={{ color: "var(--brand-text)" }} />
             <h2
               className="text-2xl font-black"
-              style={{ color: "#FFFFFF" }}
+              style={{ color: "var(--foreground)" }}
             >
               What It Means for Our Customers
             </h2>
@@ -130,15 +130,15 @@ export function CertificationsPage() {
                 transition={{ delay: index * 0.06, duration: 0.4 }}
                 className="flex items-start gap-3 rounded-xl border p-5"
                 style={{
-                  backgroundColor: "#111111",
-                  borderColor: "#2A2A2A",
+                  backgroundColor: "var(--surface)",
+                  borderColor: "var(--border)",
                 }}
               >
                 <CheckCircle
                   className="mt-0.5 size-5 shrink-0"
-                  style={{ color: "#E8521A" }}
+                  style={{ color: "var(--brand-text)" }}
                 />
-                <p className="text-base" style={{ color: "#A0A0A0" }}>
+                <p className="text-base" style={{ color: "var(--text-secondary)" }}>
                   {benefit}
                 </p>
               </motion.div>

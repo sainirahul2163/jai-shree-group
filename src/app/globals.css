@@ -1,59 +1,62 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "../sites/theme.css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  /* Core palette — direct hex, no light overrides */
-  --color-background: #0a0a0a;
-  --color-foreground: #ffffff;
-  --color-primary: #e8521a;
-  --color-primary-foreground: #ffffff;
-  --color-card: #111111;
-  --color-card-foreground: #ffffff;
-  --color-border: #2a2a2a;
-  --color-muted: #1a1a1a;
-  --color-muted-foreground: #a0a0a0;
-  --color-popover: #111111;
-  --color-popover-foreground: #ffffff;
-  --color-secondary: #1a1a1a;
-  --color-secondary-foreground: #ffffff;
-  --color-accent: #1a1a1a;
-  --color-accent-foreground: #ffffff;
-  --color-input: #2a2a2a;
-  --color-ring: #e8521a;
-  --color-destructive: #ef4444;
+  /* Token names point at CSS variables so a site can override :root. */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
 
-  /* Brand extensions */
-  --color-surface: #111111;
-  --color-surface-2: #1a1a1a;
-  --color-brand: #e8521a;
-  --color-brand-hover: #ff6b35;
-  --color-text-secondary: #a0a0a0;
-  --color-text-muted: #666666;
-  --color-metallic: #c0c0c0;
-  --color-steel: #8a8a8a;
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-text: var(--brand-text);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-border-strong: var(--border-strong);
+  --color-metallic: var(--metallic);
+  --color-steel: var(--steel);
 
   --font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
   --font-mono: var(--font-geist-mono, ui-monospace, monospace);
   --font-heading: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
   --font-display: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
 
-  --color-sidebar: #111111;
-  --color-sidebar-foreground: #ffffff;
-  --color-sidebar-primary: #e8521a;
-  --color-sidebar-primary-foreground: #ffffff;
-  --color-sidebar-accent: #1a1a1a;
-  --color-sidebar-accent-foreground: #ffffff;
-  --color-sidebar-border: #2a2a2a;
-  --color-sidebar-ring: #e8521a;
+  --color-sidebar: var(--surface);
+  --color-sidebar-foreground: var(--foreground);
+  --color-sidebar-primary: var(--brand);
+  --color-sidebar-primary-foreground: var(--brand-foreground);
+  --color-sidebar-accent: var(--surface-2);
+  --color-sidebar-accent-foreground: var(--foreground);
+  --color-sidebar-border: var(--border);
+  --color-sidebar-ring: var(--brand);
 
-  --color-chart-1: #e8521a;
-  --color-chart-2: #ff6b35;
-  --color-chart-3: #c0c0c0;
-  --color-chart-4: #8a8a8a;
-  --color-chart-5: #666666;
+  --color-chart-1: var(--brand);
+  --color-chart-2: var(--brand-hover);
+  --color-chart-3: var(--metallic);
+  --color-chart-4: var(--steel);
+  --color-chart-5: var(--text-muted);
 
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
@@ -76,11 +79,11 @@
   --surface: #111111;
   --surface-2: #1a1a1a;
   --border: #2a2a2a;
-  --brand: #e8521a;
-  --brand-hover: #ff6b35;
-  --brand-glow: rgba(232, 82, 26, 0.3);
+  --brand-foreground: #ffffff;
+  --brand-glow: color-mix(in oklab, var(--brand) 30%, transparent);
   --text-secondary: #a0a0a0;
   --text-muted: #666666;
+  --border-strong: #3a3a3a;
   --metallic: #c0c0c0;
   --steel: #8a8a8a;
 
@@ -88,8 +91,8 @@
   --card-foreground: #ffffff;
   --popover: #111111;
   --popover-foreground: #ffffff;
-  --primary: #e8521a;
-  --primary-foreground: #ffffff;
+  --primary: var(--brand);
+  --primary-foreground: var(--brand-foreground);
   --secondary: #1a1a1a;
   --secondary-foreground: #ffffff;
   --muted: #1a1a1a;
@@ -98,7 +101,7 @@
   --accent-foreground: #ffffff;
   --destructive: #ef4444;
   --input: #2a2a2a;
-  --ring: #e8521a;
+  --ring: var(--brand);
   --radius: 0.625rem;
 }
 
@@ -108,15 +111,15 @@
   }
 
   html {
-    background-color: #0a0a0a;
-    color: #ffffff;
+    background-color: var(--background);
+    color: var(--foreground);
     font-size: 17px;
     @apply scroll-smooth font-sans;
   }
 
   body {
-    background-color: #0a0a0a;
-    color: #ffffff;
+    background-color: var(--background);
+    color: var(--foreground);
     min-height: 100vh;
     line-height: 1.75;
     @apply antialiased;
@@ -129,7 +132,7 @@
   h5,
   h6 {
     font-family: var(--font-display);
-    color: #ffffff;
+    color: var(--foreground);
     @apply font-black tracking-tight;
   }
 }
@@ -137,34 +140,34 @@
 @layer utilities {
   .glow-orange {
     box-shadow:
-      0 0 20px rgba(232, 82, 26, 0.3),
-      0 0 40px rgba(232, 82, 26, 0.15);
+      0 0 20px color-mix(in oklab, var(--brand) 30%, transparent),
+      0 0 40px color-mix(in oklab, var(--brand) 15%, transparent);
   }
 
   .glow-orange-hover:hover {
     box-shadow:
-      0 0 24px rgba(232, 82, 26, 0.3),
-      0 0 48px rgba(232, 82, 26, 0.25);
+      0 0 24px color-mix(in oklab, var(--brand) 30%, transparent),
+      0 0 48px color-mix(in oklab, var(--brand) 25%, transparent);
   }
 
   .metallic-text {
-    background: linear-gradient(135deg, #ffffff 0%, #c0c0c0 100%);
+    background: linear-gradient(135deg, var(--foreground) 0%, var(--metallic) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
   .orange-gradient {
-    background: linear-gradient(135deg, #e8521a 0%, #ff6b35 100%);
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-hover) 100%);
   }
 
   .orange-gradient-text {
-    color: #e8521a;
+    color: var(--brand-text);
   }
 
   .surface-card {
-    background-color: #1a1a1a;
-    border: 1px solid #2a2a2a;
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
     @apply rounded-xl;
   }
 
@@ -189,7 +192,7 @@
   .nav-link-underline::after {
     content: "";
     @apply absolute bottom-0 left-0 h-0.5 w-0 transition-all duration-300 ease-out;
-    background-color: #e8521a;
+    background-color: var(--brand);
   }
 
   .nav-link-underline:hover::after {
@@ -245,12 +248,12 @@
   /* Outline type fills with white on row hover — fashion-house feel */
   .landing-marquee-text {
     color: transparent;
-    -webkit-text-stroke: 1px #2a2a2a;
+    -webkit-text-stroke: 1px var(--border);
     transition: color 0.4s ease;
   }
 
   .landing-marquee-row:hover .landing-marquee-text {
-    color: #fafafa;
+    color: var(--foreground);
   }
 
   @keyframes landing-marquee-left {

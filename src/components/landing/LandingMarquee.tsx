@@ -44,7 +44,7 @@ function MarqueeRow({
                 <span className="landing-marquee-text text-5xl font-black tracking-tight md:text-7xl">
                   {item}
                 </span>
-                <span aria-hidden className="mx-8 text-2xl text-[#E8521A]">
+                <span aria-hidden className="mx-8 text-2xl text-brand-text">
                   ◆
                 </span>
               </span>
@@ -60,7 +60,7 @@ export function LandingMarquee() {
   return (
     <section
       aria-label="Capabilities and locations"
-      className="overflow-hidden bg-[#060606] py-20"
+      className="overflow-hidden bg-background py-20"
     >
       <MarqueeRow items={ROW_ONE} direction="left" />
       <MarqueeRow items={ROW_TWO} direction="right" />

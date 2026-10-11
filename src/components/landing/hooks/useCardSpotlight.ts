@@ -19,7 +19,7 @@ export function useCardSpotlight(): CardSpotlight {
   const y = useMotionValue(0);
   const reduceMotion = useReducedMotion() ?? false;
 
-  const background = useMotionTemplate`radial-gradient(400px circle at ${x}px ${y}px, rgba(232,82,26,0.06), transparent 70%)`;
+  const background = useMotionTemplate`radial-gradient(400px circle at ${x}px ${y}px, color-mix(in oklab, var(--brand) 6%, transparent), transparent 70%)`;
 
   const onMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (reduceMotion) return;

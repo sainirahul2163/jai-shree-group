@@ -1,13 +1,15 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 
+import { useSiteProducts } from "@/sites/SiteProvider";
+
 const INTERVAL = 3500;
 
-const SHOWCASE_PRODUCTS = [
+const ALL_SHOWCASE_PRODUCTS = [
   {
     name: "Perforated Sheets",
     slug: "perforated-sheets",
@@ -17,7 +19,7 @@ const SHOWCASE_PRODUCTS = [
       { label: "Materials", value: "SS / MS / GI / AL" },
     ],
     pattern: "dots",
-    accentColor: "#E8521A",
+    accentColor: "var(--brand)",
   },
   {
     name: "Laser Cutting",
@@ -29,7 +31,7 @@ const SHOWCASE_PRODUCTS = [
       { label: "Materials", value: "SS / MS / AL / Brass" },
     ],
     pattern: "laser",
-    accentColor: "#E8521A",
+    accentColor: "var(--brand)",
   },
   {
     name: "Expanded Metal",
@@ -40,7 +42,7 @@ const SHOWCASE_PRODUCTS = [
       { label: "Patterns", value: "Diamond / Square / Hex" },
     ],
     pattern: "diamond",
-    accentColor: "#E8521A",
+    accentColor: "var(--brand)",
   },
   {
     name: "Turret Punching",
@@ -52,7 +54,7 @@ const SHOWCASE_PRODUCTS = [
       { label: "Materials", value: "SS / MS / GI / AL" },
     ],
     pattern: "mixed",
-    accentColor: "#E8521A",
+    accentColor: "var(--brand)",
   },
   {
     name: "Precision Sheet Leveling",
@@ -63,7 +65,7 @@ const SHOWCASE_PRODUCTS = [
       { label: "Tolerance", value: "As per spec" },
     ],
     pattern: "lines",
-    accentColor: "#E8521A",
+    accentColor: "var(--brand)",
   },
   {
     name: "Custom Components",
@@ -75,7 +77,7 @@ const SHOWCASE_PRODUCTS = [
       { label: "Specials", value: "Huller / Herringbone" },
     ],
     pattern: "custom",
-    accentColor: "#E8521A",
+    accentColor: "var(--brand)",
   },
 ] as const;
 
@@ -86,7 +88,7 @@ function DotsPattern() {
         className="absolute inset-0"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(232,82,26,0.6) 1.5px, transparent 1.5px)",
+            "radial-gradient(circle, color-mix(in oklab, var(--brand) 60%, transparent) 1.5px, transparent 1.5px)",
           backgroundSize: "24px 20px",
           backgroundPosition: "0 0, 12px 10px",
         }}
@@ -95,7 +97,7 @@ function DotsPattern() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 60% 40%, rgba(232,82,26,0.08), transparent)",
+            "radial-gradient(ellipse 80% 60% at 60% 40%, color-mix(in oklab, var(--brand) 8%, transparent), transparent)",
         }}
       />
     </div>
@@ -121,7 +123,7 @@ function LaserPattern() {
               y1="32"
               x2="32"
               y2="0"
-              stroke="rgba(232,82,26,0.2)"
+              stroke="color-mix(in oklab, var(--brand) 20%, transparent)"
               strokeWidth="0.8"
             />
           </pattern>
@@ -132,7 +134,7 @@ function LaserPattern() {
         className="absolute top-0 bottom-0 w-0.5"
         style={{
           background:
-            "linear-gradient(to bottom, transparent, #FF6B35, #E8521A, transparent)",
+            "linear-gradient(to bottom, transparent, var(--brand-hover), var(--brand), transparent)",
         }}
         initial={{ left: "-2px", opacity: 0 }}
         animate={{ left: ["0%", "105%"], opacity: [0, 1, 1, 0] }}
@@ -147,7 +149,7 @@ function LaserPattern() {
         className="absolute top-0 bottom-0 w-8 blur-sm"
         style={{
           background:
-            "linear-gradient(to right, transparent, rgba(232,82,26,0.15), transparent)",
+            "linear-gradient(to right, transparent, color-mix(in oklab, var(--brand) 15%, transparent), transparent)",
         }}
         initial={{ left: "-32px" }}
         animate={{ left: ["-32px", "105%"] }}
@@ -179,7 +181,7 @@ function DiamondPattern() {
             <polygon
               points="18,2 34,12 18,22 2,12"
               fill="none"
-              stroke="rgba(232,82,26,0.35)"
+              stroke="color-mix(in oklab, var(--brand) 35%, transparent)"
               strokeWidth="0.8"
             />
           </pattern>
@@ -190,7 +192,7 @@ function DiamondPattern() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 70% 50% at 60% 40%, rgba(232,82,26,0.06), transparent)",
+            "radial-gradient(ellipse 70% 50% at 60% 40%, color-mix(in oklab, var(--brand) 6%, transparent), transparent)",
         }}
       />
     </div>
@@ -284,14 +286,14 @@ function LinesPattern() {
         className="absolute inset-0"
         style={{
           backgroundImage:
-            "repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(232,82,26,0.15) 10px, rgba(232,82,26,0.15) 11px)",
+            "repeating-linear-gradient(0deg, transparent, transparent 10px, color-mix(in oklab, var(--brand) 15%, transparent) 10px, color-mix(in oklab, var(--brand) 15%, transparent) 11px)",
         }}
       />
       <motion.div
         className="absolute right-0 left-0 h-px"
         style={{
           background:
-            "linear-gradient(to right, transparent, #E8521A, transparent)",
+            "linear-gradient(to right, transparent, var(--brand), transparent)",
         }}
         initial={{ top: "10%" }}
         animate={{ top: ["10%", "85%", "10%"] }}
@@ -320,7 +322,7 @@ function CustomPattern() {
               cy="24"
               r="10"
               fill="none"
-              stroke="rgba(232,82,26,0.2)"
+              stroke="color-mix(in oklab, var(--brand) 20%, transparent)"
               strokeWidth="0.8"
             />
             <rect
@@ -329,7 +331,7 @@ function CustomPattern() {
               width="20"
               height="20"
               fill="none"
-              stroke="rgba(232,82,26,0.15)"
+              stroke="color-mix(in oklab, var(--brand) 15%, transparent)"
               strokeWidth="0.8"
             />
             <line
@@ -337,7 +339,7 @@ function CustomPattern() {
               y1="24"
               x2="14"
               y2="24"
-              stroke="rgba(232,82,26,0.1)"
+              stroke="color-mix(in oklab, var(--brand) 10%, transparent)"
               strokeWidth="0.5"
             />
             <line
@@ -345,7 +347,7 @@ function CustomPattern() {
               y1="24"
               x2="48"
               y2="24"
-              stroke="rgba(232,82,26,0.1)"
+              stroke="color-mix(in oklab, var(--brand) 10%, transparent)"
               strokeWidth="0.5"
             />
             <line
@@ -353,7 +355,7 @@ function CustomPattern() {
               y1="0"
               x2="24"
               y2="14"
-              stroke="rgba(232,82,26,0.1)"
+              stroke="color-mix(in oklab, var(--brand) 10%, transparent)"
               strokeWidth="0.5"
             />
             <line
@@ -361,7 +363,7 @@ function CustomPattern() {
               y1="34"
               x2="24"
               y2="48"
-              stroke="rgba(232,82,26,0.1)"
+              stroke="color-mix(in oklab, var(--brand) 10%, transparent)"
               strokeWidth="0.5"
             />
           </pattern>
@@ -382,6 +384,17 @@ const PATTERN_MAP: Record<string, React.FC> = {
 };
 
 export function ProductShowcase() {
+  // Only the products the active site offers, in its order.
+  const siteProducts = useSiteProducts();
+  const SHOWCASE_PRODUCTS = useMemo(
+    () =>
+      siteProducts.flatMap(
+        (card) => ALL_SHOWCASE_PRODUCTS.find((item) => item.slug === card.slug) ?? []
+      ),
+    [siteProducts]
+  );
+  const total = SHOWCASE_PRODUCTS.length;
+
   const [current, setCurrent] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -397,9 +410,9 @@ export function ProductShowcase() {
   const startAutoRotate = useCallback(() => {
     stopAutoRotate();
     intervalRef.current = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % SHOWCASE_PRODUCTS.length);
+      setCurrent((prev) => (prev + 1) % total);
     }, INTERVAL);
-  }, [stopAutoRotate]);
+  }, [stopAutoRotate, total]);
 
   const restartAutoRotate = useCallback(() => {
     if (isHovered) return;
@@ -416,13 +429,10 @@ export function ProductShowcase() {
 
   const next = useCallback(
     (dir = 1) => {
-      setCurrent(
-        (prev) =>
-          (prev + dir + SHOWCASE_PRODUCTS.length) % SHOWCASE_PRODUCTS.length
-      );
+      setCurrent((prev) => (prev + dir + total) % total);
       restartAutoRotate();
     },
-    [restartAutoRotate]
+    [restartAutoRotate, total]
   );
 
   useEffect(() => {
@@ -479,7 +489,7 @@ export function ProductShowcase() {
         style={{
           background: "#0F0F0F",
           minHeight: "260px",
-          borderColor: isHovered ? "rgba(232, 82, 26, 0.7)" : "#2A2A2A",
+          borderColor: isHovered ? "color-mix(in oklab, var(--brand) 70%, transparent)" : "var(--border)",
         }}
       >
         <AnimatePresence mode="wait">
@@ -509,9 +519,9 @@ export function ProductShowcase() {
           aria-label="Previous product"
           animate={{ opacity: isHovered ? 1 : 0 }}
           transition={{ duration: 0.2 }}
-          className="absolute top-1/2 left-3 z-30 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/60 backdrop-blur-sm transition-colors hover:border-[#E8521A] hover:bg-[#E8521A]/80"
+          className="absolute top-1/2 left-3 z-30 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-foreground/10 bg-black/60 backdrop-blur-sm transition-colors hover:border-brand hover:bg-brand/80"
         >
-          <ChevronLeft className="size-4 text-white" />
+          <ChevronLeft className="size-4 text-foreground" />
         </motion.button>
 
         <motion.button
@@ -520,9 +530,9 @@ export function ProductShowcase() {
           aria-label="Next product"
           animate={{ opacity: isHovered ? 1 : 0 }}
           transition={{ duration: 0.2 }}
-          className="absolute top-1/2 right-3 z-30 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/60 backdrop-blur-sm transition-colors hover:border-[#E8521A] hover:bg-[#E8521A]/80"
+          className="absolute top-1/2 right-3 z-30 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-foreground/10 bg-black/60 backdrop-blur-sm transition-colors hover:border-brand hover:bg-brand/80"
         >
-          <ChevronRight className="size-4 text-white" />
+          <ChevronRight className="size-4 text-foreground" />
         </motion.button>
 
         <div className="relative z-20 p-6">
@@ -535,7 +545,7 @@ export function ProductShowcase() {
               exit="exit"
             >
               <motion.span
-                className="text-xs font-bold tracking-[0.2em] text-[#E8521A] uppercase"
+                className="text-xs font-bold tracking-[0.2em] text-brand-text uppercase"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.25, delay: 0 }}
@@ -544,7 +554,7 @@ export function ProductShowcase() {
               </motion.span>
 
               <motion.p
-                className="mt-1.5 text-sm text-[#888888]"
+                className="mt-1.5 text-sm text-text-secondary"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.25, delay: 0.06 }}
@@ -552,7 +562,7 @@ export function ProductShowcase() {
                 {product.tagline}
               </motion.p>
 
-              <div className="my-4 h-px bg-[#1E1E1E]" />
+              <div className="my-4 h-px bg-surface-2" />
 
               <div className="flex flex-col gap-2.5">
                 {product.specs.map((spec, specIndex) => (
@@ -566,8 +576,8 @@ export function ProductShowcase() {
                       delay: 0.12 + specIndex * 0.06,
                     }}
                   >
-                    <span className="text-xs text-[#666666]">{spec.label}</span>
-                    <span className="text-sm font-semibold text-white tabular-nums">
+                    <span className="text-xs text-text-muted">{spec.label}</span>
+                    <span className="text-sm font-semibold text-foreground tabular-nums">
                       {spec.value}
                     </span>
                   </motion.div>
@@ -581,7 +591,7 @@ export function ProductShowcase() {
               >
                 <Link
                   href={`/products/${product.slug}`}
-                  className="group mt-5 flex items-center gap-1.5 text-xs font-medium text-[#E8521A] transition-colors hover:text-[#FF6B35]"
+                  className="group mt-5 flex items-center gap-1.5 text-xs font-medium text-brand-text transition-colors hover:text-brand-hover"
                 >
                   View Product Details
                   <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1" />
@@ -591,10 +601,10 @@ export function ProductShowcase() {
           </AnimatePresence>
         </div>
 
-        <div className="absolute right-0 bottom-0 left-0 z-20 h-0.5 bg-[#1A1A1A]">
+        <div className="absolute right-0 bottom-0 left-0 z-20 h-0.5 bg-surface-2">
           <motion.div
             key={current}
-            className="h-full bg-[#E8521A]"
+            className="h-full bg-brand"
             initial={{ width: "0%" }}
             animate={progressControls}
           />
@@ -618,11 +628,11 @@ export function ProductShowcase() {
                 animate={{
                   width: i === current ? 24 : 8,
                   backgroundColor:
-                    i === current ? "#E8521A" : "rgba(255,255,255,0.2)",
+                    i === current ? "var(--brand)" : "rgba(255,255,255,0.2)",
                 }}
                 whileHover={{
                   backgroundColor:
-                    i === current ? "#E8521A" : "rgba(255,255,255,0.4)",
+                    i === current ? "var(--brand)" : "rgba(255,255,255,0.4)",
                 }}
               />
             </button>

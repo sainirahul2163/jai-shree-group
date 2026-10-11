@@ -1,0 +1,16 @@
+---
+description: Rules for writing site copy, product data and SEO text
+globs: src/sites/**,src/data/**,src/app/**/page.tsx
+alwaysApply: false
+---
+
+# Content rules (details: docs/02-business-facts.md, docs/03-sites.md, docs/07-seo-rules.md)
+
+- Facts (specs, addresses, phones, holidays, history) must match `docs/02-business-facts.md`. Do not invent specs, stock, machines, clients or certifications.
+- Each site's copy is written for that site. Do not copy paragraphs, FAQs or blog posts from another site, even reworded lightly. Spec numbers may repeat; sentences may not.
+- A unit site goes deep on its focus product (see `docs/03-sites.md`); other products get short cards only.
+- Never offer discontinued products (wire mesh, crimped mesh, demister pads). Welded mesh only on the Shree Weld Mesh site.
+- Four sites sell perforated sheets; each keeps its own angle (CNC patterns / Mumbai expanded + punching / mechanical punching in bulk / ready stock). See the table in `docs/03-sites.md`.
+- Canonical URLs use the site's own `config.origin`. Never point a canonical at another site.
+- Unit sites show "A Jai Shree Group company" and link once to the main site; no cross-linking blocks between all sites.
+- Write plainly: short sentences, specific numbers and units, no hype words.

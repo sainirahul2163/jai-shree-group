@@ -1,0 +1,7 @@
+/* Group brand defaults. Unit sites override these on their wrapper.
+   These hex values stay here so the rest of src/ can use the tokens. */
+:root {
+  --brand: #e8521a;
+  --brand-hover: #ff6b35;
+  --brand-text: #e8521a;
+}

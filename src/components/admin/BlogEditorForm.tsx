@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { SiteSelect } from "@/components/admin/SiteFilter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,6 +16,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { saveBlogPost } from "@/lib/supabase/actions";
 import { createClient } from "@/lib/supabase/client";
+import type { SiteKey } from "@/sites/types";
 import type { BlogPost } from "@/types/database";
 
 const CATEGORIES = [
@@ -41,6 +43,7 @@ export function BlogEditorForm({
   isPending?: boolean;
   onSaved: () => void;
 }) {
+  const [site, setSite] = useState<SiteKey>(post?.site ?? "group");
   const [title, setTitle] = useState(post?.title ?? "");
   const [slug, setSlug] = useState(post?.slug ?? "");
   const [category, setCategory] = useState(post?.category ?? "General");
@@ -75,6 +78,7 @@ export function BlogEditorForm({
     try {
       await saveBlogPost(
         {
+          site,
           title,
           slug: slug || slugify(title),
           excerpt,
@@ -102,6 +106,14 @@ export function BlogEditorForm({
       </h2>
 
       <div className="space-y-4">
+        <div>
+          <Label>Site</Label>
+          <SiteSelect
+            value={site}
+            onChange={setSite}
+            className="mt-1.5 border-[#2A2A2A] bg-[#111111]"
+          />
+        </div>
         <div>
           <Label>Title</Label>
           <Input

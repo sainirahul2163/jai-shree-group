@@ -25,7 +25,7 @@ const PATTERNS = [
                 cy={y}
                 r="7"
                 fill="none"
-                stroke="#E8521A"
+                stroke="var(--brand-text)"
                 strokeWidth="1.5"
               />
             );
@@ -54,7 +54,7 @@ const PATTERNS = [
                 cy={y}
                 r="7"
                 fill="none"
-                stroke="#E8521A"
+                stroke="var(--brand-text)"
                 strokeWidth="1.5"
               />
             );
@@ -84,7 +84,7 @@ const PATTERNS = [
                 cy={y}
                 r="7"
                 fill="none"
-                stroke="#E8521A"
+                stroke="var(--brand-text)"
                 strokeWidth="1.5"
               />
             );
@@ -115,7 +115,7 @@ const PATTERNS = [
                 width="12"
                 height="12"
                 fill="none"
-                stroke="#E8521A"
+                stroke="var(--brand-text)"
                 strokeWidth="1.5"
                 rx="1"
               />
@@ -143,7 +143,7 @@ const PATTERNS = [
               width="12"
               height="12"
               fill="none"
-              stroke="#E8521A"
+              stroke="var(--brand-text)"
               strokeWidth="1.5"
               rx="1"
             />
@@ -177,7 +177,7 @@ const PATTERNS = [
                 key={`${row}-${col}`}
                 points={pts}
                 fill="none"
-                stroke="#E8521A"
+                stroke="var(--brand-text)"
                 strokeWidth="1.5"
               />
             );
@@ -208,7 +208,7 @@ const PATTERNS = [
                   cy={cy - r / 2}
                   r={r / 2 + 1}
                   fill="none"
-                  stroke="#E8521A"
+                  stroke="var(--brand-text)"
                   strokeWidth="1.2"
                 />
                 <circle
@@ -216,7 +216,7 @@ const PATTERNS = [
                   cy={cy}
                   r={r / 2 + 1}
                   fill="none"
-                  stroke="#E8521A"
+                  stroke="var(--brand-text)"
                   strokeWidth="1.2"
                 />
                 <circle
@@ -224,7 +224,7 @@ const PATTERNS = [
                   cy={cy + r / 2}
                   r={r / 2 + 1}
                   fill="none"
-                  stroke="#E8521A"
+                  stroke="var(--brand-text)"
                   strokeWidth="1.2"
                 />
                 <circle
@@ -232,7 +232,7 @@ const PATTERNS = [
                   cy={cy}
                   r={r / 2 + 1}
                   fill="none"
-                  stroke="#E8521A"
+                  stroke="var(--brand-text)"
                   strokeWidth="1.2"
                 />
               </g>
@@ -264,7 +264,7 @@ const PATTERNS = [
                 width="30"
                 height="10"
                 fill="none"
-                stroke="#E8521A"
+                stroke="var(--brand-text)"
                 strokeWidth="1.5"
                 rx="3"
               />
@@ -291,7 +291,7 @@ const PATTERNS = [
             width="108"
             height="10"
             fill="none"
-            stroke="#E8521A"
+            stroke="var(--brand-text)"
             strokeWidth="1.5"
             rx="3"
           />
@@ -307,7 +307,7 @@ export function PerforationPatterns() {
   const [selected, setSelected] = useState(PATTERNS[0]);
 
   return (
-    <section className="border-t border-[#1E1E1E] py-16">
+    <section className="border-t border-surface-2 py-16">
       <div className="mb-10">
         <div className="mb-4 flex items-center gap-3">
           <span className="h-px w-6 bg-orange-500/40" />
@@ -315,10 +315,10 @@ export function PerforationPatterns() {
             Hole Patterns
           </span>
         </div>
-        <h2 className="text-3xl font-black tracking-tight text-white">
+        <h2 className="text-3xl font-black tracking-tight text-foreground">
           9 Perforation Patterns Available
         </h2>
-        <p className="mt-2 max-w-xl text-sm text-[#8A8A8A]">
+        <p className="mt-2 max-w-xl text-sm text-text-secondary">
           Select any pattern below to see details. All patterns available in any
           metal — SS, MS, GI, Aluminum, Copper, Brass.
         </p>
@@ -336,14 +336,14 @@ export function PerforationPatterns() {
               transition={SPRING}
               className={`relative flex aspect-square flex-col items-center justify-center rounded-xl border p-2 transition-all duration-300 ${
                 selected.id === pattern.id
-                  ? "border-[#E8521A] bg-[#E8521A]/5"
-                  : "border-[#1E1E1E] bg-[#0C0C0C] hover:border-[#E8521A]/40"
+                  ? "border-brand bg-brand/5"
+                  : "border-surface-2 bg-background hover:border-brand/40"
               }`}
             >
               {selected.id === pattern.id && (
                 <motion.div
                   layoutId="active-pattern"
-                  className="absolute inset-0 rounded-xl border-2 border-[#E8521A]"
+                  className="absolute inset-0 rounded-xl border-2 border-brand"
                   transition={SPRING}
                 />
               )}
@@ -353,7 +353,7 @@ export function PerforationPatterns() {
               </div>
 
               <div className="mt-1 w-full px-1">
-                <p className="truncate text-[9px] leading-tight font-bold text-white">
+                <p className="truncate text-[9px] leading-tight font-bold text-foreground">
                   {pattern.name}
                 </p>
                 <p className="truncate text-[8px] text-[#555]">{pattern.sub}</p>
@@ -370,34 +370,34 @@ export function PerforationPatterns() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
               transition={SPRING}
-              className="flex h-full flex-col rounded-2xl border border-[#1E1E1E] bg-[#0C0C0C] p-6"
+              className="flex h-full flex-col rounded-2xl border border-surface-2 bg-background p-6"
             >
-              <div className="mb-6 flex aspect-video w-full items-center justify-center rounded-xl border border-[#1A1A1A] bg-[#080808] p-6">
+              <div className="mb-6 flex aspect-video w-full items-center justify-center rounded-xl border border-surface-2 bg-[#080808] p-6">
                 <div className="h-full w-full max-w-xs">{selected.svg}</div>
               </div>
 
               <div className="mb-3 flex items-start justify-between">
                 <div>
-                  <h3 className="text-xl font-black text-white">
+                  <h3 className="text-xl font-black text-foreground">
                     {selected.name}
                   </h3>
-                  <p className="text-sm text-[#E8521A]">{selected.sub}</p>
+                  <p className="text-sm text-brand-text">{selected.sub}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs tracking-widest text-[#666] uppercase">
+                  <p className="text-xs tracking-widest text-text-muted uppercase">
                     Open Area
                   </p>
-                  <p className="text-lg font-black text-[#E8521A]">
+                  <p className="text-lg font-black text-brand-text">
                     {selected.openArea}
                   </p>
                 </div>
               </div>
 
-              <p className="flex-1 text-sm leading-relaxed text-[#8A8A8A]">
+              <p className="flex-1 text-sm leading-relaxed text-text-secondary">
                 {selected.description}
               </p>
 
-              <div className="mt-6 border-t border-[#1A1A1A] pt-4">
+              <div className="mt-6 border-t border-surface-2 pt-4">
                 <p className="mb-2 text-xs tracking-widest text-[#555] uppercase">
                   Available in
                 </p>
@@ -406,7 +406,7 @@ export function PerforationPatterns() {
                     (m) => (
                       <span
                         key={m}
-                        className="rounded border border-[#1E1E1E] px-2 py-0.5 text-xs text-[#666]"
+                        className="rounded border border-surface-2 px-2 py-0.5 text-xs text-text-muted"
                       >
                         {m}
                       </span>

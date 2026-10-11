@@ -54,7 +54,7 @@ export function LandingProcess() {
   return (
     <section
       ref={sectionRef}
-      className="border-y border-[#1C1C1C] bg-[#0C0C0C] px-6 py-32"
+      className="border-y border-surface-2 bg-background px-6 py-32"
     >
       <div className="mx-auto max-w-7xl">
         {/* Header */}
@@ -69,8 +69,8 @@ export function LandingProcess() {
           {...reveal(0.1)}
           className="mt-6 text-5xl font-black tracking-tight md:text-7xl"
         >
-          <span className="block text-white">Five Steps.</span>
-          <span className="block text-[#3A3A3A]">Zero Compromise.</span>
+          <span className="block text-foreground">Five Steps.</span>
+          <span className="block text-border-strong">Zero Compromise.</span>
         </motion.h2>
 
         {/* ── Desktop: horizontal timeline ── */}
@@ -81,7 +81,7 @@ export function LandingProcess() {
               <span
                 key={step.num}
                 className={`text-7xl font-black leading-none transition-colors duration-500 ${
-                  i < activeCount ? "text-[#E8521A]/20" : "text-white/[0.06]"
+                  i < activeCount ? "text-brand-text/20" : "text-foreground/[0.06]"
                 }`}
               >
                 {step.num}
@@ -91,9 +91,9 @@ export function LandingProcess() {
 
           {/* Line + dots */}
           <div className="relative mt-8 h-2">
-            <div className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-[#1C1C1C]" />
+            <div className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-surface-2" />
             <motion.div
-              className="absolute left-0 top-1/2 h-px w-full origin-left -translate-y-1/2 bg-[#E8521A]"
+              className="absolute left-0 top-1/2 h-px w-full origin-left -translate-y-1/2 bg-brand"
               style={{ scaleX: reduceMotion ? 1 : fill }}
             />
             <div className="absolute inset-0 grid grid-cols-5 gap-6">
@@ -102,8 +102,8 @@ export function LandingProcess() {
                   <span
                     className={`absolute left-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full transition-all duration-500 ${
                       i < activeCount
-                        ? "scale-[1.4] bg-[#E8521A] shadow-[0_0_12px_rgba(232,82,26,0.6)]"
-                        : "bg-[#3A3A3A]"
+                        ? "scale-[1.4] bg-brand shadow-[0_0_12px_color-mix(in_oklab,var(--brand)_60%,transparent)]"
+                        : "bg-border-strong"
                     }`}
                   />
                 </div>
@@ -115,8 +115,8 @@ export function LandingProcess() {
           <div className="mt-8 grid grid-cols-5 gap-6">
             {STEPS.map((step) => (
               <div key={step.num}>
-                <h3 className="text-lg font-bold text-white">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-[#8A8A8A]">
+                <h3 className="text-lg font-bold text-foreground">{step.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-text-secondary">
                   {step.desc}
                 </p>
               </div>
@@ -126,9 +126,9 @@ export function LandingProcess() {
 
         {/* ── Mobile: vertical timeline ── */}
         <div className="relative mt-16 md:hidden">
-          <div className="absolute left-[3px] top-0 h-full w-px bg-[#1C1C1C]" />
+          <div className="absolute left-[3px] top-0 h-full w-px bg-surface-2" />
           <motion.div
-            className="absolute left-[3px] top-0 h-full w-px origin-top bg-[#E8521A]"
+            className="absolute left-[3px] top-0 h-full w-px origin-top bg-brand"
             style={{ scaleY: reduceMotion ? 1 : fill }}
           />
           <div className="flex flex-col gap-12">
@@ -137,21 +137,21 @@ export function LandingProcess() {
                 <span
                   className={`absolute left-0 top-1.5 h-2 w-2 rounded-full transition-all duration-500 ${
                     i < activeCount
-                      ? "scale-[1.4] bg-[#E8521A] shadow-[0_0_12px_rgba(232,82,26,0.6)]"
-                      : "bg-[#3A3A3A]"
+                      ? "scale-[1.4] bg-brand shadow-[0_0_12px_color-mix(in_oklab,var(--brand)_60%,transparent)]"
+                      : "bg-border-strong"
                   }`}
                 />
                 <span
                   className={`text-5xl font-black leading-none transition-colors duration-500 ${
-                    i < activeCount ? "text-[#E8521A]/20" : "text-white/[0.06]"
+                    i < activeCount ? "text-brand-text/20" : "text-foreground/[0.06]"
                   }`}
                 >
                   {step.num}
                 </span>
-                <h3 className="mt-3 text-lg font-bold text-white">
+                <h3 className="mt-3 text-lg font-bold text-foreground">
                   {step.title}
                 </h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-[#8A8A8A]">
+                <p className="mt-1.5 text-sm leading-relaxed text-text-secondary">
                   {step.desc}
                 </p>
               </div>

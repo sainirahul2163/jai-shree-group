@@ -1,14 +1,17 @@
+"use client";
+
 import Link from "next/link";
 import { Download, Mail, MapPin, Phone } from "lucide-react";
 
 import { Logo } from "@/components/layout/Logo";
 import { Button } from "@/components/ui/button";
-import {
-  BROCHURE_URL,
-  COMPANY,
-  FOOTER,
-  PRODUCTS,
-} from "@/lib/constants";
+import { group } from "@/sites/group";
+import { useSite, useSiteProducts } from "@/sites/SiteProvider";
+
+const LEGAL_LINKS = [
+  { label: "Privacy", href: "/privacy" },
+  { label: "Terms", href: "/terms" },
+];
 
 function whatsappUrl(phone: string) {
   const digits = phone.replace(/\D/g, "");
@@ -60,13 +63,19 @@ const SOCIAL_ICONS = {
   Instagram: InstagramIcon,
 } as const;
 
+// A client component so the [site] 404 page (which gets no route params) can
+// render it too; it reads the active site from <SiteProvider>.
 export function Footer() {
+  const site = useSite();
+  const products = useSiteProducts();
+  const { footer, contact } = site;
+
   return (
     <footer
       className="border-t"
       style={{
-        backgroundColor: "#0A0A0A",
-        borderColor: "#2A2A2A",
+        backgroundColor: "var(--background)",
+        borderColor: "var(--border)",
       }}
     >
       <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 lg:px-16">
@@ -74,36 +83,57 @@ export function Footer() {
           {/* Column 1 — Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Logo />
-            <p
-              className="mt-4 text-sm italic"
-              style={{ color: "#A0A0A0" }}
-            >
-              {COMPANY.tagline}
-            </p>
-            <p
-              className="mt-2 text-xs"
-              style={{ color: "#666666" }}
-            >
-              Also known as Shree Perforators | Jai Shree Metal Perforators
-            </p>
-            <span
-              className="mt-4 inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium"
-              style={{
-                borderColor: "#E8521A",
-                backgroundColor: "#1A1A1A",
-                color: "#E8521A",
-              }}
-            >
-              {COMPANY.iso} Certified
-            </span>
+            {site.tagline && (
+              <p
+                className="mt-4 text-sm italic"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                {site.tagline}
+              </p>
+            )}
+            {footer.alsoKnownAs && (
+              <p
+                className="mt-2 text-xs"
+                style={{ color: "var(--text-muted)" }}
+              >
+                {footer.alsoKnownAs}
+              </p>
+            )}
+            {site.endorsed && (
+              <p
+                className="mt-2 text-xs"
+                style={{ color: "var(--text-muted)" }}
+              >
+                A{" "}
+                <a
+                  href={group.origin}
+                  className="underline underline-offset-2 transition-colors hover:text-brand-text"
+                >
+                  {group.name}
+                </a>{" "}
+                company
+              </p>
+            )}
+            {site.iso && (
+              <span
+                className="mt-4 inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium"
+                style={{
+                  borderColor: "var(--brand)",
+                  backgroundColor: "var(--surface-2)",
+                  color: "var(--brand-text)",
+                }}
+              >
+                {site.iso} Certified
+              </span>
+            )}
             <p
               className="mt-4 text-sm leading-relaxed"
-              style={{ color: "#A0A0A0" }}
+              style={{ color: "var(--text-secondary)" }}
             >
-              {FOOTER.description}
+              {footer.description}
             </p>
             <div className="mt-6 flex gap-3">
-              {FOOTER.social.map((item) => {
+              {(site.social ?? []).map((item) => {
                 const Icon =
                   SOCIAL_ICONS[item.icon as keyof typeof SOCIAL_ICONS] ??
                   LinkedInIcon;
@@ -117,9 +147,9 @@ export function Footer() {
                       title={`${item.name} — coming soon`}
                       className="flex size-9 cursor-not-allowed items-center justify-center rounded-lg border opacity-50"
                       style={{
-                        borderColor: "#2A2A2A",
-                        color: "#A0A0A0",
-                        backgroundColor: "#111111",
+                        borderColor: "var(--border)",
+                        color: "var(--text-secondary)",
+                        backgroundColor: "var(--surface)",
                       }}
                       aria-label={`${item.name} coming soon`}
                     >
@@ -135,11 +165,11 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={item.name}
-                    className="flex size-9 items-center justify-center rounded-lg border transition-colors hover:border-[#E8521A] hover:text-[#E8521A]"
+                    className="flex size-9 items-center justify-center rounded-lg border transition-colors hover:border-brand hover:text-brand-text"
                     style={{
-                      borderColor: "#2A2A2A",
-                      color: "#A0A0A0",
-                      backgroundColor: "#111111",
+                      borderColor: "var(--border)",
+                      color: "var(--text-secondary)",
+                      backgroundColor: "var(--surface)",
                     }}
                   >
                     <Icon className="size-4" />
@@ -153,17 +183,17 @@ export function Footer() {
           <div>
             <h3
               className="mb-4 text-sm font-bold uppercase tracking-wider"
-              style={{ color: "#E8521A" }}
+              style={{ color: "var(--brand-text)" }}
             >
-              {FOOTER.headings.products}
+              {footer.headings.products}
             </h3>
             <ul className="space-y-2.5">
-              {PRODUCTS.map((product) => (
+              {products.map((product) => (
                 <li key={product.slug}>
                   <Link
                     href={`/products/${product.slug}`}
-                    className="text-sm transition-colors hover:text-[#E8521A]"
-                    style={{ color: "#A0A0A0" }}
+                    className="text-sm transition-colors hover:text-brand-text"
+                    style={{ color: "var(--text-secondary)" }}
                   >
                     {product.name}
                   </Link>
@@ -176,17 +206,17 @@ export function Footer() {
           <div>
             <h3
               className="mb-4 text-sm font-bold uppercase tracking-wider"
-              style={{ color: "#E8521A" }}
+              style={{ color: "var(--brand-text)" }}
             >
-              {FOOTER.headings.company}
+              {footer.headings.company}
             </h3>
             <ul className="space-y-2.5">
-              {FOOTER.quickLinks.map((link) => (
+              {footer.quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm transition-colors hover:text-[#E8521A]"
-                    style={{ color: "#A0A0A0" }}
+                    className="text-sm transition-colors hover:text-brand-text"
+                    style={{ color: "var(--text-secondary)" }}
                   >
                     {link.label}
                   </Link>
@@ -199,75 +229,77 @@ export function Footer() {
           <div>
             <h3
               className="mb-4 text-sm font-bold uppercase tracking-wider"
-              style={{ color: "#E8521A" }}
+              style={{ color: "var(--brand-text)" }}
             >
-              {FOOTER.headings.contact}
+              {footer.headings.contact}
             </h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5">
                 <MapPin
                   className="mt-0.5 size-4 shrink-0"
-                  style={{ color: "#E8521A" }}
+                  style={{ color: "var(--brand-text)" }}
                 />
-                <span className="text-sm" style={{ color: "#A0A0A0" }}>
-                  {COMPANY.address}
+                <span className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                  {contact.address}
                 </span>
               </li>
               <li>
                 <a
-                  href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}
-                  className="flex items-center gap-2.5 text-sm transition-colors hover:text-[#FFFFFF]"
-                  style={{ color: "#A0A0A0" }}
+                  href={`tel:${contact.phone.replace(/\s/g, "")}`}
+                  className="flex items-center gap-2.5 text-sm transition-colors hover:text-foreground"
+                  style={{ color: "var(--text-secondary)" }}
                 >
-                  <Phone className="size-4 shrink-0" style={{ color: "#E8521A" }} />
-                  {COMPANY.phone}
+                  <Phone className="size-4 shrink-0" style={{ color: "var(--brand-text)" }} />
+                  {contact.phone}
                 </a>
               </li>
               <li>
                 <a
-                  href={`mailto:${COMPANY.email}`}
-                  className="flex items-center gap-2.5 text-sm transition-colors hover:text-[#FFFFFF]"
-                  style={{ color: "#A0A0A0" }}
+                  href={`mailto:${contact.email}`}
+                  className="flex items-center gap-2.5 text-sm transition-colors hover:text-foreground"
+                  style={{ color: "var(--text-secondary)" }}
                 >
-                  <Mail className="size-4 shrink-0" style={{ color: "#E8521A" }} />
-                  {COMPANY.email}
+                  <Mail className="size-4 shrink-0" style={{ color: "var(--brand-text)" }} />
+                  {contact.email}
                 </a>
               </li>
             </ul>
 
             <div className="mt-6 flex flex-col gap-3">
+              {site.brochureUrl && (
               <Button
                 asChild
                 variant="outline"
-                className="h-10 w-full bg-transparent font-semibold hover:bg-[#1A1A1A]"
+                className="h-10 w-full bg-transparent font-semibold hover:bg-surface-2"
                 style={{
-                  borderColor: "#E8521A",
-                  color: "#E8521A",
+                  borderColor: "var(--brand)",
+                  color: "var(--brand-text)",
                 }}
               >
                 <a
-                  href={BROCHURE_URL}
+                  href={site.brochureUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <Download className="size-4" />
-                  {FOOTER.buttons.brochure}
+                  {footer.buttons.brochure}
                 </a>
               </Button>
+              )}
               <Button
                 asChild
                 className="h-10 w-full border-0 font-semibold hover:opacity-90"
                 style={{
                   backgroundColor: "#25D366",
-                  color: "#FFFFFF",
+                  color: "var(--foreground)",
                 }}
               >
                 <a
-                  href={whatsappUrl(COMPANY.whatsapp)}
+                  href={whatsappUrl(contact.whatsapp)}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {FOOTER.buttons.whatsapp}
+                  {footer.buttons.whatsapp}
                 </a>
               </Button>
             </div>
@@ -278,14 +310,28 @@ export function Footer() {
       {/* Bottom bar */}
       <div
         className="border-t"
-        style={{ borderColor: "#2A2A2A" }}
+        style={{ borderColor: "var(--border)" }}
       >
         <div
           className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-6 text-center text-xs md:flex-row md:px-8 md:text-left lg:px-16"
-          style={{ color: "#666666" }}
+          style={{ color: "var(--text-muted)" }}
         >
-          <p>{FOOTER.copyright}</p>
-          <p>{FOOTER.certification}</p>
+          <div className="flex flex-col items-center gap-2 md:flex-row md:gap-4">
+            <p>{footer.copyright}</p>
+            <nav aria-label="Legal" className="flex gap-4">
+              {LEGAL_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="transition-colors hover:text-brand-text"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+          <p>{footer.certification}</p>
         </div>
       </div>
     </footer>

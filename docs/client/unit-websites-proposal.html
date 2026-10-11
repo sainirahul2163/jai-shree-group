@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Unit Websites — Proposal for Approval</title>
+<style>
+  @font-face { font-family: Inter; font-weight: 400; src: url(../../public/fonts/canva/inter-400.woff2); }
+  @font-face { font-family: Inter; font-weight: 500; src: url(../../public/fonts/canva/inter-500.woff2); }
+  @font-face { font-family: Inter; font-weight: 600; src: url(../../public/fonts/canva/inter-600.woff2); }
+  @font-face { font-family: Inter; font-weight: 700; src: url(../../public/fonts/canva/inter-700.woff2); }
+  @font-face { font-family: Inter; font-weight: 800; src: url(../../public/fonts/canva/inter-800.woff2); }
+  @page { size: A4; margin: 0; }
+  :root { --brand: #E8521A; --ink: #1A1A1A; --sub: #5C5C5C; --line: #E6E2DE; --tint: #FDF3EE; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 210mm; height: 297mm; }
+  body { font-family: Inter, Helvetica, Arial, sans-serif; color: var(--ink); font-size: 9.6pt; line-height: 1.45; background: #fff; }
+  .page { padding: 12mm 14mm 10mm; height: 297mm; display: flex; flex-direction: column; }
+  header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 5mm; border-bottom: 2.5px solid var(--brand); }
+  header img { height: 13mm; }
+  .meta { text-align: right; font-size: 8.5pt; color: var(--sub); }
+  .meta b { display: block; color: var(--brand); font-size: 8pt; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; margin-bottom: 1mm; }
+  h1 { font-size: 19pt; line-height: 1.15; font-weight: 800; letter-spacing: -.01em; margin: 6mm 0 2mm; }
+  .lead { font-size: 10pt; color: #333; max-width: 170mm; }
+  table { width: 100%; border-collapse: collapse; margin-top: 5mm; table-layout: fixed; }
+  th { text-align: left; font-size: 7.6pt; letter-spacing: .1em; text-transform: uppercase; color: var(--sub); font-weight: 700; padding: 0 3mm 2mm 0; border-bottom: 1px solid var(--ink); }
+  td { padding: 2.2mm 3mm 2.2mm 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td.n { width: 9mm; }
+  .num { display: inline-block; width: 6.5mm; height: 6.5mm; border-radius: 50%; background: var(--brand); color: #fff; font-weight: 700; font-size: 8.5pt; text-align: center; line-height: 6.5mm; }
+  .unit { font-weight: 700; font-size: 10pt; }
+  .loc { color: var(--sub); font-size: 8.6pt; }
+  .cat { font-weight: 600; }
+  .dom { color: var(--sub); font-size: 8.4pt; }
+  td.why { color: #333; }
+  col.c1 { width: 9mm; } col.c2 { width: 46mm; } col.c3 { width: 55mm; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin-top: 5mm; }
+  h2 { font-size: 8pt; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); font-weight: 700; margin-bottom: 2mm; }
+  ul { list-style: none; }
+  li { padding-left: 4mm; position: relative; margin-bottom: .8mm; }
+  li::before { content: ""; position: absolute; left: 0; top: 2.1mm; width: 1.6mm; height: 1.6mm; background: var(--brand); border-radius: 1px; }
+  .steps li::before { display: none; }
+  .steps li { padding-left: 0; }
+  .steps b { display: inline-block; min-width: 24mm; }
+  .ask { margin-top: 5mm; background: var(--tint); border-left: 3px solid var(--brand); padding: 4mm 5mm; }
+  .ask h2 { margin-bottom: 2.5mm; }
+  .ask ol { padding-left: 4.5mm; }
+  .ask ol li { padding-left: 1mm; margin-bottom: 1.6mm; }
+  .ask ol li::before { display: none; }
+  .ask p { margin-top: 2.5mm; font-weight: 600; }
+  footer { margin-top: auto; padding-top: 4mm; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 7.8pt; color: var(--sub); }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <img src="logo-navbar.svg" alt="Jai Shree Group">
+    <div class="meta"><b>Proposal for approval</b>Unit websites · 5 October 2026</div>
+  </header>
+
+  <h1>A dedicated website for each of your six units</h1>
+  <p class="lead">Each unit gets its own modern website focused on one product line it makes today. All six link to the Jai Shree Group site, run on one shared platform, and send enquiries straight to the unit that makes the product.</p>
+
+  <table>
+    <colgroup><col class="c1"><col class="c2"><col class="c3"><col></colgroup>
+    <thead><tr><th></th><th>Unit and location</th><th>Website category</th><th>Why this unit</th></tr></thead>
+    <tbody>
+      <tr><td class="n"><span class="num">1</span></td>
+        <td><div class="unit">Shree Perforators</div><div class="loc">Talawade, Pune</div></td>
+        <td><div class="cat">Perforated sheets and hole patterns</div><div class="dom">shreeperforators.com</div></td>
+        <td class="why">The core perforation unit. Its existing website is already known for perforated sheets.</td></tr>
+      <tr><td class="n"><span class="num">2</span></td>
+        <td><div class="unit">Jai Shree Metal Perforators</div><div class="loc">Talawade, Pune</div></td>
+        <td><div class="cat">Laser cutting and CNC punching job work</div><div class="dom">metalperforatedsheets.com</div></td>
+        <td class="why">Runs the laser and turret machines. Its existing website already sells this job work.</td></tr>
+      <tr><td class="n"><span class="num">3</span></td>
+        <td><div class="unit">Jai Shree Industries</div><div class="loc">Bhayander, Mumbai</div></td>
+        <td><div class="cat">Expanded metal</div><div class="dom">New website</div></td>
+        <td class="why">Makes expanded metal and is close to Mumbai-region plant, walkway and guard buyers.</td></tr>
+      <tr><td class="n"><span class="num">4</span></td>
+        <td><div class="unit">Jai Shree Perforator</div><div class="loc">Palghar</div></td>
+        <td><div class="cat">Architectural and decorative panels</div><div class="dom">metalperforation.co.in</div></td>
+        <td class="why">Has perforation, laser cutting and expanded metal under one roof, which is what facade and interior panels need.</td></tr>
+      <tr><td class="n"><span class="num">5</span></td>
+        <td><div class="unit">Jai Shree Filtration</div><div class="loc">Masjid Bunder, Mumbai</div></td>
+        <td><div class="cat">Process screens for sugar, rice, grain and mining</div><div class="dom">New website</div></td>
+        <td class="why">Its screening background fits huller, herringbone and de-stoner screens for mills and plants.</td></tr>
+      <tr><td class="n"><span class="num">6</span></td>
+        <td><div class="unit">Shree Weld Mesh</div><div class="loc">Talawade, Pune</div></td>
+        <td><div class="cat">Precision sheet leveling</div><div class="dom">New website</div></td>
+        <td class="why">Sits beside the perforating and laser units, whose sheets need flattening before delivery.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="grid">
+    <div>
+      <h2>What the group gains</h2>
+      <ul>
+        <li>Found on Google for each product, not only for the group name</li>
+        <li>Enquiries go directly to the right unit's phone and email</li>
+        <li>Modern, credible sites in place of older ones</li>
+        <li>One admin panel for all enquiries; existing Google rankings kept</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Timeline after approval</h2>
+      <ul class="steps">
+        <li><b>Week 3</b>First site live (Shree Perforators)</li>
+        <li><b>Week 4</b>Jai Shree Metal Perforators</li>
+        <li><b>Weeks 5–8</b>Sites 3 to 6, about one a week</li>
+        <li><b>Weeks 9–10</b>Google listings and first report</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ask">
+    <h2>Your approval on two points</h2>
+    <ol>
+      <li><b>Unit and website pairing.</b> Is each unit matched to the right product line above?</li>
+      <li><b>Two unit names.</b> "Shree Weld Mesh" and "Jai Shree Filtration" refer to products no longer made. Shall we show them with a descriptor, for example "Shree Weld Mesh — Precision Sheet Leveling", or would you like new names?</li>
+    </ol>
+    <p>Reply "Approved", or tell us what to change, and we will start.</p>
+  </div>
+
+  <footer><span>Prepared by Viralbizz for Jai Shree Group</span><span>Confidential</span></footer>
+</div>
+</body>
+</html>

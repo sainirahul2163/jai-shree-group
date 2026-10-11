@@ -47,7 +47,7 @@ export function LandingStory() {
   });
 
   return (
-    <section className="bg-[#060606] px-6 py-32">
+    <section className="bg-background px-6 py-32">
       <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-[2fr_3fr]">
         {/* ── Left: story + timeline ── */}
         <div>
@@ -62,17 +62,17 @@ export function LandingStory() {
             {...reveal(0.1)}
             className="mt-6 text-4xl font-black tracking-tight md:text-5xl"
           >
-            <span className="block text-white">From Delhi, 1970.</span>
-            <span className="block text-[#3A3A3A]">
+            <span className="block text-foreground">From Delhi, 1970.</span>
+            <span className="block text-border-strong">
               To India&apos;s Most Trusted.
             </span>
           </motion.h2>
 
           {/* Timeline with scroll-linked fill */}
           <div ref={timelineRef} className="relative mt-12">
-            <div className="absolute left-[2.5px] top-1 h-[calc(100%-0.5rem)] w-px bg-[#1C1C1C]" />
+            <div className="absolute left-[2.5px] top-1 h-[calc(100%-0.5rem)] w-px bg-surface-2" />
             <motion.div
-              className="absolute left-[2.5px] top-1 h-[calc(100%-0.5rem)] w-px origin-top bg-[#E8521A]"
+              className="absolute left-[2.5px] top-1 h-[calc(100%-0.5rem)] w-px origin-top bg-brand"
               style={{ scaleY: reduceMotion ? 1 : fill }}
             />
             <div className="flex flex-col gap-8">
@@ -90,12 +90,12 @@ export function LandingStory() {
                 >
                   <span
                     aria-hidden
-                    className="absolute left-0 top-1.5 h-1.5 w-1.5 bg-[#E8521A]"
+                    className="absolute left-0 top-1.5 h-1.5 w-1.5 bg-brand"
                   />
                   <span className="font-mono text-sm text-orange-500">
                     {m.year}
                   </span>
-                  <p className="mt-0.5 font-medium text-white">{m.title}</p>
+                  <p className="mt-0.5 font-medium text-foreground">{m.title}</p>
                 </motion.div>
               ))}
             </div>
@@ -104,12 +104,12 @@ export function LandingStory() {
           <motion.div {...reveal(0.3)} className="mt-12">
             <Link
               href="/about"
-              className="group relative font-medium text-white/80 transition-colors duration-300 hover:text-white"
+              className="group relative font-medium text-foreground/80 transition-colors duration-300 hover:text-foreground"
             >
               Read Full Story →
               <span
                 aria-hidden
-                className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-white transition-transform duration-300 ease-out group-hover:scale-x-100"
+                className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-foreground transition-transform duration-300 ease-out group-hover:scale-x-100"
               />
             </Link>
           </motion.div>
@@ -124,7 +124,7 @@ export function LandingStory() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-10% 0px" }}
           transition={SPRING}
-          className="relative overflow-hidden rounded-3xl border border-[#1C1C1C] bg-[#0C0C0C] p-10 md:p-14"
+          className="relative overflow-hidden rounded-3xl border border-surface-2 bg-background p-10 md:p-14"
         >
           {/* Perforation dots */}
           <div
@@ -132,7 +132,7 @@ export function LandingStory() {
             className="absolute inset-0 opacity-40"
             style={{
               backgroundImage:
-                "radial-gradient(circle, #1A1A1A 1px, transparent 1px)",
+                "radial-gradient(circle, var(--surface-2) 1px, transparent 1px)",
               backgroundSize: "24px 24px",
             }}
           />
@@ -142,7 +142,7 @@ export function LandingStory() {
             className="absolute bottom-0 right-0 h-80 w-80"
             style={{
               background:
-                "radial-gradient(circle at 100% 100%, rgba(232,82,26,0.05), transparent 70%)",
+                "radial-gradient(circle at 100% 100%, color-mix(in oklab, var(--brand) 5%, transparent), transparent 70%)",
             }}
           />
 
@@ -151,28 +151,28 @@ export function LandingStory() {
               ISO 9001:2015
             </span>
 
-            <blockquote className="mt-10 text-2xl font-bold leading-snug text-white md:text-4xl">
-              <span aria-hidden className="text-5xl text-[#E8521A] md:text-6xl">
+            <blockquote className="mt-10 text-2xl font-bold leading-snug text-foreground md:text-4xl">
+              <span aria-hidden className="text-5xl text-brand-text md:text-6xl">
                 &ldquo;
               </span>
               We offer what we promise. And promise only what we can offer.
-              <span aria-hidden className="text-[#E8521A]">
+              <span aria-hidden className="text-brand-text">
                 &rdquo;
               </span>
             </blockquote>
 
-            <p className="mt-6 text-sm text-[#8A8A8A]">
+            <p className="mt-6 text-sm text-text-secondary">
               — Jai Shree Group Philosophy
             </p>
 
-            <div className="my-8 border-t border-[#1C1C1C]" />
+            <div className="my-8 border-t border-surface-2" />
 
             <ul className="flex flex-col gap-4">
               {STRENGTHS.map((s) => (
-                <li key={s} className="flex items-center gap-3 text-white/80">
+                <li key={s} className="flex items-center gap-3 text-foreground/80">
                   <span
                     aria-hidden
-                    className="h-1.5 w-1.5 shrink-0 bg-[#E8521A]"
+                    className="h-1.5 w-1.5 shrink-0 bg-brand"
                   />
                   {s}
                 </li>

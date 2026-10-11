@@ -11,7 +11,7 @@ const LOCATIONS = [
     lat: 18.6469,
     lng: 73.7562,
     units: 3,
-    color: "#E8521A",
+    color: "var(--brand-text)",
     branches: [
       "Jai Shree Metal Perforators — Talawade",
       "Shree Perforators — Talawade",
@@ -25,7 +25,7 @@ const LOCATIONS = [
     lat: 19.076,
     lng: 72.8777,
     units: 3,
-    color: "#E8521A",
+    color: "var(--brand-text)",
     branches: [
       "Jai Shree Filtration — Masjid Bunder",
       "Jai Shree Industries — Bhayander",
@@ -60,18 +60,18 @@ const POPUP_STYLES = `
     display: none !important;
   }
   .custom-popup .leaflet-popup-close-button {
-    color: #888888 !important;
+    color: var(--text-secondary) !important;
     top: 8px !important;
     right: 8px !important;
   }
   .leaflet-control-zoom a {
-    background: #1A1A1A !important;
-    color: #FFFFFF !important;
-    border-color: #2A2A2A !important;
+    background: var(--surface-2) !important;
+    color: var(--foreground) !important;
+    border-color: var(--border) !important;
   }
   .leaflet-control-zoom a:hover {
-    background: #E8521A !important;
-    color: #FFFFFF !important;
+    background: var(--brand) !important;
+    color: var(--brand-foreground) !important;
   }
   .leaflet-attribution-flag { display: none !important; }
   .leaflet-control-attribution {
@@ -79,7 +79,7 @@ const POPUP_STYLES = `
     color: #444 !important;
     font-size: 9px !important;
   }
-  .leaflet-control-attribution a { color: #666 !important; }
+  .leaflet-control-attribution a { color: var(--text-muted) !important; }
 `;
 
 export function IndiaMap() {
@@ -136,7 +136,7 @@ export function IndiaMap() {
               transform: translate(-50%, -50%);
               width: 60px; height: 60px;
               border-radius: 50%;
-              background: rgba(232, 82, 26, 0.15);
+              background: color-mix(in oklab, var(--brand) 15%, transparent);
               animation: pulse1 2.5s ease-out infinite;
             "></div>
             <div style="
@@ -145,7 +145,7 @@ export function IndiaMap() {
               transform: translate(-50%, -50%);
               width: 40px; height: 40px;
               border-radius: 50%;
-              background: rgba(232, 82, 26, 0.2);
+              background: color-mix(in oklab, var(--brand) 20%, transparent);
               animation: pulse1 2.5s ease-out infinite 0.5s;
             "></div>
             <div style="
@@ -154,9 +154,9 @@ export function IndiaMap() {
               transform: translate(-50%, -50%);
               width: 20px; height: 20px;
               border-radius: 50%;
-              background: #E8521A;
-              border: 3px solid #FF6B35;
-              box-shadow: 0 0 20px rgba(232,82,26,0.8), 0 0 40px rgba(232,82,26,0.4);
+              background: var(--brand);
+              border: 3px solid var(--brand-hover);
+              box-shadow: 0 0 20px color-mix(in oklab, var(--brand) 80%, transparent), 0 0 40px color-mix(in oklab, var(--brand) 40%, transparent);
             "></div>
           </div>
           <style>
@@ -177,22 +177,22 @@ export function IndiaMap() {
 
         const popupHtml = `
           <div style="
-            background: #111111;
-            border: 1px solid rgba(232,82,26,0.4);
+            background: var(--surface);
+            border: 1px solid color-mix(in oklab, var(--brand) 40%, transparent);
             border-radius: 12px;
             padding: 16px 20px;
             min-width: 240px;
             font-family: Arial, sans-serif;
           ">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
-              <div style="width:8px;height:8px;border-radius:50%;background:#E8521A;box-shadow:0 0 8px #E8521A;"></div>
-              <span style="color:#FFFFFF;font-size:16px;font-weight:700;">${loc.name}</span>
-              <span style="color:#E8521A;font-size:11px;margin-left:auto;background:rgba(232,82,26,0.1);padding:2px 8px;border-radius:20px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--brand);box-shadow:0 0 8px var(--brand);"></div>
+              <span style="color:var(--foreground);font-size:16px;font-weight:700;">${loc.name}</span>
+              <span style="color:var(--brand-text);font-size:11px;margin-left:auto;background:color-mix(in oklab, var(--brand) 10%, transparent);padding:2px 8px;border-radius:20px;">
                 ${loc.units} Units
               </span>
             </div>
-            <p style="color:#888888;font-size:11px;margin:0 0 10px 0;line-height:1.5;">${loc.description}</p>
-            <div style="border-top:1px solid #2A2A2A;padding-top:10px;">
+            <p style="color:var(--text-secondary);font-size:11px;margin:0 0 10px 0;line-height:1.5;">${loc.description}</p>
+            <div style="border-top:1px solid var(--border);padding-top:10px;">
               ${loc.branches
                 .map(
                   (b) => `
@@ -201,7 +201,7 @@ export function IndiaMap() {
                   color:#CCCCCC;font-size:11px;
                   padding: 3px 0;
                 ">
-                  <div style="width:3px;height:3px;border-radius:50%;background:#E8521A;flex-shrink:0;"></div>
+                  <div style="width:3px;height:3px;border-radius:50%;background:var(--brand);flex-shrink:0;"></div>
                   ${b}
                 </div>
               `
@@ -253,9 +253,9 @@ export function IndiaMap() {
         transition={{ duration: 0.6 }}
         className="relative overflow-hidden rounded-2xl"
         style={{
-          border: "1px solid rgba(232, 82, 26, 0.2)",
+          border: "1px solid color-mix(in oklab, var(--brand) 20%, transparent)",
           boxShadow:
-            "0 0 40px rgba(232, 82, 26, 0.05), 0 0 0 1px rgba(232,82,26,0.1)",
+            "0 0 40px color-mix(in oklab, var(--brand) 5%, transparent), 0 0 0 1px color-mix(in oklab, var(--brand) 10%, transparent)",
         }}
       >
         <div
@@ -269,11 +269,11 @@ export function IndiaMap() {
         <div
           ref={mapRef}
           className="relative z-0 min-h-[320px] w-full sm:min-h-[480px]"
-          style={{ height: "480px", backgroundColor: "#0A0A0A" }}
+          style={{ height: "480px", backgroundColor: "var(--background)" }}
         />
 
-        <div className="absolute top-4 left-4 z-20 rounded-full border border-[#2A2A2A] bg-black/70 px-4 py-1.5 backdrop-blur-sm">
-          <span className="text-xs font-semibold tracking-widest text-[#E8521A] uppercase">
+        <div className="absolute top-4 left-4 z-20 rounded-full border border-border bg-black/70 px-4 py-1.5 backdrop-blur-sm">
+          <span className="text-xs font-semibold tracking-widest text-brand-text uppercase">
             Our Locations
           </span>
         </div>
@@ -286,20 +286,20 @@ export function IndiaMap() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex items-center gap-4 rounded-xl border border-[#2A2A2A] bg-[#111111] px-5 py-4"
+            className="flex items-center gap-4 rounded-xl border border-border bg-surface px-5 py-4"
           >
             <div className="relative">
-              <div className="h-3 w-3 rounded-full bg-[#E8521A]" />
-              <div className="absolute inset-0 h-3 w-3 animate-ping rounded-full bg-[#E8521A] opacity-30" />
+              <div className="h-3 w-3 rounded-full bg-brand" />
+              <div className="absolute inset-0 h-3 w-3 animate-ping rounded-full bg-brand opacity-30" />
             </div>
             <div>
-              <p className="text-base font-bold text-white">{loc.name}</p>
-              <p className="text-xs text-[#E8521A]">
+              <p className="text-base font-bold text-foreground">{loc.name}</p>
+              <p className="text-xs text-brand-text">
                 {loc.units} Manufacturing Units
               </p>
             </div>
             <div className="ml-auto text-right">
-              <p className="text-xs text-[#666]">
+              <p className="text-xs text-text-muted">
                 {loc.branches.length} branches
               </p>
             </div>

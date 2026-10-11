@@ -8,21 +8,9 @@ import { ArrowRight } from "lucide-react";
 import { MagneticHexBackground } from "@/components/home/MagneticHexBackground";
 import { ProductShowcase } from "@/components/home/ProductShowcase";
 import { Button } from "@/components/ui/button";
-import { COMPANY } from "@/lib/constants";
+import type { HeroContent } from "@/sites/content/types";
 
-const MICRO_STATS = [
-  { value: "50+ Years", label: "Experience" },
-  { value: "6 Units", label: "Manufacturing" },
-  { value: "ISO Certified", label: "Quality" },
-];
-
-const H1_LINES = [
-  { text: "PERFORATED SHEET", color: "#FFFFFF" },
-  { text: "MANUFACTURERS", color: "#FFFFFF" },
-  { text: "SINCE 1970", color: "#E8521A" },
-] as const;
-
-export function HeroSection() {
+export function HeroSection({ content }: { content: HeroContent }) {
   const heroRef = useRef<HTMLElement>(null);
 
   return (
@@ -30,7 +18,7 @@ export function HeroSection() {
       ref={heroRef}
       id="home"
       className="relative flex min-h-screen items-center overflow-hidden pt-16 md:pt-20"
-      style={{ backgroundColor: "#0A0A0A" }}
+      style={{ backgroundColor: "var(--background)" }}
     >
       <MagneticHexBackground containerRef={heroRef} />
 
@@ -39,15 +27,15 @@ export function HeroSection() {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse at top right, rgba(232, 82, 26, 0.18) 0%, transparent 55%)",
+              "radial-gradient(ellipse at top right, color-mix(in oklab, var(--brand) 18%, transparent) 0%, transparent 55%)",
           }}
         />
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage: `
-              linear-gradient(to right, #ffffff 1px, transparent 1px),
-              linear-gradient(to bottom, #ffffff 1px, transparent 1px)
+              linear-gradient(to right, var(--foreground) 1px, transparent 1px),
+              linear-gradient(to bottom, var(--foreground) 1px, transparent 1px)
             `,
             backgroundSize: "60px 60px",
           }}
@@ -62,24 +50,24 @@ export function HeroSection() {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="mb-6 inline-flex items-center rounded-full px-4 py-1.5"
             style={{
-              backgroundColor: "#1A1A1A",
-              border: "1px solid #E8521A",
+              backgroundColor: "var(--surface-2)",
+              border: "1px solid var(--brand)",
             }}
           >
             <span
               className="mr-2 size-1.5 rounded-full"
-              style={{ backgroundColor: "#E8521A" }}
+              style={{ backgroundColor: "var(--brand)" }}
             />
             <span
               className="text-xs font-medium sm:text-sm"
-              style={{ color: "#A0A0A0" }}
+              style={{ color: "var(--text-secondary)" }}
             >
-              {COMPANY.iso} Certified • Since {COMPANY.founded}
+              {content.badge}
             </span>
           </motion.div>
 
           <h1 className="font-display text-4xl leading-[0.95] sm:text-5xl md:text-6xl lg:text-7xl">
-            {H1_LINES.map((line) => (
+            {content.lines.map((line) => (
               <span key={line.text} className="block overflow-hidden">
                 <motion.span
                   initial={{ y: "100%", opacity: 0 }}
@@ -90,7 +78,9 @@ export function HeroSection() {
                     ease: [0.22, 1, 0.36, 1],
                   }}
                   className="inline-block"
-                  style={{ color: line.color }}
+                  style={{
+                    color: line.accent ? "var(--brand-text)" : "var(--foreground)",
+                  }}
                 >
                   {line.text}
                 </motion.span>
@@ -103,11 +93,9 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
             className="mt-6 max-w-xl text-lg leading-relaxed"
-            style={{ color: "#A0A0A0" }}
+            style={{ color: "var(--text-secondary)" }}
           >
-            India&apos;s trusted manufacturer of perforated sheets, expanded
-            metal, laser cutting &amp; precision components. {COMPANY.iso}{" "}
-            certified. {COMPANY.experience} years of experience.
+            {content.intro}
           </motion.p>
 
           <motion.div
@@ -120,10 +108,10 @@ export function HeroSection() {
               asChild
               size="lg"
               className="glow-orange-hover h-12 border-0 px-6 text-base font-semibold hover:opacity-90"
-              style={{ backgroundColor: "#E8521A", color: "#FFFFFF" }}
+              style={{ backgroundColor: "var(--brand)", color: "var(--brand-foreground)" }}
             >
-              <Link href="/get-quote">
-                Get a Free Quote
+              <Link href={content.primaryCta.href}>
+                {content.primaryCta.label}
                 <ArrowRight className="size-4" />
               </Link>
             </Button>
@@ -131,14 +119,14 @@ export function HeroSection() {
               asChild
               variant="outline"
               size="lg"
-              className="h-12 bg-transparent px-6 text-base font-semibold hover:bg-[#1A1A1A]"
+              className="h-12 bg-transparent px-6 text-base font-semibold hover:bg-surface-2"
               style={{
-                borderColor: "#FFFFFF",
-                color: "#FFFFFF",
+                borderColor: "var(--foreground)",
+                color: "var(--foreground)",
               }}
             >
-              <Link href="/products">
-                Explore Products
+              <Link href={content.secondaryCta.href}>
+                {content.secondaryCta.label}
                 <ArrowRight className="size-4" />
               </Link>
             </Button>
@@ -150,23 +138,23 @@ export function HeroSection() {
             transition={{ delay: 1, duration: 0.6 }}
             className="mt-10 flex flex-wrap items-center gap-6 sm:gap-8"
           >
-            {MICRO_STATS.map((stat, index) => (
+            {content.stats.map((stat, index) => (
               <div key={stat.value} className="flex items-center gap-6 sm:gap-8">
                 <div>
                   <p
                     className="text-sm font-bold sm:text-base"
-                    style={{ color: "#FFFFFF" }}
+                    style={{ color: "var(--foreground)" }}
                   >
                     {stat.value}
                   </p>
-                  <p className="text-xs" style={{ color: "#666666" }}>
+                  <p className="text-xs" style={{ color: "var(--text-muted)" }}>
                     {stat.label}
                   </p>
                 </div>
-                {index < MICRO_STATS.length - 1 && (
+                {index < content.stats.length - 1 && (
                   <div
                     className="hidden h-8 w-px sm:block"
-                    style={{ backgroundColor: "#2A2A2A" }}
+                    style={{ backgroundColor: "var(--border)" }}
                   />
                 )}
               </div>

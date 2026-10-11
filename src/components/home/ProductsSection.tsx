@@ -10,15 +10,17 @@ import {
 } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-import { HOME_SECTIONS, PRODUCTS } from "@/lib/constants";
+import type { ProductCard as ProductCardData } from "@/data/products";
 import { getProductIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
+import type { ProductsIntroContent } from "@/sites/content/types";
+import { useSiteProducts } from "@/sites/SiteProvider";
 
 function ProductCard({
   product,
   index,
 }: {
-  product: (typeof PRODUCTS)[number];
+  product: ProductCardData;
   index: number;
 }) {
   const ref = useRef<HTMLAnchorElement>(null);
@@ -64,27 +66,27 @@ function ProductCard({
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
         className={cn(
           "group relative flex h-full flex-col rounded-xl border p-6 transition-all duration-300",
-          "border-[#2A2A2A] bg-[#111111] hover:-translate-y-1 hover:border-[#E8521A]",
-          "hover:shadow-[0_8px_32px_rgba(232,82,26,0.15)]"
+          "border-border bg-surface hover:-translate-y-1 hover:border-brand",
+          "hover:shadow-[0_8px_32px_color-mix(in oklab, var(--brand) 15%, transparent)]"
         )}
       >
         <div
           className="mb-4 flex size-12 items-center justify-center rounded-full"
-          style={{ backgroundColor: "rgba(232, 82, 26, 0.1)" }}
+          style={{ backgroundColor: "color-mix(in oklab, var(--brand) 10%, transparent)" }}
         >
-          <Icon className="size-6" style={{ color: "#E8521A" }} />
+          <Icon className="size-6" style={{ color: "var(--brand-text)" }} />
         </div>
 
         <h3
           className="text-lg font-bold"
-          style={{ color: "#FFFFFF" }}
+          style={{ color: "var(--foreground)" }}
         >
           {product.name}
         </h3>
 
         <p
           className="mt-2 flex-1 text-base leading-relaxed"
-          style={{ color: "#A0A0A0" }}
+          style={{ color: "var(--text-secondary)" }}
         >
           {product.description}
         </p>
@@ -95,8 +97,8 @@ function ProductCard({
               key={material}
               className="rounded-full px-2 py-0.5 text-[10px] font-medium"
               style={{
-                backgroundColor: "#1A1A1A",
-                color: "#A0A0A0",
+                backgroundColor: "var(--surface-2)",
+                color: "var(--text-secondary)",
               }}
             >
               {material}
@@ -106,7 +108,7 @@ function ProductCard({
 
         <span
           className="mt-4 flex items-center gap-1 text-sm font-semibold opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-          style={{ color: "#E8521A" }}
+          style={{ color: "var(--brand-text)" }}
         >
           View Details
           <ArrowRight className="size-3.5" />
@@ -116,14 +118,18 @@ function ProductCard({
   );
 }
 
-export function ProductsSection() {
-  const { products: section } = HOME_SECTIONS;
+export function ProductsSection({
+  content: section,
+}: {
+  content: ProductsIntroContent;
+}) {
+  const products = useSiteProducts();
 
   return (
     <section
       id={section.id}
       className="section-padding"
-      style={{ backgroundColor: "#0A0A0A" }}
+      style={{ backgroundColor: "var(--background)" }}
     >
       <div className="mx-auto max-w-7xl">
         <motion.div
@@ -135,23 +141,23 @@ export function ProductsSection() {
         >
           <p
             className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
-            style={{ color: "#E8521A" }}
+            style={{ color: "var(--brand-text)" }}
           >
             {section.label}
           </p>
           <h2
             className="text-3xl font-black tracking-tight sm:text-4xl"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
             {section.heading}
           </h2>
-          <p className="mt-4 text-lg leading-relaxed" style={{ color: "#A0A0A0" }}>
+          <p className="mt-4 text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
             {section.subtext}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {PRODUCTS.map((product, index) => (
+          {products.map((product, index) => (
             <ProductCard key={product.slug} product={product} index={index} />
           ))}
         </div>

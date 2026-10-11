@@ -23,8 +23,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { BROCHURE_URL, NAV_LINKS, PRODUCTS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { useSite, useSiteProducts } from "@/sites/SiteProvider";
 
 function NavLink({
   href,
@@ -43,9 +43,9 @@ function NavLink({
       onClick={onClick}
       className={cn(
         "nav-link-underline relative px-3 py-2 text-[15px] font-medium transition-colors hover:opacity-80",
-        className
+        className,
       )}
-      style={{ color: "#FFFFFF" }}
+      style={{ color: "var(--foreground)" }}
     >
       {children}
     </Link>
@@ -56,6 +56,14 @@ export function Navbar() {
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const site = useSite();
+  const products = useSiteProducts();
+
+  // site.nav in order; the "/products" entry opens the products menu.
+  const productsAt = site.nav.findIndex((link) => link.href === "/products");
+  const linksBefore =
+    productsAt === -1 ? site.nav : site.nav.slice(0, productsAt);
+  const linksAfter = productsAt === -1 ? [] : site.nav.slice(productsAt + 1);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setScrolled(latest > 20);
@@ -68,13 +76,14 @@ export function Navbar() {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled ? "border-b backdrop-blur-md" : "bg-transparent"
+        scrolled ? "border-b backdrop-blur-md" : "bg-transparent",
       )}
       style={
         scrolled
           ? {
-              backgroundColor: "rgba(10, 10, 10, 0.95)",
-              borderColor: "#2A2A2A",
+              backgroundColor:
+                "color-mix(in srgb, var(--background) 95%, transparent)",
+              borderColor: "var(--border)",
             }
           : undefined
       }
@@ -83,88 +92,95 @@ export function Navbar() {
         <Logo />
 
         <nav className="hidden items-center gap-1 lg:flex">
-          <NavLink href="/">Home</NavLink>
-          <NavLink href="/about">About</NavLink>
+          {linksBefore.map((link) => (
+            <NavLink key={link.href} href={link.href}>
+              {link.label}
+            </NavLink>
+          ))}
 
-          <NavigationMenu viewport={false}>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger
-                  className="nav-link-underline h-auto bg-transparent px-3 py-2 text-[15px] font-medium hover:bg-transparent data-open:bg-transparent"
-                  style={{ color: "#FFFFFF" }}
-                >
-                  Products
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div
-                    className="w-[760px] rounded-xl border p-4 shadow-2xl"
-                    style={{
-                      backgroundColor: "#111111",
-                      borderColor: "#2A2A2A",
-                      boxShadow: "0 25px 50px rgba(0, 0, 0, 0.5)",
-                    }}
+          {productsAt !== -1 && (
+            <NavigationMenu viewport={false}>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger
+                    className="nav-link-underline h-auto bg-transparent px-3 py-2 text-[15px] font-medium hover:bg-transparent data-open:bg-transparent"
+                    style={{ color: "var(--foreground)" }}
                   >
-                    <div className="mb-3 flex items-center justify-between px-2">
-                      <p
-                        className="text-xs font-semibold uppercase tracking-widest"
-                        style={{ color: "#666666" }}
-                      >
-                        Our Products
-                      </p>
-                      <Link
-                        href="/products"
-                        className="text-xs font-semibold hover:underline"
-                        style={{ color: "#E8521A" }}
-                      >
-                        View All →
-                      </Link>
-                    </div>
-                    <div className="grid grid-cols-3 gap-1">
-                      {PRODUCTS.map((product) => {
-                        return (
-                          <NavigationMenuLink key={product.slug} asChild>
-                            <Link
-                              href={`/products/${product.slug}`}
-                              className="group flex items-start gap-3 rounded-lg p-3 transition-colors hover:bg-[#1A1A1A]"
-                            >
-                              <div
-                                className="relative mt-0.5 size-12 shrink-0 overflow-hidden rounded-lg"
-                                style={{ backgroundColor: "#1A1A1A" }}
+                    {site.nav[productsAt].label}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div
+                      className="w-[760px] rounded-xl border p-4 shadow-2xl"
+                      style={{
+                        backgroundColor: "var(--surface)",
+                        borderColor: "var(--border)",
+                        boxShadow: "0 25px 50px rgba(0, 0, 0, 0.5)",
+                      }}
+                    >
+                      <div className="mb-3 flex items-center justify-between px-2">
+                        <p
+                          className="text-xs font-semibold uppercase tracking-widest"
+                          style={{ color: "var(--text-muted)" }}
+                        >
+                          Our Products
+                        </p>
+                        <Link
+                          href="/products"
+                          className="text-xs font-semibold hover:underline"
+                          style={{ color: "var(--brand-text)" }}
+                        >
+                          View All →
+                        </Link>
+                      </div>
+                      <div className="grid grid-cols-3 gap-1">
+                        {products.map((product) => {
+                          return (
+                            <NavigationMenuLink key={product.slug} asChild>
+                              <Link
+                                href={`/products/${product.slug}`}
+                                className="group flex items-start gap-3 rounded-lg p-3 transition-colors hover:bg-surface-2"
                               >
-                                <Image
-                                  src={`/products/${product.slug}.webp`}
-                                  alt=""
-                                  fill
-                                  sizes="48px"
-                                  className="object-cover transition-transform duration-300 group-hover:scale-110"
-                                />
-                              </div>
-                              <div>
-                                <p
-                                  className="text-sm font-semibold"
-                                  style={{ color: "#FFFFFF" }}
+                                <div
+                                  className="relative mt-0.5 size-12 shrink-0 overflow-hidden rounded-lg"
+                                  style={{
+                                    backgroundColor: "var(--surface-2)",
+                                  }}
                                 >
-                                  {product.name}
-                                </p>
-                                <p
-                                  className="mt-0.5 line-clamp-2 text-xs"
-                                  style={{ color: "#666666" }}
-                                >
-                                  {product.description}
-                                </p>
-                              </div>
-                            </Link>
-                          </NavigationMenuLink>
-                        );
-                      })}
+                                  <Image
+                                    src={`/products/${product.slug}.webp`}
+                                    alt=""
+                                    fill
+                                    sizes="48px"
+                                    className="object-cover transition-transform duration-300 group-hover:scale-110"
+                                  />
+                                </div>
+                                <div>
+                                  <p
+                                    className="text-sm font-semibold"
+                                    style={{ color: "var(--foreground)" }}
+                                  >
+                                    {product.name}
+                                  </p>
+                                  <p
+                                    className="mt-0.5 line-clamp-2 text-xs"
+                                    style={{ color: "var(--text-muted)" }}
+                                  >
+                                    {product.description}
+                                  </p>
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          )}
 
-          {NAV_LINKS.slice(2).map((link) => (
+          {linksAfter.map((link) => (
             <NavLink key={link.href} href={link.href}>
               {link.label}
             </NavLink>
@@ -172,30 +188,35 @@ export function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="h-10 bg-transparent px-4 font-semibold hover:bg-[#1A1A1A]"
-            style={{
-              borderColor: "#2A2A2A",
-              color: "#FFFFFF",
-            }}
-          >
-            <a
-              href={BROCHURE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+          {site.brochureUrl && (
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="h-10 bg-transparent px-4 font-semibold hover:bg-surface-2"
+              style={{
+                borderColor: "var(--border)",
+                color: "var(--foreground)",
+              }}
             >
-              <Download className="size-4" />
-              Catalogue
-            </a>
-          </Button>
+              <a
+                href={site.brochureUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Download className="size-4" />
+                Catalogue
+              </a>
+            </Button>
+          )}
           <Button
             asChild
             size="lg"
             className="glow-orange-hover h-10 border-0 px-5 font-semibold hover:opacity-90"
-            style={{ backgroundColor: "#E8521A", color: "#FFFFFF" }}
+            style={{
+              backgroundColor: "var(--brand)",
+              color: "var(--brand-foreground)",
+            }}
           >
             <Link href="/get-quote">
               Get Quote
@@ -209,8 +230,8 @@ export function Navbar() {
             <Button
               variant="ghost"
               size="icon-lg"
-              className="hover:bg-[#1A1A1A]"
-              style={{ color: "#FFFFFF" }}
+              className="hover:bg-surface-2"
+              style={{ color: "var(--foreground)" }}
               aria-label="Open menu"
             >
               <Menu className="size-5" />
@@ -220,13 +241,13 @@ export function Navbar() {
             side="right"
             className="w-full max-w-sm border p-0 sm:max-w-sm"
             style={{
-              backgroundColor: "#0A0A0A",
-              borderColor: "#2A2A2A",
+              backgroundColor: "var(--background)",
+              borderColor: "var(--border)",
             }}
           >
             <SheetHeader
               className="border-b p-6"
-              style={{ borderColor: "#2A2A2A" }}
+              style={{ borderColor: "var(--border)" }}
             >
               <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
               <Logo />
@@ -234,78 +255,76 @@ export function Navbar() {
 
             <div className="flex flex-col overflow-y-auto p-6">
               <div className="flex flex-col gap-1">
-                <NavLink
-                  href="/"
-                  className="rounded-lg px-4 py-3 hover:bg-[#1A1A1A]"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  Home
-                </NavLink>
-                <NavLink
-                  href="/about"
-                  className="rounded-lg px-4 py-3 hover:bg-[#1A1A1A]"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  About
-                </NavLink>
-              </div>
-
-              <div className="mt-6">
-                <div className="mb-3 flex items-center justify-between px-4">
-                  <p
-                    className="text-xs font-semibold uppercase tracking-widest"
-                    style={{ color: "#666666" }}
-                  >
-                    Products
-                  </p>
-                  <Link
-                    href="/products"
-                    onClick={() => setMobileOpen(false)}
-                    className="text-xs font-semibold"
-                    style={{ color: "#E8521A" }}
-                  >
-                    View All
-                  </Link>
-                </div>
-                <div className="flex flex-col gap-1">
-                  {PRODUCTS.map((product) => {
-                    return (
-                      <Link
-                        key={product.slug}
-                        href={`/products/${product.slug}`}
-                        onClick={() => setMobileOpen(false)}
-                        className="flex items-center gap-3 rounded-lg px-4 py-3 transition-colors hover:bg-[#1A1A1A]"
-                      >
-                        <div
-                          className="relative size-10 shrink-0 overflow-hidden rounded-md"
-                          style={{ backgroundColor: "#1A1A1A" }}
-                        >
-                          <Image
-                            src={`/products/${product.slug}.webp`}
-                            alt=""
-                            fill
-                            sizes="40px"
-                            className="object-cover"
-                          />
-                        </div>
-                        <span
-                          className="text-sm font-medium"
-                          style={{ color: "#FFFFFF" }}
-                        >
-                          {product.name}
-                        </span>
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="mt-6 flex flex-col gap-1">
-                {NAV_LINKS.slice(2).map((link) => (
+                {linksBefore.map((link) => (
                   <NavLink
                     key={link.href}
                     href={link.href}
-                    className="rounded-lg px-4 py-3 hover:bg-[#1A1A1A]"
+                    className="rounded-lg px-4 py-3 hover:bg-surface-2"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {link.label}
+                  </NavLink>
+                ))}
+              </div>
+
+              {productsAt !== -1 && (
+                <div className="mt-6">
+                  <div className="mb-3 flex items-center justify-between px-4">
+                    <p
+                      className="text-xs font-semibold uppercase tracking-widest"
+                      style={{ color: "var(--text-muted)" }}
+                    >
+                      {site.nav[productsAt].label}
+                    </p>
+                    <Link
+                      href="/products"
+                      onClick={() => setMobileOpen(false)}
+                      className="text-xs font-semibold"
+                      style={{ color: "var(--brand-text)" }}
+                    >
+                      View All
+                    </Link>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    {products.map((product) => {
+                      return (
+                        <Link
+                          key={product.slug}
+                          href={`/products/${product.slug}`}
+                          onClick={() => setMobileOpen(false)}
+                          className="flex items-center gap-3 rounded-lg px-4 py-3 transition-colors hover:bg-surface-2"
+                        >
+                          <div
+                            className="relative size-10 shrink-0 overflow-hidden rounded-md"
+                            style={{ backgroundColor: "var(--surface-2)" }}
+                          >
+                            <Image
+                              src={`/products/${product.slug}.webp`}
+                              alt=""
+                              fill
+                              sizes="40px"
+                              className="object-cover"
+                            />
+                          </div>
+                          <span
+                            className="text-sm font-medium"
+                            style={{ color: "var(--foreground)" }}
+                          >
+                            {product.name}
+                          </span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              <div className="mt-6 flex flex-col gap-1">
+                {linksAfter.map((link) => (
+                  <NavLink
+                    key={link.href}
+                    href={link.href}
+                    className="rounded-lg px-4 py-3 hover:bg-surface-2"
                     onClick={() => setMobileOpen(false)}
                   >
                     {link.label}
@@ -314,31 +333,36 @@ export function Navbar() {
               </div>
 
               <div className="mt-8 flex flex-col gap-3">
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="h-12 w-full bg-transparent font-semibold hover:bg-[#1A1A1A]"
-                  style={{
-                    borderColor: "#2A2A2A",
-                    color: "#FFFFFF",
-                  }}
-                >
-                  <a
-                    href={BROCHURE_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setMobileOpen(false)}
+                {site.brochureUrl && (
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="h-12 w-full bg-transparent font-semibold hover:bg-surface-2"
+                    style={{
+                      borderColor: "var(--border)",
+                      color: "var(--foreground)",
+                    }}
                   >
-                    <Download className="size-4" />
-                    Catalogue
-                  </a>
-                </Button>
+                    <a
+                      href={site.brochureUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      <Download className="size-4" />
+                      Catalogue
+                    </a>
+                  </Button>
+                )}
                 <Button
                   asChild
                   size="lg"
                   className="glow-orange h-12 w-full border-0 font-semibold"
-                  style={{ backgroundColor: "#E8521A", color: "#FFFFFF" }}
+                  style={{
+                    backgroundColor: "var(--brand)",
+                    color: "var(--brand-foreground)",
+                  }}
                 >
                   <Link href="/get-quote" onClick={() => setMobileOpen(false)}>
                     Get Quote

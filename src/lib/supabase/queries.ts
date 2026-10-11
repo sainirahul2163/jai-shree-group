@@ -7,6 +7,7 @@ import type {
   Lead,
   Testimonial,
 } from "@/types/database";
+import type { SiteKey } from "@/sites/types";
 
 function mapRows<T>(data: unknown): T[] {
   return (data ?? []) as T[];
@@ -16,12 +17,15 @@ function mapRow<T>(data: unknown): T | null {
   return (data ?? null) as T | null;
 }
 
-export async function getPublishedGalleryItems(): Promise<GalleryItem[]> {
+export async function getPublishedGalleryItems(
+  site: SiteKey
+): Promise<GalleryItem[]> {
   if (!isSupabaseConfigured()) return [];
   const supabase = createAnonClient();
   const { data, error } = await supabase
     .from("gallery_items")
     .select("*")
+    .eq("site", site)
     .eq("is_published", true)
     .order("sort_order", { ascending: true });
   if (error) {
@@ -31,12 +35,13 @@ export async function getPublishedGalleryItems(): Promise<GalleryItem[]> {
   return mapRows<GalleryItem>(data);
 }
 
-export async function getPublishedBlogPosts(): Promise<BlogPost[]> {
+export async function getPublishedBlogPosts(site: SiteKey): Promise<BlogPost[]> {
   if (!isSupabaseConfigured()) return [];
   const supabase = createAnonClient();
   const { data, error } = await supabase
     .from("blog_posts")
     .select("*")
+    .eq("site", site)
     .eq("is_published", true)
     .order("published_at", { ascending: false });
   if (error) {
@@ -47,6 +52,7 @@ export async function getPublishedBlogPosts(): Promise<BlogPost[]> {
 }
 
 export async function getBlogPostBySlug(
+  site: SiteKey,
   slug: string
 ): Promise<BlogPost | null> {
   if (!isSupabaseConfigured()) return null;
@@ -54,6 +60,7 @@ export async function getBlogPostBySlug(
   const { data, error } = await supabase
     .from("blog_posts")
     .select("*")
+    .eq("site", site)
     .eq("slug", slug)
     .eq("is_published", true)
     .maybeSingle();
@@ -64,20 +71,26 @@ export async function getBlogPostBySlug(
   return mapRow<BlogPost>(data);
 }
 
-export async function getAllBlogSlugs(): Promise<string[]> {
+export async function getAllBlogSlugs(site: SiteKey): Promise<string[]> {
   if (!isSupabaseConfigured()) return [];
   const supabase = createAnonClient();
-  const { data, error } = await supabase.from("blog_posts").select("slug");
+  const { data, error } = await supabase
+    .from("blog_posts")
+    .select("slug")
+    .eq("site", site);
   if (error) return [];
   return mapRows<{ slug: string }>(data).map((row) => row.slug);
 }
 
-export async function getPublishedTestimonials(): Promise<Testimonial[]> {
+export async function getPublishedTestimonials(
+  site: SiteKey
+): Promise<Testimonial[]> {
   if (!isSupabaseConfigured()) return [];
   const supabase = createAnonClient();
   const { data, error } = await supabase
     .from("testimonials")
     .select("*")
+    .eq("site", site)
     .eq("is_published", true)
     .order("created_at", { ascending: false });
   if (error) {

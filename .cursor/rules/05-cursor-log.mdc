@@ -1,0 +1,15 @@
+---
+description: Cursor must write an entry in CURSOR-LOG.md at the end of every task
+alwaysApply: true
+---
+
+# Keep CURSOR-LOG.md up to date
+
+At the end of every task or chat in which you changed anything (code, docs, files, config, database):
+
+1. Add an entry at the **top** of the "Entries" section of `CURSOR-LOG.md`, using the template in that file: date, task number and name, status (✅ / 🔄 / ⛔), what you did, files changed, checks (lint, build, screenshots), commit message, what is left, next task, questions or assumptions.
+2. Tick the task in `docs/05-build-plan.md` only if its acceptance check passed.
+3. Add a one-line row to the Change log in `PROJECT-LOG.md` and update its requirement status.
+4. Then commit the code **and** these log updates together in one commit (message starts with the task number). Never commit code first and logs later.
+
+Report checks honestly: say when lint or build failed or was not run. Never delete or rewrite earlier entries; add a correcting entry instead. Do this before telling the user the task is finished.

@@ -3,20 +3,32 @@
 import Link from "next/link";
 import { useTransition } from "react";
 
+import { SiteBadge } from "@/components/admin/SiteBadge";
+import { SiteFilter } from "@/components/admin/SiteFilter";
 import { Button } from "@/components/ui/button";
 import { deleteBlogPost } from "@/lib/supabase/actions";
+import type { SiteKey } from "@/sites/types";
 import type { BlogPost } from "@/types/database";
 
-export function BlogAdminClient({ posts }: { posts: BlogPost[] }) {
+export function BlogAdminClient({
+  posts,
+  site,
+}: {
+  posts: BlogPost[];
+  site: SiteKey | null;
+}) {
   const [isPending, startTransition] = useTransition();
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-black">Blog Posts</h2>
-        <Button asChild className="glow-orange">
-          <Link href="/admin/blog/new">New Post</Link>
-        </Button>
+        <div className="flex items-center gap-3">
+          <SiteFilter value={site} />
+          <Button asChild className="glow-orange">
+            <Link href="/admin/blog/new">New Post</Link>
+          </Button>
+        </div>
       </div>
 
       <div
@@ -26,6 +38,7 @@ export function BlogAdminClient({ posts }: { posts: BlogPost[] }) {
         <table className="w-full text-left text-sm">
           <thead style={{ backgroundColor: "#111111", color: "#666666" }}>
             <tr>
+              <th className="px-4 py-3">Site</th>
               <th className="px-4 py-3">Title</th>
               <th className="px-4 py-3">Category</th>
               <th className="px-4 py-3">Status</th>
@@ -36,13 +49,16 @@ export function BlogAdminClient({ posts }: { posts: BlogPost[] }) {
           <tbody>
             {posts.length === 0 ? (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center" style={{ color: "#666666" }}>
+                <td colSpan={6} className="px-4 py-8 text-center" style={{ color: "#666666" }}>
                   No blog posts yet
                 </td>
               </tr>
             ) : (
               posts.map((post) => (
                 <tr key={post.id} className="border-t" style={{ borderColor: "#2A2A2A" }}>
+                  <td className="px-4 py-3">
+                    <SiteBadge site={post.site} />
+                  </td>
                   <td className="px-4 py-3">{post.title}</td>
                   <td className="px-4 py-3">{post.category}</td>
                   <td className="px-4 py-3">

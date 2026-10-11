@@ -1,4 +1,5 @@
-import { COMPANY } from "@/lib/constants";
+import { siteUrl } from "@/lib/seo";
+import type { SiteConfig } from "@/sites/types";
 
 type BreadcrumbItem = {
   name: string;
@@ -6,10 +7,11 @@ type BreadcrumbItem = {
 };
 
 type BreadcrumbSchemaProps = {
+  site: SiteConfig;
   items: BreadcrumbItem[];
 };
 
-export function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
+export function BreadcrumbSchema({ site, items }: BreadcrumbSchemaProps) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -17,7 +19,7 @@ export function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: `${COMPANY.website}${item.path === "/" ? "" : item.path}`,
+      item: siteUrl(site, item.path),
     })),
   };
 

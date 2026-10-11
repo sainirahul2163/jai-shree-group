@@ -5,25 +5,22 @@ import { motion } from "framer-motion";
 import { ArrowRight, Check, Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { COMPANY } from "@/lib/constants";
+import type { CtaContent } from "@/sites/content/types";
+import { useSite } from "@/sites/SiteProvider";
 
-const TRUST_BADGES = [
-  "Response within 24 hours",
-  `${COMPANY.iso} Certified`,
-  "Global Delivery",
-] as const;
+export function CtaSection({ content }: { content: CtaContent }) {
+  const { contact } = useSite();
 
-export function CtaSection() {
   return (
     <section
       className="relative overflow-hidden section-padding"
-      style={{ backgroundColor: "#0A0A0A" }}
+      style={{ backgroundColor: "var(--background)" }}
     >
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(232, 82, 26, 0.12) 0%, transparent 70%)",
+            "radial-gradient(ellipse 80% 60% at 50% 50%, color-mix(in oklab, var(--brand) 12%, transparent) 0%, transparent 70%)",
         }}
       />
 
@@ -36,16 +33,15 @@ export function CtaSection() {
         >
           <h2
             className="text-3xl font-black tracking-tight sm:text-4xl md:text-5xl"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: "var(--foreground)" }}
           >
-            Ready to Get Started?
+            {content.heading}
           </h2>
           <p
             className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed"
-            style={{ color: "#A0A0A0" }}
+            style={{ color: "var(--text-secondary)" }}
           >
-            Tell us your requirement and get a quote within 24 hours. Global
-            delivery from our Pune &amp; Mumbai facilities.
+            {content.text}
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -54,8 +50,8 @@ export function CtaSection() {
               size="lg"
               className="glow-orange h-14 px-8 text-base font-semibold"
             >
-              <Link href="/get-quote">
-                Get a Free Quote
+              <Link href={content.primaryCta.href}>
+                {content.primaryCta.label}
                 <ArrowRight className="ml-2 size-5" />
               </Link>
             </Button>
@@ -63,26 +59,26 @@ export function CtaSection() {
               asChild
               variant="outline"
               size="lg"
-              className="h-14 border-white/30 bg-transparent px-8 text-base font-semibold hover:bg-white/5"
-              style={{ color: "#FFFFFF" }}
+              className="h-14 border-foreground/30 bg-transparent px-8 text-base font-semibold hover:bg-foreground/5"
+              style={{ color: "var(--foreground)" }}
             >
-              <a href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}>
+              <a href={`tel:${contact.phone.replace(/\s/g, "")}`}>
                 <Phone className="mr-2 size-5" />
-                Call Us Now
+                {content.callLabel}
               </a>
             </Button>
           </div>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-8">
-            {TRUST_BADGES.map((badge) => (
+            {content.badges.map((badge) => (
               <span
                 key={badge}
                 className="flex items-center gap-2 text-sm font-medium"
-                style={{ color: "#A0A0A0" }}
+                style={{ color: "var(--text-secondary)" }}
               >
                 <Check
                   className="size-4 shrink-0"
-                  style={{ color: "#E8521A" }}
+                  style={{ color: "var(--brand-text)" }}
                 />
                 {badge}
               </span>

@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import { Trash2 } from "lucide-react";
 
+import { SiteBadge } from "@/components/admin/SiteBadge";
+import { SiteFilter } from "@/components/admin/SiteFilter";
 import { StatusBadge } from "@/components/admin/StatusBadge";
 import { deleteLead } from "@/lib/supabase/actions";
 import { Button } from "@/components/ui/button";
@@ -16,20 +18,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type { SiteKey } from "@/sites/types";
 import type { Lead } from "@/types/database";
 
 const STATUSES = ["all", "new", "contacted", "quoted", "converted", "lost"];
+
+function leadsHref(
+  query: string,
+  status: string,
+  site: SiteKey | null,
+  page?: number
+): string {
+  const params = new URLSearchParams({ q: query, status });
+  if (site) params.set("site", site);
+  if (page) params.set("page", String(page));
+  return `/admin/leads?${params.toString()}`;
+}
 
 export function LeadsTable({
   leads,
   query,
   status,
+  site,
   page,
   totalPages,
 }: {
   leads: Lead[];
   query: string;
   status: string;
+  site: SiteKey | null;
   page: number;
   totalPages: number;
 }) {
@@ -52,6 +69,7 @@ export function LeadsTable({
 
   const csvData = useMemo(() => {
     const headers = [
+      "Site",
       "Name",
       "Phone",
       "Email",
@@ -62,6 +80,7 @@ export function LeadsTable({
       "Date",
     ];
     const rows = leads.map((l) => [
+      l.site,
       l.name,
       l.phone,
       l.email ?? "",
@@ -96,14 +115,14 @@ export function LeadsTable({
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               const val = (e.target as HTMLInputElement).value;
-              router.push(`/admin/leads?q=${encodeURIComponent(val)}&status=${status}`);
+              router.push(leadsHref(val, status, site));
             }
           }}
         />
         <Select
           value={status}
           onValueChange={(val) =>
-            router.push(`/admin/leads?q=${encodeURIComponent(query)}&status=${val}`)
+            router.push(leadsHref(query, val, site))
           }
         >
           <SelectTrigger className="w-40 border-[#2A2A2A] bg-[#111111]">
@@ -117,6 +136,7 @@ export function LeadsTable({
             ))}
           </SelectContent>
         </Select>
+        <SiteFilter value={site} />
         <Button
           variant="outline"
           className="border-[#2A2A2A] sm:ml-auto"
@@ -146,6 +166,7 @@ export function LeadsTable({
         <table className="w-full text-left text-sm">
           <thead style={{ backgroundColor: "#111111", color: "#666666" }}>
             <tr>
+              <th className="px-4 py-3">Site</th>
               <th className="px-4 py-3">Name</th>
               <th className="px-4 py-3">Phone</th>
               <th className="px-4 py-3">Company</th>
@@ -159,13 +180,16 @@ export function LeadsTable({
           <tbody>
             {leads.length === 0 ? (
               <tr>
-                <td colSpan={8} className="px-4 py-8 text-center" style={{ color: "#666666" }}>
+                <td colSpan={9} className="px-4 py-8 text-center" style={{ color: "#666666" }}>
                   No leads found
                 </td>
               </tr>
             ) : (
               leads.map((lead) => (
                 <tr key={lead.id} className="border-t" style={{ borderColor: "#2A2A2A" }}>
+                  <td className="px-4 py-3">
+                    <SiteBadge site={lead.site} />
+                  </td>
                   <td className="px-4 py-3">{lead.name}</td>
                   <td className="px-4 py-3">{lead.phone}</td>
                   <td className="px-4 py-3">{lead.company ?? "—"}</td>
@@ -239,7 +263,7 @@ export function LeadsTable({
           {page > 1 && (
             <Button asChild variant="outline" className="border-[#2A2A2A]">
               <Link
-                href={`/admin/leads?q=${encodeURIComponent(query)}&status=${status}&page=${page - 1}`}
+                href={leadsHref(query, status, site, page - 1)}
               >
                 Previous
               </Link>
@@ -251,7 +275,7 @@ export function LeadsTable({
           {page < totalPages && (
             <Button asChild variant="outline" className="border-[#2A2A2A]">
               <Link
-                href={`/admin/leads?q=${encodeURIComponent(query)}&status=${status}&page=${page + 1}`}
+                href={leadsHref(query, status, site, page + 1)}
               >
                 Next
               </Link>

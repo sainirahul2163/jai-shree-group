@@ -8,17 +8,20 @@ export function PageViewTracker() {
   const lastTracked = useRef<string>("");
 
   useEffect(() => {
-    if (!pathname || lastTracked.current === pathname) return;
-    lastTracked.current = pathname;
+    // usePathname() only signals a navigation. Read the browser URL itself:
+    // the proxy rewrites pages to /<site>/…, which visitors never see.
+    const page = window.location.pathname;
+    if (!pathname || lastTracked.current === page) return;
+    lastTracked.current = page;
 
-    const productMatch = pathname.match(/^\/products\/([^/]+)/);
-    const cityMatch = pathname.match(/^\/(pune|mumbai)\//);
+    const productMatch = page.match(/^\/products\/([^/]+)/);
+    const cityMatch = page.match(/^\/(pune|mumbai)\//);
 
     fetch("/api/track", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        page: pathname,
+        page,
         product: productMatch?.[1] ?? null,
         city: cityMatch?.[1] ?? null,
       }),

@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import type * as THREE_NS from "three";
 
+import { useSite } from "@/sites/SiteProvider";
+
 /**
  * Interactive 3D product viewer.
  *
@@ -290,6 +292,7 @@ export function ProductViewer3D({
   variant: ProductModel;
   height?: number;
 }) {
+  const { name: siteName } = useSite();
   const mountRef = useRef<HTMLDivElement>(null);
   const [loaded, setLoaded] = useState(false);
   const spec = MODEL_SPECS[variant];
@@ -335,7 +338,13 @@ export function ProductViewer3D({
       scene.add(key);
 
       // brand-orange rim from behind, so the part edge catches the house colour
-      const brand = new THREE.PointLight(0xe8521a, 90, 30);
+      const brandHex = getComputedStyle(document.documentElement)
+        .getPropertyValue("--brand")
+        .trim();
+      const brandColor = /^#[0-9a-f]{6}$/i.test(brandHex)
+        ? Number.parseInt(brandHex.slice(1), 16)
+        : 0xe8521a;
+      const brand = new THREE.PointLight(brandColor, 90, 30);
       brand.position.set(-6, -1.5, -4);
       scene.add(brand);
 
@@ -490,13 +499,13 @@ export function ProductViewer3D({
 
   return (
     <div
-      className="relative w-full overflow-hidden rounded-2xl border border-[#1E1E1E]"
-      style={{ background: "radial-gradient(120% 90% at 50% 0%, #16181c 0%, #0A0A0A 62%)" }}
+      className="relative w-full overflow-hidden rounded-2xl border border-surface-2"
+      style={{ background: "radial-gradient(120% 90% at 50% 0%, #16181c 0%, var(--background) 62%)" }}
     >
-      <div className="flex items-center justify-between border-b border-[#1A1A1A] px-4 py-2.5">
+      <div className="flex items-center justify-between border-b border-surface-2 px-4 py-2.5">
         <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#E8521A]" />
-          <span className="text-xs font-bold uppercase tracking-[3px] text-[#E8521A]">
+          <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+          <span className="text-xs font-bold uppercase tracking-[3px] text-brand-text">
             {spec.label}
           </span>
         </div>
@@ -510,20 +519,20 @@ export function ProductViewer3D({
       {!loaded && (
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="flex flex-col items-center gap-3">
-            <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#E8521A] border-t-transparent" />
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand border-t-transparent" />
             <span className="text-xs text-[#444]">Building 3D model…</span>
           </div>
         </div>
       )}
 
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-1 border-t border-[#1A1A1A] px-4 py-2.5">
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-1 border-t border-surface-2 px-4 py-2.5">
         {spec.specs.map((s) => (
           <span key={s} className="text-[10px] text-[#555]">
             {s}
           </span>
         ))}
-        <span className="ml-auto text-[10px] font-medium text-[#E8521A]">
-          Jai Shree Group
+        <span className="ml-auto text-[10px] font-medium text-brand-text">
+          {siteName}
         </span>
       </div>
     </div>
