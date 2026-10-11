@@ -70,9 +70,9 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 **Phase 0 acceptance**
 - [x] Every main-site route matches its baseline screenshot (no visible difference at 1440 px and 390 px) — run `scripts/baseline/compare.js` as in `docs/research/baseline.md`.
 - [x] `sitemap.xml`, `robots.txt` and the saved `<head>` tags are unchanged for the group site (sitemap: +`/privacy`, `/terms`).
-- [ ] `grep -rniE "#e8521a|#ff6b35" src` finds matches only in `src/sites/`, `brochure/` and `admin/`.
-- [ ] A test lead from the group site lands in Supabase with `site = 'group'` and emails the override inbox.
-- [ ] `npm run lint` and `npm run build` pass. Merge `multi-site` → `main`.
+- [x] `grep -rniE "#e8521a|#ff6b35" src` finds matches only in `src/sites/`, `brochure/` and `admin/`.
+- [x] A test lead from the group site lands in Supabase with `site = 'group'` and emails the override inbox.
+- [x] `npm run lint` and `npm run build` pass. Merge `multi-site` → `main`.
 
 ## Phase 1 — Pilot: Shree Perforators
 

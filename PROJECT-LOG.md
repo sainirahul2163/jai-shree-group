@@ -18,6 +18,7 @@ No fixed dates. We work as fast as possible, **phase by phase, task by task**: a
 
 | # | Site | Unit location | What it shows | Domain |
 | --- | --- | --- | --- | --- |
+| 2026-10-11 | **Phase 0 + 1.1 live on jaishreegroup.com** (Claude). Preview of `eafe6d0` checked in Chrome against the migrated live DB (gallery 69 photos, 4 blog posts, testimonials, sitemap 39 URLs at the production origin, preview robots disallow + noindex). Merged `multi-site` into `main` (`751cd5c`, author = GitHub no-reply), local build against live DB passed, pushed; Vercel production deploy succeeded. Live checks: `/`, `/contact`, a product page, `/gallery` (69 photos), `/blog`, `/group` (map 18/18 tiles, 2 markers), `/privacy`, `/terms`, `/admin/login`, `/api/health` 200; `/does-not-exist` and `/group/about` 404; `/products/wire-mesh` 308; robots identical to before; sitemap = before + `/privacy`, `/terms`; canonical `https://www.jaishreegroup.com`, `index, follow`; contact shows all current unit phones and Thursday/Sunday holidays; new page views saved with `site='group'`. `main` merged back into `multi-site` (fast-forward) | `main`, `multi-site` | Phase 0 go-live |
 | 2026-10-11 | **Multi-site migration applied to the LIVE project** (Claude; same file as on jai-shree-dev, `2026-10-11-multi-site.sql`): `site` column (not null, default `'group'`, check on the 7 keys) on leads, blog_posts, gallery_items, testimonials, page_views; `(site, created_at)` indexes; blog slugs unique per site. Row counts unchanged (leads 2, blog 4, gallery 70, testimonials 3, page views 971); every existing row has `site='group'`; no rows changed. The current live code keeps working (new rows default to `'group'`) | live Supabase | Phase 0 go-live |
 | 2026-10-11 | 1.1 screenshot compare finished (Claude): 80 shots vs `after-phase-0`, no height changes, all ≤ 0.10% (landing animation, hero, 3D/map areas). Group site visually unchanged; 1.1 ticked (unit-site render test moves to 1.2) | `docs/research/after-1.1/` (git-ignored), `docs/05-build-plan.md` | Close 1.1 |
 | 2026-10-11 | 1.1 Site-aware components: Cursor started it and stopped at its Opus usage limit; Claude finished the code. Build, lint, group SEO tags and JSON-LD unchanged. **Full screenshot compare not finished** (Claude's usage limit) — re-run before ticking 1.1 | `src/sites/`, `src/components/`, `src/app/[site]/`, `src/lib/`, `docs/06-codebase-map.md` | Phase 1 task 1.1 |
@@ -81,7 +82,7 @@ Status: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 | `site` column on leads/blog/gallery/testimonials/page views; leads emailed to each unit; admin site filter | 🔄 column, saving and lead email done (dev database); admin filter built but not yet checked logged in |
 | Customer auto-reply with reference number | ✅ reference on screen; email checked with a stubbed send (no Resend key locally) |
 | Privacy and terms pages; Google Analytics 4 | ✅ privacy and terms pages (agency wording, legal review still to do); GA4 skipped (user, 2026-10-11) |
-| Main site looks identical to baseline; merge to `main` | 🔄 compare passed; merge blocked (Vercel build) |
+| Main site looks identical to baseline; merge to `main` | ✅ live 2026-10-11 (`751cd5c`) |
 
 ### Phases 1–4 — Sites and launch
 
@@ -104,25 +105,26 @@ Unit logos, working hours, contact names, unit photos, client names, case studie
 
 ## 4. Current status
 
-**Where we are (2026-10-11):** Phase 0 tasks 0.1–0.7 done and verified; the 0.7 admin site filter still needs a logged-in check. Task 0.8 (privacy and terms pages) is done by Cursor and waiting for Claude's check; Google Analytics is skipped. The multi-site migration is applied and tested on `jai-shree-dev`. The live database's admin-access hardening is applied (user approved).
+**Where we are (2026-10-11):** **Phase 0 and task 1.1 are live** on jaishreegroup.com (merge `751cd5c`). The live database has the multi-site migration and the admin-access hardening. Next: Phase 1 task 1.2 (Shree Perforators site).
 
 **Authorised by the user (2026-10-11):** run Phase 0 → Phases 1–3 (all six unit sites) as far as possible; SQL on jai-shree-dev freely; tested additive migrations on the live project when going live; merge to `main` when a phase passes its checks; Google Analytics skipped for now; admin-access hardening on the live project (applied).
 
 **Next:**
-1. Claude verifies 1.1 (site-aware components), then 1.2 (Shree Perforators site).
-2. Full screenshot compare, multi-site migration on the live project, merge Phase 0 to `main`.
+1. 1.2 Shree Perforators site (Cursor `claude-sonnet-5-thinking-high`), then 1.3 pattern library, 1.4 legacy redirects + launch checklist; merge Phase 1 to `main` when it passes.
+2. Phases 2 and 3 (the other unit sites).
 
-**Waiting on the user:**
-- ⛔ **Vercel preview builds of `multi-site` fail since 0.6** (`55610d0`, `18a3e97`; the 0.5 push `e70f992` built fine). Locally everything passes: `next build`, `next build` with `VERCEL=1 VERCEL_ENV=preview` and no `.env.local`, the same with the live project's public Supabase keys, and `vercel build` (Vercel's own builder). Claude cannot read Vercel's build log (connector has no access to team `jai-shree-s-projects`). **Needed:** the error lines from https://vercel.com/jai-shree-s-projects/jai-shree-group/DhkHP5NonhAfTeAydwnjaJ4fNT2C (or give the Vercel connector access to the team). Blocks the Phase 0 merge to `main` (a failed production build would not take the live site down, but nothing would ship).
-- Log in to the admin panel (dev: `npm run dev`, or live after the Phase 0 merge) and check the 0.7 site filter, badges and site pickers; Claude and Cursor have no admin password. Create the second admin's Supabase login when convenient.
-- Optional: turn on "Leaked password protection" in the live Supabase Auth settings (security advisor warning).
+**Waiting on the user (not blocking):**
+- Log in to the admin panel and check the 0.7 site filter, badges and site pickers (now live); Claude and Cursor have no admin password.
+- Create the Supabase login for the second admin email.
+- Optional: turn on "Leaked password protection" in the live Supabase Auth settings.
 
-**Loop notes:** ⛔ **Cursor CLI stopped mid-1.1 (03:57):** "You've hit your usage limit for Opus … resets when your monthly cycle ends on 11/4/2026". Claude finishes 1.1 from Cursor's partial work and does the following tasks itself until the user raises the Cursor limit or picks another model. 0.5 was done by Claude directly — Claude Code's auto-mode check refused to launch the Cursor CLI. The user added permission rules (Cursor CLI, Supabase `apply_migration`); Cursor runs again from 0.6.
+**Loop notes:** Cursor's Opus quota is used up until 2026-11-04; use `claude-sonnet-5-thinking-high` (hard) and `composer-2.5` (simple). Vercel previews build again since `db93fbc` (route folders must not be named after metadata files). Previews use the live database.
 
 **Open points:**
 - Welded mesh: the agency said on 2026-10-02 it was discontinued; the client's approved answers say Shree Weld Mesh makes it. We follow the client.
 - `next.config.ts` redirects (`/products/welded-mesh` → `/products` and others) apply on every host; add a host condition before the Shree Weld Mesh site goes live.
-- Phase 1: a unit site with `/products` enabled still serves `/products/<slug>` for products it does not offer (proxy checks only the first path segment); pages render the group's titles until unit copy replaces them.
+- Group products index says "8 facilities" (live copy; client rule says 6 units) — fix as a small intentional change.
+- Shared product/industry data names clients and extra materials (titanium, PVC); unit sites must override them (1.2).
 
 ---
 
