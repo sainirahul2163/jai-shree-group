@@ -97,8 +97,16 @@ function resolveSite(req: NextRequest): { key: SiteKey; remember?: SiteKey } {
   return { key: "group" };
 }
 
-/** Each site's sitemap and robots live at /<key>/sitemap.xml and /<key>/robots.txt. */
-const SITE_FILES = new Set(["/sitemap.xml", "/robots.txt"]);
+/**
+ * Each site's /sitemap.xml and /robots.txt are served by route handlers at
+ * /<key>/site-sitemap and /<key>/site-robots. The folders must not be named
+ * sitemap.xml or robots.txt: Next treats those names as metadata routes, and
+ * Vercel's build adapter then fails with "failed to find source route".
+ */
+const SITE_FILES = new Map([
+  ["/sitemap.xml", "/site-sitemap"],
+  ["/robots.txt", "/site-robots"],
+]);
 
 /** No route has this segment, so a path under it lands on [site]/[...rest] (a real 404). */
 const NO_PAGE = "/__no-page";
@@ -111,7 +119,8 @@ const NO_PAGE = "/__no-page";
  */
 function sitePath(key: SiteKey, pathname: string): string {
   if (pathname === "/") return "";
-  if (SITE_FILES.has(pathname)) return pathname;
+  const siteFile = SITE_FILES.get(pathname);
+  if (siteFile) return siteFile;
   const first = `/${pathname.split("/")[1]}`;
   const pages = findSite(key)?.pages ?? [];
   return pages.includes(first) ? pathname : `${NO_PAGE}${pathname}`;
@@ -149,7 +158,7 @@ export const config = {
   // Everything except Next internals and files (anything whose last segment
   // has a dot: icons, public/ assets), plus the per-site sitemap and robots.
   // /<key>/sitemap.xml and /<key>/robots.txt are matched too, so they 404
-  // instead of serving one site's files on another site's domain.
+  // instead of resolving under another site's domain.
   matcher: [
     "/((?!_next/|__nextjs|.*\\.[^/]+$).*)",
     "/sitemap.xml",
