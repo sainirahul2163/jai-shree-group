@@ -282,7 +282,7 @@ export function GetQuotePage({ content }: { content: QuoteContent }) {
             <Button
               asChild
               className="mt-6 h-12 border-0"
-              style={{ backgroundColor: "#25D366", color: "var(--foreground)" }}
+              style={{ backgroundColor: "#25D366", color: "var(--whatsapp-text)" }}
             >
               <a href={waLink} target="_blank" rel="noopener noreferrer">
                 Continue on WhatsApp
@@ -352,7 +352,7 @@ export function GetQuotePage({ content }: { content: QuoteContent }) {
           <Button
             asChild
             className="mt-4 h-12 w-full border-0 sm:w-auto"
-            style={{ backgroundColor: "#25D366", color: "var(--foreground)" }}
+            style={{ backgroundColor: "#25D366", color: "var(--whatsapp-text)" }}
           >
             <a href={directWhatsAppUrl} target="_blank" rel="noopener noreferrer">
               Get Quote on WhatsApp
@@ -758,7 +758,7 @@ export function GetQuotePage({ content }: { content: QuoteContent }) {
                   <Button
                     asChild
                     className="h-11 w-full border-0"
-                    style={{ backgroundColor: "#25D366", color: "var(--foreground)" }}
+                    style={{ backgroundColor: "#25D366", color: "var(--whatsapp-text)" }}
                   >
                     <a
                       href={waLink ?? "https://wa.me/919370606017"}

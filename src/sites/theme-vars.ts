@@ -20,6 +20,7 @@ export function themeCss(theme: ThemeTokens): string {
     "--brand-foreground": theme.brandForeground,
     "--brand-text": theme.brandText,
     "--label-accent": theme.labelAccent ?? theme.brandText,
+    "--whatsapp-text": theme.whatsappText ?? "#0A0A0A",
     "--card": theme.surface,
     "--card-foreground": theme.foreground,
     "--popover": theme.surface,

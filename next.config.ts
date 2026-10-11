@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+import { legacyRedirects } from "./src/sites/legacy-redirects";
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -12,6 +14,8 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Old URLs of the unit sites' previous websites (task 1.4); host-scoped.
+      ...legacyRedirects,
       {
         source: "/products/wire-mesh",
         destination: "/products",

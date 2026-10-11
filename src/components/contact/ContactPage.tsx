@@ -303,7 +303,7 @@ export function ContactPage({ content }: { content: ContactContent }) {
                   <Button
                     asChild
                     className="mt-6 h-12 border-0"
-                    style={{ backgroundColor: "#25D366", color: "var(--foreground)" }}
+                    style={{ backgroundColor: "#25D366", color: "var(--whatsapp-text)" }}
                   >
                     <a href={waLink} target="_blank" rel="noopener noreferrer">
                       Continue on WhatsApp
@@ -328,9 +328,10 @@ export function ContactPage({ content }: { content: ContactContent }) {
                 className="space-y-4"
               >
                 <div>
-                  <Label style={{ color: "var(--text-secondary)" }}>Name *</Label>
+                  <Label htmlFor="contact-name" style={{ color: "var(--text-secondary)" }}>Name *</Label>
                   <Input
                     className="mt-1.5 h-10 border-border bg-surface-2 text-foreground"
+                    id="contact-name"
                     {...form.register("name")}
                   />
                   {form.formState.errors.name && (
@@ -341,17 +342,19 @@ export function ContactPage({ content }: { content: ContactContent }) {
                 </div>
 
                 <div>
-                  <Label style={{ color: "var(--text-secondary)" }}>Company Name</Label>
+                  <Label htmlFor="contact-companyName" style={{ color: "var(--text-secondary)" }}>Company Name</Label>
                   <Input
                     className="mt-1.5 h-10 border-border bg-surface-2 text-foreground"
+                    id="contact-companyName"
                     {...form.register("companyName")}
                   />
                 </div>
 
                 <div>
-                  <Label style={{ color: "var(--text-secondary)" }}>Phone *</Label>
+                  <Label htmlFor="contact-phone" style={{ color: "var(--text-secondary)" }}>Phone *</Label>
                   <Input
                     className="mt-1.5 h-10 border-border bg-surface-2 text-foreground"
+                    id="contact-phone"
                     {...form.register("phone")}
                   />
                   {form.formState.errors.phone && (
@@ -362,10 +365,11 @@ export function ContactPage({ content }: { content: ContactContent }) {
                 </div>
 
                 <div>
-                  <Label style={{ color: "var(--text-secondary)" }}>Email *</Label>
+                  <Label htmlFor="contact-email" style={{ color: "var(--text-secondary)" }}>Email *</Label>
                   <Input
                     type="email"
                     className="mt-1.5 h-10 border-border bg-surface-2 text-foreground"
+                    id="contact-email"
                     {...form.register("email")}
                   />
                   {form.formState.errors.email && (
@@ -376,7 +380,7 @@ export function ContactPage({ content }: { content: ContactContent }) {
                 </div>
 
                 <div>
-                  <Label style={{ color: "var(--text-secondary)" }}>Product Interest *</Label>
+                  <Label htmlFor="contact-product" style={{ color: "var(--text-secondary)" }}>Product Interest *</Label>
                   <Select
                     value={form.watch("productInterest")}
                     onValueChange={(v) =>
@@ -385,7 +389,11 @@ export function ContactPage({ content }: { content: ContactContent }) {
                       })
                     }
                   >
-                    <SelectTrigger className="mt-1.5 h-10 w-full border-border bg-surface-2 text-foreground">
+                    <SelectTrigger
+                      id="contact-product"
+                      aria-label="Product interest"
+                      className="mt-1.5 h-10 w-full border-border bg-surface-2 text-foreground"
+                    >
                       <SelectValue placeholder="Select a product" />
                     </SelectTrigger>
                     <SelectContent>
@@ -404,12 +412,13 @@ export function ContactPage({ content }: { content: ContactContent }) {
                 </div>
 
                 <div>
-                  <Label style={{ color: "var(--text-secondary)" }}>
+                  <Label htmlFor="contact-message" style={{ color: "var(--text-secondary)" }}>
                     Message / Requirements *
                   </Label>
                   <Textarea
                     rows={5}
                     className="mt-1.5 border-border bg-surface-2 text-foreground"
+                    id="contact-message"
                     {...form.register("message")}
                   />
                   {form.formState.errors.message && (
@@ -429,7 +438,7 @@ export function ContactPage({ content }: { content: ContactContent }) {
                       <Button
                         asChild
                         className="h-11 w-full border-0"
-                        style={{ backgroundColor: "#25D366", color: "var(--foreground)" }}
+                        style={{ backgroundColor: "#25D366", color: "var(--whatsapp-text)" }}
                       >
                         <a
                           href={waLink}
@@ -453,7 +462,7 @@ export function ContactPage({ content }: { content: ContactContent }) {
                       <Button
                         asChild
                         className="h-11 w-full border-0"
-                        style={{ backgroundColor: "#25D366", color: "var(--foreground)" }}
+                        style={{ backgroundColor: "#25D366", color: "var(--whatsapp-text)" }}
                       >
                         <a
                           href={waLink}

@@ -181,12 +181,12 @@ export function Footer() {
 
           {/* Column 2 — Products */}
           <div>
-            <h3
+            <h2
               className="mb-4 text-sm font-bold uppercase tracking-wider"
               style={{ color: "var(--brand-text)" }}
             >
               {footer.headings.products}
-            </h3>
+            </h2>
             <ul className="space-y-2.5">
               {products.map((product) => (
                 <li key={product.slug}>
@@ -204,12 +204,12 @@ export function Footer() {
 
           {/* Column 3 — Quick Links */}
           <div>
-            <h3
+            <h2
               className="mb-4 text-sm font-bold uppercase tracking-wider"
               style={{ color: "var(--brand-text)" }}
             >
               {footer.headings.company}
-            </h3>
+            </h2>
             <ul className="space-y-2.5">
               {footer.quickLinks.map((link) => (
                 <li key={link.href}>
@@ -227,12 +227,12 @@ export function Footer() {
 
           {/* Column 4 — Contact */}
           <div>
-            <h3
+            <h2
               className="mb-4 text-sm font-bold uppercase tracking-wider"
               style={{ color: "var(--brand-text)" }}
             >
               {footer.headings.contact}
-            </h3>
+            </h2>
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5">
                 <MapPin
@@ -291,7 +291,7 @@ export function Footer() {
                 className="h-10 w-full border-0 font-semibold hover:opacity-90"
                 style={{
                   backgroundColor: "#25D366",
-                  color: "var(--foreground)",
+                  color: "var(--whatsapp-text)",
                 }}
               >
                 <a

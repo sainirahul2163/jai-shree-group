@@ -180,6 +180,8 @@ export const group: SiteConfig = {
     brandText: "#e8521a",
     // The group's section labels have always used Tailwind's orange-500.
     labelAccent: "var(--color-orange-500)",
+    // Unchanged on the live site (white on WhatsApp green is 1.8:1; see PROJECT-LOG).
+    whatsappText: "#ffffff",
     fontHeading: "geist",
     fontBody: "geist",
   },

@@ -206,7 +206,7 @@ export function ProductQuoteForm({
             <Button
               asChild
               className="h-11 w-full border-0"
-              style={{ backgroundColor: "#25D366", color: "var(--foreground)" }}
+              style={{ backgroundColor: "#25D366", color: "var(--whatsapp-text)" }}
             >
               <a
                 href={whatsappUrl(

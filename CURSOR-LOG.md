@@ -33,6 +33,17 @@ Cursor's own work diary for the Jai Shree Group multi-site build. **Cursor write
 
 ## Entries
 
+### 2026-10-11 — 1.4 Legacy redirects and launch checklist, Shree Perforators (done by Claude)
+
+- **Status:** ✅ redirects done; launch checklist all pass except Lighthouse performance on the home page (see below). DNS switch is the agency's step.
+- **What I did:**
+  - `src/sites/legacy-redirects.ts` (no imports; loaded by `next.config.ts`): 21 old shreeperforators.com URLs + `/products-gallery/*` → new pages, permanent (308), only when the host is `shreeperforators.com` or `www.shreeperforators.com`. Map from `docs/research/legacy-sites.md`: product pages → their product, laser cutting and the discontinued products (wire mesh, knitted mesh, cable tray) → `/products`, welded mesh → `https://www.jaishreegroup.com/group` until Shree Weld Mesh is live, applications → `/industries`, locations → `/export`, enquiry → `/get-quote`.
+  - Accessibility fixes found by Lighthouse (shared components): contact form labels linked to their inputs (`htmlFor`/`id`), the product select has a name, footer column headings `h3` → `h2` (same look; fixes heading order), WhatsApp-green buttons use `--whatsapp-text` (units: near-black, 10:1; **group keeps white**, 1.8:1 — see PROJECT-LOG).
+- **Launch checklist (Shree Perforators):** unique copy ✅ (duplicate check: only 2 UI lines shared) · only its products, nothing discontinued ✅ · contact shows +91 93706 06017, shreeperforator@gmail.com, Thursday holiday ✅ · fallbacks only, nothing invented ✅ · contrast AA ✅ · canonicals, sitemap (22 URLs), robots at www.shreeperforators.com ✅ · test lead saved with `site = 'shree-perforators'` ✅ (email goes to `leadEmail` shreeperforator@gmail.com; not sent locally) · WhatsApp/call use the unit number ✅ · legacy redirects tested on both hosts ✅ · analytics: skipped by the user · **Lighthouse mobile (local `next start`):** home perf 83 / a11y 96 / SEO 100; products 93 / 100 / 100; contact 85 / 100 / 100. For reference the live group site on Vercel: home 79, contact 100 (perf). Home LCP is the hero intro fading in (shared with the group).
+- **Checks:** build ✅ · lint unchanged (18) · group SEO snapshot identical · group pixels ≤ 0.05% on 7 pages × 2 widths.
+- **Left to do:** home-page performance (hero fade-in delays the largest paint on every site) — a design decision for the user; re-measure Lighthouse on the real domain after DNS.
+- **Next task:** Phase 2 (Jai Shree Metal Perforators)
+
 ### 2026-10-11 — 1.3 Pattern library tool (done by Claude; Cursor quota used up)
 
 - **Status:** ✅ done

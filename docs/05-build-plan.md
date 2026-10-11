@@ -93,8 +93,8 @@ The live site shows outdated unit phones and products. Fix these on `main` first
 - [x] Hole shape, size, pitch and layout → open area % (shared formulas), live 2D pattern, 3D preview; "Request this pattern" pre-fills the quote form.
 
 1.4 **Legacy redirects and launch checklist**
-- [ ] Legacy redirect map (old URL → new URL, 301) in `next.config.ts` with a `host` condition.
-- [ ] Launch checklist (below). DNS to Vercel is the agency's step.
+- [x] Legacy redirect map (old URL → new URL, 301) in `next.config.ts` with a `host` condition (`src/sites/legacy-redirects.ts`).
+- [x] Launch checklist (below) — all pass except home-page Lighthouse performance (83; shared hero fade-in). DNS to Vercel is the agency's step.
 
 ## Phase 2 — Jai Shree Metal Perforators
 

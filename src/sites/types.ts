@@ -57,6 +57,8 @@ export interface ThemeTokens {
   brandHover: string;
   brandForeground: string;
   brandText: string;
+  /** Text on WhatsApp-green buttons. Default: near-black (passes contrast). */
+  whatsappText?: string;
   /** Small section labels ("3D INTERACTIVE PREVIEW"). Default: brandText. */
   labelAccent?: string;
   fontHeading: FontKey;

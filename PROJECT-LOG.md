@@ -18,6 +18,7 @@ No fixed dates. We work as fast as possible, **phase by phase, task by task**: a
 
 | # | Site | Unit location | What it shows | Domain |
 | --- | --- | --- | --- | --- |
+| 2026-10-11 | 1.4 Shree Perforators: 21 old URLs 301/308 to new pages on shreeperforators.com only (tested both hosts); launch checklist passed except home-page Lighthouse performance (83 locally; shared hero fade-in, live group home is 79). Accessibility fixes in shared components (form labels, footer heading order, unit WhatsApp button text). Phase 1 complete apart from that; not merged to `main` yet (see Waiting on the user) | `src/sites/legacy-redirects.ts`, `next.config.ts`, contact/footer/quote components | Phase 1 task 1.4 |
 | 2026-10-11 | 1.3 Pattern library on Shree Perforators (`/pattern-library`): shape, layout and sizes → open area (shared formulas, checked by hand) and a scale drawing; "Request This Pattern" pre-fills the quote form. Group unchanged. Also: Vercel preview of 1.2 (`a01a44b`) built and checked with `?site=shree-perforators` | `src/components/tools/`, `src/app/[site]/(chrome)/pattern-library/`, `src/sites/`, `GetQuotePage.tsx` | Phase 1 task 1.3 |
 | 2026-10-11 | 1.2 Shree Perforators site built (Claude; Cursor quota used up): config, own copy, export page, unit about/gallery/contact, real 404s for pages and products the unit does not offer. Group site SEO identical and pixel-identical except an intentional fix: the 3D viewer caption no longer says "Carbon" steel (client rule). Preview locally at `shree-perforators.localhost:3000`; DNS not switched (needs 1.4 redirects + launch checklist) | `src/sites/`, `src/components/`, `src/app/[site]/`, `src/proxy.ts`, docs | Phase 1 task 1.2 |
 | 2026-10-11 | Cursor 1.2 run stopped at once: "You've hit your usage limit … continue with Sonnet … resets 11/4/2026". Nothing changed. Claude builds 1.2 itself (user's rule) | — | Cursor quota |
@@ -91,7 +92,7 @@ Status: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 
 | Requirement | Status |
 | --- | --- |
-| Site 1 Shree Perforators: pattern library, old-URL redirects (week 3) | 🔄 site (1.2) and pattern library (1.3) built; redirects + launch checklist (1.4) to do |
+| Site 1 Shree Perforators: pattern library, old-URL redirects (week 3) | ✅ built and checked (1.2–1.4); waiting for DNS (agency) and the Phase 1 merge |
 | Site 2 Jai Shree Metal Perforators: drawing upload quote, old-URL redirects (week 4) | ⏳ |
 | Site 3 Jai Shree Industries: expanded metal selector (weeks 5–8) | ⏳ |
 | Site 4 Jai Shree Perforator: bulk order estimator | ⏳ |
@@ -108,15 +109,17 @@ Unit logos, working hours, contact names, unit photos, client names, case studie
 
 ## 4. Current status
 
-**Where we are (2026-10-11):** **Phase 0 and task 1.1 are live** on jaishreegroup.com (merge `751cd5c`). The live database has the multi-site migration and the admin-access hardening. Phase 1: tasks 1.2 (Shree Perforators site) and 1.3 (pattern library) done; next 1.4 legacy redirects + launch checklist.
+**Where we are (2026-10-11):** **Phase 0 and task 1.1 are live** on jaishreegroup.com (merge `751cd5c`). The live database has the multi-site migration and the admin-access hardening. Phase 1 (Shree Perforators) built and checked on `multi-site` (1.2–1.4); next Phase 2 (Jai Shree Metal Perforators).
 
 **Authorised by the user (2026-10-11):** run Phase 0 → Phases 1–3 (all six unit sites) as far as possible; SQL on jai-shree-dev freely; tested additive migrations on the live project when going live; merge to `main` when a phase passes its checks; Google Analytics skipped for now; admin-access hardening on the live project (applied).
 
 **Next:**
-1. 1.4 legacy redirects + launch checklist; merge Phase 1 to `main` when it passes.
+1. Phase 2: Jai Shree Metal Perforators (drawing upload quote, legacy redirects).
 2. Phases 2 and 3 (the other unit sites).
 
 **Waiting on the user (not blocking):**
+- **Phase 1 merge to `main`:** everything passes except Lighthouse performance on home pages (the hero text fades in, which delays the largest paint; the live group home scores 79 too). Options: (a) merge as is, (b) Claude makes the hero text appear without the fade on all sites (visible change to the live home page), (c) only on unit sites. Merging changes on the live group site: 3D caption no longer says "Carbon" steel, unknown product/industry URLs return a real 404, accessibility fixes (no visual change). Until then the unit site is not reachable on any production domain anyway (DNS).
+- Group WhatsApp-green buttons have white text (1.8:1 contrast, fails WCAG). Unit sites use dark text; say if the group should switch too.
 - Log in to the admin panel and check the 0.7 site filter, badges and site pickers (now live); Claude and Cursor have no admin password.
 - Create the Supabase login for the second admin email.
 - Optional: turn on "Leaked password protection" in the live Supabase Auth settings.
